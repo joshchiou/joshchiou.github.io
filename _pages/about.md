@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Senior Advisor, Data Science and Computational Biology · <a href="https://www.lilly.com" target="_blank">Eli Lilly</a> · Cardiometabolic Research
+subtitle: Senior Advisor, Genomics · <a href="https://www.lilly.com" target="_blank">Lilly</a> · Cardiometabolic Research, Data Science
 
 profile:
   align: right
