@@ -7,40 +7,46 @@
       description:
         - Cardiometabolic Research, Data Science
         - Clinical trial proteomics for obesity and cardiometabolic drug programs
-        - Integrating proteomic, genetic, and clinical data to identify drug targets and biomarkers
 
     - title: Senior Principal Computational Geneticist
       institution: Pfizer, Cambridge, MA
       year: 2023 - 2025
       description:
         - Internal Medicine Research Unit
-        - Led statistical genetics in the UK Biobank Pharma Proteomics Project (UKB-PPP)
-        - pQTL mapping, colocalization, and protein network analyses for cardiovascular and metabolic disease
-        - Cloud-native infrastructure for statistical genetics pipelines (AWS)
+        - Led cross-functional target discovery for cardiovascular disease, modernizing human genetics-based approaches through LLMs and CRISPR screens with functional genomics teams
+        - Drove strategic planning and roadmap for genetics infrastructure, resulting in a scalable cloud-based framework for storage, analysis, and interactive visualization of summary-level data
+        - Represented Pfizer in external collaborations with academic and industry partners; communicated project updates to internal stakeholders
+        - Managed a postdoctoral fellow and intern to advance research in applied statistical genetics and single-cell genomics
 
     - title: Senior Computational Geneticist
       institution: Pfizer, Cambridge, MA
       year: 2021 - 2023
       description:
         - Internal Medicine Research Unit
-        - Statistical genetics and fine-mapping for cardiovascular and renal disease targets
-        - Contributed to pre-competitive consortiums including UKB-PPP
+        - Supported biologists on target discovery for renal disease through integrative analyses of human genetics and 'omics, resulting in 10+ novel targets
+        - Guided clinical teams on biomarker strategies and commercial teams on indication expansion using epidemiological evidence from large-scale biobanks with longitudinal EHR data
+        - Collaborated with ML experts to develop deep learning models trained on genomic datasets, accelerating target evaluation with therapeutic directionality
+        - Developed Nextflow pipelines for statistical genetics analyses, enabling cross-department benchmarking of fine-mapping and colocalization methods
 
     - title: Graduate Student Researcher
       institution: Gaulton Lab, UC San Diego, La Jolla, CA
       year: 2016 - 2021
       description:
-        - Single-cell epigenomics of pancreatic islets
-        - Mapped regulatory landscape of type 1 and type 2 diabetes genetic risk loci
         - "Advisor: Dr. Kyle Gaulton"
+        - Conducted one of the largest GWAS studies for type 1 diabetes, integrating genetics and single-cell epigenomics to uncover novel disease mechanisms — published in Nature
+        - Partnered with cross-functional research teams to deliver biological insights from large-scale genomics datasets; contributed to 25 high-impact publications in under 5 years
 
     - title: Development Scientist
       institution: IncellDx, Menlo Park, CA
       year: 2015 - 2016
+      description:
+        - Optimized a cell-based companion diagnostic assay for HIV, subsequently acquired by ViiV Healthcare
 
     - title: Microbiology Intern
       institution: NASA Johnson Space Center, Houston, TX
       year: 2015
+      description:
+        - Prototyped a rapid assay to improve detection of infectious herpesviruses for astronauts in space
 
 - title: Education
   type: time_table
@@ -56,20 +62,29 @@
       institution: University of California, Los Angeles
       year: 2015
 
-- title: Publications
+- title: Selected Publications
   type: time_table
   contents:
     - year: 2024
       items:
-        - "<a href='https://doi.org/10.1093/bioinformatics/btad767'>A fast machine learning dataloader for epigenetic tracks from BigWig files</a>. <em>Bioinformatics</em>."
+        - "Retel JS, Poehlmann A, <b>Chiou J</b>, et al. A fast machine learning dataloader for epigenetic tracks from BigWig files. <em>Bioinformatics</em> 40(1), btad767."
     - year: 2023
       items:
-        - "<a href='https://doi.org/10.1038/s41586-023-06592-6'>Plasma proteomic associations with genetics and health in the UK Biobank</a>. <em>Nature</em>."
-        - "<a href='https://doi.org/10.1038/s41588-023-01397-9'>Integrating genetics with single-cell multiomic measurements across disease states identifies mechanisms of beta cell dysfunction in type 2 diabetes</a>. <em>Nature Genetics</em>."
+        - "Sun BB, <b>Chiou J</b>, et al. Plasma proteomic associations with genetics and health in the UK Biobank. <em>Nature</em> 622, 329–338."
+        - "Wang G*, <b>Chiou J</b>*, et al. Integrating genetics with single-cell multiomic measurements across disease states identifies mechanisms of beta cell dysfunction in type 2 diabetes. <em>Nature Genetics</em> 55, 984–994."
     - year: 2021
       items:
-        - "<a href='https://doi.org/10.1038/s41586-021-03552-w'>Interpreting type 1 diabetes risk with genetics and single-cell epigenomics</a>. <em>Nature</em>."
-        - "<a href='https://doi.org/10.1038/s41588-021-00823-0'>Single-cell chromatin accessibility identifies pancreatic islet cell type- and state-specific regulatory programs of diabetes risk</a>. <em>Nature Genetics</em>."
+        - "<b>Chiou J</b>, et al. Interpreting type 1 diabetes risk with genetics and single-cell epigenomics. <em>Nature</em> 594, 398–402."
+        - "<b>Chiou J</b>*, Zeng C*, et al. Single-cell chromatin accessibility identifies pancreatic islet cell type- and state-specific regulatory programs of diabetes risk. <em>Nature Genetics</em> 53, 455–466."
+        - "Geusz RJ*, Wang A*, <b>Chiou J</b>*, et al. Pancreatic progenitor epigenome maps prioritize type 2 diabetes risk genes with roles in development. <em>eLife</em> 10:e59067."
+        - "Zhang K, Hocker JD, Miller M, Hou X, <b>Chiou J</b>, et al. A single-cell atlas of chromatin accessibility in the human genome. <em>Cell</em> 184(24), 5985–6001."
+        - "Yan J, et al. [including <b>Chiou J</b>]. Systematic analysis of binding of transcription factors to noncoding variants. <em>Nature</em> 591, 147–151."
+    - year: 2020
+      items:
+        - "Wang A*, <b>Chiou J</b>*, et al. Single cell multiomic profiling of human lung reveals cell type-specific and age-dynamic control of SARS-CoV-2 host genes. <em>eLife</em> 9:e62522."
+    - year: 2019
+      items:
+        - "Greenwald WW*, <b>Chiou J</b>*, et al. Pancreatic islet chromatin accessibility and conformation reveals distal enhancer networks of type 2 diabetes risk. <em>Nature Communications</em> 10, 2078."
 
 - title: Honors & Awards
   type: time_table
@@ -86,21 +101,24 @@
       items:
         - "J.W. and Nellie MacDowell Scholarship — UCLA"
 
-- title: Skills
+- title: Technical Skills
   type: nested_list
   contents:
-    - title: Genomics & Statistics
+    - title: Programming & AI/ML
       items:
-        - pQTL mapping, GWAS, fine-mapping, colocalization
-        - Mendelian Randomization, polygenic risk scores
-        - Single-cell epigenomics (ATAC-seq, scRNA-seq)
-    - title: Proteomics
+        - Python (pandas, dask, scikit-learn, PyTorch), machine learning, predictive modeling
+        - Data visualization, web applications, APIs, LLMs
+    - title: Statistical Genetics
       items:
-        - Clinical trial proteomics (Olink, SomaScan)
-        - MMRM, bridge normalization, pathway enrichment
-        - Biomarker discovery
-    - title: Programming & Infrastructure
+        - GWAS, ExWAS, fine-mapping, colocalization, Mendelian randomization
+        - Plink, Regenie, UK Biobank, FinnGen, Biobank Japan
+        - Meta-analysis, polygenic risk scores, survival analysis, EHR
+    - title: Genomics & Proteomics
       items:
-        - Python, R, Bash
-        - AWS (cloud-native pipelines)
-        - Docker, Snakemake, WDL
+        - Single-cell transcriptomics and epigenomics (ATAC-seq, scRNA-seq)
+        - Proteomics (Olink, SomaScan), multi-omic data integration
+    - title: Infrastructure
+      items:
+        - Cloud computing (AWS), HPC, Nextflow pipelines
+        - Docker, Singularity, Conda, Pixi, Git
+        - SQL, FAIR data principles
