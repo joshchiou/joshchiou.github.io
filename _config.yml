@@ -348,6 +348,9 @@ enable_publication_badges:
 filtered_bibtex_keywords:
   [
     abbr,
+    author_count,
+    author_includes_self,
+    author_others,
     abstract,
     additional_info,
     altmetric,

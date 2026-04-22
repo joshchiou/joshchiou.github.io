@@ -736,6 +736,11 @@ footer.sticky-bottom {
           font-style: normal;
         }
 
+        > span.author-self, span.author-self {
+          font-weight: bold;
+          color: var(--global-theme-color);
+        }
+
         > span.more-authors {
           color: var(--global-text-color-light);
           border-bottom: 1px dashed var(--global-text-color-light);

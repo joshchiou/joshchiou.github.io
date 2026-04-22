@@ -82,10 +82,10 @@
           {%- if forloop.last and author_array_limit == author_array_size %}and&nbsp;{% endif -%}
         {% endif %}
         {%- if author_is_self -%}
-          <em>
+          <span class="author-self">
             {{- author.first }}
             {{ author_last_html -}}
-          </em>
+          </span>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
@@ -100,8 +100,18 @@
       {% endfor %}
       {%- assign more_authors = author_array_size | minus: author_array_limit -%}
 
-      {%- assign more_authors_hide = more_authors | append: ' more author' -%}
-      {% if more_authors > 0 %}
+      {% if entry.author_others %}
+        {%- assign others_count = entry.author_others -%}
+        {%- assign others_label = others_count | append: ' other' -%}
+        {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
+        {% if entry.author_includes_self == 'true' %}
+          {%- assign others_label = others_label | append: ' including ' -%}
+          {%- capture self_span %}<span class="author-self">Joshua Chiou</span>{%- endcapture -%}
+          {%- assign others_label = others_label | append: self_span -%}
+        {% endif %}
+        , and {{ others_label }}
+      {% elsif more_authors > 0 %}
+        {%- assign more_authors_hide = more_authors | append: ' more author' -%}
         {%- if more_authors > 1 -%}
           {% assign more_authors_hide = more_authors_hide | append: 's' %}
         {%- endif -%}
@@ -250,6 +260,25 @@
       {% if entry.website %}
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
       {% endif %}
+      {% if site.enable_publication_badges and site.enable_publication_badges.altmetric %}
+        {% if entry.altmetric and entry.altmetric != 'false' %}
+          <span
+            class="altmetric-embed"
+            data-badge-type="2"
+            data-badge-popover="right"
+            style="display:inline-block;vertical-align:middle;margin-left:4px;"
+            {% if entry.altmetric != blank and entry.altmetric != 'true' %}
+              data-altmetric-id="{{ entry.altmetric }}"
+            {% elsif entry.arxiv %}
+              data-arxiv-id="{{ entry.arxiv }}"
+            {% elsif entry.doi %}
+              data-doi="{{ entry.doi }}"
+            {% elsif entry.pmid %}
+              data-pmid="{{ entry.pmid }}"
+            {% endif %}
+          ></span>
+        {% endif %}
+      {% endif %}
     </div>
     {% if site.enable_publication_badges %}
       {% assign entry_has_altmetric_badge = false %}
@@ -271,28 +300,8 @@
       {% if entry.inspirehep_id %}
         {% assign entry_has_inspirehep_badge = true %}
       {% endif %}
-      {% if entry_has_altmetric_badge or entry_has_dimensions_badge or entry_has_google_scholar_badge or entry_has_inspirehep_badge %}
+      {% if entry_has_dimensions_badge or entry_has_google_scholar_badge or entry_has_inspirehep_badge %}
         <div class="badges">
-          {% if site.enable_publication_badges.altmetric and entry_has_altmetric_badge %}
-            <span
-              class="altmetric-embed"
-              data-badge-type="2"
-              data-badge-popover="right"
-              {% if entry.altmetric != blank and entry.altmetric != 'true' %}
-                data-altmetric-id="{{ entry.altmetric }}"
-              {% elsif entry.arxiv %}
-                data-arxiv-id="{{ entry.arxiv }}"
-              {% elsif entry.eprint %}
-                data-arxiv-id="{{ entry.eprint }}"
-              {% elsif entry.doi %}
-                data-doi="{{ entry.doi }}"
-              {% elsif entry.pmid %}
-                data-pmid="{{ entry.pmid }}"
-              {% elsif entry.isbn %}
-                data-isbn="{{ entry.isbn }}"
-              {% endif %}
-            ></span>
-          {% endif %}
           {% if site.enable_publication_badges.dimensions and entry_has_dimensions_badge %}
             <span
               class="__dimensions_badge_embed__"
