@@ -2,14 +2,16 @@
   type: time_table
   contents:
     - title: Senior Advisor, Genomics
-      institution: Eli Lilly and Company, Boston, MA
+      institution: Eli Lilly and Company
+      location: Boston, MA
       year: 2025 - now
       description:
         - Cardiometabolic Research, Data Science
         - Clinical trial proteomics for obesity and cardiometabolic drug programs
 
     - title: Senior Principal Computational Geneticist
-      institution: Pfizer, Cambridge, MA
+      institution: Pfizer
+      location: Cambridge, MA
       year: 2023 - 2025
       description:
         - Internal Medicine Research Unit
@@ -19,7 +21,8 @@
         - Managed a postdoctoral fellow and intern to advance research in applied statistical genetics and single-cell genomics
 
     - title: Senior Computational Geneticist
-      institution: Pfizer, Cambridge, MA
+      institution: Pfizer
+      location: Cambridge, MA
       year: 2021 - 2023
       description:
         - Internal Medicine Research Unit
@@ -29,7 +32,8 @@
         - Developed Nextflow pipelines for statistical genetics analyses, enabling cross-department benchmarking of fine-mapping and colocalization methods
 
     - title: Graduate Student Researcher
-      institution: Gaulton Lab, UC San Diego, La Jolla, CA
+      institution: Gaulton Lab, UC San Diego
+      location: La Jolla, CA
       year: 2016 - 2021
       description:
         - "Advisor: Dr. Kyle Gaulton"
@@ -37,13 +41,15 @@
         - Partnered with cross-functional research teams to deliver biological insights from large-scale genomics datasets; contributed to 25 high-impact publications in under 5 years
 
     - title: Development Scientist
-      institution: IncellDx, Menlo Park, CA
+      institution: IncellDx
+      location: Menlo Park, CA
       year: 2015 - 2016
       description:
         - Optimized a cell-based companion diagnostic assay for HIV, subsequently acquired by ViiV Healthcare
 
     - title: Microbiology Intern
-      institution: NASA Johnson Space Center, Houston, TX
+      institution: NASA Johnson Space Center
+      location: Houston, TX
       year: 2015
       description:
         - Prototyped a rapid assay to improve detection of infectious herpesviruses for astronauts in space
