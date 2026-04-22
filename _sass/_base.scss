@@ -691,6 +691,11 @@ footer.sticky-bottom {
     li {
       margin-bottom: 1rem;
 
+      .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
       .preview {
       }
 
