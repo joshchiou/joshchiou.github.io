@@ -1,96 +1,106 @@
-cv:
-  name: Joshua Chiou, PhD
-  label: Computational Biologist
-  email: chioujosh@gmail.com
-  location: Boston, MA
-  image: ""
-  summary: >
-    Senior Advisor in Data Science and Computational Biology at Eli Lilly,
-    working on clinical trial proteomics for obesity and cardiometabolic drug programs.
-    Previously Senior Principal Computational Geneticist at Pfizer.
-    PhD in Biomedical Sciences, UCSD.
+- title: Experience
+  type: time_table
+  contents:
+    - title: Senior Advisor, Genomics
+      institution: Eli Lilly and Company, Boston, MA
+      year: 2025 - now
+      description:
+        - Cardiometabolic Research, Data Science
+        - Clinical trial proteomics for obesity and cardiometabolic drug programs
+        - Integrating proteomic, genetic, and clinical data to identify drug targets and biomarkers
 
-  social_networks:
-    - network: GitHub
-      username: joshchiou
-    - network: LinkedIn
-      username: joshchiou
+    - title: Senior Principal Computational Geneticist
+      institution: Pfizer, Cambridge, MA
+      year: 2023 - 2025
+      description:
+        - Internal Medicine Research Unit
+        - Led statistical genetics in the UK Biobank Pharma Proteomics Project (UKB-PPP)
+        - pQTL mapping, colocalization, and protein network analyses for cardiovascular and metabolic disease
+        - Cloud-native infrastructure for statistical genetics pipelines (AWS)
 
-  sections:
-    Education:
-      - institution: University of California, San Diego
-        location: La Jolla, CA
-        area: Biomedical Sciences
-        studyType: PhD
-        start_date: 2016
-        end_date: 2021
-        highlights:
-          - "Advisor: Dr. Kyle Gaulton"
-          - "Dissertation: Single-cell epigenomics of pancreatic islets and type 1 diabetes risk"
+    - title: Senior Computational Geneticist
+      institution: Pfizer, Cambridge, MA
+      year: 2021 - 2023
+      description:
+        - Internal Medicine Research Unit
+        - Statistical genetics and fine-mapping for cardiovascular and renal disease targets
+        - Contributed to pre-competitive consortiums including UKB-PPP
 
-      - institution: University of California, Los Angeles
-        location: Los Angeles, CA
-        area: Microbiology, Immunology, and Molecular Genetics
-        studyType: B.S.
-        start_date: 2011
-        end_date: 2015
+    - title: Graduate Student Researcher
+      institution: Gaulton Lab, UC San Diego, La Jolla, CA
+      year: 2016 - 2021
+      description:
+        - Single-cell epigenomics of pancreatic islets
+        - Mapped regulatory landscape of type 1 and type 2 diabetes genetic risk loci
+        - "Advisor: Dr. Kyle Gaulton"
 
-    Experience:
-      - company: Eli Lilly and Company
-        position: Senior Advisor, Genomics
-        location: Boston, MA
-        start_date: 2025-10
-        end_date: present
-        summary: Cardiometabolic Research
+    - title: Development Scientist
+      institution: IncellDx, Menlo Park, CA
+      year: 2015 - 2016
 
-      - company: Pfizer
-        position: Senior Principal Computational Geneticist
-        location: Cambridge, MA
-        start_date: 2023-10
-        end_date: 2025-10
-        summary: Internal Medicine Research Unit
+    - title: Microbiology Intern
+      institution: NASA Johnson Space Center, Houston, TX
+      year: 2015
 
-      - company: Pfizer
-        position: Senior Computational Geneticist
-        location: Cambridge, MA
-        start_date: 2021-04
-        end_date: 2023-09
-        summary: Internal Medicine Research Unit
+- title: Education
+  type: time_table
+  contents:
+    - title: PhD, Biomedical Sciences
+      institution: University of California, San Diego
+      year: 2021
+      description:
+        - "Dissertation: Single-cell epigenomics of pancreatic islets and type 1 diabetes risk"
+        - "Advisor: Dr. Kyle Gaulton"
 
-      - company: University of California, San Diego
-        position: Graduate Student Researcher
-        location: La Jolla, CA
-        start_date: 2016-09
-        end_date: 2021-03
-        highlights:
-          - "Advisor: Dr. Kyle Gaulton"
+    - title: B.S., Microbiology, Immunology, and Molecular Genetics
+      institution: University of California, Los Angeles
+      year: 2015
 
-      - company: IncellDx
-        position: Development Scientist
-        location: Menlo Park, CA
-        start_date: 2015-09
-        end_date: 2016-08
+- title: Publications
+  type: time_table
+  contents:
+    - year: 2024
+      items:
+        - "<a href='https://doi.org/10.1093/bioinformatics/btad767'>A fast machine learning dataloader for epigenetic tracks from BigWig files</a>. <em>Bioinformatics</em>."
+    - year: 2023
+      items:
+        - "<a href='https://doi.org/10.1038/s41586-023-06592-6'>Plasma proteomic associations with genetics and health in the UK Biobank</a>. <em>Nature</em>."
+        - "<a href='https://doi.org/10.1038/s41588-023-01397-9'>Integrating genetics with single-cell multiomic measurements across disease states identifies mechanisms of beta cell dysfunction in type 2 diabetes</a>. <em>Nature Genetics</em>."
+    - year: 2021
+      items:
+        - "<a href='https://doi.org/10.1038/s41586-021-03552-w'>Interpreting type 1 diabetes risk with genetics and single-cell epigenomics</a>. <em>Nature</em>."
+        - "<a href='https://doi.org/10.1038/s41588-021-00823-0'>Single-cell chromatin accessibility identifies pancreatic islet cell type- and state-specific regulatory programs of diabetes risk</a>. <em>Nature Genetics</em>."
 
-      - company: NASA Johnson Space Center
-        position: Microbiology Intern
-        location: Houston, TX
-        start_date: 2015-06
-        end_date: 2015-08
+- title: Honors & Awards
+  type: time_table
+  contents:
+    - year: 2020
+      items:
+        - "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist — ASHG"
+        - "Human Islet Research Network (HIRN) Annual Investigator Meeting Scholarship"
+    - year: 2018
+      items:
+        - "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist — ASHG"
+        - "NSF Graduate Research Fellowship, Honorable Mention"
+    - year: 2014
+      items:
+        - "J.W. and Nellie MacDowell Scholarship — UCLA"
 
-    Awards:
-      - title: Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist
-        date: 2020
-        issuer: ASHG
-        url: https://www.ashg.org/
-
-      - title: Human Islet Research Network (HIRN) Annual Investigator Meeting Scholarship
-        date: 2020
-
-      - title: Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist
-        date: 2018
-
-      - title: NSF Graduate Research Fellowship, Honorable Mention
-        date: 2018
-
-      - title: J.W. and Nellie MacDowell Scholarship, UCLA
-        date: 2014
+- title: Skills
+  type: nested_list
+  contents:
+    - title: Genomics & Statistics
+      items:
+        - pQTL mapping, GWAS, fine-mapping, colocalization
+        - Mendelian Randomization, polygenic risk scores
+        - Single-cell epigenomics (ATAC-seq, scRNA-seq)
+    - title: Proteomics
+      items:
+        - Clinical trial proteomics (Olink, SomaScan)
+        - MMRM, bridge normalization, pathway enrichment
+        - Biomarker discovery
+    - title: Programming & Infrastructure
+      items:
+        - Python, R, Bash
+        - AWS (cloud-native pipelines)
+        - Docker, Snakemake, WDL
