@@ -741,6 +741,13 @@ footer.sticky-bottom {
           color: var(--global-theme-color);
         }
 
+        .cofirst-note {
+          font-size: 0.8em;
+          color: var(--global-text-color-light);
+          font-style: italic;
+          margin-top: 0.1em;
+        }
+
         > span.more-authors {
           color: var(--global-text-color-light);
           border-bottom: 1px dashed var(--global-text-color-light);

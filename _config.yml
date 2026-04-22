@@ -350,6 +350,7 @@ filtered_bibtex_keywords:
     abbr,
     author_count,
     author_includes_self,
+    cofirst,
     author_others,
     abstract,
     additional_info,

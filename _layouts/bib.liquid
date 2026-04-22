@@ -155,6 +155,10 @@
       {% endif %}
     </div>
 
+    {% if entry.cofirst == 'true' %}
+      <div class="cofirst-note"><sup>*</sup>Equal contribution</div>
+    {% endif %}
+
     <!-- Journal/Book title and date -->
     {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
     {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
