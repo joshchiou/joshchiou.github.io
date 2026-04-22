@@ -10,10 +10,7 @@ email: chioujosh@gmail.com
 description: >
   Senior Advisor in Data Science and Computational Biology at Eli Lilly,
   working on clinical trial proteomics for obesity and cardiometabolic drug programs.
-footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+footer_text: ""
 keywords: proteomics, computational biology, statistical genetics, pQTL
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🧬 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
