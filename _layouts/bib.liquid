@@ -144,18 +144,13 @@
         , and
         <span
           class="more-authors"
-          title="click to view {{ more_authors_hide }}"
           onclick="
               var element = $(this);
-              element.attr('title', '');
-              var more_authors_text = element.text() == '{{ more_authors_hide }}' ? '{{ more_authors_show }}' : '{{ more_authors_hide }}';
-              var cursorPosition = 0;
-              var textAdder = setInterval(function(){
-                element.html(more_authors_text.substring(0, cursorPosition + 1));
-                if (++cursorPosition == more_authors_text.length){
-                  clearInterval(textAdder);
-                }
-            }, '{{ site.more_authors_animation_delay }}');
+              var collapsed = '{{ more_authors_hide | escape }}';
+              var expanded = '{{ more_authors_show }}';
+              var current = element.data('expanded') || false;
+              element.html(current ? collapsed : expanded);
+              element.data('expanded', !current);
           "
         >
           {{- more_authors_hide -}}
