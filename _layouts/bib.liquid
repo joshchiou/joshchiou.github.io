@@ -101,7 +101,7 @@
       {%- assign more_authors = author_array_size | minus: author_array_limit -%}
 
       {% if entry.author_others %}
-        {%- assign others_count = entry.author_others -%}
+        {%- assign others_count = entry.author_others | plus: 0 -%}
         {%- assign others_label = others_count | append: ' other' -%}
         {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
         {% if entry.author_includes_self == 'true' %}
