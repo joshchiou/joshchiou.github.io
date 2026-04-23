@@ -57,6 +57,7 @@
         {% assign author_array_limit = site.max_author_limit %}
       {% endif %}
 
+      {% assign self_already_shown = false %}
       {%- for author in entry.author_array limit: author_array_limit -%}
         {% assign author_is_self = false %}
         {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
@@ -64,6 +65,7 @@
         {% if site.scholar.last_name contains author_last_name %}
           {% if site.scholar.first_name contains author.first %}
             {% assign author_is_self = true %}
+            {% assign self_already_shown = true %}
           {% endif %}
         {%- endif -%}
         {% assign coauthor_url = null %}
@@ -104,7 +106,7 @@
         {%- assign others_count = entry.author_others | plus: 0 -%}
         {%- assign others_label = others_count | append: ' other' -%}
         {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
-        {% if entry.author_includes_self == 'true' %}
+        {% if entry.author_includes_self == 'true' and self_already_shown == false %}
           {%- assign others_label = others_label | append: ' including ' -%}
           {%- capture self_span %}<span class="author-self">Joshua Chiou</span>{%- endcapture -%}
           {%- assign others_label = others_label | append: self_span -%}
