@@ -85,8 +85,7 @@
         {% endif %}
         {%- if author_is_self -%}
           <span class="author-self">
-            {{- author.first }}
-            {{ author_last_html -}}
+            {{- author.last }}&nbsp;{{- author.first | slice: 0, 1 -}}
           </span>
         {%- else -%}
           {%- if coauthor_url -%}
@@ -108,7 +107,7 @@
         {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
         {% if entry.author_includes_self == 'true' and self_already_shown == false %}
           {%- assign others_label = others_label | append: ' including ' -%}
-          {%- capture self_span %}<span class="author-self">Joshua Chiou</span>{%- endcapture -%}
+          {%- capture self_span %}<span class="author-self">Chiou J</span>{%- endcapture -%}
           {%- assign others_label = others_label | append: self_span -%}
         {% endif %}
         , and {{ others_label }}
