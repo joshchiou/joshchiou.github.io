@@ -114,6 +114,19 @@
         - "J.W. and Nellie MacDowell Scholarship — UCLA"
 
 
+- title: Professional Activities
+  type: time_table
+  contents:
+    - year: 2023
+      items:
+        - "McKinsey Leadership Essentials"
+    - year: 2022-now
+      items:
+        - "Ad hoc reviewer: Nature Communications, Diabetes, BMJ Open Diabetes Research & Care, Communications Biology, Scientific Reports, BBA Molecular Basis of Disease"
+    - year: 2016-now
+      items:
+        - "Member, American Society for Human Genetics (ASHG)"
+
 - title: Invited Talks & Presentations
   type: time_table
   contents:
