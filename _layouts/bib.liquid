@@ -160,13 +160,13 @@
         , and
         <span
           class="more-authors"
+          data-collapsed="{{ more_authors_hide | xml_escape }}"
+          data-expanded="{{ more_authors_show | xml_escape }}"
           onclick="
-              var element = $(this);
-              var collapsed = '{{ more_authors_hide | escape }}';
-              var expanded = '{{ more_authors_show }}';
-              var current = element.data('expanded') || false;
-              element.html(current ? collapsed : expanded);
-              element.data('expanded', !current);
+              var el = $(this);
+              var isExp = el.data('is-expanded') || false;
+              el.html(isExp ? el.data('collapsed') : el.data('expanded'));
+              el.data('is-expanded', !isExp);
           "
         >
           {{- more_authors_hide -}}
