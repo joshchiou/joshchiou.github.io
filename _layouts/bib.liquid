@@ -107,11 +107,15 @@
         {%- assign others_label = others_count | append: ' more author' -%}
         {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
         {% if entry.author_includes_self == 'true' and self_already_shown == false %}
-          {%- assign others_label = others_label | append: ' including ' -%}
+          {%- assign others_label = others_label | append: ', including ' -%}
           {%- capture self_span %}<span class="author-self">Chiou J</span>{%- endcapture -%}
           {%- assign others_label = others_label | append: self_span -%}
         {% endif %}
-        , and {{ others_label }}
+        {%- if entry.html -%}
+          , and <a href="{{ entry.html }}" target="_blank" class="more-authors">{{ others_label }}</a>
+        {%- else -%}
+          , and <span class="more-authors">{{ others_label }}</span>
+        {%- endif -%}
       {% elsif more_authors > 0 %}
         {%- assign more_authors_hide = more_authors | append: ' more author' -%}
         {%- if more_authors > 1 -%}
