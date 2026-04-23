@@ -126,7 +126,19 @@
           {%- assign a_initials = author.first | split: ' ' -%}
           {%- assign a_init_str = '' -%}
           {%- for part in a_initials -%}{%- assign a_init_str = a_init_str | append: part | slice: 0, 1 -%}{%- endfor -%}
-          {% assign more_authors_show = more_authors_show | append: author.last | append: ' ' | append: a_init_str %}
+          {%- assign show_last = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+          {%- assign show_is_self = false -%}
+          {%- if site.scholar.last_name contains show_last -%}
+            {%- if site.scholar.first_name contains author.first -%}
+              {%- assign show_is_self = true -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if show_is_self -%}
+            {%- capture show_name %}<span class="author-self">{{ author.last }} {{ a_init_str }}</span>{%- endcapture -%}
+            {% assign more_authors_show = more_authors_show | append: show_name %}
+          {%- else -%}
+            {% assign more_authors_show = more_authors_show | append: author.last | append: ' ' | append: a_init_str %}
+          {%- endif -%}
           {% unless forloop.last %}
             {% assign more_authors_show = more_authors_show | append: ', ' %}
           {% endunless %}
