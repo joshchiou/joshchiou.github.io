@@ -103,7 +103,7 @@
 
       {% if entry.author_others %}
         {%- assign others_count = entry.author_others | plus: 0 -%}
-        {%- assign others_label = others_count | append: ' other' -%}
+        {%- assign others_label = others_count | append: ' more author' -%}
         {%- if others_count > 1 -%}{% assign others_label = others_label | append: 's' %}{%- endif -%}
         {% if entry.author_includes_self == 'true' and self_already_shown == false %}
           {%- assign others_label = others_label | append: ' including ' -%}
@@ -124,6 +124,19 @@
           {% endunless %}
         {%- endfor -%}
         {%- assign more_authors_show = more_authors_show | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
+        {%- assign more_authors_self = false -%}
+        {%- for author in entry.author_array offset: author_array_limit -%}
+          {%- assign hidden_last = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+          {%- if site.scholar.last_name contains hidden_last -%}
+            {%- if site.scholar.first_name contains author.first -%}
+              {%- assign more_authors_self = true -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if more_authors_self and self_already_shown == false -%}
+          {%- assign more_authors_hide = more_authors_hide | append: ', including ' -%}
+          {%- assign more_authors_hide = more_authors_hide | append: 'Chiou J' -%}
+        {%- endif -%}
         , and
         <span
           class="more-authors"
