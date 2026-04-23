@@ -61,7 +61,7 @@
       {%- for author in entry.author_array limit: author_array_limit -%}
         {%- assign author_first_parts = author.first | split: ' ' -%}
         {%- assign author_initials = '' -%}
-        {%- for part in author_first_parts -%}{%- assign author_initials = author_initials | append: part | slice: 0, 1 -%}{%- endfor -%}
+        {%- for part in author_first_parts -%}{%- assign part_initial = part | slice: 0, 1 -%}{%- assign author_initials = author_initials | append: part_initial -%}{%- endfor -%}
         {% assign author_is_self = false %}
         {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
         {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
@@ -125,7 +125,7 @@
         {%- for author in entry.author_array offset: author_array_limit -%}
           {%- assign a_initials = author.first | split: ' ' -%}
           {%- assign a_init_str = '' -%}
-          {%- for part in a_initials -%}{%- assign a_init_str = a_init_str | append: part | slice: 0, 1 -%}{%- endfor -%}
+          {%- for part in a_initials -%}{%- assign part_init = part | slice: 0, 1 -%}{%- assign a_init_str = a_init_str | append: part_init -%}{%- endfor -%}
           {%- assign show_last = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
           {%- assign show_is_self = false -%}
           {%- if site.scholar.last_name contains show_last -%}
