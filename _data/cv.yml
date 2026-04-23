@@ -5,54 +5,73 @@
       institution: Eli Lilly and Company
       location: Boston, MA
       year: 2025 - now
-      description:
-        - Collaborate with clinicians, biologists, and statisticians to design and execute proteomics analyses across phase 2/3 obesity trials (Olink, SomaScan), translating large-scale proteomic data into mechanistic and biomarker insights that inform clinical strategy
-        - Identify GIP-receptor-specific pharmacodynamic protein signatures distinguishing tirzepatide from semaglutide, providing mechanistic evidence for GIPR engagement in clinical populations
-        - Develop internal analytical infrastructure and interactive visualization for clinical proteomics, including a QC pipeline, multi-module analysis package, and prototype dashboards deployed across Lilly's Clinical Omics Research programs to accelerate translational insights from the clinic to future medicines
-    
+      maindescription: >-
+        I collaborate with clinicians, biologists, and statisticians to design and execute proteomics
+        analyses across phase 2/3 obesity trials (Olink, SomaScan), translating large-scale proteomic
+        data into mechanistic and biomarker insights that inform clinical strategy. I identified
+        GIP-receptor-specific pharmacodynamic protein signatures distinguishing tirzepatide from
+        semaglutide, providing mechanistic evidence for GIPR engagement in clinical populations. I also
+        develop internal analytical infrastructure and interactive visualization for clinical proteomics,
+        including a QC pipeline, multi-module analysis package, and prototype dashboards deployed across
+        Lilly's Clinical Omics Research programs.
+
     - title: Senior Principal Computational Geneticist
       institution: Pfizer
       location: Cambridge, MA
       year: 2023 - 2025
-      description:
-        - Led cross-functional target discovery for cardiovascular disease in close partnership with functional genomics teams, integrating LLMs and CRISPR screens with human genetics to modernize target prioritization; workflow applied to screen 300+ gene candidates in endothelial cells
-        - Drove strategic planning and roadmap for genetics infrastructure, resulting in a scalable AWS-based cloud platform for storage, analysis, and interactive visualization of summary-level GWAS data, processing 30,000+ datasets adopted across 3 internal teams
-        - Secured cross-functional funding to collaborate with the ML team on a transformer-based deep learning model trained on DNA sequences to predict epigenomic signal, analogous to published sequence-to-function architectures (Borzoi, AlphaGenome), enabling cell-type-specific effect prediction to improve directionality for human genetics-driven target identification
-        - Represented Pfizer in external collaborations with academic and industry partners, driving impactful research from investments and communicating project updates to internal stakeholders
-        - Mentored a postdoctoral fellow in applied statistical genetics and single-cell genomics
+      maindescription: >-
+        I led cross-functional target discovery for cardiovascular disease in close partnership with
+        functional genomics teams, integrating LLMs and CRISPR screens with human genetics to modernize
+        target prioritization — a workflow applied to screen 300+ gene candidates in endothelial cells.
+        I drove the strategic roadmap for genetics infrastructure, delivering a scalable AWS-based cloud
+        platform for storage, analysis, and visualization of 30,000+ GWAS datasets, adopted across three
+        internal teams. I also secured cross-functional funding to build a transformer-based deep learning
+        model for cell-type-specific epigenomic signal prediction, improving directionality for
+        genetics-driven target identification. I represented Pfizer in external collaborations and
+        mentored a postdoctoral fellow in applied statistical genetics.
 
     - title: Senior Computational Geneticist
       institution: Pfizer
       location: Cambridge, MA
       year: 2021 - 2023
-      description:
-        - Partnered with biologists to identify 10+ novel targets for renal and cardiovascular disease through integrative GWAS, ExWAS, colocalization, fine-mapping, and single-cell multi-omics; 6 targets entered the Internal Medicine portfolio for further development
-        - Supported a CRISPR-based target prioritization workflow in proximal tubule cells for CKD, narrowing ~100 genetic candidates to 3 high-priority targets for experimental validation
-        - Served as the genetics expert for clinical and commercial teams, advising on biomarker strategy and indication expansion for cardiovascular and kidney disease programs using longitudinal epidemiological evidence from UK Biobank and FinnGen
-        - Built Nextflow pipelines for GWAS fine-mapping and colocalization analyses with data engineers, enabling standardized cross-department benchmarking and adoption of optimal statistical methods
+      maindescription: >-
+        I partnered with biologists to identify 10+ novel targets for renal and cardiovascular disease
+        through integrative GWAS, ExWAS, colocalization, fine-mapping, and single-cell multi-omics —
+        six of which entered the Internal Medicine portfolio for further development. I supported a
+        CRISPR-based target prioritization workflow in proximal tubule cells for CKD, narrowing ~100
+        genetic candidates to three high-priority targets for experimental validation. I also served as
+        the genetics expert for clinical and commercial teams, advising on biomarker strategy and
+        indication expansion using longitudinal epidemiological evidence from UK Biobank and FinnGen,
+        and built Nextflow pipelines for standardized GWAS fine-mapping and colocalization analyses.
 
     - title: Graduate Student Researcher
       institution: UC San Diego
       location: La Jolla, CA
       year: 2016 - 2021
-      description:
-        - Led the largest GWAS study for type 1 diabetes (92 loci identified), implicating pancreatic exocrine cells as novel disease-relevant cell types through integration of human genetics and single-cell epigenomics; published as first author in Nature in 2021
-        - First or co-first author on 6 publications during PhD spanning diabetes genetics, pancreatic islet epigenomics, and COVID-19 lung biology;  contributed to 30+ publications total across Nature, Nature Genetics, Nature Communications, eLife, Cell, and Science Advances
-        - Developed computational methods integrating single-cell chromatin accessibility (scATAC-seq) with population-level GWAS to map causal regulatory variants to cell-type-specific enhancers and prioritize target genes
+      maindescription: >-
+        I led the largest GWAS study for type 1 diabetes (92 loci identified), implicating pancreatic
+        exocrine cells as novel disease-relevant cell types through the integration of human genetics
+        and single-cell epigenomics — published as first author in Nature in 2021. I developed
+        computational methods integrating scATAC-seq with population-level GWAS to map causal regulatory
+        variants to cell-type-specific enhancers and prioritize target genes. I was first or co-first
+        author on 6 publications during my PhD spanning diabetes genetics, islet epigenomics, and
+        COVID-19 lung biology, and contributed to 30+ publications total across Nature, Nature Genetics,
+        Nature Communications, eLife, Cell, and Science Advances (Advisor&#58; Dr. Kyle Gaulton).
 
     - title: Development Scientist
       institution: IncellDx
       location: Menlo Park, CA
       year: 2015 - 2016
-      description:
-        - Optimized a cell-based companion diagnostic assay for HIV treatment monitoring that was subsequently acquired by ViiV Healthcare
+      maindescription: >-
+        I optimized a cell-based companion diagnostic assay for HIV, which was subsequently acquired by
+        ViiV Healthcare.
 
     - title: Microbiology Intern
       institution: NASA Johnson Space Center
       location: Houston, TX
       year: 2015
-      description:
-        - Prototyped a rapid detection assay for infectious herpesviruses for use in long-duration space missions
+      maindescription: >-
+        I developed a rapid assay for improved detection of infectious herpesviruses in astronauts.
 
 - title: Education
   type: time_table
