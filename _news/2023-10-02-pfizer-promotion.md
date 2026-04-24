@@ -6,4 +6,3 @@ related_posts: false
 ---
 
 Promoted to Senior Principal Computational Geneticist in the Internal Medicine Research Unit at <a href="https://www.pfizer.com" target="_blank">Pfizer</a>.
-

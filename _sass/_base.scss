@@ -741,7 +741,8 @@ footer.sticky-bottom {
           font-style: normal;
         }
 
-        > span.author-self, span.author-self {
+        > span.author-self,
+        span.author-self {
           font-weight: bold;
           color: var(--global-theme-color);
         }
