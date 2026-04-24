@@ -87,29 +87,9 @@
       institution: University of California, Los Angeles
       year: 2015
 
-- title: Selected Publications (10 of 39)
-  type: time_table
-  contents:
-    - year: 2024
-      items:
-        - "Retel JS, Poehlmann A, <b>Chiou J</b>, et al. A fast machine learning dataloader for epigenetic tracks from BigWig files. <em>Bioinformatics</em> 40(1), btad767."
-    - year: 2023
-      items:
-        - "Sun BB, <b>Chiou J</b>, et al. Plasma proteomic associations with genetics and health in the UK Biobank. <em>Nature</em> 622, 329–338."
-        - "Wang G*, <b>Chiou J</b>*, et al. Integrating genetics with single-cell multiomic measurements across disease states identifies mechanisms of beta cell dysfunction in type 2 diabetes. <em>Nature Genetics</em> 55, 984–994."
-    - year: 2021
-      items:
-        - "<b>Chiou J</b>, et al. Interpreting type 1 diabetes risk with genetics and single-cell epigenomics. <em>Nature</em> 594, 398–402."
-        - "<b>Chiou J</b>*, Zeng C*, et al. Single-cell chromatin accessibility identifies pancreatic islet cell type- and state-specific regulatory programs of diabetes risk. <em>Nature Genetics</em> 53, 455–466."
-        - "Geusz RJ*, Wang A*, <b>Chiou J</b>*, et al. Pancreatic progenitor epigenome maps prioritize type 2 diabetes risk genes with roles in development. <em>eLife</em> 10:e59067."
-        - "Zhang K, Hocker JD, Miller M, Hou X, <b>Chiou J</b>, et al. A single-cell atlas of chromatin accessibility in the human genome. <em>Cell</em> 184(24), 5985–6001."
-        - "Yan J, et al. [including <b>Chiou J</b>]. Systematic analysis of binding of transcription factors to noncoding variants. <em>Nature</em> 591, 147–151."
-    - year: 2020
-      items:
-        - "Wang A*, <b>Chiou J</b>*, et al. Single cell multiomic profiling of human lung reveals cell type-specific and age-dynamic control of SARS-CoV-2 host genes. <em>eLife</em> 9:e62522."
-    - year: 2019
-      items:
-        - "Greenwald WW*, <b>Chiou J</b>*, et al. Pancreatic islet chromatin accessibility and conformation reveals distal enhancer networks of type 2 diabetes risk. <em>Nature Communications</em> 10, 2078."
+- title: Selected Publications
+  type: bibliography
+  subtitle: "Full list (39): <a href='/publications/'>Publications page</a> &nbsp;·&nbsp; <a href='https://scholar.google.com/citations?user=cIiNWmYAAAAJ&sortby=pubdate' target='_blank'>Google Scholar</a> &nbsp;·&nbsp; <a href='https://orcid.org/0000-0002-4618-0647' target='_blank'>ORCID</a><br><sup>*</sup>Equal contribution"
 
 - title: Honors & Awards
   type: time_table
@@ -131,7 +111,6 @@
     - year: 2014
       items:
         - "J.W. and Nellie MacDowell Scholarship — UCLA"
-
 
 - title: Professional Activities
   type: time_table
@@ -176,10 +155,3 @@
         - Cloud computing (AWS), HPC, Nextflow pipelines
         - Docker, Singularity, Conda, Pixi, Git
         - SQL, FAIR data principles
-
-- title: Full Publication List
-  type: list
-  contents:
-    - "<a href='/publications/'>All 39 publications on this site</a>"
-    - "<a href='https://scholar.google.com/citations?user=cIiNWmYAAAAJ&sortby=pubdate' target='_blank'>Google Scholar</a>"
-    - "<a href='https://orcid.org/0000-0002-4618-0647' target='_blank'>ORCID</a>"

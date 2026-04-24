@@ -61,7 +61,10 @@
       {%- for author in entry.author_array limit: author_array_limit -%}
         {%- assign author_first_parts = author.first | split: ' ' -%}
         {%- assign author_initials = '' -%}
-        {%- for part in author_first_parts -%}{%- assign part_initial = part | slice: 0, 1 -%}{%- assign author_initials = author_initials | append: part_initial -%}{%- endfor -%}
+        {%- for part in author_first_parts -%}
+          {%- assign part_initial = part | slice: 0, 1 -%}
+          {%- assign author_initials = author_initials | append: part_initial -%}
+        {%- endfor -%}
         {% assign author_is_self = false %}
         {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
         {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
@@ -88,15 +91,18 @@
         {% endif %}
         {%- if author_is_self -%}
           <span class="author-self">
-            {{- author.last }}&nbsp;{{- author_initials -}}
+            {{- author_last_html }}&nbsp;
+            {{- author_initials -}}
           </span>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
-              {{- author.last }}&nbsp;{{- author_initials -}}
+              {{- author_last_html }}&nbsp;
+              {{- author_initials -}}
             </a>
           {%- else -%}
-            {{- author.last }}&nbsp;{{- author_initials -}}
+            {{- author_last_html }}&nbsp;
+            {{- author_initials -}}
           {% endif %}
         {%- endif -%}
       {% endfor %}
@@ -125,7 +131,10 @@
         {%- for author in entry.author_array offset: author_array_limit -%}
           {%- assign a_initials = author.first | split: ' ' -%}
           {%- assign a_init_str = '' -%}
-          {%- for part in a_initials -%}{%- assign part_init = part | slice: 0, 1 -%}{%- assign a_init_str = a_init_str | append: part_init -%}{%- endfor -%}
+          {%- for part in a_initials -%}
+            {%- assign part_init = part | slice: 0, 1 -%}
+            {%- assign a_init_str = a_init_str | append: part_init -%}
+          {%- endfor -%}
           {%- assign show_last = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
           {%- assign show_is_self = false -%}
           {%- if site.scholar.last_name contains show_last -%}
@@ -163,10 +172,10 @@
           data-collapsed="{{ more_authors_hide | xml_escape }}"
           data-expanded="{{ more_authors_show | xml_escape }}"
           onclick="
-              var el = $(this);
-              var isExp = el.data('is-expanded') || false;
-              el.html(isExp ? el.data('collapsed') : el.data('expanded'));
-              el.data('is-expanded', !isExp);
+            var el = $(this);
+            var isExp = el.data('is-expanded') || false;
+            el.html(isExp ? el.data('collapsed') : el.data('expanded'));
+            el.data('is-expanded', !isExp);
           "
         >
           {{- more_authors_hide -}}
@@ -183,10 +192,6 @@
         </i>
       {% endif %}
     </div>
-
-    {% if entry.cofirst == 'true' %}
-      <div class="cofirst-note"><sup>*</sup>Equal contribution</div>
-    {% endif %}
 
     <!-- Journal/Book title and date -->
     {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
@@ -297,7 +302,7 @@
         {% if entry.altmetric and entry.altmetric != 'false' %}
           <span
             class="altmetric-embed"
-            data-badge-type="2"
+            data-badge-type="donut"
             data-badge-popover="right"
             style="display:inline-block;vertical-align:middle;margin-left:4px;"
             {% if entry.altmetric != blank and entry.altmetric != 'true' %}
