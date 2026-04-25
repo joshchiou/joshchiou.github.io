@@ -1,33 +1,56 @@
 {% if site.enable_publication_badges.altmetric %}
   <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
   <script>
-    // Altmetric's embed.js generates deprecated details.php?domain=...&citation_id=... URLs.
-    // Rewrite them to the canonical details/<id> format.
-    // For 0-score badges (no citation_id), fall back to the DOI resolver.
+    // Altmetric's embed.js appends domain=<site> to the details.php URL, which Altmetric's
+    // server rejects. Rewrite to canonical details/<id> format.
+    // Watches both childList (node insertion) AND href attribute changes, because embed.js
+    // sets href in a separate step after inserting the <a> element.
     (function () {
       function fixAltmetricLinks() {
-        document.querySelectorAll('.altmetric-embed a[href*="altmetric.com/details"]').forEach(function (a) {
-          var citationMatch = a.href.match(/[?&]citation_id=(\d+)/);
+        document.querySelectorAll('.altmetric-embed a').forEach(function (a) {
+          var href = a.getAttribute('href') || '';
+          if (href.indexOf('details.php') === -1) return;
+          var citationMatch = href.match(/citation_id=(\d+)/);
           if (citationMatch) {
-            a.href = 'https://www.altmetric.com/details/' + citationMatch[1];
+            a.setAttribute('href', 'https://www.altmetric.com/details/' + citationMatch[1]);
             return;
           }
-          // 0-score papers have no citation_id — send to DOI resolver instead
-          var doiMatch = a.href.match(/[?&]doi=([^&]+)/);
+          // 0-score: no citation_id yet, send to DOI resolver instead
+          var doiMatch = href.match(/[?&]doi=([^&]+)/);
           if (doiMatch) {
-            a.href = 'https://doi.org/' + decodeURIComponent(doiMatch[1]);
+            a.setAttribute('href', 'https://doi.org/' + decodeURIComponent(doiMatch[1]));
           }
         });
       }
 
-      // MutationObserver handles badges inserted after this script runs (embed.js is async)
-      var observer = new MutationObserver(fixAltmetricLinks);
-      document.addEventListener('DOMContentLoaded', function () {
-        observer.observe(document.body, { childList: true, subtree: true });
-        fixAltmetricLinks();
+      var observer = new MutationObserver(function () {
+        // Use setTimeout so the DOM settles before we query
+        setTimeout(fixAltmetricLinks, 0);
       });
-      // Fallback sweep after full page load
-      window.addEventListener('load', fixAltmetricLinks);
+
+      function init() {
+        if (document.body) {
+          observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['href']
+          });
+        }
+        fixAltmetricLinks();
+        // Belt-and-suspenders: poll for 5s to catch badges that load after window.load
+        var polls = 0;
+        var id = setInterval(function () {
+          fixAltmetricLinks();
+          if (++polls >= 10) clearInterval(id);
+        }, 500);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     })();
   </script>
 {% endif %}
