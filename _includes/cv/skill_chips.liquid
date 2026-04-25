@@ -1,0 +1,15 @@
+<div class="skill-chips-container">
+  {% for section in entry.contents %}
+    <div class="skill-chips-section">
+      <h5 class="skill-chips-heading">
+        {% if section.icon %}<i class="{{ section.icon }} skill-chips-icon"></i>{% endif %}
+        {{ section.title }}
+      </h5>
+      <div class="skill-chips-list">
+        {% for chip in section.items %}
+          <span class="skill-chip">{{ chip }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

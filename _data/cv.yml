@@ -115,23 +115,77 @@
       description:
         - Invited talk
 - title: Technical Skills
-  type: nested_list
+  type: skill_chips
   contents:
-    - title: Programming & AI/ML
-      items:
-        - Python (pandas, dask, scikit-learn, PyTorch), machine learning, predictive modeling
-        - Data visualization, web applications, APIs, LLMs
     - title: Statistical Genetics
+      icon: fa-solid fa-dna
       items:
-        - GWAS, ExWAS, fine-mapping, colocalization, Mendelian randomization
-        - Plink, Regenie, UK Biobank, FinnGen, Biobank Japan
-        - Meta-analysis, polygenic risk scores, survival analysis, EHR
-    - title: Genomics & Proteomics
+        - GWAS
+        - ExWAS
+        - Fine-mapping
+        - Colocalization
+        - Mendelian randomization
+        - pQTL
+        - eQTL
+        - Polygenic risk scores
+        - Meta-analysis
+        - Causal variant-to-gene mapping
+        - PLINK
+        - REGENIE
+    - title: Genomics
+      icon: fa-solid fa-microscope
       items:
-        - Single-cell transcriptomics and epigenomics (ATAC-seq, scRNA-seq)
-        - Proteomics (Olink, SomaScan), multi-omic data integration
-    - title: Infrastructure
+        - scRNA-seq
+        - scATAC-seq
+        - Bulk ATAC-seq
+        - Multi-omic integration
+    - title: Proteomics & Translational Research
+      icon: fa-solid fa-flask
       items:
-        - Cloud computing (AWS), HPC, Nextflow pipelines
-        - Docker, Singularity, Conda, Pixi, Git
-        - SQL, FAIR data principles
+        - Olink
+        - SomaScan
+        - Clinical trial proteomics
+        - Biomarker discovery
+        - EHR integration
+        - Survival analysis
+        - Target identification
+        - In silico validation
+        - Phenotyping
+    - title: Machine Learning & AI
+      icon: fa-solid fa-robot
+      items:
+        - Machine learning
+        - Predictive modeling
+        - Deep learning
+        - LLM integration
+        - Agentic AI workflows
+        - Prompt engineering
+    - title: Programming
+      icon: fa-solid fa-code
+      items:
+        - Python
+        - R
+        - SQL
+        - pandas
+        - polars
+        - dask
+        - scanpy
+        - PyTorch
+        - scikit-learn
+        - Plotly
+        - Dash
+        - Streamlit
+    - title: Cloud & Infrastructure
+      icon: fa-solid fa-server
+      items:
+        - AWS (S3, EC2, Batch)
+        - HPC clusters
+        - Unix
+        - Nextflow
+        - Docker
+        - Singularity
+        - Conda
+        - Pixi
+        - uv
+        - Git
+        - FAIR data principles

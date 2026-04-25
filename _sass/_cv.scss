@@ -213,3 +213,57 @@ ul.timeline li::before {
      color: var(--global-text-color);
 }
 */
+
+/*****************************
+ * Skill Chips styles
+ *****************************/
+
+.skill-chips-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.skill-chips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-chips-heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--global-text-color);
+  margin-bottom: 0.25rem;
+}
+
+.skill-chips-icon {
+  color: var(--global-theme-color);
+  margin-right: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.skill-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skill-chip {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--global-theme-color);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--global-text-color);
+  background-color: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--global-theme-color);
+    color: var(--global-bg-color);
+  }
+}
