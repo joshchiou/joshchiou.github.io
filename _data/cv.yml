@@ -58,9 +58,9 @@
     - title: PhD, Biomedical Sciences
       institution: University of California, San Diego
       year: 2021
-      description:
-        - "Dissertation: Understanding pancreatic mechanisms of diabetes risk with genetic association and single cell epigenome data"
-        - "Advisor: Dr. Kyle Gaulton"
+      maindescription: >-
+        Dissertation: <em>Understanding pancreatic mechanisms of diabetes risk with genetic association
+        and single cell epigenome data.</em> Advisor: Dr. Kyle Gaulton.
 
     - title: B.S., Microbiology, Immunology, and Molecular Genetics
       institution: University of California, Los Angeles
