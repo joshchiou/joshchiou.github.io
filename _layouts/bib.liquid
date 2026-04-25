@@ -67,7 +67,11 @@
         {%- endfor -%}
         {% assign author_is_self = false %}
         {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
-        {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
+        {%- assign author_symbols = author.last | regex_replace: '[^*∗†‡§¶‖&^]', '' -%}
+        {%- assign author_suffix_html = '' -%}
+        {%- if author_symbols != '' -%}
+          {%- assign author_suffix_html = author_symbols | prepend: '<sup>' | append: '</sup>' -%}
+        {%- endif -%}
         {% if site.scholar.last_name contains author_last_name %}
           {% if site.scholar.first_name contains author.first %}
             {% assign author_is_self = true %}
@@ -91,18 +95,24 @@
         {% endif %}
         {%- if author_is_self -%}
           <span class="author-self">
-            {{- author_last_html }}&nbsp;
+            {{- author_last_name -}}
+            &nbsp;
             {{- author_initials -}}
+            {{- author_suffix_html -}}
           </span>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
-              {{- author_last_html }}&nbsp;
+              {{- author_last_name -}}
+              &nbsp;
               {{- author_initials -}}
+              {{- author_suffix_html -}}
             </a>
           {%- else -%}
-            {{- author_last_html }}&nbsp;
+            {{- author_last_name -}}
+            &nbsp;
             {{- author_initials -}}
+            {{- author_suffix_html -}}
           {% endif %}
         {%- endif -%}
       {% endfor %}
@@ -143,10 +153,10 @@
             {%- endif -%}
           {%- endif -%}
           {%- if show_is_self -%}
-            {%- capture show_name %}<span class="author-self">{{ author.last }} {{ a_init_str }}</span>{%- endcapture -%}
+            {%- capture show_name %}<span class="author-self">{{ show_last }} {{ a_init_str }}</span>{%- endcapture -%}
             {% assign more_authors_show = more_authors_show | append: show_name %}
           {%- else -%}
-            {% assign more_authors_show = more_authors_show | append: author.last | append: ' ' | append: a_init_str %}
+            {% assign more_authors_show = more_authors_show | append: show_last | append: ' ' | append: a_init_str %}
           {%- endif -%}
           {% unless forloop.last %}
             {% assign more_authors_show = more_authors_show | append: ', ' %}

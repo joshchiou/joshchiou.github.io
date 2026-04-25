@@ -1,6 +1,4 @@
 <div class="publications cv-publications">
-  {% if entry.subtitle %}
-    <p style="font-size: 0.85rem; color: var(--global-text-color-light); margin-bottom: 1rem;">{{ entry.subtitle }}</p>
-  {% endif %}
+  {% include publication_meta.liquid %}
   {% bibliography --group_by none --query @*[selected=true]* --sort_by cv_order --order ascending %}
 </div>
