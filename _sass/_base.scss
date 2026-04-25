@@ -801,14 +801,9 @@ footer.sticky-bottom {
         }
       }
 
-      // Altmetric donut badge: force light background so PNG score is legible in dark mode
+      // Altmetric donut badge: suppress any anchor background
       .altmetric-embed a {
         background-color: transparent !important;
-
-        img {
-          background-color: #ffffff;
-          border-radius: 2px;
-        }
       }
 
       .hidden {

@@ -117,6 +117,12 @@ html[data-theme="dark"] {
   .repo-img-dark {
     display: block;
   }
+
+  // Altmetric donut: circular white fill so the PNG score remains legible on dark backgrounds
+  .altmetric-embed img {
+    background-color: #ffffff;
+    border-radius: 50%;
+  }
 }
 
 html[data-theme-setting="dark"] {
