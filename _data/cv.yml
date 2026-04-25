@@ -57,6 +57,7 @@
   contents:
     - title: PhD, Biomedical Sciences
       institution: University of California, San Diego
+      location: La Jolla, CA
       year: 2021
       maindescription: >-
         Dissertation: <em>Understanding pancreatic mechanisms of diabetes risk with genetic association
@@ -64,6 +65,7 @@
 
     - title: B.S., Microbiology, Immunology, and Molecular Genetics
       institution: University of California, Los Angeles
+      location: Los Angeles, CA
       year: 2015
 
 - title: Selected Publications
@@ -74,7 +76,7 @@
   contents:
     - year: 2023
       items:
-        - "Solving the Science Challenge - Pfizer Integrative Biology"
+        - "Solving the Science Challenge — Pfizer Integrative Biology"
     - year: 2020
       items:
         - "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist — ASHG"
