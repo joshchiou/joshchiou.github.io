@@ -6,65 +6,44 @@
       location: Boston, MA
       year: 2025 - now
       maindescription: >-
-        I collaborate with clinicians, biologists, and statisticians to design and execute proteomics
-        analyses across phase 2/3 obesity trials (Olink, SomaScan), translating large-scale proteomic
-        data into mechanistic and biomarker insights that inform clinical strategy. I identified
-        GIP-receptor-specific pharmacodynamic protein signatures distinguishing tirzepatide from
-        semaglutide, providing mechanistic evidence for GIPR engagement in clinical populations. I also
-        develop internal analytical infrastructure and interactive visualization for clinical proteomics,
-        including a QC pipeline, multi-module analysis package, and prototype dashboards deployed across
-        Lilly's Clinical Omics Research programs.
+        I collaborate with clinicians, biologists, and statisticians to generate mechanistic and biomarker
+        insights from large-scale proteomics across phase 2/3 obesity trials, while building the
+        analytical infrastructure supporting clinical omics research.
 
     - title: Senior Principal Computational Geneticist
       institution: Pfizer
       location: Cambridge, MA
       year: 2023 - 2025
       maindescription: >-
-        I led cross-functional target discovery for cardiovascular disease in close partnership with
-        functional genomics teams, integrating LLMs and CRISPR screens with human genetics to modernize
-        target prioritization — a workflow applied to screen 300+ gene candidates in endothelial cells.
-        I drove the strategic roadmap for genetics infrastructure, delivering a scalable AWS-based cloud
-        platform for storage, analysis, and visualization of 30,000+ GWAS datasets, adopted across three
-        internal teams. I also secured cross-functional funding to build a transformer-based deep learning
-        model for cell-type-specific epigenomic signal prediction, improving directionality for
-        genetics-driven target identification. I represented Pfizer in external collaborations and
-        mentored a postdoctoral fellow in applied statistical genetics.
+        I collaborated with cross-functional teams for cardiovascular target discovery integrating human
+        genetics, functional genomics, and large language models, while driving delivery of scalable
+        cloud infrastructure for large-scale genomics analysis across the organization.
 
     - title: Senior Computational Geneticist
       institution: Pfizer
       location: Cambridge, MA
       year: 2021 - 2023
       maindescription: >-
-        I partnered with biologists to identify 10+ novel targets for renal and cardiovascular disease
-        through integrative GWAS, ExWAS, colocalization, fine-mapping, and single-cell multi-omics —
-        six of which entered the Internal Medicine portfolio for further development. I supported a
-        CRISPR-based target prioritization workflow in proximal tubule cells for CKD, narrowing ~100
-        genetic candidates to three high-priority targets for experimental validation. I also served as
-        the genetics expert for clinical and commercial teams, advising on biomarker strategy and
-        indication expansion using longitudinal epidemiological evidence from UK Biobank and FinnGen,
-        and built Nextflow pipelines for standardized GWAS fine-mapping and colocalization analyses.
+        I partnered with biologists to identify novel targets for renal and cardiovascular disease
+        through integrative multi-omics, with several advancing into the portfolio, and served as the
+        genetics expert for indication expansion teams.
 
     - title: Graduate Student Researcher
       institution: UC San Diego
       location: La Jolla, CA
       year: 2016 - 2021
       maindescription: >-
-        I led the largest GWAS study for type 1 diabetes (92 loci identified), implicating pancreatic
-        exocrine cells as novel disease-relevant cell types through the integration of human genetics
-        and single-cell epigenomics — published as first author in Nature in 2021. I developed
-        computational methods integrating scATAC-seq with population-level GWAS to map causal regulatory
-        variants to cell-type-specific enhancers and prioritize target genes. I was first or co-first
-        author on 6 publications during my PhD spanning diabetes genetics, islet epigenomics, and
-        COVID-19 lung biology, and contributed to 30+ publications total across Nature, Nature Genetics,
-        Nature Communications, eLife, Cell, and Science Advances (Advisor&#58; Dr. Kyle Gaulton).
+        I led the largest GWAS for type 1 diabetes, implicating novel disease-relevant cell types
+        through integration of human genetics and single-cell epigenomics, and published broadly across
+        top journals throughout my PhD.
 
     - title: Development Scientist
       institution: IncellDx
       location: Menlo Park, CA
       year: 2015 - 2016
       maindescription: >-
-        I optimized a cell-based companion diagnostic assay for HIV, which was subsequently acquired by
-        ViiV Healthcare.
+        I optimized a cell-based companion diagnostic assay for HIV that was subsequently acquired by
+        a major pharmaceutical company.
 
     - title: Microbiology Intern
       institution: NASA Johnson Space Center
