@@ -28,9 +28,7 @@ map: true
   var cityData = {{ cities | jsonify }};
 
   // Wait for Leaflet to be available (loaded by map: true in front matter)
-  document.addEventListener('readystatechange', function () {
-    if (document.readyState !== 'complete') return;
-
+  function initMap() {
     var mapEl = document.getElementById('travel-map');
     if (!mapEl) return;
 
@@ -42,13 +40,17 @@ map: true
     }).addTo(map);
 
     // Load committed GeoJSON (no CDN dependency)
+    // NOTE: world-countries.geojson uses feature.properties.name.
+    // These names must stay in sync with COUNTRY_ALIASES in scripts/parse_location_history.py.
+    // e.g. the GeoJSON has "United States of America" but Nominatim + COUNTRY_ALIASES
+    // normalizes to "United States" — so COUNTRY_ALIASES must map the GeoJSON name too.
     fetch('{{ "/assets/json/world-countries.geojson" | relative_url }}')
       .then(function (r) { return r.json(); })
       .then(function (geojson) {
         var visited = new Set(visitedCountries);
         L.geoJSON(geojson, {
           style: function (feature) {
-            var name = feature.properties.ADMIN || feature.properties.name || '';
+            var name = feature.properties.name || '';
             var isVisited = visited.has(name);
             return {
               fillColor: isVisited ? '#4575b4' : '#d3d3d3',
@@ -58,7 +60,7 @@ map: true
             };
           },
           onEachFeature: function (feature, layer) {
-            var name = feature.properties.ADMIN || feature.properties.name || '';
+            var name = feature.properties.name || '';
             if (visited.has(name)) {
               layer.bindTooltip(name);
             }
@@ -78,6 +80,14 @@ map: true
         }).bindTooltip(city.name + ', ' + city.country).addTo(map);
       }
     });
-  });
+  }
+
+  if (document.readyState === 'complete') {
+    initMap();
+  } else {
+    document.addEventListener('readystatechange', function () {
+      if (document.readyState === 'complete') initMap();
+    });
+  }
 })();
 </script>
