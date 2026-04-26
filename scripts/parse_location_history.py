@@ -45,8 +45,8 @@ except ImportError:
     sys.exit(1)
 
 # Minimum visit duration in hours to include an entry.
-# 4h filters most airport transits; raise to 8h to be more conservative.
-MIN_VISIT_HOURS = 4
+# 1h captures day trips; raise to 4h to filter airport transits more aggressively.
+MIN_VISIT_HOURS = 1
 
 # Minimum overall visit probability (0.0–1.0) to include an entry.
 MIN_CONFIDENCE = 0.5
@@ -76,6 +76,7 @@ COUNTRY_ALIASES = {
     "ROC": "Taiwan",
     "Taiwan, Province of China": "Taiwan",
     "Viet Nam": "Vietnam",
+    "España": "Spain",
     # GeoJSON (datasets/geo-countries) uses "Czechia" — no alias needed but keep for safety
     "Czech Republic": "Czechia",
     "Slovak Republic": "Slovakia",
