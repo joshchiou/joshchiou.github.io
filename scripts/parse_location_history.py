@@ -189,11 +189,8 @@ def geocode_place(place_id: str, lat: float, lon: float, cache: dict) -> dict | 
 
 
 def build_geocode_cache(timeline: list, cache: dict) -> int:
-    """
-    Geocode all unique placeIDs from level-0 visits regardless of filters.
-    This ensures the cache is complete so re-runs with different thresholds
-    don't need new API calls. Returns number of new requests made.
-    """
+    """Ensures the cache is complete so re-runs with different thresholds don't need new API calls.
+    Returns number of new requests made."""
     unique: dict[str, tuple[float, float]] = {}
     for entry in timeline:
         if "visit" not in entry:
@@ -206,7 +203,7 @@ def build_geocode_cache(timeline: list, cache: dict) -> int:
         if not place_id or place_id in cache:
             continue
         lat, lon = parse_geo(candidate.get("placeLocation", ""))
-        if lat is not None and place_id not in unique:
+        if lat is not None:
             unique[place_id] = (lat, lon)
 
     new_calls = len(unique)
@@ -225,7 +222,6 @@ def build_geocode_cache(timeline: list, cache: dict) -> int:
 
 
 def parse_timeline(timeline: list, cache: dict):
-    """Apply visit filters and build country/city aggregates from cached geocodes."""
     countries: dict[str, dict] = defaultdict(lambda: {"lat": None, "lon": None, "count": 0})
     cities: dict[str, dict] = defaultdict(lambda: {"lat": None, "lon": None, "country": None, "count": 0})
 
@@ -348,8 +344,8 @@ def main():
 
     cache = load_cache(cache_path)
     new_calls = build_geocode_cache(timeline, cache)
+    save_cache(cache_path, cache)
     if new_calls:
-        save_cache(cache_path, cache)
         print(f"  Cache saved to {cache_path} ({len(cache)} total entries)")
 
     print("\nBuilding output...")

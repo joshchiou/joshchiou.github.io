@@ -14,6 +14,7 @@ Requirements: pip install requests
 import json
 import os
 import sys
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -61,31 +62,22 @@ def fetch_all_activities(token: str) -> list[dict]:
     return activities
 
 
-def compute_calendar_data(activities: list[dict]) -> list[list]:
-    """
-    Returns [[date_str, distance_km], ...] for ECharts calendar heatmap.
-    Aggregates multiple rides on the same day.
-    """
-    daily: dict[str, float] = {}
-    for a in activities:
-        if a.get("type") not in RIDE_TYPES:
-            continue
-        date = a["start_date_local"][:10]  # YYYY-MM-DD
-        daily[date] = daily.get(date, 0.0) + a["distance"] / 1000
+def compute_calendar_data(rides: list[dict]) -> list[list]:
+    """Returns [[date_str, distance_km], ...] for ECharts calendar heatmap."""
+    daily: defaultdict[str, float] = defaultdict(float)
+    for a in rides:
+        daily[a["start_date_local"][:10]] += a["distance"] / 1000
     return [[date, round(val, 2)] for date, val in sorted(daily.items())]
 
 
-def compute_stats(activities: list[dict]) -> dict:
+def compute_stats(rides: list[dict]) -> dict:
     """Returns all-time aggregate stats and monthly distance breakdown."""
-    rides = [a for a in activities if a.get("type") in RIDE_TYPES]
-
     total_distance_km = round(sum(a["distance"] for a in rides) / 1000, 1)
     total_elevation_m = round(sum(a["total_elevation_gain"] for a in rides))
 
-    monthly: dict[str, float] = {}
+    monthly: defaultdict[str, float] = defaultdict(float)
     for a in rides:
-        month = a["start_date_local"][:7]  # YYYY-MM
-        monthly[month] = monthly.get(month, 0.0) + a["distance"] / 1000
+        monthly[a["start_date_local"][:7]] += a["distance"] / 1000
 
     monthly_list = [
         {"month": k, "distance_km": round(v, 1)}
@@ -121,8 +113,8 @@ def main() -> None:
     rides = [a for a in activities if a.get("type") in RIDE_TYPES]
     print(f"Found {len(rides)} cycling activities out of {len(activities)} total")
 
-    calendar_data = compute_calendar_data(activities)
-    stats = compute_stats(activities)
+    calendar_data = compute_calendar_data(rides)
+    stats = compute_stats(rides)
 
     data_dir = REPO_ROOT / "_data"
     write_json(data_dir / "strava_calendar.json", calendar_data)
