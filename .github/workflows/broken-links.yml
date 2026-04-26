@@ -42,10 +42,10 @@ jobs:
   link-checker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Link Checker 🔗
-        uses: lycheeverse/lychee-action@v2.0.2
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           fail: true
           # removed md files that include liquid tags
