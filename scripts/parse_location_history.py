@@ -58,11 +58,12 @@ NOMINATIM_URL = "https://nominatim.openstreetmap.org/reverse"
 NOMINATIM_HEADERS = {"User-Agent": "joshchiou.github.io/1.0"}
 
 COUNTRY_ALIASES = {
-    "USA": "United States",
-    "US": "United States",
-    "U.S.A.": "United States",
-    "U.S.": "United States",
-    "United States of America": "United States",
+    # Normalize all US variants to the GeoJSON name ("United States of America")
+    "United States": "United States of America",
+    "USA": "United States of America",
+    "US": "United States of America",
+    "U.S.A.": "United States of America",
+    "U.S.": "United States of America",
     "UK": "United Kingdom",
     "U.K.": "United Kingdom",
     "England": "United Kingdom",
@@ -75,7 +76,8 @@ COUNTRY_ALIASES = {
     "ROC": "Taiwan",
     "Taiwan, Province of China": "Taiwan",
     "Viet Nam": "Vietnam",
-    "Czechia": "Czech Republic",
+    # GeoJSON (datasets/geo-countries) uses "Czechia" — no alias needed but keep for safety
+    "Czech Republic": "Czechia",
     "Slovak Republic": "Slovakia",
     "Türkiye": "Turkey",
     "Turkish Republic": "Turkey",
@@ -83,8 +85,11 @@ COUNTRY_ALIASES = {
     "UAE": "United Arab Emirates",
     "Holland": "Netherlands",
     "PRC": "China",
-    "HK": "Hong Kong",
-    "Macau SAR": "Macau",
+    # GeoJSON uses "Hong Kong S.A.R." and "Macao S.A.R"
+    "HK": "Hong Kong S.A.R.",
+    "Hong Kong": "Hong Kong S.A.R.",
+    "Macau SAR": "Macao S.A.R",
+    "Macau": "Macao S.A.R",
 }
 
 
