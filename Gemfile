@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'observer'  # removed from Ruby stdlib in 3.4+; needed by citeproc-ruby
-gem 'benchmark' # removed from Ruby stdlib in 4.0; needed by jekyll plugins
+gem 'benchmark' # removed from Ruby stdlib in 3.4+; needed by jekyll plugins
 group :jekyll_plugins do
     gem 'classifier-reborn'
     gem 'jekyll'
