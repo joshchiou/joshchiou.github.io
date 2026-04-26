@@ -68,10 +68,14 @@
   country: United States of America
   lat: 42.3443
   lon: -71.1147
-- name: Fort Lauderdale
-  country: United States of America
-  lat: 26.1224
-  lon: -80.1373
+- name: Tournefeuille
+  country: France
+  lat: 43.5848
+  lon: 1.3478
+- name: Blagnac
+  country: France
+  lat: 43.6598
+  lon: 1.3596
 - name: Dedham
   country: United States of America
   lat: 42.2376
