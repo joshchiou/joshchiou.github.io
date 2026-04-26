@@ -32,6 +32,7 @@
 - `_data/strava_stats.json` (placeholder → updated by GitHub Actions)
 - `_data/travel_countries.yml` (populated from Takeout script)
 - `_data/travel_cities.yml` (populated from Takeout script)
+- `assets/json/world-countries.geojson` (Natural Earth 110m boundaries, committed for offline use)
 - `scripts/update_strava.py`
 - `.github/workflows/update-strava.yml`
 - `CLAUDE.md`
