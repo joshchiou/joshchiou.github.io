@@ -1,46 +1,39 @@
 ---
 layout: page
 permalink: /repositories/
-title: repositories
-description: Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.
+title: code
 nav: false
+description: >
+  A slice of my public coding activity. Most production work lives in enterprise GitHub organizations
+  (Pfizer, Lilly) and isn't reflected here.
 ---
 
-{% if site.data.repositories.github_users %}
-
-## GitHub users
-
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% for user in site.data.repositories.github_users %}
-    {% include repository/repo_user.liquid username=user %}
-  {% endfor %}
-</div>
-
----
-
-{% if site.repo_trophies.enabled %}
-{% for user in site.data.repositories.github_users %}
-{% if site.data.repositories.github_users.size > 1 %}
-
-  <h4>{{ user }}</h4>
-  {% endif %}
-  <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% include repository/repo_trophies.liquid username=user %}
-  </div>
-
----
-
-{% endfor %}
-{% endif %}
-{% endif %}
-
-{% if site.data.repositories.github_repos %}
-
-## GitHub Repositories
+## Maintained
 
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
   {% for repo in site.data.repositories.github_repos %}
     {% include repository/repo.liquid repository=repo %}
   {% endfor %}
 </div>
-{% endif %}
+
+---
+
+## Open-source contributions
+
+Selected merged pull requests to community scientific software.
+
+<ul class="list-unstyled">
+  {% for c in site.data.contributions %}
+  <li class="mb-3">
+    <a href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer"><strong>{{ c.pr_title }}</strong></a>
+    &nbsp;·&nbsp;
+    <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
+    &nbsp;·&nbsp;
+    <span class="text-muted">{{ c.date }}</span>
+    <br>
+    <small>{{ c.blurb }}</small>
+  </li>
+  {% endfor %}
+</ul>
+
+<a href="https://github.com/search?q=author%3Ajoshchiou+is%3Apr+is%3Amerged&type=pullrequests" target="_blank" rel="noopener noreferrer">See all merged pull requests →</a>
