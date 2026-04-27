@@ -13,11 +13,10 @@ The [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/
 profiling ~3,000 plasma proteins using the Olink Proximity Extension Assay across 54,306
 participants. The flagship analysis, published in {% cite sun2023plasma %}, characterized
 protein quantitative trait loci (pQTLs), their genetic architecture, and their associations
-with disease outcomes — providing one of the most comprehensive maps to date of how human
+with disease outcomes, providing one of the most comprehensive maps to date of how human
 genetics shapes the circulating proteome.
 
 My contributions focused on the statistical genetics infrastructure and analytical pipelines
 underpinning the consortium's analyses. The UKB-PPP dataset has since become a foundational
 resource for Mendelian randomization, drug target validation, and multi-omics integration
-across the pharmaceutical industry, enabling rapid translation of genetic insights into
-actionable hypotheses for drug discovery programs.
+across the pharmaceutical industry.

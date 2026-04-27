@@ -8,8 +8,8 @@ category: work
 related_publications: false
 ---
 
-At Lilly, I work at the intersection of clinical omics and drug development: applying
-large-scale proteomics — primarily Olink and SomaScan platforms — to phase 2 and phase 3
+At Lilly, I work at the intersection of clinical omics and drug development, applying
+large-scale proteomics (primarily Olink and SomaScan platforms) to phase 2 and phase 3
 clinical trials for obesity and cardiometabolic disease. The goal is to translate protein
 abundance changes measured in trial participants into mechanistic hypotheses about drug
 biology and actionable biomarker strategies that inform clinical decisions.
@@ -18,5 +18,5 @@ This work requires bridging statistical genetics, proteomics methodology, and cl
 endpoint analysis: interpreting proteomic trajectories in the context of pQTL and genetic
 association data, applying survival analysis and mixed models to longitudinal omics data,
 and integrating electronic health record data to characterize patient subgroups. I also
-build the analytical infrastructure — pipelines, data models, dashboards — that supports
+build the analytical infrastructure (pipelines, data models, dashboards) that supports
 the broader clinical omics team.
