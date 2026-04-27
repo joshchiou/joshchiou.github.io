@@ -5,18 +5,12 @@ module.exports = {
   skippedContentGlobs: ["_site/assets/**/*.html"],
   safelist: {
     standard: [
-      /^badge-type/,
-      /^badge-bug/,
-      /^badge-perf/,
-      /^badge-feature/,
-      /^badge-pkg/,
-      /^badge-compat/,
-      /^badge-lang/,
-      /^contribution-item/,
+      /^badge-type/, /^badge-bug/, /^badge-perf/, /^badge-feature/,
+      /^badge-pkg/, /^badge-compat/, /^badge-lang/,
+      /^contribution-grid/, /^contrib-card/,
       /^project-img-wrap/,
-      /^repo-card/,
-      /^lang-dot/,
-      /^pr-link/,
+      /^repo-card/, /^repo-card-grid/, /^lang-dot/, /^pr-link/,
+      /^github-profile/, /^github-avatar/, /^gh-stat/, /^gh-avatar/,
     ],
   },
 };

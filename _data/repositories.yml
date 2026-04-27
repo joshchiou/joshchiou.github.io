@@ -2,8 +2,11 @@ github_users:
   - joshchiou
 
 github_repos:
-  - joshchiou/T1D_snATAC
-  - Gaulton-Lab/pipelines
-  - joshchiou/joshchiou.github.io
+  - repo: joshchiou/T1D_snATAC
+    desc: "Data and analysis code for snATAC-seq profiling of pancreatic islets and T1D risk loci."
+  - repo: Gaulton-Lab/pipelines
+    desc: "Pipelines for bulk and single-cell ATAC-seq, GWAS, and epigenomic analysis."
+  - repo: joshchiou/joshchiou.github.io
+    desc: "Personal academic website, built with Jekyll and al-folio."
 
 repo_description_lines_max: 2
