@@ -3,6 +3,7 @@ github_users:
 
 github_repos:
   - joshchiou/T1D_snATAC
+  - Gaulton-Lab/pipelines
   - joshchiou/joshchiou.github.io
 
 repo_description_lines_max: 2
