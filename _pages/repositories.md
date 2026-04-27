@@ -121,10 +121,17 @@ Repositories I've built or contributed to significantly.
 
 Selected merged pull requests to community scientific software.
 
-<div class="contribution-grid contribution-grid--single">
+<ul class="list-unstyled">
   {% for c in site.data.contributions %}
-  <div class="contrib-card">
-    <div class="contrib-card-badges mb-2">
+  <li class="mb-4 contribution-item">
+    <div class="mb-1">
+      <strong>{{ c.pr_title }}</strong>
+      &nbsp;&middot;&nbsp;
+      <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
+      &nbsp;&middot;&nbsp;
+      <span class="text-muted small">{{ c.date }}</span>
+    </div>
+    <div class="mb-1">
       {% if c.type %}
         {% if c.type == "bug fix" %}{% assign tc = "badge-bug" %}
         {% elsif c.type == "performance" %}{% assign tc = "badge-perf" %}
@@ -136,22 +143,15 @@ Selected merged pull requests to community scientific software.
       {% endif %}
       {% if c.language %}<span class="badge-type badge-lang">{{ c.language }}</span>{% endif %}
     </div>
-    <div class="contrib-card-title mb-1">
-      <strong>{{ c.pr_title }}</strong>
+    <div class="mb-1">
+      <small class="text-muted">{{ c.blurb }}</small>
     </div>
-    <div class="contrib-card-meta mb-2">
-      <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
-      <span class="text-muted">&nbsp;&middot;&nbsp;{{ c.date }}</span>
-    </div>
-    <div class="contrib-card-blurb">{{ c.blurb }}</div>
-    <div class="contrib-card-footer">
-      <a class="pr-link" href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer">
-        <i class="fa-solid fa-code-pull-request"></i> View pull request
-      </a>
-    </div>
-  </div>
+    <a class="pr-link" href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer">
+      <i class="fa-solid fa-code-pull-request"></i> View pull request
+    </a>
+  </li>
   {% endfor %}
-</div>
+</ul>
 
 <div class="mt-3">
   <a href="https://github.com/search?q=author%3Ajoshchiou+is%3Apr+is%3Amerged&type=pullrequests"
