@@ -54,24 +54,29 @@ chart:
 
   var calChart, barChart;
 
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
   function buildCalOption() {
     var mobile = window.innerWidth < 576;
+    var dark = isDark();
+    var textColor   = dark ? '#c8c8c8' : '#333333';
+    var emptyColor  = dark ? '#1e3a4a' : '#e8f4f8';
+    var borderColor = dark ? '#2d2d2d' : '#ffffff';
     return {
       tooltip: {
         formatter: function (p) { return p.data[0] + '<br/>' + p.data[1] + ' mi'; }
       },
       visualMap: {
-        min: 0,
-        max: maxMiles,
-        show: true,
+        min: 0, max: maxMiles, show: true,
         orient: 'horizontal',
         left: mobile ? 'center' : 'right',
         bottom: 0,
-        itemWidth: 10,
-        itemHeight: 70,
+        itemWidth: 10, itemHeight: 70,
         text: ['more', 'less'],
-        textStyle: { fontSize: 10 },
-        inRange: { color: ['#e8f4f8', '#74add1', '#2980b9'] }
+        textStyle: { fontSize: 10, color: textColor },
+        inRange: { color: [emptyColor, '#74add1', '#2980b9'] }
       },
       calendar: {
         range: '{{ 'now' | date: '%Y' }}',
@@ -80,51 +85,59 @@ chart:
         left: mobile ? 30 : 40,
         right: mobile ? 10 : 115,
         bottom: mobile ? 50 : 30,
-        itemStyle: { borderWidth: 2, borderColor: '#fff' },
+        itemStyle: { borderWidth: 2, borderColor: borderColor },
         yearLabel: { show: false },
-        monthLabel: { fontSize: 11 },
-        dayLabel: { nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'] }
+        monthLabel: { fontSize: 11, color: textColor },
+        dayLabel: { nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], color: textColor }
       },
       series: [{ type: 'heatmap', coordinateSystem: 'calendar', data: calendarMiles }]
+    };
+  }
+
+  function buildBarOption() {
+    var dark = isDark();
+    var textColor  = dark ? '#c8c8c8' : '#333333';
+    var splitColor = dark ? 'rgba(200,200,200,0.15)' : 'rgba(0,0,0,0.1)';
+    return {
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) { return params[0].name + '<br/>' + params[0].value + ' mi'; }
+      },
+      grid: { left: 55, right: 20, top: 15, bottom: 65 },
+      xAxis: {
+        type: 'category', data: months,
+        axisLabel: { rotate: 45, interval: 0, fontSize: 11, color: textColor },
+        axisLine:  { lineStyle: { color: textColor } },
+        axisTick:  { lineStyle: { color: textColor } }
+      },
+      yAxis: {
+        type: 'value', name: 'miles',
+        nameTextStyle: { fontSize: 11, color: textColor },
+        axisLabel: { color: textColor },
+        splitLine: { lineStyle: { type: 'dashed', color: splitColor } }
+      },
+      series: [{
+        type: 'bar', data: distMiles,
+        itemStyle: { color: '#2980b9', borderRadius: [3, 3, 0, 0] },
+        emphasis: { itemStyle: { color: '#1a5f8a' } }
+      }]
     };
   }
 
   function initCharts() {
     var calEl = document.getElementById('cycling-calendar');
     if (calEl && window.echarts) {
+      if (calChart) { echarts.dispose(calEl); }
       var mobile = window.innerWidth < 576;
       calEl.style.height = (mobile ? 220 : 185) + 'px';
       calChart = echarts.init(calEl);
       calChart.setOption(buildCalOption());
     }
-
     var barEl = document.getElementById('cycling-monthly');
     if (barEl && window.echarts) {
+      if (barChart) { echarts.dispose(barEl); }
       barChart = echarts.init(barEl);
-      barChart.setOption({
-        tooltip: {
-          trigger: 'axis',
-          formatter: function (params) { return params[0].name + '<br/>' + params[0].value + ' mi'; }
-        },
-        grid: { left: 55, right: 20, top: 15, bottom: 65 },
-        xAxis: {
-          type: 'category',
-          data: months,
-          axisLabel: { rotate: 45, interval: 0, fontSize: 11 }
-        },
-        yAxis: {
-          type: 'value',
-          name: 'miles',
-          nameTextStyle: { fontSize: 11 },
-          splitLine: { lineStyle: { type: 'dashed', opacity: 0.5 } }
-        },
-        series: [{
-          type: 'bar',
-          data: distMiles,
-          itemStyle: { color: '#2980b9', borderRadius: [3, 3, 0, 0] },
-          emphasis: { itemStyle: { color: '#1a5f8a' } }
-        }]
-      });
+      barChart.setOption(buildBarOption());
     }
   }
 
@@ -138,6 +151,13 @@ chart:
     }
     if (barChart) { barChart.resize(); }
   });
+
+  // Re-render whenever the site theme changes (light ↔ dark toggle)
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.attributeName === 'data-theme') { initCharts(); }
+    });
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   if (document.readyState === 'complete') { initCharts(); }
   else { window.addEventListener('load', initCharts); }
