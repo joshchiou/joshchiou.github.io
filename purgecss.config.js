@@ -14,6 +14,9 @@ module.exports = {
       /^badge-lang/,
       /^contribution-item/,
       /^project-img-wrap/,
+      /^repo-card/,
+      /^lang-dot/,
+      /^pr-link/,
     ],
   },
 };

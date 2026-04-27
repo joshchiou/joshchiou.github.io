@@ -1,4 +1,12 @@
 /*******************************************************************************
+ * Post description — normalize to body size across all pages
+ ******************************************************************************/
+
+.post-description {
+  font-size: 1rem;
+}
+
+/*******************************************************************************
  * Project card — consistent image cropping
  * Per-project tuning: set `img_position` in front matter
  * e.g. img_position: "top"  or  img_position: "center 30%"
@@ -19,6 +27,84 @@
     object-fit: cover;
     object-position: var(--img-position, center);
     display: block;
+  }
+}
+
+/*******************************************************************************
+ * Native repo cards
+ ******************************************************************************/
+
+.repo-card {
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  min-width: 260px;
+  max-width: 340px;
+  flex: 1 1 260px;
+  background: var(--global-card-bg-color);
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    border-color: var(--global-theme-color);
+    text-decoration: none;
+  }
+
+  .repo-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+
+    i.fa-book {
+      color: var(--global-text-color-light);
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .repo-card-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--global-theme-color);
+      word-break: break-all;
+    }
+  }
+
+  .repo-card-desc {
+    font-size: 0.82rem;
+    color: var(--global-text-color-light);
+    margin-bottom: 0.65rem;
+    line-height: 1.45;
+    min-height: 2.4em;
+  }
+
+  .repo-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--global-text-color-light);
+
+    .repo-card-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      .lang-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+    }
+
+    .repo-card-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
   }
 }
 
@@ -58,4 +144,20 @@
   border: 1px solid var(--global-divider-color);
   color: var(--global-text-color-light);
   font-weight: 500;
+}
+
+.pr-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--global-theme-color);
+  text-decoration: none;
+  margin-top: 0.3rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  i { font-size: 0.7rem; }
 }

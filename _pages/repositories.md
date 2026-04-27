@@ -26,11 +26,74 @@ description: >
 
 ## Maintained
 
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+<div class="d-flex flex-wrap gap-3 mb-4" id="repo-cards">
   {% for repo in site.data.repositories.github_repos %}
-    {% include repository/repo.liquid repository=repo %}
+    {% assign repo_parts = repo | split: '/' %}
+    <a class="repo-card" href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer"
+       data-repo="{{ repo }}">
+      <div class="repo-card-header">
+        <i class="fa-regular fa-book"></i>
+        <span class="repo-card-name">
+          {% assign owner = repo_parts[0] %}
+          {% assign rname = repo_parts[1] %}
+          {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo }}{% endif %}
+        </span>
+      </div>
+      <div class="repo-card-desc" id="desc-{{ repo | replace: '/', '-' }}">
+        <span class="text-muted" style="font-size:0.78rem">Loading&hellip;</span>
+      </div>
+      <div class="repo-card-meta" id="meta-{{ repo | replace: '/', '-' }}"></div>
+    </a>
   {% endfor %}
 </div>
+
+<script>
+(function () {
+  var LANG_COLORS = {
+    Python: '#3572A5', R: '#198CE7', JavaScript: '#f1e05a',
+    TypeScript: '#2b7489', Shell: '#89e051', Ruby: '#701516',
+    Java: '#b07219', CSS: '#563d7c', HTML: '#e34c26'
+  };
+
+  var repos = {{ site.data.repositories.github_repos | jsonify }};
+
+  repos.forEach(function (repo) {
+    var slug = repo.replace('/', '-');
+    fetch('https://api.github.com/repos/' + repo)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var descEl = document.getElementById('desc-' + slug);
+        var metaEl = document.getElementById('meta-' + slug);
+        if (!descEl || !metaEl) return;
+
+        descEl.textContent = d.description || '';
+
+        var lang = d.language || '';
+        var color = LANG_COLORS[lang] || '#8a8a8a';
+        var stars = d.stargazers_count || 0;
+        var forks = d.forks_count || 0;
+
+        var html = '';
+        if (lang) {
+          html += '<span class="repo-card-lang">'
+               + '<span class="lang-dot" style="background:' + color + '"></span>'
+               + lang + '</span>';
+        }
+        if (stars > 0) {
+          html += '<span class="repo-card-stat"><i class="fa-regular fa-star"></i> ' + stars + '</span>';
+        }
+        if (forks > 0) {
+          html += '<span class="repo-card-stat"><i class="fa-solid fa-code-fork"></i> ' + forks + '</span>';
+        }
+        metaEl.innerHTML = html;
+      })
+      .catch(function () {
+        var descEl = document.getElementById('desc-' + slug);
+        if (descEl) descEl.textContent = '';
+      });
+  });
+})();
+</script>
 
 ---
 
@@ -42,7 +105,7 @@ Selected merged pull requests to community scientific software.
   {% for c in site.data.contributions %}
   <li class="mb-4 contribution-item">
     <div class="mb-1">
-      <a href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer"><strong>{{ c.pr_title }}</strong></a>
+      <strong>{{ c.pr_title }}</strong>
       &nbsp;&middot;&nbsp;
       <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
       &nbsp;&middot;&nbsp;
@@ -60,7 +123,12 @@ Selected merged pull requests to community scientific software.
       {% endif %}
       {% if c.language %}<span class="badge-type badge-lang">{{ c.language }}</span>{% endif %}
     </div>
-    <small class="text-muted">{{ c.blurb }}</small>
+    <div class="mb-1">
+      <small class="text-muted">{{ c.blurb }}</small>
+    </div>
+    <a class="pr-link" href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer">
+      <i class="fa-solid fa-code-pull-request"></i> View pull request
+    </a>
   </li>
   {% endfor %}
 </ul>
