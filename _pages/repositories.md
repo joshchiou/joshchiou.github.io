@@ -9,6 +9,21 @@ description: >
   (Pfizer, Lilly) and isn't reflected here.
 ---
 
+<div class="d-flex justify-content-center mb-4">
+  <a href="https://github.com/joshchiou" target="_blank" rel="noopener noreferrer">
+    <img
+      class="repo-img-light"
+      src="https://github-readme-stats.vercel.app/api?username=joshchiou&show_icons=true&hide_border=true&count_private=true&theme={{ site.repo_theme_light }}"
+      alt="GitHub stats"
+    >
+    <img
+      class="repo-img-dark"
+      src="https://github-readme-stats.vercel.app/api?username=joshchiou&show_icons=true&hide_border=true&count_private=true&theme={{ site.repo_theme_dark }}"
+      alt="GitHub stats"
+    >
+  </a>
+</div>
+
 ## Maintained
 
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
