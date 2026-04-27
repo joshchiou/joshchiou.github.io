@@ -1,0 +1,61 @@
+/*******************************************************************************
+ * Project card — consistent image cropping
+ * Per-project tuning: set `img_position` in front matter
+ * e.g. img_position: "top"  or  img_position: "center 30%"
+ ******************************************************************************/
+
+.project-img-wrap {
+  overflow: hidden;
+  line-height: 0;
+
+  figure {
+    margin: 0;
+    line-height: 0;
+  }
+
+  img.card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    object-position: var(--img-position, center);
+    display: block;
+  }
+}
+
+/*******************************************************************************
+ * Code page — contribution list
+ ******************************************************************************/
+
+.contribution-item {
+  border-left: 3px solid var(--global-theme-color);
+  padding-left: 1rem;
+  transition: border-left-color 0.2s ease;
+
+  &:hover {
+    border-left-color: var(--global-hover-color);
+  }
+}
+
+.badge-type {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.15em 0.55em;
+  border-radius: 3px;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}
+
+.badge-bug     { background-color: #c0392b; color: #fff; }
+.badge-perf    { background-color: #b7770d; color: #fff; }
+.badge-feature { background-color: #1e8449; color: #fff; }
+.badge-pkg     { background-color: #0e7a6f; color: #fff; }
+.badge-compat  { background-color: #5d6d7e; color: #fff; }
+.badge-lang {
+  background-color: transparent;
+  border: 1px solid var(--global-divider-color);
+  color: var(--global-text-color-light);
+  font-weight: 500;
+}

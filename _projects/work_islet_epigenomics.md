@@ -2,7 +2,7 @@
 layout: page
 title: Single-Cell Epigenomics of Pancreatic Islets
 description: Mapping cell-type-specific chromatin accessibility and its role in diabetes genetic risk.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-work.svg
 importance: 2
 category: work
 related_publications: false

@@ -2,7 +2,7 @@
 layout: page
 title: Travel
 description: Places visited, mapped.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-fun.svg
 importance: 5
 category: fun
 map: true

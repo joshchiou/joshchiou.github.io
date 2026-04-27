@@ -2,7 +2,7 @@
 layout: page
 title: Home Assistant
 description: Home automation setup with solar monitoring, local AI, and custom integrations.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-fun.svg
 importance: 1
 category: fun
 ---

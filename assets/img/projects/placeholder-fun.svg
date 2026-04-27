@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="fbg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#1e2d3d"/>
+      <stop offset="100%" stop-color="#243447"/>
+    </linearGradient>
+    <radialGradient id="blob1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e67e22" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#e67e22" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0c040" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#f0c040" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#e74c3c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#fbg)"/>
+  <!-- bokeh blobs -->
+  <ellipse cx="160" cy="160" rx="220" ry="200" fill="url(#blob1)"/>
+  <ellipse cx="460" cy="280" rx="200" ry="180" fill="url(#blob2)"/>
+  <ellipse cx="530" cy="100" rx="160" ry="150" fill="url(#blob3)"/>
+  <!-- dot grid -->
+  <g fill="#ffffff" fill-opacity="0.07">
+    <circle cx="60" cy="60" r="2"/><circle cx="120" cy="60" r="2"/><circle cx="180" cy="60" r="2"/>
+    <circle cx="240" cy="60" r="2"/><circle cx="300" cy="60" r="2"/><circle cx="360" cy="60" r="2"/>
+    <circle cx="420" cy="60" r="2"/><circle cx="480" cy="60" r="2"/><circle cx="540" cy="60" r="2"/>
+    <circle cx="60" cy="120" r="2"/><circle cx="120" cy="120" r="2"/><circle cx="180" cy="120" r="2"/>
+    <circle cx="240" cy="120" r="2"/><circle cx="300" cy="120" r="2"/><circle cx="360" cy="120" r="2"/>
+    <circle cx="420" cy="120" r="2"/><circle cx="480" cy="120" r="2"/><circle cx="540" cy="120" r="2"/>
+    <circle cx="60" cy="180" r="2"/><circle cx="120" cy="180" r="2"/><circle cx="180" cy="180" r="2"/>
+    <circle cx="240" cy="180" r="2"/><circle cx="300" cy="180" r="2"/><circle cx="360" cy="180" r="2"/>
+    <circle cx="420" cy="180" r="2"/><circle cx="480" cy="180" r="2"/><circle cx="540" cy="180" r="2"/>
+    <circle cx="60" cy="240" r="2"/><circle cx="120" cy="240" r="2"/><circle cx="180" cy="240" r="2"/>
+    <circle cx="240" cy="240" r="2"/><circle cx="300" cy="240" r="2"/><circle cx="360" cy="240" r="2"/>
+    <circle cx="420" cy="240" r="2"/><circle cx="480" cy="240" r="2"/><circle cx="540" cy="240" r="2"/>
+    <circle cx="60" cy="300" r="2"/><circle cx="120" cy="300" r="2"/><circle cx="180" cy="300" r="2"/>
+    <circle cx="240" cy="300" r="2"/><circle cx="300" cy="300" r="2"/><circle cx="360" cy="300" r="2"/>
+    <circle cx="420" cy="300" r="2"/><circle cx="480" cy="300" r="2"/><circle cx="540" cy="300" r="2"/>
+    <circle cx="60" cy="360" r="2"/><circle cx="120" cy="360" r="2"/><circle cx="180" cy="360" r="2"/>
+    <circle cx="240" cy="360" r="2"/><circle cx="300" cy="360" r="2"/><circle cx="360" cy="360" r="2"/>
+    <circle cx="420" cy="360" r="2"/><circle cx="480" cy="360" r="2"/><circle cx="540" cy="360" r="2"/>
+  </g>
+  <!-- accent triangles -->
+  <polygon points="300,90 345,168 255,168" fill="#e67e22" fill-opacity="0.22"/>
+  <polygon points="455,245 495,315 415,315" fill="#f0c040" fill-opacity="0.18"/>
+  <polygon points="148,272 180,328 116,328" fill="#e67e22" fill-opacity="0.18"/>
+  <!-- accent circles -->
+  <circle cx="300" cy="122" r="9" fill="#e67e22" fill-opacity="0.65"/>
+  <circle cx="455" cy="268" r="7" fill="#f0c040" fill-opacity="0.55"/>
+  <circle cx="148" cy="294" r="5.5" fill="#e67e22" fill-opacity="0.55"/>
+  <!-- outer glow rings -->
+  <circle cx="300" cy="122" r="18" fill="none" stroke="#e67e22" stroke-opacity="0.2" stroke-width="1.5"/>
+  <circle cx="455" cy="268" r="14" fill="none" stroke="#f0c040" stroke-opacity="0.18" stroke-width="1.2"/>
+</svg>

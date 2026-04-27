@@ -2,7 +2,7 @@
 layout: page
 title: On the Bike
 description: Strava-powered cycling stats — activity calendar and all-time totals.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-fun.svg
 importance: 2
 category: fun
 chart:

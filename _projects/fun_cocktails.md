@@ -2,7 +2,7 @@
 layout: page
 title: Cocktails
 description: Notes from the house bar.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-fun.svg
 importance: 3
 category: fun
 ---

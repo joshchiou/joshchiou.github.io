@@ -2,7 +2,7 @@
 layout: page
 title: Genetics-Driven Target Discovery for Cardiovascular and Renal Disease
 description: Integrative multi-omics pipeline for identifying and validating drug targets at Pfizer.
-img: assets/img/prof_pic.jpg
+img: assets/img/projects/placeholder-work.svg
 importance: 4
 category: work
 related_publications: false
