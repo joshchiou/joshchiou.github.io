@@ -7,7 +7,7 @@ module.exports = {
     standard: [
       /^badge-type/, /^badge-bug/, /^badge-perf/, /^badge-feature/,
       /^badge-pkg/, /^badge-compat/, /^badge-lang/,
-      /^contribution-grid/, /^contrib-card/,
+      /^contribution-grid/, /^contrib-card/, /^contribution-item/,
       /^project-img-wrap/,
       /^repo-card/, /^repo-card-grid/, /^lang-dot/, /^pr-link/,
       /^github-profile/, /^github-avatar/, /^gh-stat/, /^gh-avatar/,

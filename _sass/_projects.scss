@@ -248,6 +248,20 @@
 }
 
 /*******************************************************************************
+ * Contribution list — side-bar style
+ ******************************************************************************/
+
+.contribution-item {
+  border-left: 3px solid var(--global-theme-color);
+  padding-left: 1rem;
+  transition: border-left-color 0.2s ease;
+
+  &:hover {
+    border-left-color: var(--global-hover-color);
+  }
+}
+
+/*******************************************************************************
  * Shared badge + PR link styles
  ******************************************************************************/
 
