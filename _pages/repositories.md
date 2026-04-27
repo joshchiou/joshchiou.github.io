@@ -29,7 +29,10 @@ description: >
   </div>
 </div>
 
-## Maintained
+## Featured repositories
+
+Repositories I've built or contributed to significantly.
+
 
 <div class="repo-card-grid mb-4">
   {% for item in site.data.repositories.github_repos %}
@@ -118,7 +121,7 @@ description: >
 
 Selected merged pull requests to community scientific software.
 
-<div class="contribution-grid">
+<div class="contribution-grid contribution-grid--single">
   {% for c in site.data.contributions %}
   <div class="contrib-card">
     <div class="contrib-card-badges mb-2">
