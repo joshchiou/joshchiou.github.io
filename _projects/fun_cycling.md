@@ -30,7 +30,7 @@ chart:
 
 ### Activity calendar ({{ 'now' | date: '%Y' }})
 
-<div id="cycling-calendar" style="height: 185px;"></div>
+<div id="cycling-calendar"></div>
 <p class="text-muted mt-1 mb-4"><small>Each cell is one day; color shows miles ridden.</small></p>
 
 ### Monthly distance (all-time)
@@ -52,42 +52,56 @@ chart:
     return Math.round(km * KM_TO_MI * 10) / 10;
   });
 
+  var calChart, barChart;
+
+  function buildCalOption() {
+    var mobile = window.innerWidth < 576;
+    return {
+      tooltip: {
+        formatter: function (p) { return p.data[0] + '<br/>' + p.data[1] + ' mi'; }
+      },
+      visualMap: {
+        min: 0,
+        max: maxMiles,
+        show: true,
+        orient: 'horizontal',
+        left: mobile ? 'center' : 'right',
+        bottom: 0,
+        itemWidth: 10,
+        itemHeight: 70,
+        text: ['more', 'less'],
+        textStyle: { fontSize: 10 },
+        inRange: { color: ['#e8f4f8', '#74add1', '#2980b9'] }
+      },
+      calendar: {
+        range: '{{ 'now' | date: '%Y' }}',
+        cellSize: ['auto', mobile ? 13 : 16],
+        top: 20,
+        left: mobile ? 30 : 40,
+        right: mobile ? 10 : 115,
+        bottom: mobile ? 50 : 30,
+        itemStyle: { borderWidth: 2, borderColor: '#fff' },
+        yearLabel: { show: false },
+        monthLabel: { fontSize: 11 },
+        dayLabel: { nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'] }
+      },
+      series: [{ type: 'heatmap', coordinateSystem: 'calendar', data: calendarMiles }]
+    };
+  }
+
   function initCharts() {
     var calEl = document.getElementById('cycling-calendar');
     if (calEl && window.echarts) {
-      echarts.init(calEl).setOption({
-        tooltip: {
-          formatter: function (p) { return p.data[0] + '<br/>' + p.data[1] + ' mi'; }
-        },
-        visualMap: {
-          min: 0,
-          max: maxMiles,
-          show: true,
-          orient: 'horizontal',
-          left: 'right',
-          bottom: 0,
-          itemWidth: 10,
-          itemHeight: 70,
-          text: ['more', 'less'],
-          textStyle: { fontSize: 10 },
-          inRange: { color: ['#e8f4f8', '#74add1', '#2980b9'] }
-        },
-        calendar: {
-          range: '{{ 'now' | date: '%Y' }}',
-          cellSize: ['auto', 16],
-          top: 20, left: 40, right: 115,
-          itemStyle: { borderWidth: 2, borderColor: '#fff' },
-          yearLabel: { show: false },
-          monthLabel: { fontSize: 11 },
-          dayLabel: { nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'] }
-        },
-        series: [{ type: 'heatmap', coordinateSystem: 'calendar', data: calendarMiles }]
-      });
+      var mobile = window.innerWidth < 576;
+      calEl.style.height = (mobile ? 220 : 185) + 'px';
+      calChart = echarts.init(calEl);
+      calChart.setOption(buildCalOption());
     }
 
     var barEl = document.getElementById('cycling-monthly');
     if (barEl && window.echarts) {
-      echarts.init(barEl).setOption({
+      barChart = echarts.init(barEl);
+      barChart.setOption({
         tooltip: {
           trigger: 'axis',
           formatter: function (params) { return params[0].name + '<br/>' + params[0].value + ' mi'; }
@@ -113,6 +127,17 @@ chart:
       });
     }
   }
+
+  window.addEventListener('resize', function () {
+    if (calChart) {
+      var calEl = document.getElementById('cycling-calendar');
+      var mobile = window.innerWidth < 576;
+      calEl.style.height = (mobile ? 220 : 185) + 'px';
+      calChart.resize();
+      calChart.setOption(buildCalOption());
+    }
+    if (barChart) { barChart.resize(); }
+  });
 
   if (document.readyState === 'complete') { initCharts(); }
   else { window.addEventListener('load', initCharts); }
