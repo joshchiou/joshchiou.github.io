@@ -1,49 +1,49 @@
 # Curated list of merged open-source contributions.
-# Add new entries at the top. date: YYYY-MM-DD
+# Sorted newest-first by actual merge date.
 # type: bug fix | performance | feature | packaging | compatibility
 # language: Python | R | etc.
-
-- repo: scverse/SnapATAC2
-  url: https://github.com/scverse/SnapATAC2
-  pr_title: "Parallel IDF"
-  pr_url: https://github.com/scverse/SnapATAC2/pull/404
-  date: 2025-06-30
-  type: performance
-  language: Python
-  blurb: Parallelized inverse-document-frequency computation in dimensionality reduction, cutting runtime on large datasets.
-
-- repo: conda-forge/staged-recipes
-  url: https://github.com/conda-forge/staged-recipes
-  pr_title: "Add r-mmrm: Mixed Models for Repeated Measures"
-  pr_url: https://github.com/conda-forge/staged-recipes/pull/31675
-  date: 2025-12-10
-  type: packaging
-  language: R
-  blurb: Packaged r-mmrm for conda-forge, making it available as a conda dependency for clinical trial analysis pipelines.
-
-- repo: stephenslab/susieR
-  url: https://github.com/stephenslab/susieR
-  pr_title: "Compatibility with rpy2"
-  pr_url: https://github.com/stephenslab/susieR/pull/247
-  date: 2025-02-25
-  type: compatibility
-  language: R
-  blurb: Restored Python interoperability so susieR can be called from rpy2 pipelines.
 
 - repo: smcneece/ha-esunpower
   url: https://github.com/smcneece/ha-esunpower
   pr_title: "fix: prevent memory leak crash when PVS serial is an IP address"
   pr_url: https://github.com/smcneece/ha-esunpower/pull/64
-  date: 2025-03-26
+  date: 2026-03-26
   type: bug fix
   language: Python
   blurb: Fixed a memory leak that caused the Home Assistant integration to crash when the SunPower PVS serial number is configured as an IP address.
+
+- repo: conda-forge/staged-recipes
+  url: https://github.com/conda-forge/staged-recipes
+  pr_title: "Add r-mmrm: Mixed Models for Repeated Measures"
+  pr_url: https://github.com/conda-forge/staged-recipes/pull/31675
+  date: 2026-02-12
+  type: packaging
+  language: R
+  blurb: Packaged r-mmrm for conda-forge, making it available as a conda dependency for clinical trial analysis pipelines.
+
+- repo: scverse/SnapATAC2
+  url: https://github.com/scverse/SnapATAC2
+  pr_title: "Parallel IDF"
+  pr_url: https://github.com/scverse/SnapATAC2/pull/404
+  date: 2025-07-09
+  type: performance
+  language: Python
+  blurb: Parallelized inverse-document-frequency computation in dimensionality reduction, cutting runtime on large datasets.
+
+- repo: stephenslab/susieR
+  url: https://github.com/stephenslab/susieR
+  pr_title: "Compatibility with rpy2"
+  pr_url: https://github.com/stephenslab/susieR/pull/247
+  date: 2025-02-27
+  type: compatibility
+  language: R
+  blurb: Restored Python interoperability so susieR can be called from rpy2 pipelines.
 
 - repo: Cloufield/gwaslab
   url: https://github.com/Cloufield/gwaslab
   pr_title: "add fix ID before assign rsID"
   pr_url: https://github.com/Cloufield/gwaslab/pull/118
-  date: 2024-11-27
+  date: 2024-11-28
   type: bug fix
   language: Python
   blurb: Added a variant ID normalization step before rsID assignment, preventing downstream mapping errors in GWAS summary statistics workflows.
@@ -52,7 +52,7 @@
   url: https://github.com/scverse/SnapATAC2
   pr_title: "Fix for multiple harmony covariates"
   pr_url: https://github.com/scverse/SnapATAC2/pull/342
-  date: 2024-10-01
+  date: 2024-10-06
   type: bug fix
   language: Python
   blurb: Fixed batch correction when more than one covariate is passed to Harmony integration.
@@ -61,7 +61,7 @@
   url: https://github.com/GreenleafLab/ArchR
   pr_title: "Update GroupExport.R"
   pr_url: https://github.com/GreenleafLab/ArchR/pull/2006
-  date: 2023-08-21
+  date: 2023-08-25
   type: bug fix
   language: R
   blurb: Fixed group export function compatibility with updated dependencies.
@@ -70,7 +70,8 @@
   url: https://github.com/FinucaneLab/fine-mapping-inf
   pr_title: "Add filter for duplicate credible sets"
   pr_url: https://github.com/FinucaneLab/fine-mapping-inf/pull/2
-  date: 2022-11-08
+  date: 2022-11-09
   type: feature
   language: Python
   blurb: Added deduplication step for credible sets output, preventing redundant entries in fine-mapping results.
+
