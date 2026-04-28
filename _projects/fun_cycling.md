@@ -14,7 +14,7 @@ chart:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
-### Bike garage
+### Bike fleet
 
 {% for bike in bikes %}
 <div class="bike-card mb-4">
@@ -88,19 +88,13 @@ chart:
 (function () {
   var KM_TO_MI = 0.621371;
 
-  var rawCalendar = {{ site.data.strava_calendar | jsonify }};
-  var calendarMiles = rawCalendar.map(function (d) {
-    return [d[0], Math.round(d[1] * KM_TO_MI * 10) / 10];
-  });
-  var maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
-
+  // Monthly and cumulative data are small — keep inlined
   var monthlyRaw = {{ site.data.strava_stats.monthly | jsonify }};
   var months = monthlyRaw.map(function (m) { return m.month; });
   var distMiles = monthlyRaw.map(function (m) {
     return Math.round(m.distance_km * KM_TO_MI * 10) / 10;
   });
 
-  // Year-over-year data
   var byYear = {};
   monthlyRaw.forEach(function (m) {
     var parts = m.month.split('-');
@@ -113,7 +107,6 @@ chart:
   var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var yearColors = ['#2980b9', '#e67e22', '#27ae60', '#8e44ad', '#e74c3c'];
 
-  // Cumulative distance
   var cumMonths = [];
   var cumValues = [];
   var running = 0;
@@ -124,13 +117,34 @@ chart:
   });
 
   var calChart, barChart, cumChart;
+  var calendarMiles = null;
+  var maxMiles = 0;
   var currentView = 'alltime';
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
+  // Fetch calendar data externally (keeps page HTML lean)
+  var calEl = document.getElementById('cycling-calendar');
+  if (calEl) {
+    calEl.innerHTML = '<div style="height:155px;display:flex;align-items:center;justify-content:center"><small class="text-muted">Loading activity data&hellip;</small></div>';
+  }
+  fetch('{{ "/assets/data/strava_calendar.json" | relative_url }}')
+    .then(function (r) { return r.json(); })
+    .then(function (rawCalendar) {
+      calendarMiles = rawCalendar.map(function (d) {
+        return [d[0], Math.round(d[1] * KM_TO_MI * 10) / 10];
+      });
+      maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
+      initCalChart();
+    })
+    .catch(function () {
+      if (calEl) calEl.innerHTML = '<small class="text-muted">Activity data unavailable.</small>';
+    });
+
   function buildCalOption() {
+    if (!calendarMiles) return {};
     var mobile = window.innerWidth < 576;
     var dark = isDark();
     var textColor   = dark ? '#c8c8c8' : '#333333';
@@ -273,15 +287,19 @@ chart:
     };
   }
 
-  function initCharts() {
+  function initCalChart() {
     var calEl = document.getElementById('cycling-calendar');
-    if (calEl && window.echarts) {
+    if (calEl && window.echarts && calendarMiles) {
       if (calChart) { echarts.dispose(calEl); }
       var mobile = window.innerWidth < 576;
       calEl.style.height = (mobile ? 180 : 155) + 'px';
+      calEl.innerHTML = '';
       calChart = echarts.init(calEl);
       calChart.setOption(buildCalOption());
     }
+  }
+
+  function initOtherCharts() {
     var barEl = document.getElementById('cycling-monthly');
     if (barEl && window.echarts) {
       if (barChart) { echarts.dispose(barEl); }
@@ -296,7 +314,11 @@ chart:
     }
   }
 
-  // Toggle handler
+  function initAllCharts() {
+    initCalChart();
+    initOtherCharts();
+  }
+
   document.querySelectorAll('.chart-toggle-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.chart-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
@@ -325,12 +347,12 @@ chart:
 
   new MutationObserver(function (mutations) {
     mutations.forEach(function (m) {
-      if (m.attributeName === 'data-theme') { initCharts(); }
+      if (m.attributeName === 'data-theme') { initAllCharts(); }
     });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  if (document.readyState === 'complete') { initCharts(); }
-  else { window.addEventListener('load', initCharts); }
+  if (document.readyState === 'complete') { initOtherCharts(); }
+  else { window.addEventListener('load', initOtherCharts); }
 })();
 </script>
 
