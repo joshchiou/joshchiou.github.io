@@ -6,33 +6,70 @@ img: assets/img/projects/fun/travel.svg
 importance: 5
 category: fun
 map: true
+chart:
+  echarts: true
 ---
 
 {% assign countries = site.data.travel_countries %}
 {% assign cities = site.data.travel_cities %}
+{% assign continents = countries | map: "continent" | uniq %}
+
+<div class="travel-stats mb-3">
+  <div class="travel-stat">
+    <span class="travel-stat-val">{{ countries | size }}</span>
+    <span class="travel-stat-label">countries</span>
+  </div>
+  <div class="travel-stat">
+    <span class="travel-stat-val">{{ continents | size }}</span>
+    <span class="travel-stat-label">continents</span>
+  </div>
+  <div class="travel-stat">
+    <span class="travel-stat-val">{{ cities | size }}</span>
+    <span class="travel-stat-label">cities</span>
+  </div>
+</div>
 
 <div id="travel-map" style="height: 480px; border-radius: 8px; overflow: hidden;"></div>
+<p class="text-muted mt-1 mb-4"><small>Click a highlighted country to see cities visited.</small></p>
 
-<p class="mt-2 text-muted">
-  <small>
-    {{ countries | size }} countries &nbsp;·&nbsp; {{ cities | size }} cities
-  </small>
-</p>
+### Where I've been
+
+<div id="travel-donut" style="height: 280px;"></div>
+
+### Photos
+
+<div class="travel-gallery-placeholder">
+  <i class="fa-regular fa-images fa-2x"></i>
+  <p>Photo gallery coming soon.</p>
+</div>
 
 <script>
 (function () {
   var visitedCountries = {{ countries | map: "name" | jsonify }};
   var cityData = {{ cities | jsonify }};
+  var continentData = [
+    {% assign grouped = countries | group_by: "continent" %}
+    {% for g in grouped %}
+      { name: '{{ g.name }}', value: {{ g.items | size }} }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
   var map, tileLayer, geoLayer, cityMarkers = [];
+  var donutChart;
 
   var TILES = {
     light: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
     dark: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
+  };
+
+  var CONTINENT_COLORS = {
+    'North America': '#4575b4',
+    'Europe': '#e67e22',
+    'Asia': '#27ae60'
   };
 
   function countryStyle(feature) {
@@ -61,7 +98,7 @@ map: true
 
   function initMap() {
     var mapEl = document.getElementById('travel-map');
-    if (!mapEl) return;
+    if (!mapEl || typeof L === 'undefined') return;
 
     var dark = isDark();
     map = L.map(mapEl, { scrollWheelZoom: false }).setView([20, 0], 2);
@@ -81,10 +118,16 @@ map: true
             var name = feature.properties.name || '';
             if (visited.has(name)) {
               layer.bindTooltip(name);
+              var countryCities = cityData.filter(function (c) { return c.country === name; });
+              if (countryCities.length > 0) {
+                var cityNames = countryCities.map(function (c) { return c.name; }).join(', ');
+                layer.bindPopup('<strong>' + name + '</strong><br/>' + cityNames);
+              }
             }
           }
         }).addTo(map);
-      });
+      })
+      .catch(function (err) { console.warn('Failed to load country data:', err); });
 
     cityData.forEach(function (city) {
       if (city.lat && city.lon) {
@@ -96,14 +139,59 @@ map: true
     });
   }
 
-  function updateTheme() {
-    if (!map) return;
+  function buildDonutOption() {
     var dark = isDark();
-    tileLayer.setUrl(dark ? TILES.dark : TILES.light);
-    if (geoLayer) { geoLayer.setStyle(countryStyle); }
-    var style = cityStyle();
-    cityMarkers.forEach(function (m) { m.setStyle(style); });
+    var textColor = dark ? '#c8c8c8' : '#333333';
+    return {
+      tooltip: {
+        trigger: 'item',
+        formatter: function (p) { return p.name + ': ' + p.value + ' countr' + (p.value === 1 ? 'y' : 'ies'); }
+      },
+      legend: {
+        bottom: 0,
+        textStyle: { color: textColor, fontSize: 12 }
+      },
+      series: [{
+        type: 'pie',
+        radius: ['40%', '65%'],
+        center: ['50%', '45%'],
+        avoidLabelOverlap: true,
+        itemStyle: { borderRadius: 6, borderColor: dark ? '#22223a' : '#fff', borderWidth: 2 },
+        label: {
+          show: true,
+          formatter: '{b}\n{c}',
+          color: textColor,
+          fontSize: 12
+        },
+        data: continentData.map(function (d) {
+          return { name: d.name, value: d.value, itemStyle: { color: CONTINENT_COLORS[d.name] || '#888' } };
+        })
+      }]
+    };
   }
+
+  function initDonut() {
+    var el = document.getElementById('travel-donut');
+    if (!el || typeof echarts === 'undefined') return;
+    if (donutChart) { echarts.dispose(el); }
+    donutChart = echarts.init(el);
+    donutChart.setOption(buildDonutOption());
+  }
+
+  function updateTheme() {
+    if (map) {
+      var dark = isDark();
+      tileLayer.setUrl(dark ? TILES.dark : TILES.light);
+      if (geoLayer) { geoLayer.setStyle(countryStyle); }
+      var style = cityStyle();
+      cityMarkers.forEach(function (m) { m.setStyle(style); });
+    }
+    initDonut();
+  }
+
+  window.addEventListener('resize', function () {
+    if (donutChart) { donutChart.resize(); }
+  });
 
   new MutationObserver(function (mutations) {
     mutations.forEach(function (m) {
@@ -111,12 +199,15 @@ map: true
     });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  if (document.readyState === 'complete') {
+  function initAll() {
     initMap();
+    initDonut();
+  }
+
+  if (document.readyState === 'complete') {
+    setTimeout(initAll, 0);
   } else {
-    document.addEventListener('readystatechange', function () {
-      if (document.readyState === 'complete') initMap();
-    });
+    window.addEventListener('load', initAll);
   }
 })();
 </script>

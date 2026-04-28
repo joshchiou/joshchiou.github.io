@@ -449,7 +449,7 @@ ul.timeline li::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.48rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #fff;
   margin-top: 2px;
@@ -507,18 +507,19 @@ ul.timeline li::before {
 }
 
 .cv-sub-role-title {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--global-text-color);
 }
 
 .cv-sub-role-year {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--global-text-color-light);
 }
 
+.cv-entry-desc,
 .cv-sub-role-desc {
-  font-size: 0.82rem;
+  font-size: 1rem;
   color: var(--global-text-color);
   margin-top: 4px;
   line-height: 1.5;

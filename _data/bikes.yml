@@ -1,0 +1,20 @@
+- name: Lemond Zurich
+  year: 2002
+  image: null
+  status: Daily driver
+  groups:
+    - label: Frame & Fit
+      items:
+        - Steel (Reynolds 853)
+        - 51cm
+    - label: Drivetrain
+      items:
+        - Shimano 105 R7000 (2x11)
+    - label: Wheels & Tires
+      items:
+        - Stock wheels
+        - Continental GP 5000
+    - label: Contact Points
+      items:
+        - Stock saddle
+        - Stock bar tape

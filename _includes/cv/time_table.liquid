@@ -3,7 +3,7 @@
     <li class="list-group-item">
       <div class="row">
         {% if content.year %}
-          <div class="col-xs-2 cl-sm-2 col-md-2 text-center" style="width: 75px">
+          <div class="col-xs-2 cl-sm-2 col-md-2 text-left" style="width: 85px; padding-right: 12px;">
             <table class="table-cv">
               <tbody>
                 <tr>
@@ -60,12 +60,8 @@
               </tbody>
             </table>
           {% endif %}
-          {% if content.icon_label %}
-              </div>
-            </div>
-          {% endif %}
           {% if content.roles %}
-            <div class="cv-grouped-roles ml-1 ml-md-4">
+            <div class="cv-grouped-roles">
               {% for role in content.roles %}
                 <div class="cv-sub-role">
                   <div class="cv-sub-role-marker{% if forloop.first %} cv-sub-role-marker--current{% endif %}"></div>
@@ -81,8 +77,12 @@
             </div>
           {% else %}
             {% if content.maindescription %}
-              <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
+              <div class="cv-entry-desc">{{ content.maindescription }}</div>
             {% endif %}
+          {% endif %}
+          {% if content.icon_label %}
+              </div>
+            </div>
           {% endif %}
           {% if content.description %}
             <ul class="items">

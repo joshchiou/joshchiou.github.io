@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /repositories/
+permalink: /code/
 title: code
 nav: true
 nav_order: 4
@@ -10,7 +10,7 @@ description: >
 ---
 
 <div class="github-profile-card mb-5" id="github-profile-card">
-  <div class="github-profile-inner">
+  <div class="github-profile-inner-d">
     <div class="github-profile-left">
       <a href="https://github.com/joshchiou" target="_blank" rel="noopener noreferrer"
          class="github-profile-identity">
@@ -21,10 +21,27 @@ description: >
         </div>
       </a>
     </div>
-    <div class="github-profile-stats" id="gh-stats">
-      <div class="gh-stat"><span class="gh-stat-val" id="gh-repos">—</span><span class="gh-stat-label">repos</span></div>
-      <div class="gh-stat"><span class="gh-stat-val" id="gh-stars">—</span><span class="gh-stat-label">stars</span></div>
-      <div class="gh-stat"><span class="gh-stat-val" id="gh-followers">—</span><span class="gh-stat-label">followers</span></div>
+    <div class="github-profile-right-d">
+      <div class="github-profile-stats" id="gh-stats">
+        <div class="gh-stat"><span class="gh-stat-val" id="gh-repos">—</span><span class="gh-stat-label">repos</span></div>
+        <div class="gh-stat"><span class="gh-stat-val" id="gh-stars">—</span><span class="gh-stat-label">stars</span></div>
+        <div class="gh-stat"><span class="gh-stat-val" id="gh-followers">—</span><span class="gh-stat-label">followers</span></div>
+      </div>
+      <div class="gh-stat-divider"></div>
+      <div class="github-profile-orgs-d">
+        <div class="github-profile-orgs-icons">
+          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly & Company">
+            <img src="https://avatars.githubusercontent.com/u/16001067?v=4&s=40" alt="Eli Lilly">
+          </a>
+          <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
+            <img src="https://avatars.githubusercontent.com/u/11897326?v=4&s=40" alt="conda-forge">
+          </a>
+          <a href="https://github.com/noobies-tennis" target="_blank" rel="noopener noreferrer" title="Noobies Tennis">
+            <img src="https://avatars.githubusercontent.com/u/97570579?v=4&s=40" alt="Noobies Tennis">
+          </a>
+        </div>
+        <span class="github-profile-orgs-label">organizations</span>
+      </div>
     </div>
   </div>
 </div>
