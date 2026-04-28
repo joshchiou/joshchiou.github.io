@@ -2,7 +2,7 @@
 layout: page
 title: Travel
 description: Places visited, mapped.
-img: assets/img/projects/placeholder-fun.svg
+img: assets/img/projects/fun/travel.svg
 importance: 5
 category: fun
 map: true
@@ -21,44 +21,62 @@ map: true
 
 <script>
 (function () {
-  // Countries visited (injected at build time by Jekyll)
   var visitedCountries = {{ countries | map: "name" | jsonify }};
-
-  // Cities (lat/lon markers)
   var cityData = {{ cities | jsonify }};
 
-  // Wait for Leaflet to be available (loaded by map: true in front matter)
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
+  var map, tileLayer, geoLayer, cityMarkers = [];
+
+  var TILES = {
+    light: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+    dark: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
+  };
+
+  function countryStyle(feature) {
+    var name = feature.properties.name || '';
+    var visited = new Set(visitedCountries);
+    var isVisited = visited.has(name);
+    var dark = isDark();
+    return {
+      fillColor: isVisited ? (dark ? '#58a6ff' : '#4575b4') : (dark ? '#2d333b' : '#d3d3d3'),
+      fillOpacity: isVisited ? 0.65 : (dark ? 0.4 : 0.3),
+      color: dark ? '#444c56' : '#fff',
+      weight: 0.5
+    };
+  }
+
+  function cityStyle() {
+    var dark = isDark();
+    return {
+      radius: 4,
+      fillColor: dark ? '#f97583' : '#e84848',
+      color: dark ? '#2d333b' : '#fff',
+      weight: 1,
+      fillOpacity: 0.8
+    };
+  }
+
   function initMap() {
     var mapEl = document.getElementById('travel-map');
     if (!mapEl) return;
 
-    var map = L.map(mapEl, { scrollWheelZoom: false }).setView([20, 0], 2);
+    var dark = isDark();
+    map = L.map(mapEl, { scrollWheelZoom: false }).setView([20, 0], 2);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    tileLayer = L.tileLayer(dark ? TILES.dark : TILES.light, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom: 19
     }).addTo(map);
 
-    // Load committed GeoJSON (no CDN dependency)
-    // NOTE: world-countries.geojson uses feature.properties.name.
-    // These names must stay in sync with COUNTRY_ALIASES in scripts/parse_location_history.py.
-    // e.g. the GeoJSON has "United States of America" but Nominatim + COUNTRY_ALIASES
-    // normalizes to "United States" — so COUNTRY_ALIASES must map the GeoJSON name too.
     fetch('{{ "/assets/json/world-countries.geojson" | relative_url }}')
       .then(function (r) { return r.json(); })
       .then(function (geojson) {
         var visited = new Set(visitedCountries);
-        L.geoJSON(geojson, {
-          style: function (feature) {
-            var name = feature.properties.name || '';
-            var isVisited = visited.has(name);
-            return {
-              fillColor: isVisited ? '#4575b4' : '#d3d3d3',
-              fillOpacity: isVisited ? 0.65 : 0.3,
-              color: '#fff',
-              weight: 0.5
-            };
-          },
+        geoLayer = L.geoJSON(geojson, {
+          style: countryStyle,
           onEachFeature: function (feature, layer) {
             var name = feature.properties.name || '';
             if (visited.has(name)) {
@@ -68,19 +86,30 @@ map: true
         }).addTo(map);
       });
 
-    // City markers
     cityData.forEach(function (city) {
       if (city.lat && city.lon) {
-        L.circleMarker([city.lat, city.lon], {
-          radius: 4,
-          fillColor: '#e84848',
-          color: '#fff',
-          weight: 1,
-          fillOpacity: 0.8
-        }).bindTooltip(city.name + ', ' + city.country).addTo(map);
+        var marker = L.circleMarker([city.lat, city.lon], cityStyle())
+          .bindTooltip(city.name + ', ' + city.country)
+          .addTo(map);
+        cityMarkers.push(marker);
       }
     });
   }
+
+  function updateTheme() {
+    if (!map) return;
+    var dark = isDark();
+    tileLayer.setUrl(dark ? TILES.dark : TILES.light);
+    if (geoLayer) { geoLayer.setStyle(countryStyle); }
+    var style = cityStyle();
+    cityMarkers.forEach(function (m) { m.setStyle(style); });
+  }
+
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.attributeName === 'data-theme') { updateTheme(); }
+    });
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   if (document.readyState === 'complete') {
     initMap();

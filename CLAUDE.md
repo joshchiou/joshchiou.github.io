@@ -59,7 +59,19 @@ restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
 ## Don't touch unless re-templating
 
-- `_sass/` — al-folio CSS (upstream)
+- `_sass/` — al-folio CSS (upstream), except custom additions at the end of `_base.scss`
 - `assets/libs/` — vendored JS libraries
 - `_config.yml` third_party_libraries block — library versions/integrity hashes
 - `bin/` — CI scripts (upstream)
+
+## Project card images
+
+Each project card has a thumbnail image set via `img:` in its frontmatter. Currently using
+abstract SVGs in `assets/img/projects/work/` and `assets/img/projects/fun/`.
+
+To replace an SVG with a real image:
+1. Run `python3 scripts/prep_images.py /path/to/source assets/img/projects/work/` (or `fun/`)
+2. Update the `img:` field in the project's `_projects/*.md` frontmatter
+3. Optionally add `img_position: top` (or `center`, `bottom`) to control cropping via CSS `object-position`
+
+Image pipeline generates responsive WebP versions at 480/800/1400px widths automatically.

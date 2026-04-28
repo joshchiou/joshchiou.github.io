@@ -2,7 +2,7 @@
 layout: page
 title: Genetics-Driven Novel Target Discovery
 description: Integrative multi-omics pipeline for identifying and validating drug targets at Pfizer.
-img: assets/img/projects/placeholder-work.svg
+img: assets/img/projects/work/pfizer-targets.svg
 importance: 4
 category: work
 related_publications: false

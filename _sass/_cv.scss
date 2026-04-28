@@ -267,3 +267,259 @@ ul.timeline li::before {
     color: var(--global-bg-color);
   }
 }
+
+/*****************************
+ * Interactive Timeline
+ *****************************/
+
+.cv-timeline {
+  margin-bottom: 2rem;
+  padding: 1.5rem 0;
+}
+
+.timeline-track {
+  position: relative;
+  padding-left: 36px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--global-divider-color);
+  }
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 1.25rem;
+
+  &:last-child { padding-bottom: 0; }
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -36px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #fff;
+
+  &--current {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--global-theme-color) 25%, transparent);
+  }
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--global-bg-color);
+  border: 2px solid var(--global-theme-color);
+  transition: all 0.2s ease;
+
+  &--current {
+    background: var(--global-theme-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--global-theme-color) 25%, transparent);
+  }
+
+  &--edu {
+    border-color: #e67e22;
+  }
+}
+
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-year {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--global-theme-color);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1px;
+
+  &--edu {
+    color: #e67e22;
+  }
+}
+
+.timeline-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+  line-height: 1.35;
+  margin-bottom: 0;
+}
+
+.timeline-institution {
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+  margin-top: 0;
+}
+
+// Expandable roles chip
+.timeline-roles-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--global-theme-color);
+  background: color-mix(in srgb, var(--global-theme-color) 8%, transparent);
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-left: 4px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  vertical-align: baseline;
+  line-height: 1;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+  }
+
+  i {
+    font-size: 0.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  &.expanded i {
+    transform: rotate(180deg);
+  }
+}
+
+.timeline-roles-expand {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+
+  &.open {
+    max-height: 200px;
+  }
+}
+
+.timeline-prev-role {
+  font-size: 0.76rem;
+  color: var(--global-text-color-light);
+  font-style: italic;
+  line-height: 1.3;
+  padding-left: 12px;
+  border-left: 2px solid var(--global-theme-color);
+  display: block;
+}
+
+/*****************************
+ * Experience card icon circles
+ *****************************/
+
+.cv-entry-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cv-icon-circle {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.cv-entry-header-text {
+  flex: 1;
+  min-width: 0;
+
+  .title {
+    margin-left: 0 !important;
+  }
+
+  .institution {
+    margin-left: 0 !important;
+  }
+}
+
+/*****************************
+ * Grouped sub-roles (LinkedIn-style)
+ *****************************/
+
+.cv-grouped-roles {
+  margin-top: 0.5rem;
+}
+
+.cv-sub-role {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+
+  & + .cv-sub-role {
+    border-top: 1px solid var(--global-divider-color);
+  }
+}
+
+.cv-sub-role-marker {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  background: transparent;
+  border: 2px solid var(--global-text-color-light);
+
+  &--current {
+    background: var(--global-theme-color);
+    border-color: var(--global-theme-color);
+  }
+}
+
+.cv-sub-role-body {
+  flex: 1;
+}
+
+.cv-sub-role-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+.cv-sub-role-year {
+  font-size: 0.7rem;
+  color: var(--global-text-color-light);
+}
+
+.cv-sub-role-desc {
+  font-size: 0.82rem;
+  color: var(--global-text-color);
+  margin-top: 4px;
+  line-height: 1.5;
+}

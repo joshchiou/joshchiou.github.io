@@ -2,7 +2,7 @@
 layout: page
 title: Translational Proteomics for Obesity Clinical Trials
 description: Generating mechanistic and biomarker insights from large-scale proteomics in phase 2/3 obesity programs.
-img: assets/img/projects/placeholder-work.svg
+img: assets/img/projects/work/lilly-proteomics.svg
 importance: 5
 category: work
 related_publications: false

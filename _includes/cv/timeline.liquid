@@ -1,0 +1,76 @@
+<div class="cv-timeline">
+  {% assign experience = site.data.cv | where: "title", "Experience" | first %}
+  {% assign education = site.data.cv | where: "title", "Education" | first %}
+
+  {% assign merged_items = "" | split: "" %}
+  {% assign skip_titles = "Graduate Student Researcher" | split: "|" %}
+
+  {% if experience %}
+    {% for item in experience.contents %}
+      {% unless skip_titles contains item.title %}
+        {% assign merged_items = merged_items | push: item %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+
+  {% if education %}
+    {% for item in education.contents %}
+      {% assign merged_items = merged_items | push: item %}
+    {% endfor %}
+  {% endif %}
+
+  {% assign sorted_items = merged_items | sort: "year" | reverse %}
+
+  <div class="timeline-track">
+    {% for item in sorted_items %}
+      {% assign year_parts = item.year | split: " - " %}
+      {% assign end_part = year_parts[1] | default: "" | strip %}
+      {% assign is_current = false %}
+      {% if end_part == "now" %}
+        {% assign is_current = true %}
+      {% endif %}
+
+      {% assign is_education = false %}
+      {% if item.title contains "PhD" or item.title contains "B.S." %}
+        {% assign is_education = true %}
+      {% endif %}
+
+      {% assign full_institution = item.institution %}
+      {% if item.institution == "UC San Diego" %}
+        {% assign full_institution = "University of California, San Diego" %}
+      {% endif %}
+
+      <div class="timeline-item{% if is_current %} timeline-item--current{% endif %}{% if is_education %} timeline-item--edu{% endif %}">
+        <div class="timeline-marker">
+          {% if item.icon_label %}
+            <div class="timeline-logo{% if is_current %} timeline-logo--current{% endif %}" style="background:{{ item.icon_bg }};{% if item.icon_color %} color:{{ item.icon_color }};{% endif %}">
+              {{ item.icon_label }}
+            </div>
+          {% else %}
+            <div class="timeline-dot{% if is_current %} timeline-dot--current{% endif %}{% if is_education %} timeline-dot--edu{% endif %}"></div>
+          {% endif %}
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-year{% if is_education %} timeline-year--edu{% endif %}">{{ item.year }}</div>
+          <div class="timeline-title">
+            {{ item.title }}
+            {% if item.previous_title %}
+              <span class="timeline-roles-chip" onclick="this.closest('.timeline-item').querySelector('.timeline-roles-expand').classList.toggle('open'); this.classList.toggle('expanded');">
+                {% if item.roles %}{{ item.roles | size }} roles{% else %}2 roles{% endif %}
+                <i class="fa-solid fa-chevron-down"></i>
+              </span>
+            {% endif %}
+          </div>
+          {% if item.previous_title %}
+            <div class="timeline-roles-expand">
+              <span class="timeline-prev-role">{{ item.previous_title }} · {{ item.previous_year }}</span>
+            </div>
+          {% endif %}
+          <div class="timeline-institution">
+            {{ full_institution }}{% if item.title contains "PhD" %} · Gaulton Lab{% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

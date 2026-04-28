@@ -2,7 +2,7 @@
 layout: page
 title: Cycling
 description: Strava-powered cycling stats — activity calendar and all-time totals.
-img: assets/img/projects/placeholder-fun.svg
+img: assets/img/projects/fun/cycling.svg
 importance: 2
 category: fun
 chart:

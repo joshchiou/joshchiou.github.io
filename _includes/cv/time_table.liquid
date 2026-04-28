@@ -28,6 +28,13 @@
           </div>
         {% endif %}
         <div class="col-xs-10 cl-sm-10 col-md-10 mt-2 mt-md-0">
+          {% if content.icon_label %}
+            <div class="cv-entry-header">
+              <div class="cv-icon-circle" style="background:{{ content.icon_bg }};{% if content.icon_color %} color:{{ content.icon_color }};{% endif %}">
+                {{ content.icon_label }}
+              </div>
+              <div class="cv-entry-header-text">
+          {% endif %}
           {% if content.title %}
             <h6 class="title font-weight-bold ml-1 ml-md-4">{{ content.title }}</h6>
           {% endif %}
@@ -53,8 +60,29 @@
               </tbody>
             </table>
           {% endif %}
-          {% if content.maindescription %}
-            <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
+          {% if content.icon_label %}
+              </div>
+            </div>
+          {% endif %}
+          {% if content.roles %}
+            <div class="cv-grouped-roles ml-1 ml-md-4">
+              {% for role in content.roles %}
+                <div class="cv-sub-role">
+                  <div class="cv-sub-role-marker{% if forloop.first %} cv-sub-role-marker--current{% endif %}"></div>
+                  <div class="cv-sub-role-body">
+                    <div class="cv-sub-role-title">{{ role.title }}</div>
+                    <div class="cv-sub-role-year">{{ role.year }}</div>
+                    {% if role.maindescription %}
+                      <div class="cv-sub-role-desc">{{ role.maindescription }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            {% if content.maindescription %}
+              <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
+            {% endif %}
           {% endif %}
           {% if content.description %}
             <ul class="items">

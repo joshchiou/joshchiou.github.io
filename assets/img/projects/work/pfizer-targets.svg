@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a150a"/>
+      <stop offset="100%" stop-color="#0d1f12"/>
+    </linearGradient>
+    <radialGradient id="glow4" cx="0.4" cy="0.45" r="0.5">
+      <stop offset="0%" stop-color="#38b000" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#008000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg4)"/>
+  <!-- dot grid -->
+  <g fill="#ffffff" fill-opacity="0.03">
+    <circle cx="30" cy="30" r="1"/><circle cx="80" cy="30" r="1"/><circle cx="130" cy="30" r="1"/><circle cx="180" cy="30" r="1"/><circle cx="230" cy="30" r="1"/><circle cx="280" cy="30" r="1"/><circle cx="330" cy="30" r="1"/><circle cx="380" cy="30" r="1"/><circle cx="430" cy="30" r="1"/><circle cx="480" cy="30" r="1"/><circle cx="530" cy="30" r="1"/><circle cx="580" cy="30" r="1"/>
+    <circle cx="30" cy="80" r="1"/><circle cx="80" cy="80" r="1"/><circle cx="130" cy="80" r="1"/><circle cx="180" cy="80" r="1"/><circle cx="230" cy="80" r="1"/><circle cx="280" cy="80" r="1"/><circle cx="330" cy="80" r="1"/><circle cx="380" cy="80" r="1"/><circle cx="430" cy="80" r="1"/><circle cx="480" cy="80" r="1"/><circle cx="530" cy="80" r="1"/><circle cx="580" cy="80" r="1"/>
+    <circle cx="30" cy="130" r="1"/><circle cx="80" cy="130" r="1"/><circle cx="130" cy="130" r="1"/><circle cx="180" cy="130" r="1"/><circle cx="230" cy="130" r="1"/><circle cx="280" cy="130" r="1"/><circle cx="330" cy="130" r="1"/><circle cx="380" cy="130" r="1"/><circle cx="430" cy="130" r="1"/><circle cx="480" cy="130" r="1"/><circle cx="530" cy="130" r="1"/><circle cx="580" cy="130" r="1"/>
+    <circle cx="30" cy="180" r="1"/><circle cx="80" cy="180" r="1"/><circle cx="130" cy="180" r="1"/><circle cx="180" cy="180" r="1"/><circle cx="230" cy="180" r="1"/><circle cx="280" cy="180" r="1"/><circle cx="330" cy="180" r="1"/><circle cx="380" cy="180" r="1"/><circle cx="430" cy="180" r="1"/><circle cx="480" cy="180" r="1"/><circle cx="530" cy="180" r="1"/><circle cx="580" cy="180" r="1"/>
+    <circle cx="30" cy="230" r="1"/><circle cx="80" cy="230" r="1"/><circle cx="130" cy="230" r="1"/><circle cx="180" cy="230" r="1"/><circle cx="230" cy="230" r="1"/><circle cx="280" cy="230" r="1"/><circle cx="330" cy="230" r="1"/><circle cx="380" cy="230" r="1"/><circle cx="430" cy="230" r="1"/><circle cx="480" cy="230" r="1"/><circle cx="530" cy="230" r="1"/><circle cx="580" cy="230" r="1"/>
+    <circle cx="30" cy="280" r="1"/><circle cx="80" cy="280" r="1"/><circle cx="130" cy="280" r="1"/><circle cx="180" cy="280" r="1"/><circle cx="230" cy="280" r="1"/><circle cx="280" cy="280" r="1"/><circle cx="330" cy="280" r="1"/><circle cx="380" cy="280" r="1"/><circle cx="430" cy="280" r="1"/><circle cx="480" cy="280" r="1"/><circle cx="530" cy="280" r="1"/><circle cx="580" cy="280" r="1"/>
+    <circle cx="30" cy="330" r="1"/><circle cx="80" cy="330" r="1"/><circle cx="130" cy="330" r="1"/><circle cx="180" cy="330" r="1"/><circle cx="230" cy="330" r="1"/><circle cx="280" cy="330" r="1"/><circle cx="330" cy="330" r="1"/><circle cx="380" cy="330" r="1"/><circle cx="430" cy="330" r="1"/><circle cx="480" cy="330" r="1"/><circle cx="530" cy="330" r="1"/><circle cx="580" cy="330" r="1"/>
+    <circle cx="30" cy="380" r="1"/><circle cx="80" cy="380" r="1"/><circle cx="130" cy="380" r="1"/><circle cx="180" cy="380" r="1"/><circle cx="230" cy="380" r="1"/><circle cx="280" cy="380" r="1"/><circle cx="330" cy="380" r="1"/><circle cx="380" cy="380" r="1"/><circle cx="430" cy="380" r="1"/><circle cx="480" cy="380" r="1"/><circle cx="530" cy="380" r="1"/><circle cx="580" cy="380" r="1"/>
+  </g>
+  <!-- ambient glow -->
+  <ellipse cx="220" cy="200" rx="240" ry="170" fill="url(#glow4)"/>
+  <!-- target crosshair 1 (main) -->
+  <g stroke="#38b000" fill="none">
+    <circle cx="200" cy="190" r="60" stroke-opacity="0.2" stroke-width="1.5"/>
+    <circle cx="200" cy="190" r="40" stroke-opacity="0.3" stroke-width="1.5"/>
+    <circle cx="200" cy="190" r="20" stroke-opacity="0.45" stroke-width="1.5"/>
+    <circle cx="200" cy="190" r="4" fill="#38b000" fill-opacity="0.6" stroke="none"/>
+    <!-- crosshair lines -->
+    <line x1="200" y1="120" x2="200" y2="170" stroke-opacity="0.2" stroke-width="1"/>
+    <line x1="200" y1="210" x2="200" y2="260" stroke-opacity="0.2" stroke-width="1"/>
+    <line x1="130" y1="190" x2="180" y2="190" stroke-opacity="0.2" stroke-width="1"/>
+    <line x1="220" y1="190" x2="270" y2="190" stroke-opacity="0.2" stroke-width="1"/>
+  </g>
+  <!-- target crosshair 2 (smaller) -->
+  <g stroke="#008000" fill="none">
+    <circle cx="460" cy="150" r="35" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="460" cy="150" r="22" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="460" cy="150" r="10" stroke-opacity="0.35" stroke-width="1"/>
+    <circle cx="460" cy="150" r="3" fill="#008000" fill-opacity="0.5" stroke="none"/>
+    <line x1="460" y1="108" x2="460" y2="140" stroke-opacity="0.15" stroke-width="0.8"/>
+    <line x1="460" y1="160" x2="460" y2="192" stroke-opacity="0.15" stroke-width="0.8"/>
+    <line x1="418" y1="150" x2="450" y2="150" stroke-opacity="0.15" stroke-width="0.8"/>
+    <line x1="470" y1="150" x2="502" y2="150" stroke-opacity="0.15" stroke-width="0.8"/>
+  </g>
+  <!-- target crosshair 3 (smallest) -->
+  <g stroke="#38b000" fill="none">
+    <circle cx="380" cy="310" r="25" stroke-opacity="0.12" stroke-width="1"/>
+    <circle cx="380" cy="310" r="15" stroke-opacity="0.2" stroke-width="1"/>
+    <circle cx="380" cy="310" r="2.5" fill="#38b000" fill-opacity="0.4" stroke="none"/>
+  </g>
+  <!-- hexagonal rings (benzene / molecular structures) -->
+  <g stroke="#38b000" fill="none" stroke-width="1">
+    <!-- hexagon 1 at (100, 80) -->
+    <polygon points="100,60 118,70 118,90 100,100 82,90 82,70" stroke-opacity="0.2"/>
+    <!-- hexagon 2 fused -->
+    <polygon points="118,70 136,60 154,70 154,90 136,100 118,90" stroke-opacity="0.15"/>
+    <!-- hexagon 3 at (490, 280) -->
+    <polygon points="490,262 506,271 506,289 490,298 474,289 474,271" stroke-opacity="0.18"/>
+    <!-- hexagon 4 at (530, 310) -->
+    <polygon points="506,289 522,280 538,289 538,307 522,316 506,307" stroke-opacity="0.13"/>
+    <!-- hexagon 5 at (540, 80) -->
+    <polygon points="540,62 554,70 554,86 540,94 526,86 526,70" stroke-opacity="0.15"/>
+    <!-- hexagon 6 at (80, 320) -->
+    <polygon points="80,302 94,310 94,326 80,334 66,326 66,310" stroke-opacity="0.12"/>
+  </g>
+  <!-- molecular bond lines -->
+  <g stroke="#38b000" stroke-width="0.8">
+    <line x1="100" y1="100" x2="100" y2="125" stroke-opacity="0.15"/>
+    <line x1="154" y1="70" x2="172" y2="58" stroke-opacity="0.12"/>
+    <line x1="82" y1="70" x2="65" y2="55" stroke-opacity="0.12"/>
+    <line x1="136" y1="100" x2="148" y2="118" stroke-opacity="0.1"/>
+    <line x1="490" y1="298" x2="490" y2="318" stroke-opacity="0.12"/>
+    <line x1="538" y1="307" x2="555" y2="318" stroke-opacity="0.1"/>
+    <line x1="540" y1="94" x2="540" y2="112" stroke-opacity="0.12"/>
+    <line x1="554" y1="70" x2="572" y2="60" stroke-opacity="0.1"/>
+    <line x1="80" y1="334" x2="80" y2="354" stroke-opacity="0.1"/>
+  </g>
+  <!-- bond atoms (small dots at ends) -->
+  <g fill="#38b000">
+    <circle cx="100" cy="125" r="2" fill-opacity="0.25"/>
+    <circle cx="172" cy="58" r="2" fill-opacity="0.2"/>
+    <circle cx="65" cy="55" r="2" fill-opacity="0.2"/>
+    <circle cx="148" cy="118" r="2" fill-opacity="0.18"/>
+    <circle cx="490" cy="318" r="2" fill-opacity="0.2"/>
+    <circle cx="555" cy="318" r="2" fill-opacity="0.18"/>
+    <circle cx="540" cy="112" r="2" fill-opacity="0.2"/>
+    <circle cx="572" cy="60" r="2" fill-opacity="0.18"/>
+  </g>
+  <!-- scattered molecule dots -->
+  <g fill="#38b000">
+    <circle cx="320" cy="60" r="1.5" fill-opacity="0.2"/>
+    <circle cx="50" cy="200" r="1.5" fill-opacity="0.15"/>
+    <circle cx="560" cy="200" r="1.5" fill-opacity="0.15"/>
+    <circle cx="280" cy="350" r="1.5" fill-opacity="0.2"/>
+    <circle cx="160" cy="350" r="2" fill-opacity="0.15"/>
+    <circle cx="520" cy="360" r="1.5" fill-opacity="0.15"/>
+    <circle cx="350" cy="120" r="1.5" fill-opacity="0.18"/>
+  </g>
+  <g fill="#008000">
+    <circle cx="420" cy="50" r="1.5" fill-opacity="0.2"/>
+    <circle cx="30" cy="150" r="1.5" fill-opacity="0.15"/>
+    <circle cx="570" cy="300" r="1.5" fill-opacity="0.15"/>
+    <circle cx="200" cy="360" r="2" fill-opacity="0.15"/>
+    <circle cx="450" cy="380" r="1.5" fill-opacity="0.12"/>
+  </g>
+  <!-- glow around main target -->
+  <circle cx="200" cy="190" r="75" fill="#38b000" fill-opacity="0.03"/>
+  <circle cx="460" cy="150" r="45" fill="#008000" fill-opacity="0.02"/>
+</svg>

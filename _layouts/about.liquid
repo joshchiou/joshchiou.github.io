@@ -40,20 +40,70 @@ layout: default
 
     <div class="clearfix">{{ content }}</div>
 
+    <!-- Stats bar + CTA buttons (Option A: stats left, CTAs right) -->
+    {% assign stats = site.data.scholar_stats %}
+    <div class="about-hero-bar animate-in" style="clear: both;">
+      <div class="about-hero-left">
+        <div class="about-stats">
+          <div class="about-stat">
+            <span class="about-stat-num" id="stat-papers">{{ stats.total_papers }}</span>
+            <span class="about-stat-label">Publications</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num" id="stat-citations">{{ stats.citations }}</span>
+            <span class="about-stat-label">Citations</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">{{ stats.h_index }}</span>
+            <span class="about-stat-label">h-index</span>
+          </div>
+        </div>
+        {% if stats.top_journal_papers > 0 %}
+        <div class="about-journals">
+          <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
+          <span class="about-journal-pill">Nature</span>
+          <span class="about-journal-pill">Cell</span>
+          <span class="about-journal-pill">Nature Genetics</span>
+        </div>
+        {% endif %}
+      </div>
+      <div class="about-cta">
+        <a href="{{ '/publications/' | relative_url }}" class="about-cta-btn about-cta-primary">
+          <i class="fa-solid fa-book-open"></i> Publications
+        </a>
+        <a href="{{ '/assets/pdf/CV.pdf' | relative_url }}" class="about-cta-btn about-cta-secondary" target="_blank">
+          <i class="ai ai-cv"></i> Download CV
+        </a>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var els = document.querySelectorAll('#stat-papers, #stat-citations');
+      els.forEach(function (el) {
+        var n = parseInt(el.textContent, 10);
+        if (!isNaN(n)) el.textContent = n.toLocaleString();
+      });
+    })();
+    </script>
+
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
-      <h2>
+      <div class="animate-in">
+      <h2 class="about-section-heading">
         <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
       </h2>
       {% include news.liquid limit=true %}
+      </div>
     {% endif %}
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2 class="mt-4">
+      <div class="animate-in">
+      <h2 class="about-section-heading mt-4">
         <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
       </h2>
       {% include selected_papers.liquid %}
+      </div>
     {% endif %}
 
     <!-- Social -->

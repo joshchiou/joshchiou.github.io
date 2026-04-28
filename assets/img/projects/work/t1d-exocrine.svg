@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0f1a"/>
+      <stop offset="100%" stop-color="#1a1030"/>
+    </linearGradient>
+    <linearGradient id="acc1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#764ba2" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#764ba2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg1)"/>
+  <!-- grid dots -->
+  <g fill="#ffffff" fill-opacity="0.04">
+    <circle cx="30" cy="30" r="1"/><circle cx="70" cy="30" r="1"/><circle cx="110" cy="30" r="1"/><circle cx="150" cy="30" r="1"/><circle cx="190" cy="30" r="1"/><circle cx="230" cy="30" r="1"/><circle cx="270" cy="30" r="1"/><circle cx="310" cy="30" r="1"/><circle cx="350" cy="30" r="1"/><circle cx="390" cy="30" r="1"/><circle cx="430" cy="30" r="1"/><circle cx="470" cy="30" r="1"/><circle cx="510" cy="30" r="1"/><circle cx="550" cy="30" r="1"/>
+    <circle cx="30" cy="70" r="1"/><circle cx="70" cy="70" r="1"/><circle cx="110" cy="70" r="1"/><circle cx="150" cy="70" r="1"/><circle cx="190" cy="70" r="1"/><circle cx="230" cy="70" r="1"/><circle cx="270" cy="70" r="1"/><circle cx="310" cy="70" r="1"/><circle cx="350" cy="70" r="1"/><circle cx="390" cy="70" r="1"/><circle cx="430" cy="70" r="1"/><circle cx="470" cy="70" r="1"/><circle cx="510" cy="70" r="1"/><circle cx="550" cy="70" r="1"/>
+    <circle cx="30" cy="110" r="1"/><circle cx="70" cy="110" r="1"/><circle cx="110" cy="110" r="1"/><circle cx="150" cy="110" r="1"/><circle cx="190" cy="110" r="1"/><circle cx="230" cy="110" r="1"/><circle cx="270" cy="110" r="1"/><circle cx="310" cy="110" r="1"/><circle cx="350" cy="110" r="1"/><circle cx="390" cy="110" r="1"/><circle cx="430" cy="110" r="1"/><circle cx="470" cy="110" r="1"/><circle cx="510" cy="110" r="1"/><circle cx="550" cy="110" r="1"/>
+    <circle cx="30" cy="150" r="1"/><circle cx="70" cy="150" r="1"/><circle cx="110" cy="150" r="1"/><circle cx="150" cy="150" r="1"/><circle cx="190" cy="150" r="1"/><circle cx="230" cy="150" r="1"/><circle cx="270" cy="150" r="1"/><circle cx="310" cy="150" r="1"/><circle cx="350" cy="150" r="1"/><circle cx="390" cy="150" r="1"/><circle cx="430" cy="150" r="1"/><circle cx="470" cy="150" r="1"/><circle cx="510" cy="150" r="1"/><circle cx="550" cy="150" r="1"/>
+    <circle cx="30" cy="190" r="1"/><circle cx="70" cy="190" r="1"/><circle cx="110" cy="190" r="1"/><circle cx="150" cy="190" r="1"/><circle cx="190" cy="190" r="1"/><circle cx="230" cy="190" r="1"/><circle cx="270" cy="190" r="1"/><circle cx="310" cy="190" r="1"/><circle cx="350" cy="190" r="1"/><circle cx="390" cy="190" r="1"/><circle cx="430" cy="190" r="1"/><circle cx="470" cy="190" r="1"/><circle cx="510" cy="190" r="1"/><circle cx="550" cy="190" r="1"/>
+    <circle cx="30" cy="230" r="1"/><circle cx="70" cy="230" r="1"/><circle cx="110" cy="230" r="1"/><circle cx="150" cy="230" r="1"/><circle cx="190" cy="230" r="1"/><circle cx="230" cy="230" r="1"/><circle cx="270" cy="230" r="1"/><circle cx="310" cy="230" r="1"/><circle cx="350" cy="230" r="1"/><circle cx="390" cy="230" r="1"/><circle cx="430" cy="230" r="1"/><circle cx="470" cy="230" r="1"/><circle cx="510" cy="230" r="1"/><circle cx="550" cy="230" r="1"/>
+    <circle cx="30" cy="270" r="1"/><circle cx="70" cy="270" r="1"/><circle cx="110" cy="270" r="1"/><circle cx="150" cy="270" r="1"/><circle cx="190" cy="270" r="1"/><circle cx="230" cy="270" r="1"/><circle cx="270" cy="270" r="1"/><circle cx="310" cy="270" r="1"/><circle cx="350" cy="270" r="1"/><circle cx="390" cy="270" r="1"/><circle cx="430" cy="270" r="1"/><circle cx="470" cy="270" r="1"/><circle cx="510" cy="270" r="1"/><circle cx="550" cy="270" r="1"/>
+    <circle cx="30" cy="310" r="1"/><circle cx="70" cy="310" r="1"/><circle cx="110" cy="310" r="1"/><circle cx="150" cy="310" r="1"/><circle cx="190" cy="310" r="1"/><circle cx="230" cy="310" r="1"/><circle cx="270" cy="310" r="1"/><circle cx="310" cy="310" r="1"/><circle cx="350" cy="310" r="1"/><circle cx="390" cy="310" r="1"/><circle cx="430" cy="310" r="1"/><circle cx="470" cy="310" r="1"/><circle cx="510" cy="310" r="1"/><circle cx="550" cy="310" r="1"/>
+    <circle cx="30" cy="350" r="1"/><circle cx="70" cy="350" r="1"/><circle cx="110" cy="350" r="1"/><circle cx="150" cy="350" r="1"/><circle cx="190" cy="350" r="1"/><circle cx="230" cy="350" r="1"/><circle cx="270" cy="350" r="1"/><circle cx="310" cy="350" r="1"/><circle cx="350" cy="350" r="1"/><circle cx="390" cy="350" r="1"/><circle cx="430" cy="350" r="1"/><circle cx="470" cy="350" r="1"/><circle cx="510" cy="350" r="1"/><circle cx="550" cy="350" r="1"/>
+  </g>
+  <!-- ambient glow -->
+  <ellipse cx="300" cy="200" rx="250" ry="180" fill="url(#glow1)"/>
+  <!-- DNA helix suggestion -->
+  <g stroke="#667eea" fill="none" stroke-width="1.5">
+    <path d="M40,380 Q100,340 130,300 Q160,260 150,220 Q140,180 170,140 Q200,100 230,60 Q260,20 300,0" stroke-opacity="0.15"/>
+    <path d="M80,380 Q120,340 140,300 Q160,260 160,220 Q160,180 180,140 Q200,100 240,60 Q270,20 310,0" stroke-opacity="0.15"/>
+    <!-- rungs -->
+    <line x1="55" y1="365" x2="90" y2="365" stroke-opacity="0.08"/>
+    <line x1="118" y1="310" x2="148" y2="310" stroke-opacity="0.08"/>
+    <line x1="148" y1="250" x2="162" y2="250" stroke-opacity="0.08"/>
+    <line x1="155" y1="190" x2="168" y2="190" stroke-opacity="0.08"/>
+    <line x1="178" y1="130" x2="188" y2="130" stroke-opacity="0.08"/>
+    <line x1="218" y1="70" x2="245" y2="70" stroke-opacity="0.08"/>
+  </g>
+  <!-- large cells (pancreas tissue) -->
+  <g fill="none" stroke-width="1.5">
+    <!-- cell 1 - large with nucleus -->
+    <circle cx="200" cy="160" r="42" stroke="#667eea" stroke-opacity="0.25" fill="#667eea" fill-opacity="0.04"/>
+    <circle cx="200" cy="160" r="16" stroke="#764ba2" stroke-opacity="0.4" fill="#764ba2" fill-opacity="0.08"/>
+    <circle cx="196" cy="156" r="5" fill="#764ba2" fill-opacity="0.3"/>
+    <!-- cell 2 -->
+    <circle cx="360" cy="120" r="36" stroke="#667eea" stroke-opacity="0.2" fill="#667eea" fill-opacity="0.03"/>
+    <circle cx="360" cy="120" r="14" stroke="#764ba2" stroke-opacity="0.35" fill="#764ba2" fill-opacity="0.06"/>
+    <circle cx="357" cy="117" r="4" fill="#764ba2" fill-opacity="0.25"/>
+    <!-- cell 3 - large prominent -->
+    <circle cx="420" cy="260" r="50" stroke="#764ba2" stroke-opacity="0.3" fill="#764ba2" fill-opacity="0.05"/>
+    <circle cx="420" cy="260" r="20" stroke="#667eea" stroke-opacity="0.45" fill="#667eea" fill-opacity="0.1"/>
+    <circle cx="415" cy="255" r="7" fill="#667eea" fill-opacity="0.35"/>
+    <!-- cell 4 -->
+    <circle cx="140" cy="300" r="32" stroke="#764ba2" stroke-opacity="0.2" fill="#764ba2" fill-opacity="0.03"/>
+    <circle cx="140" cy="300" r="12" stroke="#667eea" stroke-opacity="0.3" fill="#667eea" fill-opacity="0.06"/>
+    <!-- cell 5 -->
+    <circle cx="500" cy="150" r="28" stroke="#667eea" stroke-opacity="0.18" fill="#667eea" fill-opacity="0.03"/>
+    <circle cx="500" cy="150" r="10" stroke="#764ba2" stroke-opacity="0.3" fill="#764ba2" fill-opacity="0.06"/>
+    <!-- cell 6 -->
+    <circle cx="300" cy="310" r="38" stroke="#667eea" stroke-opacity="0.22" fill="#667eea" fill-opacity="0.04"/>
+    <circle cx="300" cy="310" r="15" stroke="#764ba2" stroke-opacity="0.38" fill="#764ba2" fill-opacity="0.08"/>
+    <circle cx="297" cy="307" r="5" fill="#764ba2" fill-opacity="0.28"/>
+    <!-- cell 7 - small -->
+    <circle cx="80" cy="180" r="20" stroke="#764ba2" stroke-opacity="0.15" fill="#764ba2" fill-opacity="0.02"/>
+    <circle cx="80" cy="180" r="7" stroke="#667eea" stroke-opacity="0.25" fill="#667eea" fill-opacity="0.05"/>
+    <!-- cell 8 -->
+    <circle cx="540" cy="320" r="25" stroke="#667eea" stroke-opacity="0.15" fill="#667eea" fill-opacity="0.02"/>
+    <circle cx="540" cy="320" r="9" stroke="#764ba2" stroke-opacity="0.25" fill="#764ba2" fill-opacity="0.05"/>
+  </g>
+  <!-- scattered small particles -->
+  <g fill="#667eea">
+    <circle cx="260" cy="80" r="2" fill-opacity="0.4"/>
+    <circle cx="480" cy="70" r="1.5" fill-opacity="0.3"/>
+    <circle cx="100" cy="100" r="1.5" fill-opacity="0.25"/>
+    <circle cx="550" cy="220" r="2" fill-opacity="0.35"/>
+    <circle cx="40" cy="260" r="1.5" fill-opacity="0.2"/>
+    <circle cx="460" cy="370" r="1.5" fill-opacity="0.25"/>
+    <circle cx="180" cy="370" r="2" fill-opacity="0.3"/>
+    <circle cx="350" cy="50" r="1.5" fill-opacity="0.2"/>
+    <circle cx="520" cy="80" r="1" fill-opacity="0.2"/>
+    <circle cx="240" cy="240" r="1.5" fill-opacity="0.2"/>
+  </g>
+  <g fill="#764ba2">
+    <circle cx="320" cy="200" r="1.5" fill-opacity="0.35"/>
+    <circle cx="160" cy="60" r="2" fill-opacity="0.25"/>
+    <circle cx="450" cy="190" r="1.5" fill-opacity="0.3"/>
+    <circle cx="70" cy="340" r="1.5" fill-opacity="0.2"/>
+    <circle cx="380" cy="370" r="2" fill-opacity="0.25"/>
+    <circle cx="570" cy="130" r="1.5" fill-opacity="0.2"/>
+  </g>
+  <!-- glow rings on featured cells -->
+  <circle cx="420" cy="260" r="58" fill="none" stroke="#764ba2" stroke-opacity="0.12" stroke-width="2"/>
+  <circle cx="200" cy="160" r="50" fill="none" stroke="#667eea" stroke-opacity="0.1" stroke-width="1.5"/>
+</svg>

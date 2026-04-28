@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2535"/>
+      <stop offset="100%" stop-color="#1e2d40"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="40%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#0984e3" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0984e3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="65%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#74b9ff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#74b9ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow3" cx="25%" cy="75%" r="35%">
+      <stop offset="0%" stop-color="#0984e3" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#0984e3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <!-- ambient glows -->
+  <ellipse cx="240" cy="180" rx="270" ry="230" fill="url(#glow1)"/>
+  <ellipse cx="390" cy="220" rx="230" ry="200" fill="url(#glow2)"/>
+  <ellipse cx="150" cy="300" rx="180" ry="150" fill="url(#glow3)"/>
+  <!-- dot grid -->
+  <g fill="#ffffff" fill-opacity="0.05">
+    <circle cx="60" cy="60" r="1.5"/><circle cx="120" cy="60" r="1.5"/><circle cx="180" cy="60" r="1.5"/>
+    <circle cx="240" cy="60" r="1.5"/><circle cx="300" cy="60" r="1.5"/><circle cx="360" cy="60" r="1.5"/>
+    <circle cx="420" cy="60" r="1.5"/><circle cx="480" cy="60" r="1.5"/><circle cx="540" cy="60" r="1.5"/>
+    <circle cx="60" cy="120" r="1.5"/><circle cx="120" cy="120" r="1.5"/><circle cx="180" cy="120" r="1.5"/>
+    <circle cx="240" cy="120" r="1.5"/><circle cx="300" cy="120" r="1.5"/><circle cx="360" cy="120" r="1.5"/>
+    <circle cx="420" cy="120" r="1.5"/><circle cx="480" cy="120" r="1.5"/><circle cx="540" cy="120" r="1.5"/>
+    <circle cx="60" cy="180" r="1.5"/><circle cx="120" cy="180" r="1.5"/><circle cx="180" cy="180" r="1.5"/>
+    <circle cx="240" cy="180" r="1.5"/><circle cx="300" cy="180" r="1.5"/><circle cx="360" cy="180" r="1.5"/>
+    <circle cx="420" cy="180" r="1.5"/><circle cx="480" cy="180" r="1.5"/><circle cx="540" cy="180" r="1.5"/>
+    <circle cx="60" cy="240" r="1.5"/><circle cx="120" cy="240" r="1.5"/><circle cx="180" cy="240" r="1.5"/>
+    <circle cx="240" cy="240" r="1.5"/><circle cx="300" cy="240" r="1.5"/><circle cx="360" cy="240" r="1.5"/>
+    <circle cx="420" cy="240" r="1.5"/><circle cx="480" cy="240" r="1.5"/><circle cx="540" cy="240" r="1.5"/>
+    <circle cx="60" cy="300" r="1.5"/><circle cx="120" cy="300" r="1.5"/><circle cx="180" cy="300" r="1.5"/>
+    <circle cx="240" cy="300" r="1.5"/><circle cx="300" cy="300" r="1.5"/><circle cx="360" cy="300" r="1.5"/>
+    <circle cx="420" cy="300" r="1.5"/><circle cx="480" cy="300" r="1.5"/><circle cx="540" cy="300" r="1.5"/>
+    <circle cx="60" cy="360" r="1.5"/><circle cx="120" cy="360" r="1.5"/><circle cx="180" cy="360" r="1.5"/>
+    <circle cx="240" cy="360" r="1.5"/><circle cx="300" cy="360" r="1.5"/><circle cx="360" cy="360" r="1.5"/>
+    <circle cx="420" cy="360" r="1.5"/><circle cx="480" cy="360" r="1.5"/><circle cx="540" cy="360" r="1.5"/>
+  </g>
+  <!-- globe outline -->
+  <g transform="translate(280, 190)">
+    <!-- outer circle -->
+    <circle cx="0" cy="0" r="95" fill="#0984e3" fill-opacity="0.04" stroke="#0984e3" stroke-opacity="0.3" stroke-width="1.5"/>
+    <!-- globe glow -->
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#74b9ff" stroke-opacity="0.08" stroke-width="6"/>
+    <!-- equator -->
+    <ellipse cx="0" cy="0" rx="95" ry="20" fill="none" stroke="#0984e3" stroke-opacity="0.15" stroke-width="0.8"/>
+    <!-- tropic lines -->
+    <ellipse cx="0" cy="-35" rx="88" ry="16" fill="none" stroke="#74b9ff" stroke-opacity="0.1" stroke-width="0.6"/>
+    <ellipse cx="0" cy="35" rx="88" ry="16" fill="none" stroke="#74b9ff" stroke-opacity="0.1" stroke-width="0.6"/>
+    <!-- polar circles -->
+    <ellipse cx="0" cy="-65" rx="70" ry="12" fill="none" stroke="#0984e3" stroke-opacity="0.08" stroke-width="0.5"/>
+    <ellipse cx="0" cy="65" rx="70" ry="12" fill="none" stroke="#0984e3" stroke-opacity="0.08" stroke-width="0.5"/>
+    <!-- meridian (vertical ellipse) -->
+    <ellipse cx="0" cy="0" rx="20" ry="95" fill="none" stroke="#0984e3" stroke-opacity="0.15" stroke-width="0.8"/>
+    <!-- additional meridians -->
+    <ellipse cx="0" cy="0" rx="55" ry="95" fill="none" stroke="#74b9ff" stroke-opacity="0.1" stroke-width="0.6"/>
+    <ellipse cx="0" cy="0" rx="80" ry="95" fill="none" stroke="#0984e3" stroke-opacity="0.08" stroke-width="0.5"/>
+    <!-- prime meridian -->
+    <line x1="0" y1="-95" x2="0" y2="95" stroke="#0984e3" stroke-opacity="0.1" stroke-width="0.5"/>
+  </g>
+  <!-- compass rose suggestion (lower left) -->
+  <g transform="translate(110, 310)">
+    <!-- outer ring -->
+    <circle cx="0" cy="0" r="28" fill="none" stroke="#0984e3" stroke-opacity="0.2" stroke-width="1"/>
+    <!-- cardinal directions -->
+    <line x1="0" y1="-26" x2="0" y2="26" stroke="#74b9ff" stroke-opacity="0.2" stroke-width="0.8"/>
+    <line x1="-26" y1="0" x2="26" y2="0" stroke="#74b9ff" stroke-opacity="0.2" stroke-width="0.8"/>
+    <!-- ordinal directions -->
+    <line x1="-18" y1="-18" x2="18" y2="18" stroke="#0984e3" stroke-opacity="0.12" stroke-width="0.6"/>
+    <line x1="18" y1="-18" x2="-18" y2="18" stroke="#0984e3" stroke-opacity="0.12" stroke-width="0.6"/>
+    <!-- north arrow (diamond shape) -->
+    <polygon points="0,-24 4,-10 0,-14 -4,-10" fill="#74b9ff" fill-opacity="0.35"/>
+    <!-- south pointer -->
+    <polygon points="0,24 3,12 0,16 -3,12" fill="#0984e3" fill-opacity="0.2"/>
+    <!-- center -->
+    <circle cx="0" cy="0" r="3" fill="#0984e3" fill-opacity="0.5"/>
+    <circle cx="0" cy="0" r="7" fill="none" stroke="#0984e3" stroke-opacity="0.15" stroke-width="0.8"/>
+  </g>
+  <!-- location pin markers on globe -->
+  <!-- pin 1 (top area) -->
+  <g transform="translate(310, 130)">
+    <circle cx="0" cy="0" r="4.5" fill="#74b9ff" fill-opacity="0.65"/>
+    <circle cx="0" cy="0" r="10" fill="none" stroke="#74b9ff" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#74b9ff" stroke-opacity="0.1" stroke-width="0.8"/>
+  </g>
+  <!-- pin 2 (middle right) -->
+  <g transform="translate(350, 200)">
+    <circle cx="0" cy="0" r="5" fill="#0984e3" fill-opacity="0.7"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#0984e3" stroke-opacity="0.22" stroke-width="1"/>
+  </g>
+  <!-- pin 3 (lower area) -->
+  <g transform="translate(250, 240)">
+    <circle cx="0" cy="0" r="3.5" fill="#74b9ff" fill-opacity="0.55"/>
+    <circle cx="0" cy="0" r="8" fill="none" stroke="#74b9ff" stroke-opacity="0.18" stroke-width="0.8"/>
+  </g>
+  <!-- pin 4 (left of globe) -->
+  <g transform="translate(210, 170)">
+    <circle cx="0" cy="0" r="4" fill="#0984e3" fill-opacity="0.6"/>
+    <circle cx="0" cy="0" r="9" fill="none" stroke="#0984e3" stroke-opacity="0.2" stroke-width="0.8"/>
+  </g>
+  <!-- scattered location dots (outside globe - representing destinations) -->
+  <g fill="#74b9ff" fill-opacity="0.3">
+    <circle cx="80" cy="100" r="3"/><circle cx="500" cy="120" r="2.5"/>
+    <circle cx="520" cy="280" r="3"/><circle cx="470" cy="340" r="2"/>
+    <circle cx="60" cy="220" r="2.5"/><circle cx="150" cy="160" r="2"/>
+  </g>
+  <g fill="#0984e3" fill-opacity="0.2">
+    <circle cx="530" cy="180" r="2"/><circle cx="90" cy="340" r="2"/>
+    <circle cx="440" cy="80" r="2.5"/><circle cx="180" cy="350" r="1.8"/>
+    <circle cx="500" cy="350" r="1.5"/><circle cx="70" cy="160" r="1.5"/>
+  </g>
+  <!-- dashed flight/travel paths -->
+  <path d="M80 100 Q180 60 310 130" fill="none" stroke="#74b9ff" stroke-opacity="0.15" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M350 200 Q440 180 500 120" fill="none" stroke="#0984e3" stroke-opacity="0.12" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M250 240 Q350 310 520 280" fill="none" stroke="#74b9ff" stroke-opacity="0.1" stroke-width="1" stroke-dasharray="4 4"/>
+  <!-- glow accent on key pins -->
+  <circle cx="310" cy="130" r="3" fill="#74b9ff" fill-opacity="0.15">
+    <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="fill-opacity" values="0.15;0.05;0.15" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="350" cy="200" r="3" fill="#0984e3" fill-opacity="0.12">
+    <animate attributeName="r" values="3;5;3" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="fill-opacity" values="0.12;0.04;0.12" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

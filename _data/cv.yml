@@ -5,6 +5,8 @@
       institution: Lilly
       location: Boston, MA
       year: 2025 - now
+      icon_label: LLY
+      icon_bg: "#d52b1e"
       maindescription: >-
         I collaborate with clinicians, biologists, and statisticians to generate mechanistic and biomarker
         insights from large-scale proteomics across phase 2/3 obesity trials, while building the
@@ -13,25 +15,32 @@
     - title: Senior Principal Computational Geneticist
       institution: Pfizer
       location: Cambridge, MA
-      year: 2023 - 2025
-      maindescription: >-
-        I collaborated with cross-functional teams for cardiovascular and renal target discovery integrating human
-        genetics, functional genomics, and large language models, while driving delivery of scalable
-        cloud infrastructure for large-scale genomics analysis across the organization.
-
-    - title: Senior Computational Geneticist
-      institution: Pfizer
-      location: Cambridge, MA
-      year: 2021 - 2023
-      maindescription: >-
-        I partnered with biologists to identify novel targets for cardiovascular and renal disease
-        through integrative multi-omics, with several advancing into the portfolio, and served as the
-        genetics expert for indication expansion teams.
+      year: 2021 - 2025
+      icon_label: PFE
+      icon_bg: "#0000c9"
+      previous_title: Senior Computational Geneticist
+      previous_year: 2021 - 2023
+      roles:
+        - title: Senior Principal Computational Geneticist
+          year: 2023 - 2025
+          maindescription: >-
+            I collaborated with cross-functional teams for cardiovascular and renal target discovery integrating human
+            genetics, functional genomics, and large language models, while driving delivery of scalable
+            cloud infrastructure for large-scale genomics analysis across the organization.
+        - title: Senior Computational Geneticist
+          year: 2021 - 2023
+          maindescription: >-
+            I partnered with biologists to identify novel targets for cardiovascular and renal disease
+            through integrative multi-omics, with several advancing into the portfolio, and served as the
+            genetics expert for indication expansion teams.
 
     - title: Graduate Student Researcher
       institution: UC San Diego
       location: La Jolla, CA
       year: 2016 - 2021
+      icon_label: UCSD
+      icon_bg: "#182B49"
+      icon_color: "#C69214"
       maindescription: >-
         I led the largest GWAS for type 1 diabetes, implicating novel disease-relevant cell types
         through integration of human genetics and single-cell epigenomics, and published broadly across
@@ -41,14 +50,27 @@
       institution: IncellDx
       location: Menlo Park, CA
       year: 2015 - 2016
-      maindescription: >-
-        I optimized a cell-based companion diagnostic assay for HIV that was subsequently acquired by
-        a major pharmaceutical company.
+      icon_label: IDx
+      icon_bg: "#ff9902"
+      previous_title: Research Associate
+      previous_year: 2015
+      roles:
+        - title: Development Scientist
+          year: 2016
+          maindescription:
+        - title: Research Associate
+          year: 2015 - 2016
+          maindescription: >-
+            I optimized a cell-based companion diagnostic assay for HIV that was subsequently acquired by
+            a major pharmaceutical company.
 
     - title: Microbiology Intern
-      institution: NASA Johnson Space Center
+      institution: National Aeronautics and Space Administration
+      department: Johnson Space Center
       location: Houston, TX
       year: 2015
+      icon_label: NASA
+      icon_bg: "#0b3d91"
       maindescription: >-
         I developed a rapid assay for improved detection of infectious herpesviruses in astronauts.
 
@@ -59,6 +81,9 @@
       institution: University of California, San Diego
       location: La Jolla, CA
       year: 2016 - 2021
+      icon_label: UCSD
+      icon_bg: "#182B49"
+      icon_color: "#C69214"
       maindescription: >-
         Dissertation: <em>Understanding pancreatic mechanisms of diabetes risk with genetic association
         and single cell epigenome data.</em> Advisor: Dr. Kyle Gaulton.
@@ -67,6 +92,9 @@
       institution: University of California, Los Angeles
       location: Los Angeles, CA
       year: 2011 - 2015
+      icon_label: UCLA
+      icon_bg: "#2774AE"
+      icon_color: "#FFD100"
 
 - title: Selected Publications
   type: bibliography

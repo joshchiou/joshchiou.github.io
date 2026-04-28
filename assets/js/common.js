@@ -56,4 +56,25 @@ $(document).ready(function () {
   $('[data-toggle="popover"]').popover({
     trigger: "hover",
   });
+
+  // Scroll entrance animations
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var animateEls = document.querySelectorAll(".animate-in");
+    if (animateEls.length > 0) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      animateEls.forEach(function (el) {
+        observer.observe(el);
+      });
+    }
+  }
 });
