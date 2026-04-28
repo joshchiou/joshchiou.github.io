@@ -232,21 +232,25 @@ let determineComputedTheme = () => {
 };
 
 let initTheme = () => {
-  let themeSetting = determineThemeSetting();
+  // Attributes already set by inline script in <head>.
+  // Apply component-level theming now that DOM is ready.
+  applyTheme();
 
-  setThemeSetting(themeSetting);
-
-  // Add event listener to the theme toggle button.
-  document.addEventListener("DOMContentLoaded", function () {
-    const mode_toggle = document.getElementById("light-toggle");
-
+  const mode_toggle = document.getElementById("light-toggle");
+  if (mode_toggle) {
     mode_toggle.addEventListener("click", function () {
       toggleThemeSetting();
     });
-  });
+  }
 
-  // Add event listener to the system theme preference change.
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
     applyTheme();
   });
 };
+
+// Self-initialize when loaded as deferred script
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", function () { initTheme(); });
+} else {
+  initTheme();
+}

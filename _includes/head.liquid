@@ -73,9 +73,22 @@
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url | bust_css_cache }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
 
-<!-- Dark Mode -->
-<script src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
+<!-- Dark Mode: inline critical anti-flicker, defer the rest -->
 {% if site.enable_darkmode %}
+  <script>
+    (function(){
+      var ts = localStorage.getItem("theme");
+      if (ts !== "dark" && ts !== "light" && ts !== "system") ts = "system";
+      document.documentElement.setAttribute("data-theme-setting", ts);
+      var theme;
+      if (ts === "system") {
+        theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+      } else {
+        theme = ts;
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
   <link
     defer
     rel="stylesheet"
@@ -83,10 +96,8 @@
     media="none"
     id="highlight_theme_dark"
   >
-  <script>
-    initTheme();
-  </script>
 {% endif %}
+<script defer src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
 
 <!-- GeoJSON support via Leaflet -->
 {% if page.map %}
