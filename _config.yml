@@ -348,6 +348,8 @@ lazy_loading_images: true # enables lazy loading of images (recommended)
 enable_google_analytics: false # enables google analytics
 enable_cronitor_analytics: false # enables cronitor RUM analytics
 enable_pirsch_analytics: false # enables Pirsch analytics (https://pirsch.io/)
+enable_goatcounter: false # enables GoatCounter analytics (https://goatcounter.com/)
+goatcounter_code: # your GoatCounter site code (the subdomain part of yourcode.goatcounter.com)
 enable_google_verification: true # enables google site verification
 enable_bing_verification: false # enables bing site verification
 enable_masonry: true # enables automatic project cards arrangement
