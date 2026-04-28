@@ -1,0 +1,35 @@
+name: Update Scholar Stats
+
+on:
+  schedule:
+    - cron: "23 7 * * 3" # Every Wednesday 07:23 UTC
+  workflow_dispatch: # Allow manual trigger from GitHub Actions UI
+
+jobs:
+  update-scholar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install scholarly
+
+      - name: Fetch and update Scholar stats
+        run: python scripts/update_scholar.py
+
+      - name: Commit updated data files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/scholar_stats.json
+          git diff --staged --quiet || git commit -m "chore: update scholar stats [skip ci]"
+          git push

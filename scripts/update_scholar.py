@@ -1,4 +1,4 @@
-#!/usr/bin/python3.12
+#!/usr/bin/env python3
 """Fetch Google Scholar stats and count publications from papers.bib.
 
 Writes _data/scholar_stats.json with citation count, h-index, paper counts,
