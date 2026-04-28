@@ -1,9 +1,23 @@
 {
   "total_papers": 38,
   "top_journal_papers": 9,
+  "top_journals": [
+    {
+      "name": "Nature",
+      "count": 5
+    },
+    {
+      "name": "Nature Genetics",
+      "count": 3
+    },
+    {
+      "name": "Cell",
+      "count": 1
+    }
+  ],
   "citations": 7529,
   "h_index": 27,
   "i10_index": 0,
   "source": "google_scholar",
-  "updated_at": "2026-04-28T02:30:00.000000+00:00"
+  "updated_at": "2026-04-28T23:42:40.751806+00:00"
 }

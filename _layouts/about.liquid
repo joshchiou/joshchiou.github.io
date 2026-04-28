@@ -58,12 +58,12 @@ layout: default
             <span class="about-stat-label">h-index</span>
           </div>
         </div>
-        {% if stats.top_journal_papers > 0 %}
+        {% if stats.top_journals.size > 0 %}
         <div class="about-journals">
           <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
-          <span class="about-journal-pill">Nature</span>
-          <span class="about-journal-pill">Cell</span>
-          <span class="about-journal-pill">Nature Genetics</span>
+          {% for journal in stats.top_journals %}
+            <span class="about-journal-pill">{{ journal.name }}</span>
+          {% endfor %}
         </div>
         {% endif %}
       </div>
