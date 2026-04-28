@@ -44,6 +44,16 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
+      - name: Optimize unprocessed images 🖼️
+        run: |
+          pip3 install Pillow
+          find assets/img -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -size +500k | while read img; do
+            webp="${img%.*}.webp"
+            if [ ! -f "$webp" ]; then
+              echo "Optimizing: $img"
+              python3 scripts/prep_images.py "$(dirname "$img")" "$(dirname "$img")" --keep-names
+            fi
+          done
       - name: Install and Build 🔧
         env:
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
