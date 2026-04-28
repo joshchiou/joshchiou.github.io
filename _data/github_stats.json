@@ -1,0 +1,28 @@
+{
+  "avatar_url": "https://avatars.githubusercontent.com/u/23390702?v=4",
+  "name": "Josh Chiou",
+  "public_repos": 27,
+  "followers": 5,
+  "total_stars": 2,
+  "repos": {
+    "joshchiou/T1D_snATAC": {
+      "language": null,
+      "stars": 1,
+      "forks": 0,
+      "description": "Links to T1D GWAS and single cell ATAC-seq datasets."
+    },
+    "Gaulton-Lab/pipelines": {
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "description": "Analytical tools and pipelines for bulk and single cell epigenomic and human genetic data"
+    },
+    "joshchiou/joshchiou.github.io": {
+      "language": "HTML",
+      "stars": 1,
+      "forks": 0,
+      "description": "Personal website for Josh Chiou"
+    }
+  },
+  "updated_at": "2026-04-28T23:45:40.447428+00:00"
+}

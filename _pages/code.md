@@ -9,23 +9,29 @@ description: >
   (Pfizer, Lilly) and isn't reflected here.
 ---
 
+{% assign gh = site.data.github_stats %}
+
 <div class="github-profile-card mb-5" id="github-profile-card">
   <div class="github-profile-inner-d">
     <div class="github-profile-left">
       <a href="https://github.com/joshchiou" target="_blank" rel="noopener noreferrer"
          class="github-profile-identity">
-        <img id="gh-avatar" src="" alt="GitHub avatar" class="github-avatar">
+        {% if gh.avatar_url %}
+          <img src="{{ gh.avatar_url }}" alt="GitHub avatar" class="github-avatar">
+        {% else %}
+          <img src="" alt="GitHub avatar" class="github-avatar" style="display:none">
+        {% endif %}
         <div>
-          <div class="github-profile-name" id="gh-name">Josh Chiou</div>
+          <div class="github-profile-name">{{ gh.name | default: "Josh Chiou" }}</div>
           <div class="github-profile-login">@joshchiou</div>
         </div>
       </a>
     </div>
     <div class="github-profile-right-d">
-      <div class="github-profile-stats" id="gh-stats">
-        <div class="gh-stat"><span class="gh-stat-val" id="gh-repos">—</span><span class="gh-stat-label">repos</span></div>
-        <div class="gh-stat"><span class="gh-stat-val" id="gh-stars">—</span><span class="gh-stat-label">stars</span></div>
-        <div class="gh-stat"><span class="gh-stat-val" id="gh-followers">—</span><span class="gh-stat-label">followers</span></div>
+      <div class="github-profile-stats">
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.public_repos | default: "—" }}</span><span class="gh-stat-label">repos</span></div>
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.total_stars | default: "—" }}</span><span class="gh-stat-label">stars</span></div>
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.followers | default: "—" }}</span><span class="gh-stat-label">followers</span></div>
       </div>
       <div class="gh-stat-divider"></div>
       <div class="github-profile-orgs-d">
@@ -50,6 +56,7 @@ description: >
 
 Repositories I've built or contributed to significantly.
 
+{% assign LANG_COLORS = "Python:#3572A5,R:#198CE7,JavaScript:#f1e05a,TypeScript:#2b7489,Shell:#89e051,Ruby:#701516,HTML:#e34c26,CSS:#563d7c" | split: "," %}
 
 <div class="repo-card-grid mb-4">
   {% for item in site.data.repositories.github_repos %}
@@ -57,8 +64,8 @@ Repositories I've built or contributed to significantly.
     {% assign repo_parts = repo | split: '/' %}
     {% assign owner = repo_parts[0] %}
     {% assign rname = repo_parts[1] %}
-    <a class="repo-card" href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer"
-       data-repo="{{ repo }}" data-custom-desc="{{ item.desc }}">
+    {% assign repo_data = gh.repos[repo] %}
+    <a class="repo-card" href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer">
       <div class="repo-card-header">
         <i class="fa-regular fa-book"></i>
         <span class="repo-card-name">
@@ -66,71 +73,30 @@ Repositories I've built or contributed to significantly.
         </span>
       </div>
       <div class="repo-card-desc">{{ item.desc }}</div>
-      <div class="repo-card-meta" id="meta-{{ repo | replace: '/', '-' }}">
-        <span class="text-muted" style="font-size:0.75rem">Loading&hellip;</span>
+      <div class="repo-card-meta">
+        {% if repo_data.language %}
+          {% assign lang_color = "#8a8a8a" %}
+          {% for pair in LANG_COLORS %}
+            {% assign kv = pair | split: ":" %}
+            {% if kv[0] == repo_data.language %}
+              {% assign lang_color = kv[1] %}
+            {% endif %}
+          {% endfor %}
+          <span class="repo-card-lang">
+            <span class="lang-dot" style="background:{{ lang_color }}"></span>
+            {{ repo_data.language }}
+          </span>
+        {% endif %}
+        {% if repo_data.stars > 0 %}
+          <span class="repo-card-stat"><i class="fa-regular fa-star"></i> {{ repo_data.stars }}</span>
+        {% endif %}
+        {% if repo_data.forks > 0 %}
+          <span class="repo-card-stat"><i class="fa-solid fa-code-fork"></i> {{ repo_data.forks }}</span>
+        {% endif %}
       </div>
     </a>
   {% endfor %}
 </div>
-
-<script>
-(function () {
-  var LANG_COLORS = {
-    Python: '#3572A5', R: '#198CE7', JavaScript: '#f1e05a',
-    TypeScript: '#2b7489', Shell: '#89e051', Ruby: '#701516',
-    HTML: '#e34c26', CSS: '#563d7c'
-  };
-
-  // Stats card
-  fetch('https://api.github.com/users/joshchiou')
-    .then(function (r) { return r.json(); })
-    .then(function (u) {
-      var av = document.getElementById('gh-avatar');
-      var nm = document.getElementById('gh-name');
-      if (av) { av.src = u.avatar_url; av.style.display = 'block'; }
-      if (nm && u.name) nm.textContent = u.name;
-      var reposEl = document.getElementById('gh-repos');
-      var followEl = document.getElementById('gh-followers');
-      if (reposEl) reposEl.textContent = u.public_repos;
-      if (followEl) followEl.textContent = u.followers;
-    });
-
-  fetch('https://api.github.com/users/joshchiou/repos?per_page=100')
-    .then(function (r) { return r.json(); })
-    .then(function (repos) {
-      var stars = repos.reduce(function (s, r) { return s + r.stargazers_count; }, 0);
-      var el = document.getElementById('gh-stars');
-      if (el) el.textContent = stars;
-    });
-
-  // Repo cards — fetch language/stars/forks
-  var cards = document.querySelectorAll('.repo-card[data-repo]');
-  cards.forEach(function (card) {
-    var repo = card.getAttribute('data-repo');
-    var slug = repo.replace('/', '-');
-    var metaEl = document.getElementById('meta-' + slug);
-    fetch('https://api.github.com/repos/' + repo)
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (!metaEl) return;
-        var lang  = d.language || '';
-        var color = LANG_COLORS[lang] || '#8a8a8a';
-        var stars = d.stargazers_count || 0;
-        var forks = d.forks_count || 0;
-        var html = '';
-        if (lang) {
-          html += '<span class="repo-card-lang">'
-               + '<span class="lang-dot" style="background:' + color + '"></span>'
-               + lang + '</span>';
-        }
-        if (stars > 0) html += '<span class="repo-card-stat"><i class="fa-regular fa-star"></i> ' + stars + '</span>';
-        if (forks > 0) html += '<span class="repo-card-stat"><i class="fa-solid fa-code-fork"></i> ' + forks + '</span>';
-        metaEl.innerHTML = html || '<span style="font-size:0.75rem;opacity:0">&nbsp;</span>';
-      })
-      .catch(function () { if (metaEl) metaEl.innerHTML = ''; });
-  });
-})();
-</script>
 
 ---
 
