@@ -47,7 +47,7 @@ jobs:
       - name: Optimize unprocessed images 🖼️
         run: |
           pip3 install Pillow
-          find assets/img -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -size +500k | while read img; do
+          find assets/img -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -size +100k | while read img; do
             webp="${img%.*}.webp"
             if [ ! -f "$webp" ]; then
               echo "Optimizing: $img"

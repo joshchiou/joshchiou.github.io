@@ -187,6 +187,11 @@ exclude:
   - vendor
   - docs/
   - scripts/
+  - assets/css/bootstrap.min.css.map
+  - assets/css/mdb.min.css.map
+  - assets/js/bootstrap.bundle.min.js.map
+  - assets/js/distillpub/template.v2.js.map
+  - assets/js/distillpub/transforms.v2.js.map
 keep_files:
   - CNAME
   - .nojekyll

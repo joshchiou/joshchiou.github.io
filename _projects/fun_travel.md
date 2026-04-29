@@ -150,8 +150,14 @@ document.addEventListener('DOMContentLoaded', function () {
               var countryCities = cityData.filter(function (c) { return c.country === name; });
               if (countryCities.length > 0) {
                 var cityNames = countryCities.map(function (c) { return c.name; }).join(', ');
-                layer.bindPopup('<strong>' + name + '</strong><br/>' + cityNames);
+                var cityCount = countryCities.length;
+                var label = cityCount + (cityCount === 1 ? ' city' : ' cities');
+                layer.bindPopup('<strong>' + name + '</strong><br/><em>' + label + '</em>: ' + cityNames);
+              } else {
+                layer.bindPopup('<strong>' + name + '</strong>');
               }
+            } else {
+              layer.bindTooltip(name, { className: 'leaflet-tooltip-unvisited', opacity: 0.6 });
             }
           }
         }).addTo(map);

@@ -71,6 +71,10 @@ chart:
 <p class="text-muted">Stats updating — check back soon.</p>
 {% endif %}
 
+<div id="last-ride-card" class="mb-4" style="display:none">
+  <small class="text-muted">Last ride: <span id="last-ride-date"></span> &middot; <span id="last-ride-dist"></span></small>
+</div>
+
 ### Activity calendar (year to date)
 
 <div id="cycling-calendar"></div>
@@ -141,6 +145,20 @@ chart:
         return [d[0], Math.round(d[1] * KM_TO_MI * 10) / 10];
       });
       maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
+
+      // Show last ride card
+      if (calendarMiles.length > 0) {
+        var last = calendarMiles[calendarMiles.length - 1];
+        var dateObj = new Date(last[0] + 'T00:00:00');
+        var dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        var card = document.getElementById('last-ride-card');
+        if (card) {
+          document.getElementById('last-ride-date').textContent = dateStr;
+          document.getElementById('last-ride-dist').textContent = last[1] + ' mi';
+          card.style.display = '';
+        }
+      }
+
       initCalChart();
     })
     .catch(function () {

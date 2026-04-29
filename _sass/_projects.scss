@@ -355,6 +355,55 @@ html[data-theme="dark"] .github-profile-orgs-icons img {
 }
 
 /*******************************************************************************
+ * Contributions filter bar
+ ******************************************************************************/
+
+.contrib-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contrib-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.contrib-filter-label {
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+  margin-right: 0.15rem;
+  white-space: nowrap;
+}
+
+.contrib-filter-btn {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2em 0.65em;
+  border-radius: 3px;
+  border: 1px solid var(--global-divider-color);
+  background: transparent;
+  color: var(--global-text-color-light);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+
+  &.active {
+    background: var(--global-theme-color);
+    border-color: var(--global-theme-color);
+    color: #fff;
+  }
+}
+
+/*******************************************************************************
  * Travel page
  ******************************************************************************/
 
