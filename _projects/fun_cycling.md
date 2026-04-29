@@ -14,46 +14,67 @@ chart:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
+<p class="text-muted mb-4">Two 2002 LeMond steel frames — the Zurich is my daily commuter and the Tourmalet is the backup. On weekends my wife and I explore the Boston area together, ranging from short loops around the Fells to longer rides out to Nahant, Castle Island, and beyond. I do all my own wrenching and always learn something new in the process.</p>
+
 ### Bike fleet
 
-{% for bike in bikes %}
-<div class="bike-card mb-4">
-  <div class="bike-card-img-wrap">
-    {% if bike.image %}
-      <img src="{{ bike.image | relative_url }}" alt="{{ bike.name }}">
-    {% else %}
-      <div class="bike-card-placeholder">
-        <i class="fa-solid fa-bicycle"></i>
-      </div>
-    {% endif %}
-  </div>
-  <div class="bike-card-body">
-    <div class="bike-card-header">
-      <div>
-        <h4 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h4>
-      </div>
-      {% if bike.status %}
-        <span class="bike-card-status">{{ bike.status }}</span>
-      {% endif %}
-    </div>
-    {% for group in bike.groups %}
-      <div class="bike-chip-group">
-        <span class="bike-chip-group-label">{{ group.label }}</span>
-        <div class="bike-chip-list">
-          {% for item in group.items %}
-            <span class="bike-chip">{{ item }}</span>
+<div class="bike-carousel">
+  <div class="bike-carousel-viewport">
+    <div class="bike-carousel-track" id="bikeTrack">
+      {% for bike in bikes %}
+      <div class="bike-card bike-carousel-slide">
+        <div class="bike-card-img-wrap">
+          {% if bike.image %}
+            <img src="{{ bike.image | relative_url }}" alt="{{ bike.name }}">
+          {% else %}
+            <div class="bike-card-placeholder">
+              <i class="fa-solid fa-bicycle"></i>
+            </div>
+          {% endif %}
+        </div>
+        <div class="bike-card-body">
+          <div class="bike-card-header">
+            <div>
+              <h4 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h4>
+            </div>
+            {% if bike.status %}
+              <span class="bike-card-status">{{ bike.status }}</span>
+            {% endif %}
+          </div>
+          {% for group in bike.groups %}
+            <div class="bike-chip-group">
+              <span class="bike-chip-group-label">{{ group.label }}</span>
+              <div class="bike-chip-list">
+                {% for item in group.items %}
+                  <span class="bike-chip">{{ item }}</span>
+                {% endfor %}
+              </div>
+            </div>
           {% endfor %}
         </div>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="bike-carousel-controls" id="bikeControls">
+    <button class="bike-carousel-btn" id="bikePrev" aria-label="Previous bike">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="bike-carousel-dots" id="bikeDots"></div>
+    <button class="bike-carousel-btn" id="bikeNext" aria-label="Next bike">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
   </div>
 </div>
-{% endfor %}
+
+### Wrenching
+
+<p class="text-muted mb-4">I service both bikes myself — cable swaps, brake and derailleur adjustments, bearing overhauls, and occasional full rebuilds. Both drivetrains run on hot-waxed chain: I strip the factory grease, melt wax in a slow cooker, and re-dip every few hundred miles. The drivetrain stays noticeably cleaner and quieter compared to wet lube, and touching up the wax mid-season is quick. Every bike I work on teaches me something new, which is a big part of why I enjoy it.</p>
 
 ### Stats
 
 {% if stats.total_rides %}
-<div class="row mb-4 text-center">
+<div class="row mb-2 text-center">
   <div class="col-4">
     <h3 class="mb-0">{{ stats.total_rides }}</h3>
     <small class="text-muted">rides</small>
@@ -66,6 +87,9 @@ chart:
     <h3 class="mb-0">{{ total_ft }}</h3>
     <small class="text-muted">ft elevation</small>
   </div>
+</div>
+<div class="text-center mb-4" style="font-size: 0.82rem; color: var(--global-text-color-light);">
+  <span id="stat-streak"></span><span id="stat-streak-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-best-streak"></span>
 </div>
 {% else %}
 <p class="text-muted">Stats updating — check back soon.</p>
@@ -96,7 +120,7 @@ chart:
 (function () {
   var KM_TO_MI = 0.621371;
 
-  // Monthly and cumulative data are small — keep inlined
+  // ── Inline monthly data ──────────────────────────────────────────────────
   var monthlyRaw = {{ site.data.strava_stats.monthly | jsonify }};
   var months = monthlyRaw.map(function (m) { return m.month; });
   var distMiles = monthlyRaw.map(function (m) {
@@ -133,7 +157,35 @@ chart:
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
-  // Fetch calendar data externally (keeps page HTML lean)
+  // ── Streak helpers ───────────────────────────────────────────────────────
+  function calcStreaks(data) {
+    if (!data || data.length < 1) return { current: 0, best: 0 };
+    var parsed = data.map(function (d) {
+      var p = d[0].split('-');
+      return new Date(+p[0], +p[1] - 1, +p[2]);
+    }).sort(function (a, b) { return a - b; });
+
+    var best = 1, run = 1;
+    for (var i = 1; i < parsed.length; i++) {
+      if ((parsed[i] - parsed[i - 1]) === 86400000) { run++; if (run > best) best = run; }
+      else run = 1;
+    }
+
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var last = parsed[parsed.length - 1];
+    var gap = Math.round((today - last) / 86400000);
+    var current = 0;
+    if (gap <= 1) {
+      current = 1;
+      for (var j = parsed.length - 2; j >= 0; j--) {
+        if (Math.round((parsed[j + 1] - parsed[j]) / 86400000) === 1) current++;
+        else break;
+      }
+    }
+    return { current: current, best: best };
+  }
+
+  // ── Calendar fetch ───────────────────────────────────────────────────────
   var calEl = document.getElementById('cycling-calendar');
   if (calEl) {
     calEl.innerHTML = '<div style="height:155px;display:flex;align-items:center;justify-content:center"><small class="text-muted">Loading activity data&hellip;</small></div>';
@@ -146,7 +198,7 @@ chart:
       });
       maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
 
-      // Show last ride card
+      // Last ride card
       if (calendarMiles.length > 0) {
         var last = calendarMiles[calendarMiles.length - 1];
         var dateObj = new Date(last[0] + 'T00:00:00');
@@ -159,19 +211,37 @@ chart:
         }
       }
 
+      // Streak stats
+      var streaks = calcStreaks(calendarMiles);
+      var streakEl = document.getElementById('stat-streak');
+      var bestEl = document.getElementById('stat-best-streak');
+      var sepEl = document.getElementById('stat-streak-sep');
+      if (streakEl) {
+        if (streaks.current > 1) {
+          streakEl.textContent = streaks.current + '-day streak';
+        }
+      }
+      if (bestEl && streaks.best > 1) {
+        bestEl.textContent = 'best: ' + streaks.best + ' days';
+        if (sepEl && streaks.current > 1) sepEl.style.display = '';
+      }
+
       initCalChart();
     })
     .catch(function () {
       if (calEl) calEl.innerHTML = '<small class="text-muted">Activity data unavailable.</small>';
     });
 
+  // ── Chart option builders ────────────────────────────────────────────────
   function buildCalOption() {
     if (!calendarMiles) return {};
     var mobile = window.innerWidth < 576;
     var dark = isDark();
-    var textColor   = dark ? '#c8c8c8' : '#333333';
-    var emptyColor  = dark ? '#1e3a4a' : '#e8f4f8';
-    var borderColor = dark ? '#2d2d2d' : '#ffffff';
+    var textColor  = dark ? '#c8c8c8' : '#333333';
+    var emptyColor = dark ? 'rgba(255,255,255,0.05)' : 'rgba(41,128,185,0.09)';
+    var borderColor = dark ? 'rgba(255,255,255,0.05)' : 'rgba(41,128,185,0.15)';
+    var activeHigh = dark ? '#74add1' : '#2980b9';
+    var activeMid  = dark ? '#4a9fd4' : '#5aaee0';
     return {
       tooltip: {
         formatter: function (p) { return p.data[0] + '<br/>' + p.data[1] + ' mi'; }
@@ -184,7 +254,7 @@ chart:
         itemWidth: 10, itemHeight: 70,
         text: ['more', 'less'],
         textStyle: { fontSize: 10, color: textColor },
-        inRange: { color: [emptyColor, '#74add1', '#2980b9'] }
+        inRange: { color: [emptyColor, activeMid, activeHigh] }
       },
       calendar: {
         range: ['{{ "now" | date: "%Y" }}-01-01', '{{ "now" | date: "%Y-%m-%d" }}'],
@@ -193,7 +263,7 @@ chart:
         left: mobile ? 30 : 40,
         right: mobile ? 10 : 115,
         bottom: mobile ? 50 : 30,
-        itemStyle: { borderWidth: 2, borderColor: borderColor },
+        itemStyle: { borderWidth: 1, borderColor: borderColor },
         yearLabel: { show: false },
         monthLabel: { fontSize: 11, color: textColor },
         dayLabel: { nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], color: textColor }
@@ -309,6 +379,7 @@ chart:
     };
   }
 
+  // ── Chart init ───────────────────────────────────────────────────────────
   function initCalChart() {
     var calEl = document.getElementById('cycling-calendar');
     if (calEl && window.echarts && calendarMiles) {
@@ -341,6 +412,54 @@ chart:
     initOtherCharts();
   }
 
+  // ── Bike carousel ────────────────────────────────────────────────────────
+  function initBikeCarousel() {
+    var track = document.getElementById('bikeTrack');
+    var controls = document.getElementById('bikeControls');
+    if (!track) return;
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.bike-carousel-slide'));
+    var n = slides.length;
+    if (n <= 1) {
+      if (controls) controls.style.display = 'none';
+      return;
+    }
+
+    var cur = 0;
+    var dots = [];
+    var dotsEl = document.getElementById('bikeDots');
+    var prevBtn = document.getElementById('bikePrev');
+    var nextBtn = document.getElementById('bikeNext');
+
+    for (var i = 0; i < n; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'bike-carousel-dot';
+      dot.setAttribute('aria-label', 'Bike ' + (i + 1));
+      (function (idx) { dot.addEventListener('click', function () { go(idx); }); })(i);
+      dotsEl.appendChild(dot);
+      dots.push(dot);
+    }
+
+    function slideWidth() {
+      return slides[0].offsetWidth + 16; // card width + 1rem gap
+    }
+
+    function go(idx) {
+      cur = Math.max(0, Math.min(idx, n - 1));
+      track.style.transform = 'translateX(-' + (cur * slideWidth()) + 'px)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
+      prevBtn.disabled = cur === 0;
+      nextBtn.disabled = cur === n - 1;
+    }
+
+    prevBtn.addEventListener('click', function () { go(cur - 1); });
+    nextBtn.addEventListener('click', function () { go(cur + 1); });
+    go(0);
+
+    window._bikeCarouselGo = go;
+    window._bikeCarouselCur = function () { return cur; };
+  }
+
+  // ── Toggle buttons ───────────────────────────────────────────────────────
   document.querySelectorAll('.chart-toggle-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.chart-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
@@ -355,6 +474,7 @@ chart:
     });
   });
 
+  // ── Resize & theme ───────────────────────────────────────────────────────
   window.addEventListener('resize', function () {
     if (calChart) {
       var calEl = document.getElementById('cycling-calendar');
@@ -365,6 +485,8 @@ chart:
     }
     if (barChart) { barChart.resize(); }
     if (cumChart) { cumChart.resize(); }
+    // Re-snap carousel after resize
+    if (window._bikeCarouselGo) { window._bikeCarouselGo(window._bikeCarouselCur()); }
   });
 
   new MutationObserver(function (mutations) {
@@ -373,8 +495,16 @@ chart:
     });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  if (document.readyState === 'complete') { initOtherCharts(); }
-  else { window.addEventListener('load', initOtherCharts); }
+  // ── Boot ─────────────────────────────────────────────────────────────────
+  if (document.readyState === 'complete') {
+    initOtherCharts();
+    initBikeCarousel();
+  } else {
+    window.addEventListener('load', function () {
+      initOtherCharts();
+      initBikeCarousel();
+    });
+  }
 })();
 </script>
 
