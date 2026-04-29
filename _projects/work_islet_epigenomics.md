@@ -21,3 +21,7 @@ how genetic variation at type 2 diabetes loci affects cell-type-specific regulat
 across disease states {% cite wang2023integrating %}. The resulting resource, a catalog of
 islet cell-type regulatory elements annotated with disease-relevant variants, is widely used
 in the field for interpreting diabetes GWAS results.
+
+---
+
+**Related:** [Type 1 Diabetes and the Exocrine Pancreas]({{ '/projects/work_t1d_exocrine/' | relative_url }}) — companion project revealing acinar cell contributions to T1D genetic risk using the same single-cell epigenomic approach.

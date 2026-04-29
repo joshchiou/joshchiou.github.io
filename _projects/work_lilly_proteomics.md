@@ -20,3 +20,7 @@ association data, applying survival analysis and mixed models to longitudinal om
 and integrating electronic health record data to characterize patient subgroups. I also
 build the analytical infrastructure (pipelines, data models, dashboards) that supports
 the broader clinical omics team.
+
+---
+
+**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the foundational pQTL resource that informs much of the analytical work described above.

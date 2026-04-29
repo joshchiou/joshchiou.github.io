@@ -24,3 +24,7 @@ the field's view of T1D from a purely islet-centric disease to one with measurab
 contributions, opening new avenues for early detection and intervention.
 
 Data and code: [joshchiou/T1D\_snATAC](https://github.com/joshchiou/T1D_snATAC)
+
+---
+
+**Related:** [Single-Cell Epigenomics of Pancreatic Islets]({{ '/projects/work_islet_epigenomics/' | relative_url }}) — companion project mapping islet cell-type chromatin accessibility and type 2 diabetes risk variants.

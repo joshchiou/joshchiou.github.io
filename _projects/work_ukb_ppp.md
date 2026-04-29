@@ -20,3 +20,7 @@ My contributions focused on the statistical genetics infrastructure and analytic
 underpinning the consortium's analyses. The UKB-PPP dataset has since become a foundational
 resource for Mendelian randomization, drug target validation, and multi-omics integration
 across the pharmaceutical industry.
+
+---
+
+**Related:** [Translational Proteomics for Obesity Clinical Trials]({{ '/projects/work_lilly_proteomics/' | relative_url }}) — applying the pQTL and proteomic methods from UKB-PPP to clinical trial data at Lilly.
