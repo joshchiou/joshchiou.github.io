@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claire – Magazine Editorial Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f7f7f5;
+    color: #111;
+    padding: 40px 16px;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px 40px;
+    box-shadow: 0 2px 40px rgba(0,0,0,0.07);
+  }
+
+  /* ── Masthead ── */
+  .masthead {
+    border-bottom: 3px solid #111;
+    padding-bottom: 14px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .masthead h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #111;
+  }
+
+  .masthead-right {
+    text-align: right;
+    font-size: 0.72rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+  }
+
+  /* ── Hero: photo + profile ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+    align-items: start;
+  }
+
+  .hero-img-wrap {
+    position: relative;
+  }
+
+  .hero-img-wrap img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-img-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 6px 10px;
+    font-weight: 600;
+  }
+
+  /* Profile section */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-lede {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #333;
+    font-style: italic;
+    border-left: 3px solid #111;
+    padding-left: 14px;
+  }
+
+  /* Stat grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e0e0e0;
+  }
+
+  .stat-cell {
+    padding: 10px 12px;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .stat-cell:nth-child(even) { border-right: none; }
+  .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .stat-cell-label {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .stat-cell-val {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  /* ── Basepaws block ── */
+  .basepaws-block {
+    border: 1px solid #e0e0e0;
+    padding: 16px;
+  }
+
+  .section-eyebrow {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 12px;
+  }
+
+  .breed-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+    font-size: 0.75rem;
+  }
+
+  .breed-row-name {
+    width: 70px;
+    color: #333;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .breed-row-track {
+    flex: 1;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 99px;
+  }
+
+  .breed-row-fill {
+    height: 100%;
+    border-radius: 99px;
+  }
+
+  .breed-row-pct {
+    width: 38px;
+    text-align: right;
+    color: #888;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+  }
+
+  /* ── Chromosome map ── */
+  .chr-block {
+    margin-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 16px;
+  }
+
+  .chr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 24px;
+  }
+
+  .chr-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.68rem;
+  }
+
+  .chr-label {
+    width: 22px;
+    color: #888;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-size: 0.65rem;
+  }
+
+  .chr-track {
+    flex: 1;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .chr-seg { height: 100%; }
+
+  .chr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin-top: 12px;
+    font-size: 0.65rem;
+    color: #888;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── Section divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 36px 0 28px;
+  }
+
+  .section-divider-line {
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+  }
+
+  .section-divider-text {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #999;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* ── Timeline era entries ── */
+  .era {
+    margin-bottom: 44px;
+  }
+
+  .era-header {
+    margin-bottom: 14px;
+  }
+
+  .era-eyebrow {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .era-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .era-location {
+    font-size: 0.72rem;
+    color: #888;
+  }
+
+  .era-photo {
+    width: 100%;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .era-photo img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .era-caption {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.65;
+    border-left: 2px solid #ddd;
+    padding-left: 12px;
+  }
+
+  /* ── Color palette ── */
+  .c-western { background: #2698ba; }
+  .c-exotic  { background: #e05c4a; }
+  .c-eastern { background: #e8972e; }
+  .c-persian { background: #5cb85c; }
+  .c-polycat { background: #adb5bd; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Masthead ── -->
+  <div class="masthead">
+    <h1>Claire</h1>
+    <div class="masthead-right">
+      Domestic Shorthair<br>
+      The Real Senior Scientist<br>
+      Born ~2018 · Watertown, MA
+    </div>
+  </div>
+
+  <!-- ── Hero: photo + profile ── -->
+  <div class="hero">
+    <div class="hero-img-wrap">
+      <img src="../img/projects/fun/cats/claire-main.jpg" alt="Claire">
+      <div class="hero-img-label">Claire, 2025</div>
+    </div>
+
+    <div class="profile">
+      <p class="profile-lede">
+        "Joined the family in February 2021 and has since contributed significantly to the household's research culture through sustained application of lap occupancy."
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat-cell">
+          <div class="stat-cell-label">Breed</div>
+          <div class="stat-cell-val">Domestic Shorthair</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-label">Gender</div>
+          <div class="stat-cell-val">♀ Female</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-label">Born</div>
+          <div class="stat-cell-val">~2018</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-label">Adopted</div>
+          <div class="stat-cell-val">Feb 2021</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-label">Eye color</div>
+          <div class="stat-cell-val">🟢 Green</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-label">Coat</div>
+          <div class="stat-cell-val">🩶 Gray</div>
+        </div>
+      </div>
+
+      <!-- Basepaws block -->
+      <div class="basepaws-block">
+        <div class="section-eyebrow">🧬 Basepaws Breed Analysis</div>
+        <div class="breed-row">
+          <span class="breed-row-name">Western</span>
+          <div class="breed-row-track"><div class="breed-row-fill c-western" style="width:63.58%"></div></div>
+          <span class="breed-row-pct">63.6%</span>
+        </div>
+        <div class="breed-row">
+          <span class="breed-row-name">Polycat</span>
+          <div class="breed-row-track"><div class="breed-row-fill c-polycat" style="width:16.01%"></div></div>
+          <span class="breed-row-pct">16.0%</span>
+        </div>
+        <div class="breed-row">
+          <span class="breed-row-name">Exotic</span>
+          <div class="breed-row-track"><div class="breed-row-fill c-exotic" style="width:9.20%"></div></div>
+          <span class="breed-row-pct">9.2%</span>
+        </div>
+        <div class="breed-row">
+          <span class="breed-row-name">Eastern</span>
+          <div class="breed-row-track"><div class="breed-row-fill c-eastern" style="width:7.13%"></div></div>
+          <span class="breed-row-pct">7.1%</span>
+        </div>
+        <div class="breed-row">
+          <span class="breed-row-name">Persian</span>
+          <div class="breed-row-track"><div class="breed-row-fill c-persian" style="width:4.08%"></div></div>
+          <span class="breed-row-pct">4.1%</span>
+        </div>
+
+        <!-- Chromosome map -->
+        <div class="chr-block">
+          <div class="section-eyebrow" style="margin-bottom:10px;">Chromosome Map</div>
+          <div class="chr-grid">
+            <div class="chr-row"><span class="chr-label">A1</span><div class="chr-track"><div class="chr-seg c-western" style="width:100%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">A2</span><div class="chr-track"><div class="chr-seg c-polycat" style="width:30%"></div><div class="chr-seg c-exotic" style="width:70%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">A3</span><div class="chr-track"><div class="chr-seg c-eastern" style="width:65%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">B1</span><div class="chr-track"><div class="chr-seg c-polycat" style="width:80%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">B2</span><div class="chr-track"><div class="chr-seg c-persian" style="width:65%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">B3</span><div class="chr-track"><div class="chr-seg c-western" style="width:60%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">B4</span><div class="chr-track"><div class="chr-seg c-western" style="width:55%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">C1</span><div class="chr-track"><div class="chr-seg c-western" style="width:90%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">C2</span><div class="chr-track"><div class="chr-seg c-western" style="width:70%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">D1</span><div class="chr-track"><div class="chr-seg c-western" style="width:50%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">D2</span><div class="chr-track"><div class="chr-seg c-western" style="width:25%"></div><div class="chr-seg c-polycat" style="width:25%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">D3</span><div class="chr-track"><div class="chr-seg c-western" style="width:30%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">D4</span><div class="chr-track"><div class="chr-seg c-polycat" style="width:30%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">E1</span><div class="chr-track"><div class="chr-seg c-western" style="width:25%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">E2</span><div class="chr-track"><div class="chr-seg c-western" style="width:20%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">E3</span><div class="chr-track"><div class="chr-seg c-eastern" style="width:20%"></div><div class="chr-seg c-persian" style="width:5%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">F1</span><div class="chr-track"><div class="chr-seg c-western" style="width:20%"></div><div class="chr-seg c-polycat" style="width:5%"></div></div></div>
+            <div class="chr-row"><span class="chr-label">F2</span><div class="chr-track"><div class="chr-seg c-eastern" style="width:30%"></div><div class="chr-seg c-polycat" style="width:20%"></div></div></div>
+          </div>
+          <div class="chr-legend">
+            <div class="legend-item"><div class="legend-dot c-western"></div>Western</div>
+            <div class="legend-item"><div class="legend-dot c-exotic"></div>Exotic</div>
+            <div class="legend-item"><div class="legend-dot c-eastern"></div>Eastern</div>
+            <div class="legend-item"><div class="legend-dot c-persian"></div>Persian</div>
+            <div class="legend-item"><div class="legend-dot c-polycat"></div>Polycat</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /profile -->
+  </div><!-- /hero -->
+
+  <!-- ── Section divider ── -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-text">Life in Photos</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- ── Timeline ── -->
+  <div class="era">
+    <div class="era-header">
+      <div class="era-eyebrow">~2018</div>
+      <div class="era-title">The Early Days</div>
+      <div class="era-location">Los Angeles, CA</div>
+    </div>
+    <div class="era-photo">
+      <img src="../img/projects/fun/cats/claire-gallery-1.jpg" alt="Claire early days">
+    </div>
+    <p class="era-caption">Born somewhere in Los Angeles, Claire spent her early months developing core competencies: napping at maximum efficiency, climbing things that shouldn't be climbed, and judging strangers from elevated surfaces.</p>
+  </div>
+
+  <div class="era">
+    <div class="era-header">
+      <div class="era-eyebrow">February 2021</div>
+      <div class="era-title">Adoption Day</div>
+      <div class="era-location">Los Angeles → San Diego, CA</div>
+    </div>
+    <div class="era-photo">
+      <img src="../img/projects/fun/cats/claire-gallery-2.jpg" alt="Claire adoption day">
+    </div>
+    <p class="era-caption">Adopted in Los Angeles and immediately relocated to San Diego. She handled the transition with the calm demeanor of someone who had already claimed every window in the new apartment before the boxes were unpacked.</p>
+  </div>
+
+  <div class="era">
+    <div class="era-header">
+      <div class="era-eyebrow">July 2021</div>
+      <div class="era-title">Cross-Country Move</div>
+      <div class="era-location">San Diego, CA → Cambridge, MA</div>
+    </div>
+    <div class="era-photo">
+      <img src="../img/projects/fun/cats/claire-gallery-3.jpg" alt="Claire cross-country move">
+    </div>
+    <p class="era-caption">A five-hour flight across the country. Claire voiced her objections precisely once, then fell asleep and did not complain again. First encounter with East Coast humidity was less well received.</p>
+  </div>
+
+  <div class="era">
+    <div class="era-header">
+      <div class="era-eyebrow">2021 – 2023</div>
+      <div class="era-title">The Cambridge Years</div>
+      <div class="era-location">Cambridge, MA</div>
+    </div>
+    <div class="era-photo">
+      <img src="../img/projects/fun/cats/claire-gallery-4.jpg" alt="Claire in Cambridge">
+    </div>
+    <p class="era-caption">Settled into Cambridge life. Proximity to MIT had no effect on her publication output, but lab meetings were regularly attended from the comfort of a nearby lap. Winter coats were assessed and found disappointing.</p>
+  </div>
+
+  <div class="era">
+    <div class="era-header">
+      <div class="era-eyebrow">June 2023</div>
+      <div class="era-title">New Home</div>
+      <div class="era-location">Watertown, MA</div>
+    </div>
+    <div class="era-photo">
+      <img src="../img/projects/fun/cats/claire-gallery-5.jpg" alt="Claire in Watertown">
+    </div>
+    <p class="era-caption">Upgraded from apartment to a house with a proper yard-view window. This development was greeted with immediate and sustained approval. Multiple nap locations scouted and approved on day one.</p>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
