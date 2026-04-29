@@ -117,6 +117,12 @@
                         </li>
                       {% endfor %}
                     </ul>
+                  {% elsif item.text %}
+                    {% if item.link %}
+                      <span class="item"><a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">{{ item.text }}</a></span>
+                    {% else %}
+                      <span class="item">{{ item.text }}</span>
+                    {% endif %}
                   {% else %}
                     <span class="item">{{ item }}</span>
                   {% endif %}
