@@ -1,0 +1,10 @@
+# Home Assistant stats — update manually from hass-backup
+# automations: find automations/ -name "*.yaml" | wc -l
+# entities:    check Settings > Devices & Services in the HA UI
+# integrations: count active integration entries
+# since:       year the stack first went live
+
+automations:
+entities:
+integrations:
+since:
