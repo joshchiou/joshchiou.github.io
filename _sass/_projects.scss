@@ -649,6 +649,250 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
 }
 
 /*******************************************************************************
+ * Home Assistant stack diagram
+ ******************************************************************************/
+
+.hass-stats {
+  display: flex;
+  margin: 1.5rem 0;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hass-stat {
+  flex: 1;
+  padding: 0.9rem 0.5rem;
+  border-right: 1px solid var(--global-divider-color);
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.hass-stat-val {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #18bcf2;
+  line-height: 1.1;
+}
+
+.hass-stat-label {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--global-text-color-light);
+}
+
+.hass-diagram {
+  margin: 1.5rem 0;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hass-layer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--global-bg-color);
+}
+
+.hass-layer:nth-child(odd) {
+  background: var(--global-code-bg-color);
+}
+
+.hass-layer--core {
+  background: rgba(24, 188, 242, 0.06) !important;
+  border-top: 1px solid rgba(24, 188, 242, 0.2);
+  border-bottom: 1px solid rgba(24, 188, 242, 0.2);
+}
+
+.hass-layer-label {
+  flex: 0 0 80px;
+  padding-top: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--global-text-color-light);
+}
+
+.hass-layer-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.hass-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.hass-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--global-divider-color);
+  background: transparent;
+  color: var(--global-text-color);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+
+  i {
+    font-size: 0.82em;
+  }
+
+  &:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 2px 8px rgba(24, 188, 242, 0.2);
+    border-color: #18bcf2;
+  }
+
+  &.active {
+    border-color: #18bcf2;
+    background: rgba(24, 188, 242, 0.1);
+    color: #0ea5d9;
+  }
+}
+
+.hass-chip--core {
+  font-weight: 600;
+  border-color: rgba(24, 188, 242, 0.5);
+  background: rgba(24, 188, 242, 0.08);
+  color: #0ea5d9;
+}
+
+.hass-node-detail {
+  display: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(24, 188, 242, 0.25);
+  background: rgba(24, 188, 242, 0.05);
+  font-size: 0.8rem;
+  color: var(--global-text-color);
+  line-height: 1.5;
+
+  strong {
+    color: #18bcf2;
+  }
+
+  &.open {
+    display: block;
+  }
+}
+
+.hass-connector {
+  opacity: 0.65;
+  line-height: 0;
+  background: var(--global-code-bg-color);
+}
+
+.hass-flow-svg {
+  display: block;
+  width: 100%;
+  height: 24px;
+}
+
+@keyframes hass-flow {
+  to { stroke-dashoffset: 16; }
+}
+
+.hass-flow-line--1 {
+  stroke-dashoffset: 0;
+  animation: hass-flow 1s linear infinite;
+}
+
+.hass-flow-line--2 {
+  stroke-dashoffset: 0;
+  animation: hass-flow 1s linear infinite;
+  animation-delay: -0.33s;
+}
+
+.hass-flow-line--3 {
+  stroke-dashoffset: 0;
+  animation: hass-flow 1s linear infinite;
+  animation-delay: -0.67s;
+}
+
+.hass-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.hass-principle-card {
+  padding: 1.1rem 1rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: #18bcf2;
+  }
+
+  .hass-principle-icon {
+    font-size: 1.3rem;
+    color: #18bcf2;
+    margin-bottom: 0.5rem;
+  }
+
+  h5 {
+    margin: 0 0 0.35rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 575px) {
+  .hass-stats {
+    flex-wrap: wrap;
+  }
+
+  .hass-stat {
+    flex: 1 0 50%;
+
+    &:nth-child(2) {
+      border-right: none;
+    }
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      border-bottom: 1px solid var(--global-divider-color);
+    }
+  }
+
+  .hass-layer {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .hass-layer-label {
+    flex: unset;
+    padding-top: 0;
+  }
+}
+
+/*******************************************************************************
  * Claire photo editorial page
  ******************************************************************************/
 
