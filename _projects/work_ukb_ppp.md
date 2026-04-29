@@ -16,8 +16,8 @@ protein quantitative trait loci (pQTLs), their genetic architecture, and their a
 with disease outcomes, providing one of the most comprehensive maps to date of how human
 genetics shapes the circulating proteome.
 
-My contributions focused on the statistical genetics infrastructure and analytical pipelines
-underpinning the consortium's analyses. The UKB-PPP dataset has since become a foundational
+My contributions to the flagship paper focused on fine-mapping of the pQTLs and colocalization with eQTLs
+to enable the consortium's broader analyses. The UKB-PPP dataset has since become a foundational
 resource for Mendelian randomization, drug target validation, and multi-omics integration
 across the pharmaceutical industry.
 

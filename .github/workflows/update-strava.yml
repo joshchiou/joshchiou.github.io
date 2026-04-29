@@ -2,7 +2,7 @@ name: Update Strava Data
 
 on:
   schedule:
-    - cron: "0 6 * * 1" # Every Monday 06:00 UTC
+    - cron: "0 6 */2 * *" # Every 2 days at 06:00 UTC
   workflow_dispatch: # Allow manual trigger from GitHub Actions UI
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: pip install requests

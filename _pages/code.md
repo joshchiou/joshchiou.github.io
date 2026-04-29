@@ -37,13 +37,13 @@ description: >
       <div class="github-profile-orgs-d">
         <div class="github-profile-orgs-icons">
           <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly & Company">
-            <img src="https://avatars.githubusercontent.com/u/16001067?v=4&s=40" alt="Eli Lilly">
+            <img src="https://avatars.githubusercontent.com/u/16001067?v=4&s=40" alt="Eli Lilly" loading="lazy">
           </a>
           <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
-            <img src="https://avatars.githubusercontent.com/u/11897326?v=4&s=40" alt="conda-forge">
+            <img src="https://avatars.githubusercontent.com/u/11897326?v=4&s=40" alt="conda-forge" loading="lazy">
           </a>
           <a href="https://github.com/noobies-tennis" target="_blank" rel="noopener noreferrer" title="Noobies Tennis">
-            <img src="https://avatars.githubusercontent.com/u/97570579?v=4&s=40" alt="Noobies Tennis">
+            <img src="https://avatars.githubusercontent.com/u/97570579?v=4&s=40" alt="Noobies Tennis" loading="lazy">
           </a>
         </div>
         <span class="github-profile-orgs-label">organizations</span>
@@ -105,15 +105,35 @@ Repositories I've built or contributed to significantly.
 Selected merged pull requests to community scientific software.
 
 {% assign sorted_contribs = site.data.contributions | sort: "date" | reverse %}
+{% assign all_types = sorted_contribs | map: "type" | uniq | compact %}
+{% assign all_langs = sorted_contribs | map: "language" | uniq | compact %}
+
+<div class="contrib-filters mb-3" id="contrib-filters">
+  <div class="contrib-filter-group">
+    <span class="contrib-filter-label">Type:</span>
+    <button class="contrib-filter-btn active" data-filter-type="">all</button>
+    {% for t in all_types %}
+      <button class="contrib-filter-btn" data-filter-type="{{ t }}">{{ t }}</button>
+    {% endfor %}
+  </div>
+  <div class="contrib-filter-group mt-1">
+    <span class="contrib-filter-label">Language:</span>
+    <button class="contrib-filter-btn active" data-filter-lang="">all</button>
+    {% for l in all_langs %}
+      <button class="contrib-filter-btn" data-filter-lang="{{ l }}">{{ l }}</button>
+    {% endfor %}
+  </div>
+</div>
+
 {% assign current_year = "" %}
-<ul class="list-unstyled">
+<ul class="list-unstyled" id="contrib-list">
   {% for c in sorted_contribs %}
     {% assign c_year = c.date | date: "%Y" %}
     {% if c_year != current_year %}
       {% assign current_year = c_year %}
-      <li class="mt-4 mb-2"><h4 class="text-muted">{{ current_year }}</h4></li>
+      <li class="mt-4 mb-2 contrib-year-header"><h4 class="text-muted">{{ current_year }}</h4></li>
     {% endif %}
-    <li class="mb-4 contribution-item">
+    <li class="mb-4 contribution-item" data-type="{{ c.type }}" data-lang="{{ c.language }}">
       <div class="mb-1">
         <strong>{{ c.pr_title }}</strong>
         &nbsp;&middot;&nbsp;
@@ -143,7 +163,61 @@ Selected merged pull requests to community scientific software.
   {% endfor %}
 </ul>
 
+<div id="contrib-empty" style="display:none" class="text-muted mb-3">No contributions match the selected filters.</div>
+
 <div class="mt-3">
   <a href="https://github.com/search?q=author%3Ajoshchiou+is%3Apr+is%3Amerged&type=pullrequests"
      target="_blank" rel="noopener noreferrer">See all merged pull requests &rarr;</a>
 </div>
+
+<script>
+(function () {
+  var activeType = '';
+  var activeLang = '';
+
+  function applyFilters() {
+    var items = document.querySelectorAll('#contrib-list .contribution-item');
+    var headers = document.querySelectorAll('#contrib-list .contrib-year-header');
+    var anyVisible = false;
+
+    items.forEach(function (item) {
+      var typeMatch = !activeType || item.getAttribute('data-type') === activeType;
+      var langMatch = !activeLang || item.getAttribute('data-lang') === activeLang;
+      item.style.display = (typeMatch && langMatch) ? '' : 'none';
+      if (typeMatch && langMatch) anyVisible = true;
+    });
+
+    // Hide year headers when all their items are hidden
+    headers.forEach(function (header) {
+      var next = header.nextElementSibling;
+      var hasVisible = false;
+      while (next && !next.classList.contains('contrib-year-header')) {
+        if (next.style.display !== 'none') { hasVisible = true; break; }
+        next = next.nextElementSibling;
+      }
+      header.style.display = hasVisible ? '' : 'none';
+    });
+
+    var empty = document.getElementById('contrib-empty');
+    if (empty) empty.style.display = anyVisible ? 'none' : '';
+  }
+
+  document.querySelectorAll('.contrib-filter-btn[data-filter-type]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.contrib-filter-btn[data-filter-type]').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeType = btn.getAttribute('data-filter-type');
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('.contrib-filter-btn[data-filter-lang]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.contrib-filter-btn[data-filter-lang]').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeLang = btn.getAttribute('data-filter-lang');
+      applyFilters();
+    });
+  });
+})();
+</script>

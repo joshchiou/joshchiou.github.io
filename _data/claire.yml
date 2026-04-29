@@ -1,0 +1,48 @@
+# Timeline entries for Claire's project page.
+# Add new entries here to grow the timeline — no template changes needed.
+# Fields: year, milestone, location, img, caption
+
+- year: "~2018"
+  milestone: "The Early Days"
+  location: "Los Angeles, CA"
+  img: "assets/img/projects/fun/cats/claire-gallery-1.webp"
+  caption: >-
+    Born somewhere in Los Angeles, Claire spent her early months developing
+    core competencies: napping at maximum efficiency, climbing things that
+    shouldn't be climbed, and judging strangers from elevated surfaces.
+
+- year: "February 2021"
+  milestone: "Adoption Day"
+  location: "Los Angeles → San Diego, CA"
+  img: "assets/img/projects/fun/cats/claire-gallery-2.webp"
+  caption: >-
+    Adopted in Los Angeles and immediately relocated to San Diego. She handled
+    the transition with the calm demeanor of someone who had already claimed
+    every window in the new apartment before the boxes were unpacked.
+
+- year: "July 2021"
+  milestone: "Cross-Country Move"
+  location: "San Diego, CA → Cambridge, MA"
+  img: "assets/img/projects/fun/cats/claire-gallery-3.webp"
+  caption: >-
+    A five-hour flight across the country. Claire voiced her objections
+    precisely once, then fell asleep and did not complain again. First
+    encounter with East Coast humidity was less well received.
+
+- year: "2021 – 2023"
+  milestone: "The Cambridge Years"
+  location: "Cambridge, MA"
+  img: "assets/img/projects/fun/cats/claire-gallery-4.webp"
+  caption: >-
+    Settled into Cambridge life. Proximity to MIT had no measurable effect on
+    her publication output, but lab meetings were regularly attended from the
+    comfort of a nearby lap.
+
+- year: "June 2023"
+  milestone: "New Home"
+  location: "Watertown, MA"
+  img: "assets/img/projects/fun/cats/claire-gallery-5.webp"
+  caption: >-
+    Upgraded to a house with a proper yard-view window. This development was
+    greeted with immediate and sustained approval. Multiple nap locations
+    scouted and approved on day one.

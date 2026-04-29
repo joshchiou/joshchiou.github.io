@@ -1,0 +1,38 @@
+name: Lighthouse CI
+
+on:
+  workflow_run:
+    workflows: ["Deploy site"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js 📦
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse CI 🔦
+        run: |
+          lhci autorun \
+            --collect.url=https://joshchiou.github.io \
+            --collect.url=https://joshchiou.github.io/publications/ \
+            --collect.url=https://joshchiou.github.io/projects/ \
+            --collect.url=https://joshchiou.github.io/code/ \
+            --collect.numberOfRuns=3 \
+            --upload.target=temporary-public-storage \
+            --assert.assertions.categories:performance=["warn",{"minScore":0.8}] \
+            --assert.assertions.categories:accessibility=["warn",{"minScore":0.9}] \
+            --assert.assertions.categories:best-practices=["warn",{"minScore":0.9}] \
+            --assert.assertions.categories:seo=["warn",{"minScore":0.9}]
