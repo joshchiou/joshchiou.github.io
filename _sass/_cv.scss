@@ -37,6 +37,22 @@ a.btncv:hover {
  * CV TIME_TABLE styles
  *****************************/
 
+span.cv-award-org {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--global-theme-color);
+  background: color-mix(in srgb, var(--global-theme-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--global-theme-color) 30%, transparent);
+  border-radius: 0.125rem;
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.45rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
 p.location {
   font-size: 0.7rem;
   white-space: nowrap;
