@@ -104,35 +104,42 @@ Repositories I've built or contributed to significantly.
 
 Selected merged pull requests to community scientific software.
 
+{% assign sorted_contribs = site.data.contributions | sort: "date" | reverse %}
+{% assign current_year = "" %}
 <ul class="list-unstyled">
-  {% for c in site.data.contributions %}
-  <li class="mb-4 contribution-item">
-    <div class="mb-1">
-      <strong>{{ c.pr_title }}</strong>
-      &nbsp;&middot;&nbsp;
-      <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
-      &nbsp;&middot;&nbsp;
-      <span class="text-muted small">{{ c.date }}</span>
-    </div>
-    <div class="mb-1">
-      {% if c.type %}
-        {% if c.type == "bug fix" %}{% assign tc = "badge-bug" %}
-        {% elsif c.type == "performance" %}{% assign tc = "badge-perf" %}
-        {% elsif c.type == "feature" %}{% assign tc = "badge-feature" %}
-        {% elsif c.type == "packaging" %}{% assign tc = "badge-pkg" %}
-        {% elsif c.type == "compatibility" %}{% assign tc = "badge-compat" %}
-        {% else %}{% assign tc = "badge-compat" %}{% endif %}
-        <span class="badge-type {{ tc }}">{{ c.type }}</span>
-      {% endif %}
-      {% if c.language %}<span class="badge-type badge-lang">{{ c.language }}</span>{% endif %}
-    </div>
-    <div class="mb-1">
-      <small class="text-muted">{{ c.blurb }}</small>
-    </div>
-    <a class="pr-link" href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer">
-      <i class="fa-solid fa-code-pull-request"></i> View pull request
-    </a>
-  </li>
+  {% for c in sorted_contribs %}
+    {% assign c_year = c.date | date: "%Y" %}
+    {% if c_year != current_year %}
+      {% assign current_year = c_year %}
+      <li class="mt-4 mb-2"><h4 class="text-muted">{{ current_year }}</h4></li>
+    {% endif %}
+    <li class="mb-4 contribution-item">
+      <div class="mb-1">
+        <strong>{{ c.pr_title }}</strong>
+        &nbsp;&middot;&nbsp;
+        <a href="{{ c.url }}" target="_blank" rel="noopener noreferrer">{{ c.repo }}</a>
+        &nbsp;&middot;&nbsp;
+        <span class="text-muted small">{{ c.date }}</span>
+      </div>
+      <div class="mb-1">
+        {% if c.type %}
+          {% if c.type == "bug fix" %}{% assign tc = "badge-bug" %}
+          {% elsif c.type == "performance" %}{% assign tc = "badge-perf" %}
+          {% elsif c.type == "feature" %}{% assign tc = "badge-feature" %}
+          {% elsif c.type == "packaging" %}{% assign tc = "badge-pkg" %}
+          {% elsif c.type == "compatibility" %}{% assign tc = "badge-compat" %}
+          {% else %}{% assign tc = "badge-compat" %}{% endif %}
+          <span class="badge-type {{ tc }}">{{ c.type }}</span>
+        {% endif %}
+        {% if c.language %}<span class="badge-type badge-lang">{{ c.language }}</span>{% endif %}
+      </div>
+      <div class="mb-1">
+        <small class="text-muted">{{ c.blurb }}</small>
+      </div>
+      <a class="pr-link" href="{{ c.pr_url }}" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-code-pull-request"></i> View pull request
+      </a>
+    </li>
   {% endfor %}
 </ul>
 
