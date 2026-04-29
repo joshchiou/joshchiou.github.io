@@ -9,6 +9,7 @@ layout: default
 {% endif %}
 
 <div class="post">
+  {% include breadcrumbs.liquid %}
   <header class="post-header">
     {% if page.project_intro %}
       {% include project_intro.liquid img=page.img title=page.title icons=page.icons description=page.description %}

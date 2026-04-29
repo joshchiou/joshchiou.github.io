@@ -1479,3 +1479,19 @@ ninja-keys::part(ninja-input-wrapper) {
     transition: none;
   }
 }
+
+// Breadcrumb navigation
+.breadcrumb-nav {
+  margin-bottom: 0.75rem;
+
+  a {
+    color: var(--global-text-color-light);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--global-theme-color);
+    }
+  }
+}
