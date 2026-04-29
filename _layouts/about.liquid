@@ -78,11 +78,51 @@ layout: default
     </div>
     <script>
     (function () {
-      var els = document.querySelectorAll('#stat-papers, #stat-citations');
-      els.forEach(function (el) {
-        var n = parseInt(el.textContent, 10);
-        if (!isNaN(n)) el.textContent = n.toLocaleString();
-      });
+      var els = document.querySelectorAll('#stat-papers, #stat-citations, #stat-hindex');
+      var animated = false;
+
+      function animateCountUp(el, target, duration) {
+        var start = 0;
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.round(eased * target);
+          el.textContent = current.toLocaleString();
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function triggerCountUp() {
+        if (animated) return;
+        animated = true;
+        els.forEach(function (el) {
+          var n = parseInt(el.textContent, 10);
+          if (!isNaN(n) && n > 0) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              el.textContent = n.toLocaleString();
+            } else {
+              animateCountUp(el, n, 1200);
+            }
+          }
+        });
+      }
+
+      var bar = document.querySelector('.about-hero-bar');
+      if (bar) {
+        var observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (m) {
+            if (m.target.classList.contains('visible')) {
+              triggerCountUp();
+              observer.disconnect();
+            }
+          });
+        });
+        observer.observe(bar, { attributes: true, attributeFilter: ['class'] });
+        if (bar.classList.contains('visible')) triggerCountUp();
+      }
     })();
     </script>
 
