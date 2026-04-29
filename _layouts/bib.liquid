@@ -423,4 +423,17 @@
       </div>
     {% endif %}
   </div>
+  {% if site.serve_schema_org and entry.doi %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": {{ entry.title | jsonify }},
+      "datePublished": "{{ entry.year }}",
+      {% if entry.journal %}"isPartOf": {"@type": "Periodical", "name": {{ entry.journal | jsonify }}},{% endif %}
+      "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "{{ entry.doi }}"},
+      "url": "https://doi.org/{{ entry.doi }}"
+    }
+    </script>
+  {% endif %}
 </div>
