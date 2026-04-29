@@ -308,6 +308,9 @@
       {% if entry.website %}
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
       {% endif %}
+      {% if entry.project_url %}
+        <a href="{{ entry.project_url | relative_url }}" class="btn btn-sm z-depth-0" role="button">View project →</a>
+      {% endif %}
       {% if site.enable_publication_badges and site.enable_publication_badges.altmetric %}
         {% if entry.altmetric and entry.altmetric != 'false' %}
           <span
