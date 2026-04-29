@@ -53,10 +53,16 @@
   /* ── Hero: photo + profile ── */
   .hero {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 220px 1fr;
     gap: 28px;
     margin-bottom: 36px;
     align-items: start;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
 
   .hero-img-wrap {
@@ -104,19 +110,17 @@
   /* Stat grid */
   .stat-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 0;
     border: 1px solid #e0e0e0;
   }
 
   .stat-cell {
-    padding: 10px 12px;
-    border-right: 1px solid #e0e0e0;
+    padding: 8px 12px;
     border-bottom: 1px solid #e0e0e0;
   }
 
-  .stat-cell:nth-child(even) { border-right: none; }
-  .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .stat-cell:last-child { border-bottom: none; }
 
   .stat-cell-label {
     font-size: 0.58rem;
@@ -334,15 +338,12 @@
 
   <!-- ── Hero: photo + profile ── -->
   <div class="hero">
-    <div class="hero-img-wrap">
-      <img src="../img/projects/fun/cats/claire-main.jpg" alt="Claire">
-      <div class="hero-img-label">Claire, 2025</div>
-    </div>
-
-    <div class="profile">
-      <p class="profile-lede">
-        "Joined the family in February 2021 and has since contributed significantly to the household's research culture through sustained application of lap occupancy."
-      </p>
+    <!-- Left: photo + stat table -->
+    <div class="hero-left">
+      <div class="hero-img-wrap">
+        <img src="../img/projects/fun/cats/claire-main.jpg" alt="Claire">
+        <div class="hero-img-label">Claire, 2025</div>
+      </div>
 
       <div class="stat-grid">
         <div class="stat-cell">
@@ -370,6 +371,13 @@
           <div class="stat-cell-val">🩶 Gray</div>
         </div>
       </div>
+    </div>
+
+    <!-- Right: lede + basepaws -->
+    <div class="profile">
+      <p class="profile-lede">
+        "Joined the family in February 2021 and has since contributed significantly to the household's research culture through sustained application of lap occupancy."
+      </p>
 
       <!-- Basepaws block -->
       <div class="basepaws-block">
