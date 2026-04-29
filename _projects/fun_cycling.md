@@ -52,20 +52,24 @@ chart:
 
 ### Stats
 
+{% if stats.total_rides %}
 <div class="row mb-4 text-center">
   <div class="col-4">
-    <h3 class="mb-0">{{ stats.total_rides | default: "—" }}</h3>
+    <h3 class="mb-0">{{ stats.total_rides }}</h3>
     <small class="text-muted">rides</small>
   </div>
   <div class="col-4">
-    <h3 class="mb-0">{{ total_miles | default: "—" }}</h3>
+    <h3 class="mb-0">{{ total_miles }}</h3>
     <small class="text-muted">miles</small>
   </div>
   <div class="col-4">
-    <h3 class="mb-0">{{ total_ft | default: "—" }}</h3>
+    <h3 class="mb-0">{{ total_ft }}</h3>
     <small class="text-muted">ft elevation</small>
   </div>
 </div>
+{% else %}
+<p class="text-muted">Stats updating — check back soon.</p>
+{% endif %}
 
 ### Activity calendar (year to date)
 
