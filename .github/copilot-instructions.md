@@ -5,6 +5,7 @@ Personal academic website — customized fork of [al-folio](https://github.com/a
 ## Build & Dev
 
 ```bash
+bundle install                    # first time only
 bundle exec jekyll serve          # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build (use before pushing)
 docker compose up                 # recommended — matches CI exactly
@@ -24,7 +25,7 @@ All personal content lives in a small set of files; everything else is upstream 
 |---|---|
 | `_pages/about.md` | Landing page body copy |
 | `_config.yml` | Site metadata, feature flags, nav |
-| `_data/cv.yml` | CV structured data (experience, education, skills) |
+| `_data/cv.yml` | CV structured data (experience, education, skills, awards) |
 | `_bibliography/papers.bib` | All publications (rendered via jekyll-scholar) |
 | `_news/*.md` | News items on the about page (reverse-chronological) |
 | `_projects/*.md` | Project cards (`work_` or `fun_` prefix) |
@@ -66,6 +67,7 @@ python3 scripts/update_strava.py  # requires STRAVA_CLIENT_ID, STRAVA_CLIENT_SEC
 ```bash
 python3 scripts/parse_location_history.py /path/to/location-history.json
 # outputs _data/travel_countries.yml and _data/travel_cities.yml
+# geocodes via Nominatim; caches to scripts/.geocode_cache.json (~5 min first run, instant on re-runs)
 # review travel_cities.yml before committing — contains noise from restaurants/shops
 ```
 

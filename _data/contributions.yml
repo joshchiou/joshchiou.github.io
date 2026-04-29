@@ -28,6 +28,7 @@
   date: 2025-07-09
   type: performance
   language: Python
+  featured: true
   blurb: Parallelized inverse-document-frequency computation in dimensionality reduction, cutting runtime on large datasets.
 
 - repo: stephenslab/susieR
@@ -37,6 +38,7 @@
   date: 2025-02-27
   type: compatibility
   language: R
+  featured: true
   blurb: Restored Python interoperability so susieR can be called from rpy2 pipelines.
 
 - repo: Cloufield/gwaslab
@@ -64,6 +66,7 @@
   date: 2023-08-25
   type: bug fix
   language: R
+  featured: true
   blurb: Fixed group export function compatibility with updated dependencies.
 
 - repo: FinucaneLab/fine-mapping-inf

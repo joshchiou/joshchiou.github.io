@@ -37,13 +37,13 @@ description: >
       <div class="github-profile-orgs-d">
         <div class="github-profile-orgs-icons">
           <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly & Company">
-            <img src="https://avatars.githubusercontent.com/u/16001067?v=4&s=40" alt="Eli Lilly" loading="lazy">
+            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Eli Lilly">
           </a>
           <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
-            <img src="https://avatars.githubusercontent.com/u/11897326?v=4&s=40" alt="conda-forge" loading="lazy">
+            <img src="{{ '/assets/img/orgs/conda-forge.png' | relative_url }}" alt="conda-forge">
           </a>
           <a href="https://github.com/noobies-tennis" target="_blank" rel="noopener noreferrer" title="Noobies Tennis">
-            <img src="https://avatars.githubusercontent.com/u/97570579?v=4&s=40" alt="Noobies Tennis" loading="lazy">
+            <img src="{{ '/assets/img/orgs/noobies-tennis.png' | relative_url }}" alt="Noobies Tennis">
           </a>
         </div>
         <span class="github-profile-orgs-label">organizations</span>
@@ -133,7 +133,7 @@ Selected merged pull requests to community scientific software.
       {% assign current_year = c_year %}
       <li class="mt-4 mb-2 contrib-year-header"><h4 class="text-muted">{{ current_year }}</h4></li>
     {% endif %}
-    <li class="mb-4 contribution-item" data-type="{{ c.type }}" data-lang="{{ c.language }}">
+    <li class="mb-4 contribution-item" data-type="{{ c.type }}" data-lang="{{ c.language }}" data-featured="{{ c.featured | default: false }}">
       <div class="mb-1">
         <strong>{{ c.pr_title }}</strong>
         &nbsp;&middot;&nbsp;
@@ -176,6 +176,7 @@ Selected merged pull requests to community scientific software.
   var activeLang = '';
 
   function applyFilters() {
+    var filtered = activeType !== '' || activeLang !== '';
     var items = document.querySelectorAll('#contrib-list .contribution-item');
     var headers = document.querySelectorAll('#contrib-list .contrib-year-header');
     var anyVisible = false;
@@ -183,8 +184,10 @@ Selected merged pull requests to community scientific software.
     items.forEach(function (item) {
       var typeMatch = !activeType || item.getAttribute('data-type') === activeType;
       var langMatch = !activeLang || item.getAttribute('data-lang') === activeLang;
-      item.style.display = (typeMatch && langMatch) ? '' : 'none';
-      if (typeMatch && langMatch) anyVisible = true;
+      var featuredMatch = filtered || item.getAttribute('data-featured') === 'true';
+      var visible = typeMatch && langMatch && featuredMatch;
+      item.style.display = visible ? '' : 'none';
+      if (visible) anyVisible = true;
     });
 
     // Hide year headers when all their items are hidden
@@ -219,5 +222,8 @@ Selected merged pull requests to community scientific software.
       applyFilters();
     });
   });
+
+  // Apply on load to show only featured items initially
+  applyFilters();
 })();
 </script>
