@@ -5,7 +5,7 @@ description: Pre-competitive consortium mapping the genetic architecture of the 
 img: assets/img/projects/work/ukb-ppp.svg
 importance: 3
 category: work
-related_publications: false
+related_publications: true
 ---
 
 The [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/)

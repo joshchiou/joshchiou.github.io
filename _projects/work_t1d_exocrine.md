@@ -5,7 +5,7 @@ description: Discovering acinar cell contributions to T1D genetic risk using sin
 img: assets/img/projects/work/t1d-exocrine.svg
 importance: 1
 category: work
-related_publications: false
+related_publications: true
 ---
 
 Type 1 diabetes (T1D) has long been understood as a disease of the pancreatic islets, where
