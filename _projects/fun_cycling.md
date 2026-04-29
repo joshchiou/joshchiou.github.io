@@ -89,7 +89,7 @@ chart:
   </div>
 </div>
 <div class="text-center mb-4" style="font-size: 0.82rem; color: var(--global-text-color-light);">
-  <span id="stat-streak"></span><span id="stat-streak-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-best-streak"></span>
+  <span id="stat-streak"></span><span id="stat-streak-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-best-streak"></span><span id="stat-pace-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-pace"></span>
 </div>
 {% else %}
 <p class="text-muted">Stats updating — check back soon.</p>
@@ -138,6 +138,40 @@ chart:
   var years = Object.keys(byYear).sort();
   var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var yearColors = ['#2980b9', '#e67e22', '#27ae60', '#8e44ad', '#e74c3c'];
+
+  // ── YoY pace ─────────────────────────────────────────────────────────────
+  var curYear = years[years.length - 1];
+  var prevYear = String(parseInt(curYear, 10) - 1);
+  var curYearData = byYear[curYear] || [];
+  var curMonthIdx = -1;
+  for (var _i = 11; _i >= 0; _i--) {
+    if ((curYearData[_i] || 0) > 0) { curMonthIdx = _i; break; }
+  }
+  var yoyDelta = null, yoyPct = null, projFull = null;
+  if (curMonthIdx >= 0 && byYear[prevYear]) {
+    var curYTD = 0, prevYTD = 0;
+    for (var _j = 0; _j <= curMonthIdx; _j++) {
+      curYTD += curYearData[_j] || 0;
+      prevYTD += byYear[prevYear][_j] || 0;
+    }
+    curYTD = Math.round(curYTD);
+    prevYTD = Math.round(prevYTD);
+    yoyDelta = curYTD - prevYTD;
+    yoyPct   = prevYTD > 0 ? Math.round(yoyDelta / prevYTD * 100) : null;
+    projFull = Math.round(curYTD / (curMonthIdx + 1) * 12);
+  }
+
+  function showPaceStat() {
+    if (yoyDelta === null) return;
+    var el  = document.getElementById('stat-pace');
+    var sep = document.getElementById('stat-pace-sep');
+    if (!el) return;
+    var sign = yoyDelta >= 0 ? '+' : '';
+    var pct  = yoyPct !== null ? ' (' + sign + yoyPct + '%)' : '';
+    el.textContent = sign + yoyDelta + ' mi vs ' + prevYear + pct + ' · on pace for ~' + projFull + ' mi';
+    el.style.color = yoyDelta >= 0 ? '#27ae60' : '#e74c3c';
+    if (sep) sep.style.display = '';
+  }
 
   var cumMonths = [];
   var cumValues = [];
@@ -278,14 +312,27 @@ chart:
     var splitColor = dark ? 'rgba(200,200,200,0.15)' : 'rgba(0,0,0,0.1)';
 
     if (currentView === 'byyear') {
+      var markerColor = dark ? 'rgba(200,200,200,0.3)' : 'rgba(100,100,100,0.28)';
+      var markerLabelColor = dark ? 'rgba(200,200,200,0.5)' : 'rgba(100,100,100,0.55)';
       return {
         tooltip: {
           trigger: 'axis',
           formatter: function (params) {
-            var lines = params.map(function (p) {
-              return '<span style="color:' + p.color + '">●</span> ' + p.seriesName + ': ' + p.value + ' mi';
+            var lines = [];
+            var curVal = null, prevVal = null;
+            params.forEach(function (p) {
+              lines.push('<span style="color:' + p.color + '">●</span> ' + p.seriesName + ': ' + (p.value || 0) + ' mi');
+              if (p.seriesName === curYear) curVal = p.value;
+              if (p.seriesName === prevYear) prevVal = p.value;
             });
-            return params[0].name + '<br/>' + lines.join('<br/>');
+            var result = params[0].name + '<br/>' + lines.join('<br/>');
+            if (curVal && prevVal) {
+              var d = Math.round(curVal - prevVal);
+              var sign = d >= 0 ? '+' : '';
+              var col  = d >= 0 ? '#27ae60' : '#e74c3c';
+              result += '<br/><span style="font-size:0.88em;color:' + col + '">' + sign + d + ' mi vs ' + prevYear + '</span>';
+            }
+            return result;
           }
         },
         legend: {
@@ -307,12 +354,25 @@ chart:
           splitLine: { lineStyle: { type: 'dashed', color: splitColor } }
         },
         series: years.map(function (year, i) {
-          return {
+          var s = {
             name: year, type: 'line', data: byYear[year],
             smooth: true, symbol: 'circle', symbolSize: 6,
             lineStyle: { width: 2.5 },
             itemStyle: { color: yearColors[i % yearColors.length] }
           };
+          if (year === curYear && curMonthIdx >= 0) {
+            s.markLine = {
+              silent: true,
+              symbol: ['none', 'none'],
+              data: [{ xAxis: monthLabels[curMonthIdx] }],
+              lineStyle: { type: 'dashed', color: markerColor, width: 1.5 },
+              label: {
+                show: true, position: 'insideEndTop',
+                formatter: 'today', fontSize: 10, color: markerLabelColor
+              }
+            };
+          }
+          return s;
         })
       };
     }
@@ -499,10 +559,12 @@ chart:
   if (document.readyState === 'complete') {
     initOtherCharts();
     initBikeCarousel();
+    showPaceStat();
   } else {
     window.addEventListener('load', function () {
       initOtherCharts();
       initBikeCarousel();
+      showPaceStat();
     });
   }
 })();
