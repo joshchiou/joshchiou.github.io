@@ -69,9 +69,10 @@ jobs:
       - name: Lighthouse CI audit 🔦
         uses: treosh/lighthouse-ci-action@v12
         with:
+          staticDistDir: _site
           urls: |
-            _site/index.html
-            _site/publications/index.html
+            /
+            /publications/
           uploadArtifacts: true
           configJson: |
             {
