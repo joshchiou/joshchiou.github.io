@@ -13,21 +13,75 @@ involves a good amaro. The house bar has a soft spot for aged rum and Japanese w
 
 ### Favorites
 
-**Negroni** --- Equal parts gin, Campari, and sweet vermouth. Stirred over ice, strained into a
-coupe, orange peel expressed and dropped in. Endlessly riffable: swap the gin for mezcal
-(Oaxaca Negroni), the Campari for Cynar (Cynar Negroni), or the vermouth for Punt e Mes for
-extra bitterness.
+<div class="recipe-grid">
 
-**Manhattan** --- 2 oz rye, 1 oz sweet vermouth, 2 dashes Angostura. Stirred and strained,
-Luxardo cherry. The spec matters here more than in most drinks --- good rye (Rittenhouse,
-Wild Turkey 101) and fresh vermouth make or break it.
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h4>Negroni</h4>
+    <span class="recipe-method">stirred</span>
+  </div>
+  <ul class="recipe-ingredients">
+    <li>1 oz gin</li>
+    <li>1 oz Campari</li>
+    <li>1 oz sweet vermouth</li>
+  </ul>
+  <p class="recipe-note">Strained into a coupe, orange peel expressed. Endlessly riffable — swap gin for mezcal (Oaxaca Negroni), Campari for Cynar, or vermouth for Punt e Mes.</p>
+</div>
 
-**Paper Plane** --- Equal parts bourbon, Aperol, Amaro Nonino, and lemon juice. Shaken. One of
-the few modern classics that earns the equal-parts format --- every ingredient pulls weight.
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h4>Manhattan</h4>
+    <span class="recipe-method">stirred</span>
+  </div>
+  <ul class="recipe-ingredients">
+    <li>2 oz rye</li>
+    <li>1 oz sweet vermouth</li>
+    <li>2 dashes Angostura</li>
+  </ul>
+  <p class="recipe-note">Strained, Luxardo cherry. The spec matters — good rye (Rittenhouse, Wild Turkey 101) and fresh vermouth make or break it.</p>
+</div>
 
-**Jungle Bird** --- 1.5 oz dark rum, 0.75 oz Campari, 1.5 oz pineapple juice, 0.5 oz lime,
-0.5 oz simple. Shaken. A tiki drink with a bitter backbone --- the Campari and pineapple
-combination is surprisingly good.
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h4>Paper Plane</h4>
+    <span class="recipe-method">shaken</span>
+  </div>
+  <ul class="recipe-ingredients">
+    <li>0.75 oz bourbon</li>
+    <li>0.75 oz Aperol</li>
+    <li>0.75 oz Amaro Nonino</li>
+    <li>0.75 oz lemon juice</li>
+  </ul>
+  <p class="recipe-note">One of the few modern classics that earns the equal-parts format — every ingredient pulls weight.</p>
+</div>
 
-**Old Fashioned** --- 2 oz bourbon, sugar cube, Angostura, orange peel. The drink that reminds
-you that cocktails are simple when you let them be.
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h4>Jungle Bird</h4>
+    <span class="recipe-method">shaken</span>
+  </div>
+  <ul class="recipe-ingredients">
+    <li>1.5 oz dark rum</li>
+    <li>0.75 oz Campari</li>
+    <li>1.5 oz pineapple juice</li>
+    <li>0.5 oz lime juice</li>
+    <li>0.5 oz simple syrup</li>
+  </ul>
+  <p class="recipe-note">A tiki drink with a bitter backbone — the Campari and pineapple combination is surprisingly good.</p>
+</div>
+
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h4>Old Fashioned</h4>
+    <span class="recipe-method">stirred</span>
+  </div>
+  <ul class="recipe-ingredients">
+    <li>2 oz bourbon</li>
+    <li>1 sugar cube</li>
+    <li>2 dashes Angostura</li>
+    <li>Orange peel</li>
+  </ul>
+  <p class="recipe-note">The drink that reminds you cocktails are simple when you let them be.</p>
+</div>
+
+</div>

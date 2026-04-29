@@ -532,3 +532,69 @@ html[data-theme="dark"] .github-profile-orgs-icons img {
 html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
   background: rgba(255, 255, 255, 0.06);
 }
+
+/*******************************************************************************
+ * Recipe cards
+ ******************************************************************************/
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.recipe-card {
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+  }
+
+  .recipe-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+
+    h4 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+  }
+
+  .recipe-method {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--global-theme-color);
+    font-weight: 600;
+  }
+
+  .recipe-ingredients {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem;
+
+    li {
+      padding: 0.2rem 0;
+      font-size: 0.9rem;
+      color: var(--global-text-color);
+      border-bottom: 1px solid var(--global-divider-color);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .recipe-note {
+    font-size: 0.85rem;
+    color: var(--global-text-color-light);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
