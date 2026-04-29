@@ -118,11 +118,11 @@
                       {% endfor %}
                     </ul>
                   {% elsif item.text %}
-                    {% if item.link %}
-                      <span class="item"><a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">{{ item.text }}</a></span>
-                    {% else %}
-                      <span class="item">{{ item.text }}</span>
-                    {% endif %}
+                    <span class="item">
+                      {{- item.text -}}
+                      {%- if item.org %}<span class="cv-award-org">{{ item.org }}</span>{% endif %}
+                      {%- if item.link %}<a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="btncv z-depth-0 ml-1">source</a>{% endif %}
+                    </span>
                   {% else %}
                     <span class="item">{{ item }}</span>
                   {% endif %}

@@ -104,25 +104,32 @@
   contents:
     - year: 2023
       items:
-        - "Solving the Science Challenge — Pfizer Integrative Biology"
+        - text: "Solving the Science Challenge"
+          org: "Pfizer Integrative Biology"
     - year: 2020
       items:
-        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist — ASHG"
+        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist"
+          org: "ASHG"
           link: "https://www.ashg.org/wp-content/uploads/2020/10/ASHG20_Epstein_WebListingUpdated.pdf"
-        - text: "Human Islet Research Network (HIRN) Annual Investigator Meeting Scholarship"
+        - text: "Annual Investigator Meeting Scholarship"
+          org: "HIRN"
           link: "https://hirnetwork.org/news/news-awards/hirn2020_scholarship"
     - year: 2018-2020
       items:
-        - text: "Genetics Training Program Fellowship — UC San Diego"
+        - text: "Genetics Training Program Fellowship"
+          org: "UC San Diego"
           link: "https://genetics.ucsd.edu/alumni/index.html#2017-trainees"
     - year: 2018
       items:
-        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist — ASHG"
+        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist"
+          org: "ASHG"
           link: "https://www.ashg.org/wp-content/uploads/2019/09/ASHG18_Epstein_Trainee.pdf"
-        - "NSF Graduate Research Fellowship, Honorable Mention"
+        - text: "Graduate Research Fellowship, Honorable Mention"
+          org: "NSF"
     - year: 2014
       items:
-        - "J.W. and Nellie MacDowell Scholarship — UCLA"
+        - text: "J.W. and Nellie MacDowell Scholarship"
+          org: "UCLA"
 
 - title: Professional Activities
   type: time_table
