@@ -598,3 +598,316 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
     line-height: 1.5;
   }
 }
+
+/*******************************************************************************
+ * Claire photo editorial page
+ ******************************************************************************/
+
+// ── Basepaws breed / chromosome color palette ─────────────────────────────────
+
+.c-western { background: #2698ba; }
+.c-exotic  { background: #e05c4a; }
+.c-eastern { background: #e8972e; }
+.c-persian { background: #5cb85c; }
+.c-polycat { background: #adb5bd; }
+
+// ── Hero grid ─────────────────────────────────────────────────────────────────
+
+.claire-hero {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 32px;
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Left column: photo fills flex space, stat table anchors bottom
+.claire-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.claire-hero-img-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--global-divider-color);
+  border-bottom: none;
+  line-height: 0;
+
+  figure {
+    margin: 0;
+    height: 100%;
+    line-height: 0;
+    display: block;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  @media (max-width: 575px) {
+    border-bottom: 1px solid var(--global-divider-color);
+
+    img {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4/3;
+    }
+  }
+}
+
+// ── Stat table ────────────────────────────────────────────────────────────────
+
+.claire-stat-table {
+  border: 1px solid var(--global-divider-color);
+  flex-shrink: 0;
+}
+
+.claire-stat-cell {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  &:last-child { border-bottom: none; }
+}
+
+.claire-stat-label {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--global-text-color-light);
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.claire-stat-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+// ── Right column: lede + genetics ────────────────────────────────────────────
+
+.claire-hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.claire-lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--global-text-color);
+  font-style: italic;
+  border-left: 3px solid var(--global-text-color);
+  padding-left: 14px;
+  margin: 0;
+}
+
+// ── Genetics panel ────────────────────────────────────────────────────────────
+
+.claire-genetics {
+  border: 1px solid var(--global-divider-color);
+  padding: 16px;
+  flex: 1;
+}
+
+.claire-section-eyebrow {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--global-text-color-light);
+  margin-bottom: 12px;
+}
+
+// ── Breed bars ────────────────────────────────────────────────────────────────
+
+.claire-breed-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+  font-size: 0.75rem;
+}
+
+.claire-breed-name {
+  width: 68px;
+  color: var(--global-text-color);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.claire-breed-track {
+  flex: 1;
+  height: 6px;
+  background: var(--global-divider-color);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.claire-breed-fill {
+  height: 100%;
+  border-radius: 99px;
+}
+
+.claire-breed-pct {
+  width: 40px;
+  text-align: right;
+  color: var(--global-text-color-light);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+// ── Chromosome map ────────────────────────────────────────────────────────────
+
+.claire-chr-section {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--global-divider-color);
+}
+
+.claire-chr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 20px;
+}
+
+.claire-chr-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.claire-chr-label {
+  width: 22px;
+  font-size: 0.65rem;
+  color: var(--global-text-color-light);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.claire-chr-track {
+  flex: 1;
+  height: 8px;
+  background: var(--global-divider-color);
+  border-radius: 2px;
+  display: flex;
+  overflow: hidden;
+}
+
+.claire-chr-seg {
+  height: 100%;
+}
+
+.claire-chr-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 12px;
+  font-size: 0.65rem;
+  color: var(--global-text-color-light);
+}
+
+.claire-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.claire-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+// ── Section divider ───────────────────────────────────────────────────────────
+
+.claire-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 36px 0 28px;
+}
+
+.claire-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--global-divider-color);
+}
+
+.claire-divider-text {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--global-text-color-light);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+// ── Era entries ───────────────────────────────────────────────────────────────
+
+.claire-era {
+  margin-bottom: 44px;
+}
+
+.claire-era-header {
+  margin-bottom: 14px;
+}
+
+.claire-era-eyebrow {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--global-text-color-light);
+  margin-bottom: 4px;
+}
+
+.claire-era-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--global-text-color);
+  margin-bottom: 4px;
+}
+
+.claire-era-location {
+  font-size: 0.72rem;
+  color: var(--global-text-color-light);
+}
+
+.claire-era-photo {
+  margin-bottom: 12px;
+
+  figure { margin: 0; }
+
+  img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+}
+
+.claire-era-caption {
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  line-height: 1.65;
+  border-left: 2px solid var(--global-divider-color);
+  padding-left: 12px;
+  margin: 0;
+}

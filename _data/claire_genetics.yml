@@ -1,0 +1,82 @@
+# Basepaws breed analysis data for Claire.
+# cls values map to CSS color classes defined in _sass/_projects.scss.
+
+breeds:
+  - name: Western
+    pct: 63.58
+    cls: c-western
+  - name: Polycat
+    pct: 16.01
+    cls: c-polycat
+  - name: Exotic
+    pct: 9.20
+    cls: c-exotic
+  - name: Eastern
+    pct: 7.13
+    cls: c-eastern
+  - name: Persian
+    pct: 4.08
+    cls: c-persian
+
+# Chromosome map — segments approximate Basepaws report at "probable" confidence.
+# Each segment: cls (breed color class), width (percentage of chromosome length).
+chromosomes:
+  - id: A1
+    segments:
+      - { cls: c-western, width: 100 }
+  - id: A2
+    segments:
+      - { cls: c-polycat, width: 30 }
+      - { cls: c-exotic,  width: 70 }
+  - id: A3
+    segments:
+      - { cls: c-eastern, width: 65 }
+  - id: B1
+    segments:
+      - { cls: c-polycat, width: 80 }
+  - id: B2
+    segments:
+      - { cls: c-persian, width: 65 }
+  - id: B3
+    segments:
+      - { cls: c-western, width: 60 }
+  - id: B4
+    segments:
+      - { cls: c-western, width: 55 }
+  - id: C1
+    segments:
+      - { cls: c-western, width: 90 }
+  - id: C2
+    segments:
+      - { cls: c-western, width: 70 }
+  - id: D1
+    segments:
+      - { cls: c-western, width: 50 }
+  - id: D2
+    segments:
+      - { cls: c-western, width: 25 }
+      - { cls: c-polycat, width: 25 }
+  - id: D3
+    segments:
+      - { cls: c-western, width: 30 }
+  - id: D4
+    segments:
+      - { cls: c-polycat, width: 30 }
+  - id: E1
+    segments:
+      - { cls: c-western, width: 25 }
+  - id: E2
+    segments:
+      - { cls: c-western, width: 20 }
+  - id: E3
+    segments:
+      - { cls: c-eastern, width: 20 }
+      - { cls: c-persian, width: 5  }
+  - id: F1
+    segments:
+      - { cls: c-western, width: 20 }
+      - { cls: c-polycat, width: 5  }
+  - id: F2
+    segments:
+      - { cls: c-eastern, width: 30 }
+      - { cls: c-polycat, width: 20 }
