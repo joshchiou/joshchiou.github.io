@@ -8,6 +8,8 @@ category: fun
 map: true
 chart:
   echarts: true
+images:
+  slider: true
 ---
 
 {% assign countries = site.data.travel_countries %}
@@ -38,10 +40,37 @@ chart:
 
 ### Photos
 
-<div class="travel-gallery-placeholder">
-  <i class="fa-regular fa-images fa-2x"></i>
-  <p>Photo gallery coming soon.</p>
+<div class="swiper mySwiper mt-3">
+  <div class="swiper-wrapper">
+    {% for i in (1..6) %}
+    <div class="swiper-slide">
+      {% capture img_path %}assets/img/projects/fun/travel/travel-{{ i }}.webp{% endcapture %}
+      {% include figure.liquid loading="lazy" path=img_path class="img-fluid rounded z-depth-1" alt="Travel photo" zoomable=true %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
 </div>
+
+<!-- Add travel photos as: assets/img/projects/fun/travel/travel-1.webp through travel-6.webp -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  new Swiper('.mySwiper', {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    loop: true,
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    breakpoints: {
+      576: { slidesPerView: 2 },
+      992: { slidesPerView: 3 }
+    }
+  });
+});
+</script>
 
 <script>
 (function () {
