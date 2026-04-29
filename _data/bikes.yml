@@ -5,16 +5,40 @@
   groups:
     - label: Frame & Fit
       items:
+        - Blue · Silver
         - Steel (Reynolds 853)
         - 51cm
-    - label: Drivetrain
+    - label: Groupset
       items:
-        - Shimano 105 R7000 (2x11)
+        - Shimano 105 7000 (2x11)
     - label: Wheels & Tires
       items:
-        - Stock wheels
-        - Continental GP 5000
-    - label: Contact Points
+        - Bontrager Race Lite wheelset
+        - Continental GP 5000 700c x 30mm (front) 700c x 28mm (rear)
+    - label: Accessories
       items:
-        - Stock saddle
-        - Stock bar tape
+        - RYET 3D carbon saddle
+        - Procraft gel bar tape
+        - SKS Raceblade Pro XL fenders
+        - Tubus fly rear rack
+
+- name: Lemond Tourmalet
+  year: 2002
+  image: null
+  status: Backup
+  groups:
+    - label: Frame & Fit
+      items:
+        - Silver · Blue
+        - Steel (Reynolds 853)
+        - 51cm
+    - label: Groupset
+      items:
+        - Shimano Ultegra 6500 (3x9)
+    - label: Wheels & Tires
+      items:
+        - Forte Titan wheelset
+        - Continental GP 5000 700c x 25mm
+    - label: Accessories
+      items:
+        - RYET 3D carbon saddle

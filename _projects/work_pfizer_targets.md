@@ -8,12 +8,10 @@ category: work
 related_publications: false
 ---
 
-At Pfizer's Internal Medicine Research Unit, I built and led the computational genetics
-component of target discovery programs for cardiovascular and renal disease. The core
+At Pfizer's Internal Medicine Research Unit, I contributed to target discovery programs for cardiovascular and renal disease by bringing computational genetics expertise. The core
 approach integrated human genetic evidence (GWAS, exome-wide association studies,
 colocalization, and Mendelian randomization) with functional genomics layers including
-single-cell chromatin accessibility, eQTL and pQTL datasets, and deep learning-based 
-predictions to nominate and prioritize novel targets with genetic support for efficacy
+single-cell chromatin accessibility, eQTL and pQTL datasets, and deep learning-based functional predictions to nominate and prioritize novel targets with genetic support for efficacy
 and selectivity. Several targets identified through this pipeline advanced into the
 Pfizer portfolio.
 
