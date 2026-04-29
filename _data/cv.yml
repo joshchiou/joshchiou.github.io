@@ -107,14 +107,18 @@
         - "Solving the Science Challenge — Pfizer Integrative Biology"
     - year: 2020
       items:
-        - "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist — ASHG"
-        - "Human Islet Research Network (HIRN) Annual Investigator Meeting Scholarship"
+        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Finalist — ASHG"
+          link: "https://www.ashg.org/wp-content/uploads/2020/10/ASHG20_Epstein_WebListingUpdated.pdf"
+        - text: "Human Islet Research Network (HIRN) Annual Investigator Meeting Scholarship"
+          link: "https://hirnetwork.org/news/news-awards/hirn2020_scholarship"
     - year: 2018-2020
       items:
-        - "Genetics Training Program Fellowship — UC San Diego"
+        - text: "Genetics Training Program Fellowship — UC San Diego"
+          link: "https://genetics.ucsd.edu/alumni/index.html#2017-trainees"
     - year: 2018
       items:
-        - "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist — ASHG"
+        - text: "Charles J. Epstein Trainee Award for Excellence in Human Genetics Research, Semifinalist — ASHG"
+          link: "https://www.ashg.org/wp-content/uploads/2019/09/ASHG18_Epstein_Trainee.pdf"
         - "NSF Graduate Research Fellowship, Honorable Mention"
     - year: 2014
       items:
