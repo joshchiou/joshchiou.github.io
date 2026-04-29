@@ -13,32 +13,12 @@ category: fun
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="claire-hero">
 
-  <!-- Left: photo + stat table -->
-  <div class="claire-hero-left">
-    <div class="claire-hero-img-wrap">
-      {% include figure.liquid loading="eager" path="assets/img/projects/fun/cats/claire-main.webp" class="img-fluid" alt="Claire" zoomable=true %}
-    </div>
-    <div class="claire-stat-table">
-      <div class="claire-stat-cell">
-        <div class="claire-stat-label">Breed</div>
-        <div class="claire-stat-val">Domestic Shorthair</div>
-      </div>
-      <div class="claire-stat-cell">
-        <div class="claire-stat-label">Gender</div>
-        <div class="claire-stat-val">&#9792; Female</div>
-      </div>
-      <div class="claire-stat-cell">
-        <div class="claire-stat-label">Born</div>
-        <div class="claire-stat-val">~2018</div>
-      </div>
-      <div class="claire-stat-cell">
-        <div class="claire-stat-label">Coat</div>
-        <div class="claire-stat-val">Gray</div>
-      </div>
-    </div>
+  <!-- Left: photo only -->
+  <div class="claire-hero-img-wrap">
+    {% include figure.liquid loading="eager" path="assets/img/projects/fun/cats/claire-main.webp" class="img-fluid" alt="Claire" zoomable=true %}
   </div>
 
-  <!-- Right: lede + Basepaws genetics -->
+  <!-- Right: lede + genetics panel (with stats row inside) -->
   <div class="claire-hero-right">
     <p class="claire-lede">
       &ldquo;Joined the family in February 2021 and has since contributed significantly
@@ -47,6 +27,25 @@ category: fun
     </p>
 
     <div class="claire-genetics">
+      <div class="claire-hero-stats">
+        <div class="claire-hero-stat">
+          <div class="claire-stat-label">Breed</div>
+          <div class="claire-stat-val">Domestic Shorthair</div>
+        </div>
+        <div class="claire-hero-stat">
+          <div class="claire-stat-label">Gender</div>
+          <div class="claire-stat-val">&#9792; Female</div>
+        </div>
+        <div class="claire-hero-stat">
+          <div class="claire-stat-label">Born</div>
+          <div class="claire-stat-val">~2018</div>
+        </div>
+        <div class="claire-hero-stat">
+          <div class="claire-stat-label">Coat</div>
+          <div class="claire-stat-val">Gray</div>
+        </div>
+      </div>
+
       <div class="claire-section-eyebrow">&#x1F9EC;&nbsp; Basepaws Breed Analysis</div>
 
       {% for breed in genetics.breeds %}
@@ -102,7 +101,7 @@ category: fun
     <div class="claire-era-title">{{ entry.milestone }}</div>
     <div class="claire-era-location">{{ entry.location }}</div>
   </div>
-  <div class="claire-era-photo">
+  <div class="claire-era-photo" style="--img-position: {{ entry.img_position | default: 'center' }}">
     {% include figure.liquid loading="lazy" path=entry.img class="img-fluid" alt=entry.milestone zoomable=true %}
   </div>
   {% if entry.caption %}
