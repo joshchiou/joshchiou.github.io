@@ -13,19 +13,18 @@ SunPower PV system. The SunPower integration was adapted from an open-source for
 a fix for a memory-leak bug that caused crashes when the PVS serial is an IP address
 ([ha-esunpower #64](https://github.com/smcneece/ha-esunpower/pull/64)).
 
-The setup leans toward local-first: automations run on-device, voice commands use a local
-speech-to-text model rather than a cloud service, and dashboards are built in Lovelace with
-custom cards for energy monitoring and multi-room audio. The system runs continuously without
+The setup leans toward local-first: automations run on-device, local
+setups preferred over cloud services, and dashboards are built in Lovelace with
+custom cards e.g. for energy monitoring. The system runs continuously without
 cloud dependency, which is the most important design constraint.
 
 ### Stack
 
-- **Hardware** --- Intel NUC running Home Assistant OS, Zigbee coordinator (SONOFF), Z-Wave stick
+- **Hardware** --- Custom built server running Ubuntu 24.04 LTS, Zigbee coordinator (SLZB-06), Thread border routers
+- **Software** --- Docker containers for Home Assistant, Zigbee2MQTT, RTLAMR2MQTT, OpenThread, NUT, and custom Python scripts for data processing
 - **Solar** --- SunPower PV system monitored via ha-esunpower, energy dashboard tracking production vs. consumption
-- **Voice** --- Local Whisper STT + Piper TTS, no cloud dependency for voice commands
-- **Lighting** --- Zigbee bulbs and switches (Hue, IKEA TRADFRI), automations for circadian lighting
+- **Lighting** --- Zigbee/Matter switches and lightbulbs (IKEA, SONOFF), automations for circadian lighting
 - **Climate** --- Smart thermostat + occupancy-based automations
-- **Media** --- Multi-room audio via Sonos integration, media dashboard for whole-house control
 
 ### Design principles
 

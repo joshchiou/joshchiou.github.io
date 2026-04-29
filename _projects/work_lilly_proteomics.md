@@ -23,4 +23,4 @@ the broader clinical omics team.
 
 ---
 
-**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the foundational pQTL resource that informs much of the analytical work described above.
+**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the foundational proteomics resource that guide some of the analytical work described above.
