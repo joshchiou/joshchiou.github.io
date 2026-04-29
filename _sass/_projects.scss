@@ -991,7 +991,7 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 28px;
-  align-items: stretch;
+  align-items: start;
   margin-bottom: 32px;
 
   @media (max-width: 575px) {
@@ -999,20 +999,11 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
   }
 }
 
-// Left column: photo fills flex space, stat table anchors bottom
-.claire-hero-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
 .claire-hero-img-wrap {
-  flex: 1;
-  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--global-divider-color);
-  border-bottom: none;
   line-height: 0;
+  aspect-ratio: 3 / 4;
 
   figure {
     margin: 0;
@@ -1024,50 +1015,10 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
   img {
     width: 100%;
     height: 100%;
-    min-height: 200px;
     object-fit: cover;
     object-position: center top;
     display: block;
   }
-
-  @media (max-width: 575px) {
-    border-bottom: 1px solid var(--global-divider-color);
-
-    img {
-      height: auto;
-      min-height: 0;
-      aspect-ratio: 4/3;
-    }
-  }
-}
-
-// ── Stat table ────────────────────────────────────────────────────────────────
-
-.claire-stat-table {
-  border: 1px solid var(--global-divider-color);
-  flex-shrink: 0;
-}
-
-.claire-stat-cell {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--global-divider-color);
-
-  &:last-child { border-bottom: none; }
-}
-
-.claire-stat-label {
-  font-size: 0.58rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--global-text-color-light);
-  font-weight: 700;
-  margin-bottom: 1px;
-}
-
-.claire-stat-val {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--global-text-color);
 }
 
 // ── Right column: lede + genetics ────────────────────────────────────────────
@@ -1093,7 +1044,39 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
 .claire-genetics {
   border: 1px solid var(--global-divider-color);
   padding: 16px;
+}
+
+// ── Horizontal stats row (inside genetics panel) ──────────────────────────────
+
+.claire-hero-stats {
+  display: flex;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+.claire-hero-stat {
   flex: 1;
+  padding: 0 10px;
+  border-right: 1px solid var(--global-divider-color);
+
+  &:first-child { padding-left: 0; }
+  &:last-child  { padding-right: 0; border-right: none; }
+}
+
+.claire-stat-label {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--global-text-color-light);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.claire-stat-val {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--global-text-color);
 }
 
 .claire-section-eyebrow {
@@ -1272,7 +1255,7 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
     width: 100%;
     max-height: 420px;
     object-fit: cover;
-    object-position: center top;
+    object-position: var(--img-position, center);
     display: block;
   }
 }
