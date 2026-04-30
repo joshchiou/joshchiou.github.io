@@ -7,6 +7,8 @@ github_repos:
   - repo: Gaulton-Lab/pipelines
     desc: "Pipelines for bulk and single-cell ATAC-seq, GWAS, and epigenomic analysis."
   - repo: joshchiou/joshchiou.github.io
-    desc: "Personal academic website, built with Jekyll and al-folio."
+    desc: "Personal academic website — Jekyll/al-folio with automated data pipelines."
+  - repo: conda-forge/r-mmrm-feedstock
+    desc: "conda-forge feedstock for r-mmrm (Mixed Models for Repeated Measures). Maintainer."
 
 repo_description_lines_max: 2

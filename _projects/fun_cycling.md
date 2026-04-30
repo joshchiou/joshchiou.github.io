@@ -219,52 +219,40 @@ chart:
     return { current: current, best: best };
   }
 
-  // ── Calendar fetch ───────────────────────────────────────────────────────
-  var calEl = document.getElementById('cycling-calendar');
-  if (calEl) {
-    calEl.innerHTML = '<div style="height:155px;display:flex;align-items:center;justify-content:center"><small class="text-muted">Loading activity data&hellip;</small></div>';
+  // ── Calendar data (inlined at build time) ────────────────────────────────
+  var rawCalendar = {{ site.data.strava_calendar | jsonify }};
+  calendarMiles = rawCalendar.map(function (d) {
+    return [d[0], Math.round(d[1] * KM_TO_MI * 10) / 10];
+  });
+  maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
+
+  // Last ride card
+  if (calendarMiles.length > 0) {
+    var last = calendarMiles[calendarMiles.length - 1];
+    var dateObj = new Date(last[0] + 'T00:00:00');
+    var dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    var card = document.getElementById('last-ride-card');
+    if (card) {
+      document.getElementById('last-ride-date').textContent = dateStr;
+      document.getElementById('last-ride-dist').textContent = last[1] + ' mi';
+      card.style.display = '';
+    }
   }
-  fetch('{{ "/assets/data/strava_calendar.json" | relative_url }}')
-    .then(function (r) { return r.json(); })
-    .then(function (rawCalendar) {
-      calendarMiles = rawCalendar.map(function (d) {
-        return [d[0], Math.round(d[1] * KM_TO_MI * 10) / 10];
-      });
-      maxMiles = Math.ceil(Math.max.apply(null, calendarMiles.map(function (d) { return d[1]; })) / 10) * 10;
 
-      // Last ride card
-      if (calendarMiles.length > 0) {
-        var last = calendarMiles[calendarMiles.length - 1];
-        var dateObj = new Date(last[0] + 'T00:00:00');
-        var dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        var card = document.getElementById('last-ride-card');
-        if (card) {
-          document.getElementById('last-ride-date').textContent = dateStr;
-          document.getElementById('last-ride-dist').textContent = last[1] + ' mi';
-          card.style.display = '';
-        }
-      }
-
-      // Streak stats
-      var streaks = calcStreaks(calendarMiles);
-      var streakEl = document.getElementById('stat-streak');
-      var bestEl = document.getElementById('stat-best-streak');
-      var sepEl = document.getElementById('stat-streak-sep');
-      if (streakEl) {
-        if (streaks.current > 1) {
-          streakEl.textContent = streaks.current + '-day streak';
-        }
-      }
-      if (bestEl && streaks.best > 1) {
-        bestEl.textContent = 'best: ' + streaks.best + ' days';
-        if (sepEl && streaks.current > 1) sepEl.style.display = '';
-      }
-
-      initCalChart();
-    })
-    .catch(function () {
-      if (calEl) calEl.innerHTML = '<small class="text-muted">Activity data unavailable.</small>';
-    });
+  // Streak stats
+  var streaks = calcStreaks(calendarMiles);
+  var streakEl = document.getElementById('stat-streak');
+  var bestEl = document.getElementById('stat-best-streak');
+  var sepEl = document.getElementById('stat-streak-sep');
+  if (streakEl) {
+    if (streaks.current > 1) {
+      streakEl.textContent = streaks.current + '-day streak';
+    }
+  }
+  if (bestEl && streaks.best > 1) {
+    bestEl.textContent = 'best: ' + streaks.best + ' days';
+    if (sepEl && streaks.current > 1) sepEl.style.display = '';
+  }
 
   // ── Chart option builders ────────────────────────────────────────────────
   function buildCalOption() {
@@ -557,12 +545,12 @@ chart:
 
   // ── Boot ─────────────────────────────────────────────────────────────────
   if (document.readyState === 'complete') {
-    initOtherCharts();
+    initAllCharts();
     initBikeCarousel();
     showPaceStat();
   } else {
     window.addEventListener('load', function () {
-      initOtherCharts();
+      initAllCharts();
       initBikeCarousel();
       showPaceStat();
     });

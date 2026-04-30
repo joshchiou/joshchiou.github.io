@@ -7,7 +7,7 @@
   "repos": {
     "joshchiou/T1D_snATAC": {
       "language": null,
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "description": "Links to T1D GWAS and single cell ATAC-seq datasets."
     },
@@ -22,7 +22,13 @@
       "stars": 1,
       "forks": 0,
       "description": "Personal website for Josh Chiou"
+    },
+    "conda-forge/r-mmrm-feedstock": {
+      "language": "Shell",
+      "stars": 1,
+      "forks": 1,
+      "description": "A conda-smithy repository for r-mmrm."
     }
   },
-  "updated_at": "2026-04-28T23:45:40.447428+00:00"
+  "updated_at": "2026-04-29T23:45:40.447428+00:00"
 }
