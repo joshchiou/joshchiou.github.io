@@ -14,13 +14,12 @@
     - label: Wheels & Tires
       items:
         - Bontrager Race Lite wheelset
-        - Continental GP 5000 700c x 30mm (front) 700c x 28mm (rear)
+        - Continental GP 5000 tires
     - label: Accessories
       items:
-        - RYET 3D carbon saddle
-        - Procraft gel bar tape
-        - SKS Raceblade Pro XL fenders
-        - Tubus fly rear rack
+        - 3D carbon saddle
+        - SKS Raceblade fenders
+        - Tubus Fly rack
 
 - name: Lemond Tourmalet
   year: 2002
@@ -38,7 +37,7 @@
     - label: Wheels & Tires
       items:
         - Forte Titan wheelset
-        - Continental GP 5000 700c x 25mm
+        - Continental GP 5000 tires
     - label: Accessories
       items:
-        - RYET 3D carbon saddle
+        - 3D carbon saddle

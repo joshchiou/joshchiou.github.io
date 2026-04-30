@@ -6,7 +6,7 @@ nav: true
 nav_order: 4
 description: >
   A slice of my public coding activity. Most production work lives in enterprise GitHub organizations
-  (Pfizer, Lilly) and isn't reflected here.
+  (Pfizer, Lilly) and is not reflected here.
 ---
 
 {% assign gh = site.data.github_stats %}
