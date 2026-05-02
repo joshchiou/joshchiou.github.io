@@ -7,7 +7,7 @@
       items:
         - Blue · Silver
         - Steel (Reynolds 853)
-        - 51cm
+        - 51 cm
     - label: Groupset
       items:
         - Shimano 105 7000 (2x11)
@@ -17,20 +17,19 @@
         - Continental GP 5000 tires
     - label: Accessories
       items:
-        - 3D carbon saddle
         - SKS Raceblade fenders
         - Tubus Fly rack
 
 - name: Lemond Tourmalet
   year: 2002
   image: null
-  status: Backup
+  status: Backup bike
   groups:
     - label: Frame & Fit
       items:
         - Silver · Blue
         - Steel (Reynolds 853)
-        - 51cm
+        - 51 cm
     - label: Groupset
       items:
         - Shimano Ultegra 6500 (3x9)
@@ -38,6 +37,78 @@
       items:
         - Forte Titan wheelset
         - Continental GP 5000 tires
+
+- name: Lemond Etape
+  year: 2007
+  image: null
+  status: Wife's main bike
+  groups:
+    - label: Frame & Fit
+      items:
+        - Black · Silver
+        - Aluminum (6061)
+        - 49 cm
+    - label: Groupset
+      items:
+        - Shimano Tiagra 4700 (2x10)
+    - label: Wheels & Tires
+      items:
+        - Alexrims AT450  wheelset
+        - Continental GP 5000 tires
     - label: Accessories
       items:
-        - 3D carbon saddle
+        - SKS Raceblade fenders
+
+- name: Specialized Stumpjumper M2
+  year: 1998
+  image: null
+  status: Gravel bike
+  groups:
+    - label: Frame & Fit
+      items:
+        - Mango
+        - Aluminum (M2)
+        - 15.5 in
+    - label: Groupset
+      items:
+        - Sensah SRX Pro (1x11)
+    - label: Wheels & Tires
+      items:
+        - Mavic Crossride wheelset
+        - Continental Race King tires
+
+- name: Specialized Stumpjumper M2
+  year: 1996
+  image: null
+  status: Wife's gravel bike
+  groups:
+    - label: Frame & Fit
+      items:
+        - Blue
+        - Aluminum (M2)
+        - 13.5 in
+    - label: Groupset
+      items:
+        - Microshift Sword (2x10)
+    - label: Wheels & Tires
+      items:
+        - White Industries wheelset
+        - Continental Race King tires
+
+- name: Lemond Buenos Aires
+  year: 2001
+  image: null
+  status: Tall bike
+  groups:
+    - label: Frame & Fit
+      items:
+        - Yellow · White
+        - Steel (Reynolds 853)
+        - 58 cm
+    - label: Groupset
+      items:
+        - Shimano 105 (3x9)
+    - label: Wheels & Tires
+      items:
+        - Rolf Vector wheelset
+        - Continental Ultra Sport III tires

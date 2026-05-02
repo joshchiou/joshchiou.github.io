@@ -14,7 +14,9 @@ chart:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
-<p class="text-muted mb-4">Two 2002 LeMond steel frames — the Zurich is my daily commuter and the Tourmalet is the backup. On weekends my wife and I explore the Boston area together, ranging from short loops around the Fells to longer rides out to Nahant, Castle Island, and beyond. I do all my own wrenching and always learn something new in the process.</p>
+<p class="text-muted mb-4">Two 2002 LeMond steel frames — the Zurich is my daily commuter and the Tourmalet is the backup. On weekends my wife and I explore the Boston area together, ranging from short loops around the Fells to longer rides out to Nahant, Castle Island, and beyond.</p>
+
+<p class="text-muted mb-4">I service both bikes myself — cable swaps, brake and derailleur adjustments, bearing overhauls, and occasional full rebuilds. Both drivetrains run on hot-waxed chain: I strip the factory grease, melt wax in a slow cooker, and re-dip every few hundred miles. The drivetrain stays noticeably cleaner and quieter compared to wet lube, and touching up the wax mid-season is quick. Every bike I work on teaches me something new, which is a big part of why I enjoy it.</p>
 
 ### Bike fleet
 
@@ -67,9 +69,6 @@ chart:
   </div>
 </div>
 
-### Wrenching
-
-<p class="text-muted mb-4">I service both bikes myself — cable swaps, brake and derailleur adjustments, bearing overhauls, and occasional full rebuilds. Both drivetrains run on hot-waxed chain: I strip the factory grease, melt wax in a slow cooker, and re-dip every few hundred miles. The drivetrain stays noticeably cleaner and quieter compared to wet lube, and touching up the wax mid-season is quick. Every bike I work on teaches me something new, which is a big part of why I enjoy it.</p>
 
 ### Stats
 

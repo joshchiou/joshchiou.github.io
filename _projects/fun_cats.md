@@ -22,8 +22,7 @@ category: fun
   <div class="claire-hero-right">
     <p class="claire-lede">
       &ldquo;Joined the family in February 2021 and has since contributed significantly
-      to the household&rsquo;s research culture through sustained application of lap
-      occupancy.&rdquo;
+      to the household&rsquo;s culture through continuous lap occupancy.&rdquo;
     </p>
 
     <div class="claire-genetics">
