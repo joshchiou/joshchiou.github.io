@@ -6,14 +6,17 @@
 
 - name: Cambridge
   country: United States of America
+  state: Massachusetts
   lat: 42.3601
   lon: -71.0942
 - name: Watertown
   country: United States of America
+  state: Massachusetts
   lat: 42.3762
   lon: -71.1699
 - name: Indianapolis
   country: United States of America
+  state: Indiana
   lat: 39.764
   lon: -86.1555
 - name: Barcelona
@@ -22,50 +25,62 @@
   lon: 2.1499
 - name: Boston
   country: United States of America
+  state: Massachusetts
   lat: 42.3519
   lon: -71.0551
 - name: Los Angeles
   country: United States of America
+  state: California
   lat: 34.0448
   lon: -118.2569
 - name: Miami
   country: United States of America
+  state: Florida
   lat: 25.7536
   lon: -80.2
 - name: San Marino
   country: United States of America
+  state: California
   lat: 34.1186
   lon: -118.1091
 - name: Winthrop
   country: United States of America
+  state: Massachusetts
   lat: 42.3656
   lon: -71.0096
 - name: Bar Harbor
   country: United States of America
+  state: Maine
   lat: 44.397
   lon: -68.3323
 - name: Santa Monica
   country: United States of America
+  state: California
   lat: 34.0098
   lon: -118.4677
 - name: Somerville
   country: United States of America
+  state: Massachusetts
   lat: 42.381
   lon: -71.0979
 - name: Arcadia
   country: United States of America
+  state: California
   lat: 34.1248
   lon: -118.0568
 - name: Arlington
   country: United States of America
+  state: Massachusetts
   lat: 42.3999
   lon: -71.1458
 - name: Belmont
   country: United States of America
+  state: Massachusetts
   lat: 42.3829
   lon: -71.1838
 - name: Brookline
   country: United States of America
+  state: Massachusetts
   lat: 42.3443
   lon: -71.1147
 - name: Tournefeuille
@@ -78,10 +93,12 @@
   lon: 1.3596
 - name: Dedham
   country: United States of America
+  state: Massachusetts
   lat: 42.2376
   lon: -71.1477
 - name: El Segundo
   country: United States of America
+  state: California
   lat: 33.9267
   lon: -118.3864
 - name: Figueres
@@ -98,18 +115,22 @@
   lon: 3.1066
 - name: Portland
   country: United States of America
+  state: Maine
   lat: 43.665
   lon: -70.2516
 - name: Stoughton
   country: United States of America
+  state: Massachusetts
   lat: 42.1384
   lon: -71.068
 - name: Alhambra
   country: United States of America
+  state: California
   lat: 34.0952
   lon: -118.1261
 - name: Concord
   country: United States of America
+  state: Massachusetts
   lat: 42.4565
   lon: -71.3941
 - name: Crespià
@@ -118,22 +139,27 @@
   lon: 2.797
 - name: Culver City
   country: United States of America
+  state: California
   lat: 34.022
   lon: -118.3964
 - name: Malibu
   country: United States of America
+  state: California
   lat: 34.031
   lon: -118.8428
 - name: Medford
   country: United States of America
+  state: Massachusetts
   lat: 42.4077
   lon: -71.1045
 - name: Monterey Park
   country: United States of America
+  state: California
   lat: 34.0628
   lon: -118.1283
 - name: Newton
   country: United States of America
+  state: Massachusetts
   lat: 42.3307
   lon: -71.1949
 - name: Tossa de Mar
@@ -146,6 +172,7 @@
   lon: 1.4416
 - name: Waltham
   country: United States of America
+  state: Massachusetts
   lat: 42.3811
   lon: -71.2628
 - name: Paris
