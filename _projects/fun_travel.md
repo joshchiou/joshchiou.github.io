@@ -32,50 +32,19 @@ images:
 <div id="travel-map-wrap" class="travel-map-wrap mb-2">
   <svg id="travel-map-svg" class="travel-map-svg" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
   <div id="travel-map-tooltip" class="travel-map-tooltip" aria-hidden="true"></div>
+  <button id="travel-map-reset" class="travel-map-reset-btn" title="Reset zoom">
+    <i class="fa-solid fa-compress"></i>
+  </button>
 </div>
-<div class="travel-map-legend mb-5">
+<p class="travel-map-hint">Ctrl + scroll to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; double-click to reset &nbsp;·&nbsp; hover country for city clusters &nbsp;·&nbsp; click to expand below</p>
+<div class="travel-map-legend mb-4">
   <span class="travel-legend-swatch travel-legend-visited"></span><span class="travel-legend-label">Visited</span>
   <span class="travel-legend-swatch travel-legend-city"></span><span class="travel-legend-label">Cities</span>
 </div>
 
 ### Countries & Cities
 
-<div class="accordion travel-accordion mb-5" id="travelAccordion">
-  {% assign sorted_countries = countries | sort: "name" %}
-  {% for country in sorted_countries %}
-    {% assign country_cities = cities | where: "country", country.name %}
-    {% assign continent_slug = country.continent | downcase | replace: " ", "-" %}
-    <div class="accordion-item travel-accordion-item">
-      <h2 class="accordion-header" id="heading-{{ forloop.index }}">
-        <button class="accordion-button collapsed travel-accordion-btn" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse-{{ forloop.index }}"
-                aria-expanded="false"
-                aria-controls="collapse-{{ forloop.index }}">
-          <span class="travel-country-flag">{{ country.flag }}</span>
-          <span class="travel-country-name">{{ country.name }}</span>
-          <span class="travel-country-meta">
-            <span class="badge travel-continent-badge travel-continent-{{ continent_slug }}">{{ country.continent }}</span>
-            <span class="travel-city-count">{{ country_cities | size }}&nbsp;{% if country_cities.size == 1 %}city{% else %}cities{% endif %}</span>
-          </span>
-        </button>
-      </h2>
-      <div id="collapse-{{ forloop.index }}" class="accordion-collapse collapse"
-           aria-labelledby="heading-{{ forloop.index }}">
-        <div class="accordion-body travel-accordion-body">
-          <div class="travel-city-pills">
-            {% for city in country_cities %}
-              <span class="travel-city-pill">{{ city.name }}</span>
-            {% endfor %}
-            {% if country_cities.size == 0 %}
-              <span class="travel-city-pill text-muted">No cities logged</span>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+<div id="travel-bars-wrap" class="travel-bars-wrap mb-5"></div>
 
 ### Photos
 
@@ -94,46 +63,69 @@ images:
 
 <script>
 (function () {
-  /* ── Data injected at build time ─────────────────────────────────────── */
+  /* ── Build-time data ─────────────────────────────────────────────────── */
   var VISITED_COUNTRIES = {{ countries | map: "name" | jsonify }};
   var CITY_DATA         = {{ cities | jsonify }};
   var RAW_COUNTRIES     = {{ countries | jsonify }};
 
-  /* ── Continent lookup ────────────────────────────────────────────────── */
+  /* ── Lookups ─────────────────────────────────────────────────────────── */
   var COUNTRY_CONTINENT = {};
   RAW_COUNTRIES.forEach(function (c) { COUNTRY_CONTINENT[c.name] = c.continent; });
   var visitedSet = new Set(VISITED_COUNTRIES);
 
   /* ── Color palettes ──────────────────────────────────────────────────── */
   var PAL = {
-    light: {
-      'North America': '#4575b4',
-      'Europe':        '#e67e22',
-      'Asia':          '#27ae60',
-      _unvisited:      '#e0e0e0',
-      _border:         '#ffffff'
-    },
-    dark: {
-      'North America': '#58a6ff',
-      'Europe':        '#f5a623',
-      'Asia':          '#4ade80',
-      _unvisited:      '#333333',
-      _border:         '#2a2a2a'
-    }
+    light: { 'North America': '#4575b4', 'Europe': '#e67e22', 'Asia': '#27ae60',
+             _unvisited: '#e0e0e0', _border: '#ffffff' },
+    dark:  { 'North America': '#58a6ff', 'Europe': '#f5a623', 'Asia': '#4ade80',
+             _unvisited: '#333333', _border: '#2a2a2a' }
   };
-  var CITY_DOT = {
+  /* Bar fill colors — darkened for white-text contrast in both themes */
+  var BAR_COLOR = { 'North America': '#3d6aab', 'Europe': '#c96910', 'Asia': '#1f823e' };
+  var CITY_DOT  = {
     light: { fill: '#c0392b', stroke: '#ffffff' },
     dark:  { fill: '#f97583', stroke: '#1c1c1d' }
   };
 
-  function isDark() {
-    return document.documentElement.getAttribute('data-theme') === 'dark';
-  }
+  function isDark()  { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function pal()     { return isDark() ? PAL.dark  : PAL.light; }
   function cityDot() { return isDark() ? CITY_DOT.dark : CITY_DOT.light; }
 
-  /* ── Shared D3 state ─────────────────────────────────────────────────── */
-  var svg, projection, geoPath, countriesG, citiesG;
+  /* ── Metro clustering ────────────────────────────────────────────────── */
+  var CLUSTER_KM = 80;
+
+  function haversine(a, b) {
+    var R = 6371;
+    var dLat = (b.lat - a.lat) * Math.PI / 180;
+    var dLon = (b.lon - a.lon) * Math.PI / 180;
+    var la1 = a.lat * Math.PI / 180, la2 = b.lat * Math.PI / 180;
+    var x = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+  }
+
+  function clusterCities(cities) {
+    var clusters = [];
+    cities.forEach(function (city) {
+      var nearest = null, nearestDist = Infinity;
+      clusters.forEach(function (cl) {
+        var d = haversine(cl.centroid, city);
+        if (d < nearestDist) { nearestDist = d; nearest = cl; }
+      });
+      if (nearest && nearestDist < CLUSTER_KM) {
+        nearest.cities.push(city);
+        nearest.centroid.lat = nearest.cities.reduce(function (s, c) { return s + c.lat; }, 0) / nearest.cities.length;
+        nearest.centroid.lon = nearest.cities.reduce(function (s, c) { return s + c.lon; }, 0) / nearest.cities.length;
+      } else {
+        clusters.push({ cities: [city], centroid: { lat: city.lat, lon: city.lon } });
+      }
+    });
+    return clusters;
+  }
+
+  /* ── D3 map state ────────────────────────────────────────────────────── */
+  var svgSel, projection, geoPath, countriesG, citiesG, zoomG, zoomBehavior;
+  var allClusters = {};
 
   /* ── Map init ────────────────────────────────────────────────────────── */
   function initMap() {
@@ -141,36 +133,56 @@ images:
     if (!el || typeof d3 === 'undefined') return;
 
     var W = 960, H = 500;
-    svg = d3.select(el);
+    svgSel = d3.select(el);
 
-    projection = d3.geoNaturalEarth1()
-      .scale(160)
-      .translate([W / 2, H / 2]);
+    /* Zoom — require Ctrl+scroll to avoid capturing page scroll */
+    zoomBehavior = d3.zoom()
+      .scaleExtent([1, 8])
+      .filter(function (event) {
+        return event.ctrlKey || event.type !== 'wheel';
+      })
+      .on('zoom', function (event) {
+        zoomG.attr('transform', event.transform);
+      });
+    svgSel.call(zoomBehavior)
+      .on('dblclick.zoom', function () {
+        svgSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+      });
 
-    geoPath   = d3.geoPath().projection(projection);
-    countriesG = svg.append('g').attr('class', 'countries-layer');
-    citiesG    = svg.append('g').attr('class', 'cities-layer');
+    var resetBtn = document.getElementById('travel-map-reset');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        svgSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+      });
+    }
+
+    projection = d3.geoNaturalEarth1().scale(160).translate([W / 2, H / 2]);
+    geoPath    = d3.geoPath().projection(projection);
+
+    zoomG      = svgSel.append('g').attr('class', 'zoom-group');
+    countriesG = zoomG.append('g').attr('class', 'countries-layer');
+    citiesG    = zoomG.append('g').attr('class', 'cities-layer');
+
+    /* Pre-compute metro clusters for each visited country */
+    visitedSet.forEach(function (name) {
+      var c = CITY_DATA.filter(function (x) { return x.country === name; });
+      allClusters[name] = clusterCities(c);
+    });
 
     fetch('{{ "/assets/json/world-countries.geojson" | relative_url }}')
       .then(function (r) { return r.json(); })
-      .then(function (geojson) {
-        renderCountries(geojson);
-        renderCities();
-      })
-      .catch(function (e) { console.warn('Travel map GeoJSON load failed:', e); });
+      .then(function (geojson) { renderCountries(geojson); renderCities(); })
+      .catch(function (e) { console.warn('Travel GeoJSON failed:', e); });
   }
 
+  /* ── Country rendering ───────────────────────────────────────────────── */
   function countryFill(name) {
     var p = pal();
-    if (visitedSet.has(name)) {
-      return p[COUNTRY_CONTINENT[name]] || p['North America'];
-    }
-    return p._unvisited;
+    return visitedSet.has(name) ? (p[COUNTRY_CONTINENT[name]] || p['North America']) : p._unvisited;
   }
 
   function renderCountries(geojson) {
     var tooltip = document.getElementById('travel-map-tooltip');
-    var wrap    = document.getElementById('travel-map-wrap');
 
     countriesG.selectAll('path')
       .data(geojson.features)
@@ -180,40 +192,41 @@ images:
       .attr('class', function (d) {
         return visitedSet.has(d.properties.name) ? 'country-visited' : 'country-unvisited';
       })
-      .attr('fill',   function (d) { return countryFill(d.properties.name); })
-      .attr('stroke', pal()._border)
+      .attr('fill',         function (d) { return countryFill(d.properties.name); })
+      .attr('stroke',       pal()._border)
       .attr('stroke-width', 0.5)
       .on('mouseenter', function (event, d) {
         var name = d.properties.name;
         if (!visitedSet.has(name)) return;
-        var citiesHere = CITY_DATA.filter(function (c) { return c.country === name; });
+        var here = CITY_DATA.filter(function (c) { return c.country === name; });
         var html = '<strong>' + name + '</strong>';
-        if (citiesHere.length > 0) {
-          html += '<br><span class="tt-cities">' + citiesHere.map(function (c) { return c.name; }).join(' · ') + '</span>';
+        if (here.length) {
+          html += '<br><span class="tt-cities">' + here.map(function (c) { return c.name; }).join(' · ') + '</span>';
         }
         tooltip.innerHTML = html;
         tooltip.classList.add('visible');
         tooltip.removeAttribute('aria-hidden');
+        enterHoverState(name);
       })
       .on('mousemove', function (event) {
-        var svgBox = document.getElementById('travel-map-svg').getBoundingClientRect();
-        tooltip.style.left = (event.clientX - svgBox.left + 14) + 'px';
-        tooltip.style.top  = (event.clientY - svgBox.top  + 14) + 'px';
+        var box = document.getElementById('travel-map-svg').getBoundingClientRect();
+        tooltip.style.left = (event.clientX - box.left + 14) + 'px';
+        tooltip.style.top  = (event.clientY - box.top  + 14) + 'px';
       })
       .on('mouseleave', function () {
         tooltip.classList.remove('visible');
         tooltip.setAttribute('aria-hidden', 'true');
+        exitHoverState();
       })
       .on('click', function (event, d) {
         var name = d.properties.name;
         if (!visitedSet.has(name)) return;
-        var btns = document.querySelectorAll('.travel-accordion-btn');
-        btns.forEach(function (btn) {
-          if (btn.querySelector('.travel-country-name').textContent.trim() === name) {
-            if (btn.classList.contains('collapsed')) { btn.click(); }
-            btn.closest('.travel-accordion-item').scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        });
+        var row = document.querySelector('.travel-bar-row[data-country="' + CSS.escape(name) + '"]');
+        if (row) {
+          var body = row.querySelector('.travel-bar-body');
+          if (body && body.hidden) { row.querySelector('.travel-bar-header').click(); }
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       });
 
     updateMapColors();
@@ -227,9 +240,10 @@ images:
       .attr('stroke', p._border);
   }
 
+  /* ── City dots ───────────────────────────────────────────────────────── */
   function renderCities() {
     var dot = cityDot();
-    citiesG.selectAll('circle')
+    citiesG.selectAll('circle.city-dot')
       .data(CITY_DATA.filter(function (c) { return c.lat && c.lon; }))
       .enter()
       .append('circle')
@@ -240,8 +254,7 @@ images:
       .attr('fill',         dot.fill)
       .attr('stroke',       dot.stroke)
       .attr('stroke-width', 1.5)
-      .append('title')
-      .text(function (d) { return d.name + ', ' + d.country; });
+      .append('title').text(function (d) { return d.name + ', ' + d.country; });
   }
 
   function updateCityColors() {
@@ -252,7 +265,129 @@ images:
       .attr('stroke', dot.stroke);
   }
 
-  /* ── Photo gallery (graceful empty-state) ────────────────────────────── */
+  /* ── Hover cluster state ─────────────────────────────────────────────── */
+  function enterHoverState(name) {
+    /* Fade individual dots: hide this country's (clusters replace them), dim others */
+    citiesG.selectAll('circle.city-dot')
+      .attr('opacity', function (d) { return d.country === name ? 0 : 0.1; });
+
+    var clusters = allClusters[name] || [];
+    var dot = cityDot();
+
+    var cgs = citiesG.selectAll('g.metro-cluster')
+      .data(clusters)
+      .enter()
+      .append('g')
+      .attr('class', 'metro-cluster')
+      .attr('transform', function (cl) {
+        var p = projection([cl.centroid.lon, cl.centroid.lat]);
+        return p ? 'translate(' + p[0] + ',' + p[1] + ')' : 'translate(-9999,-9999)';
+      });
+
+    cgs.append('circle')
+      .attr('r',            function (cl) { return Math.max(7, 5 + cl.cities.length * 2.5); })
+      .attr('fill',         dot.fill)
+      .attr('stroke',       isDark() ? '#1c1c1d' : '#ffffff')
+      .attr('stroke-width', 2)
+      .attr('opacity',      0)
+      .transition().duration(180)
+      .attr('opacity', 0.92);
+
+    cgs.filter(function (cl) { return cl.cities.length > 1; })
+      .append('text')
+      .attr('text-anchor',   'middle')
+      .attr('dy',            '0.35em')
+      .attr('font-size',     '11px')
+      .attr('font-weight',   '700')
+      .attr('fill',          '#ffffff')
+      .attr('pointer-events','none')
+      .text(function (cl) { return cl.cities.length; });
+
+    cgs.append('title')
+      .text(function (cl) { return cl.cities.map(function (c) { return c.name; }).join(' · '); });
+  }
+
+  function exitHoverState() {
+    citiesG.selectAll('circle.city-dot').attr('opacity', 1);
+    citiesG.selectAll('g.metro-cluster').remove();
+  }
+
+  /* ── Bar chart ───────────────────────────────────────────────────────── */
+  function buildBarChart() {
+    var wrap = document.getElementById('travel-bars-wrap');
+    if (!wrap) return;
+
+    /* Compute per-country city lists, sort descending by count */
+    var data = RAW_COUNTRIES.map(function (c) {
+      return {
+        name:      c.name,
+        flag:      c.flag || '',
+        continent: c.continent,
+        cities:    CITY_DATA.filter(function (x) { return x.country === c.name; })
+      };
+    }).sort(function (a, b) { return b.cities.length - a.cities.length; });
+
+    var maxCount = data.length ? data[0].cities.length : 1;
+
+    data.forEach(function (country) {
+      var pct      = Math.max(4, Math.round(country.cities.length / maxCount * 100));
+      var barColor = BAR_COLOR[country.continent] || '#555';
+
+      var row = document.createElement('div');
+      row.className = 'travel-bar-row';
+      row.setAttribute('data-country', country.name);
+
+      /* Header */
+      var header = document.createElement('div');
+      header.className = 'travel-bar-header';
+      header.innerHTML =
+        '<span class="travel-bar-flag">'  + country.flag + '</span>' +
+        '<span class="travel-bar-name">'  + country.name + '</span>' +
+        '<div class="travel-bar-track">'  +
+          '<div class="travel-bar-fill" style="width:' + pct + '%;background:' + barColor + '">' +
+            '<span class="travel-bar-count">' + country.cities.length + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<span class="travel-bar-chevron" aria-hidden="true">▾</span>';
+
+      /* Body (city pills) */
+      var body = document.createElement('div');
+      body.className = 'travel-bar-body';
+      body.hidden = true;
+
+      var pills = document.createElement('div');
+      pills.className = 'travel-city-pills';
+
+      if (country.cities.length) {
+        country.cities.forEach(function (city) {
+          var pill = document.createElement('span');
+          pill.className = 'travel-city-pill';
+          pill.textContent = city.name;
+          pills.appendChild(pill);
+        });
+      } else {
+        var pill = document.createElement('span');
+        pill.className = 'travel-city-pill travel-city-pill--empty';
+        pill.textContent = 'No cities logged';
+        pills.appendChild(pill);
+      }
+
+      body.appendChild(pills);
+
+      header.addEventListener('click', function () {
+        var open = !body.hidden;
+        body.hidden = open;
+        header.querySelector('.travel-bar-chevron').textContent = open ? '▾' : '▴';
+        row.classList.toggle('open', !open);
+      });
+
+      row.appendChild(header);
+      row.appendChild(body);
+      wrap.appendChild(row);
+    });
+  }
+
+  /* ── Photo gallery ───────────────────────────────────────────────────── */
   function initGallery() {
     var wrapper     = document.getElementById('travelSwiperWrapper');
     var swiperEl    = document.getElementById('travelSwiper');
@@ -275,16 +410,14 @@ images:
     function finish() {
       probed++;
       if (probed < TOTAL) return;
-      if (loaded.length === 0) return; /* keep placeholder */
+      if (loaded.length === 0) return;
       loaded.sort(function (a, b) { return a.idx - b.idx; });
       loaded.forEach(function (item) {
         var slide = document.createElement('div');
         slide.className = 'swiper-slide';
         var img = document.createElement('img');
-        img.src = item.src;
-        img.className = 'img-fluid rounded z-depth-1';
-        img.alt = 'Travel photo';
-        img.loading = 'lazy';
+        img.src = item.src; img.className = 'img-fluid rounded z-depth-1';
+        img.alt = 'Travel photo'; img.loading = 'lazy';
         slide.appendChild(img);
         wrapper.appendChild(slide);
       });
@@ -292,9 +425,7 @@ images:
       swiperEl.style.display = '';
       if (typeof Swiper !== 'undefined') {
         new Swiper('#travelSwiper', {
-          slidesPerView: 1,
-          spaceBetween: 16,
-          loop: loaded.length > 3,
+          slidesPerView: 1, spaceBetween: 16, loop: loaded.length > 3,
           pagination: { el: '.swiper-pagination', clickable: true },
           navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
           breakpoints: { 576: { slidesPerView: 2 }, 992: { slidesPerView: 3 } }
@@ -316,13 +447,11 @@ images:
   /* ── Boot ────────────────────────────────────────────────────────────── */
   function boot() {
     initMap();
+    buildBarChart();
     initGallery();
   }
 
-  if (document.readyState === 'complete') {
-    boot();
-  } else {
-    window.addEventListener('load', boot);
-  }
+  if (document.readyState === 'complete') { boot(); }
+  else { window.addEventListener('load', boot); }
 })();
 </script>

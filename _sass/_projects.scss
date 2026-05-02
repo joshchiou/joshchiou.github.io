@@ -550,83 +550,126 @@ html[data-theme="dark"] .travel-legend-city {
   margin-right: 0.6rem;
 }
 
-// ── Countries & Cities accordion ──────────────────────────────────────────────
+// ── Map controls ──────────────────────────────────────────────────────────────
 
-.travel-accordion {
-  --bs-accordion-bg: var(--global-bg-color);
-  --bs-accordion-active-bg: var(--global-code-bg-color);
-  --bs-accordion-btn-color: var(--global-text-color);
-  --bs-accordion-active-color: var(--global-text-color);
-  --bs-accordion-border-color: var(--global-divider-color);
-  --bs-accordion-btn-focus-box-shadow: none;
+.travel-map-reset-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--global-bg-color);
+  border: 1px solid var(--global-divider-color);
+  border-radius: 4px;
+  padding: 5px 9px;
+  font-size: 0.72rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--global-text-color-light);
+  z-index: 5;
+  transition: background 0.15s, color 0.15s;
 
+  &:hover {
+    background: var(--global-code-bg-color);
+    color: var(--global-text-color);
+  }
+}
+
+.travel-map-hint {
+  font-size: 0.7rem;
+  color: var(--global-text-color-light);
+  text-align: center;
+  margin: 0.3rem 0 0.8rem;
+}
+
+// ── Countries & Cities bar chart ──────────────────────────────────────────────
+
+.travel-bars-wrap {
   border: 1px solid var(--global-divider-color);
   border-radius: 8px;
   overflow: hidden;
 }
 
-.travel-accordion-item {
-  border: none;
+.travel-bar-row {
   border-bottom: 1px solid var(--global-divider-color);
 
   &:last-child { border-bottom: none; }
 }
 
-.travel-accordion-btn {
+.travel-bar-header {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.85rem 1rem;
-  font-size: 0.92rem;
-  font-weight: 500;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  background: var(--global-bg-color);
+  transition: background 0.1s;
+  user-select: none;
 
-  &::after { margin-left: 0; }
-
-  &:focus { box-shadow: none; }
+  &:hover { background: var(--global-code-bg-color); }
 }
 
-.travel-country-flag {
-  font-size: 1.35rem;
+.travel-bar-flag {
+  font-size: 1.3rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
-.travel-country-name {
+.travel-bar-name {
+  flex: 0 0 170px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--global-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 480px) { flex: 0 0 90px; font-size: 0.78rem; }
+}
+
+.travel-bar-track {
   flex: 1;
+  height: 26px;
+  background: var(--global-divider-color);
+  border-radius: 4px;
+  overflow: hidden;
   min-width: 0;
 }
 
-.travel-country-meta {
+.travel-bar-fill {
+  height: 100%;
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-right: 0.4rem;
-  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-right: 8px;
+  min-width: 30px;
 }
 
-.travel-continent-badge {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.18em 0.55em;
-  border-radius: 3px;
-  color: #fff;
-}
-
-.travel-continent-north-america { background: #4575b4; }
-.travel-continent-europe         { background: #e67e22; }
-.travel-continent-asia           { background: #27ae60; }
-
-.travel-city-count {
+.travel-bar-count {
   font-size: 0.78rem;
-  color: var(--global-text-color-light);
+  font-weight: 700;
+  color: #fff;
   white-space: nowrap;
 }
 
-.travel-accordion-body {
+.travel-bar-chevron {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+  width: 16px;
+  text-align: center;
+  transition: transform 0.18s;
+}
+
+.travel-bar-row.open .travel-bar-chevron { transform: rotate(180deg); }
+
+.travel-bar-body {
+  padding: 0.6rem 1rem 0.8rem;
   background: var(--global-code-bg-color);
-  padding: 0.75rem 1rem 0.9rem;
+  border-top: 1px solid var(--global-divider-color);
+}
+
+.travel-city-pill--empty {
+  opacity: 0.5;
 }
 
 .travel-city-pills {
