@@ -86,6 +86,7 @@ images:
     light: { fill: '#c0392b', stroke: '#ffffff' },
     dark:  { fill: '#f97583', stroke: '#1c1c1d' }
   };
+  var BASE_RADIUS = 5;
 
   function isDark()  { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function pal()     { return isDark() ? PAL.dark  : PAL.light; }
@@ -143,6 +144,9 @@ images:
       })
       .on('zoom', function (event) {
         zoomG.attr('transform', event.transform);
+        /* Shrink dots as zoom increases so they don't balloon */
+        citiesG.selectAll('circle.city-dot')
+          .attr('r', Math.max(1.5, BASE_RADIUS / event.transform.k));
       });
     svgSel.call(zoomBehavior)
       .on('dblclick.zoom', function () {
@@ -201,7 +205,28 @@ images:
         var here = CITY_DATA.filter(function (c) { return c.country === name; });
         var html = '<strong>' + name + '</strong>';
         if (here.length) {
-          html += '<br><span class="tt-cities">' + here.map(function (c) { return c.name; }).join(' · ') + '</span>';
+          var summary;
+          /* US: group by state for a cleaner overview */
+          if (name === 'United States of America' && here.some(function (c) { return c.state; })) {
+            var byState = {};
+            here.forEach(function (c) {
+              var s = c.state || '—';
+              byState[s] = (byState[s] || 0) + 1;
+            });
+            summary = Object.keys(byState)
+              .sort(function (a, b) { return byState[b] - byState[a]; })
+              .map(function (s) { return byState[s] > 1 ? s + ' (' + byState[s] + ')' : s; })
+              .join(' · ');
+          } else {
+            /* Other countries: show metro clusters to reduce clutter */
+            var clusters = allClusters[name] || [];
+            summary = clusters.map(function (cl) {
+              return cl.cities.length === 1
+                ? cl.cities[0].name
+                : cl.cities[0].name + ' +' + (cl.cities.length - 1);
+            }).join(' · ');
+          }
+          html += '<br><span class="tt-cities">' + summary + '</span>';
         }
         tooltip.innerHTML = html;
         tooltip.classList.add('visible');
@@ -250,7 +275,7 @@ images:
       .attr('class', 'city-dot')
       .attr('cx', function (d) { var p = projection([d.lon, d.lat]); return p ? p[0] : -9999; })
       .attr('cy', function (d) { var p = projection([d.lon, d.lat]); return p ? p[1] : -9999; })
-      .attr('r', 5)
+      .attr('r', BASE_RADIUS)
       .attr('fill',         dot.fill)
       .attr('stroke',       dot.stroke)
       .attr('stroke-width', 1.5)
