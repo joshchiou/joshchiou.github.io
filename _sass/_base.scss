@@ -788,6 +788,122 @@ footer.sticky-bottom {
 
 // Publications
 
+// Publication meta header
+.publication-meta {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--global-text-color-light);
+
+  .publication-meta-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+
+    .publication-count {
+      font-weight: 600;
+      color: var(--global-text-color);
+    }
+
+    a {
+      color: var(--global-theme-color);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      i {
+        margin-right: 0.15rem;
+      }
+    }
+  }
+
+  .publication-meta-legend {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+  }
+
+  .meta-sep {
+    margin: 0 0.35rem;
+    opacity: 0.5;
+  }
+}
+
+// Search bar
+.bibsearch-container {
+  margin-bottom: 1.5rem;
+}
+
+.bibsearch-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 480px;
+
+  .bibsearch-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--global-text-color-light);
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+
+  .bibsearch-form-input {
+    padding-left: 36px;
+    padding-right: 36px;
+    width: 100%;
+    font-size: 0.9rem;
+    color: var(--global-text-color);
+    background: var(--global-bg-color);
+    border: 1px solid var(--global-divider-color);
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: none;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: var(--global-theme-color);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--global-theme-color) 15%, transparent);
+    }
+
+    &::placeholder {
+      color: var(--global-text-color-light);
+      opacity: 0.7;
+    }
+  }
+
+  .bibsearch-clear {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--global-text-color-light);
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+      color: var(--global-text-color);
+      background-color: var(--global-divider-color);
+    }
+  }
+}
+
+.bibsearch-count {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--global-text-color-light);
+}
+
 .publications {
   margin-top: 2rem;
 
@@ -808,11 +924,52 @@ footer.sticky-bottom {
   }
 
   h2.bibliography {
-    color: var(--global-divider-color);
-    border-top: 1px solid var(--global-divider-color);
-    padding-top: 1rem;
-    margin-top: 2rem;
-    text-align: right;
+    color: var(--global-text-color-light);
+    border-top: none;
+    border-bottom: 2px solid var(--global-divider-color);
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &.selected-heading {
+      color: var(--global-theme-color);
+      border-bottom-color: var(--global-theme-color);
+      font-size: 1.2rem;
+      margin-top: 0;
+
+      i {
+        font-size: 0.9rem;
+        margin-right: 0.25rem;
+      }
+    }
+
+    &.all-heading {
+      color: var(--global-text-color);
+      border-bottom-color: var(--global-text-color);
+      font-size: 1.2rem;
+      margin-top: 2.5rem;
+    }
+  }
+
+  h2.pub-section-heading {
+    color: var(--global-text-color);
+    border-bottom: 2px solid var(--global-text-color);
+    padding-bottom: 0.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   ol.bibliography {
@@ -821,7 +978,14 @@ footer.sticky-bottom {
     margin-top: 0;
 
     li {
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--global-code-bg-color);
+      }
 
       .row {
         margin-left: 0;
@@ -899,22 +1063,64 @@ footer.sticky-bottom {
       }
 
       .links {
+        margin-top: 0.4rem;
+
         a.btn {
           color: var(--global-text-color);
           border: 1px solid var(--global-text-color);
-          padding-left: 1rem;
-          padding-right: 1rem;
-          padding-top: 0.25rem;
-          padding-bottom: 0.25rem;
+          padding-left: 0.75rem;
+          padding-right: 0.75rem;
+          padding-top: 0.2rem;
+          padding-bottom: 0.2rem;
           margin-left: 0;
+          margin-top: 0.25rem;
+          font-size: 0.8rem;
+          border-radius: 4px;
+          transition: all 0.15s ease;
+
+          i {
+            margin-right: 0.2rem;
+            opacity: 0.7;
+          }
 
           &:hover {
             color: var(--global-theme-color);
             border-color: var(--global-theme-color);
+            background-color: color-mix(in srgb, var(--global-theme-color) 5%, transparent);
+
+            i {
+              opacity: 1;
+            }
+          }
+
+          &.btn-project {
+            color: var(--global-theme-color);
+            border-color: var(--global-theme-color);
+            font-weight: 500;
+
+            &:hover {
+              background-color: var(--global-theme-color);
+              color: white;
+            }
           }
         }
         a.award.btn {
           border-color: var(--global-highlight-color);
+        }
+
+        .badge-preprint {
+          display: inline-block;
+          font-size: 0.7rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          padding: 0.15rem 0.5rem;
+          border-radius: 3px;
+          background-color: #f0ad4e;
+          color: #fff;
+          vertical-align: middle;
+          margin-right: 0.25rem;
+          margin-top: 0.25rem;
         }
       }
 
@@ -1315,19 +1521,18 @@ ninja-keys::part(ninja-input-wrapper) {
 }
 
 .newsletter-form-input,
+// Legacy bibsearch-form-input fallback (overridden by .bibsearch-input-wrapper styles)
 .bibsearch-form-input {
-  color: var(--global-newsletter-text-color);
-  background: var(--global-newsletter-bg-color);
-  border: 1px solid var(--global-newsletter-text-color);
+  color: var(--global-text-color);
+  background: var(--global-bg-color);
+  border: 1px solid var(--global-divider-color);
   outline: none;
-  margin: 0px 10px 0px 0px;
   width: 100%;
-  max-width: 350px;
+  max-width: 480px;
   min-width: 100px;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px;
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: 8px;
+  padding: 10px 12px;
 }
 
 .newsletter-form-input:focus {

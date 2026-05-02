@@ -1,4 +1,13 @@
 {% if site.bib_search %}
   <script src="{{ '/assets/js/bibsearch.js' | relative_url | bust_file_cache }}" type="module"></script>
-  <input type="text" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="Type to filter">
+  <div class="bibsearch-container">
+    <div class="bibsearch-input-wrapper">
+      <i class="fa-solid fa-magnifying-glass bibsearch-icon"></i>
+      <input type="text" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="Filter by title, author, journal, or year…">
+      <button type="button" id="bibsearch-clear" class="bibsearch-clear" aria-label="Clear search" hidden>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <span id="bibsearch-count" class="bibsearch-count" hidden></span>
+  </div>
 {% endif %}
