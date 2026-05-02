@@ -5,9 +5,7 @@ description: Places visited, mapped.
 img: assets/img/projects/fun/travel.svg
 importance: 5
 category: fun
-map: true
-chart:
-  echarts: true
+d3: true
 images:
   slider: true
 ---
@@ -16,7 +14,7 @@ images:
 {% assign cities = site.data.travel_cities %}
 {% assign continents = countries | map: "continent" | uniq %}
 
-<div class="travel-stats mb-3">
+<div class="travel-stats mb-4">
   <div class="travel-stat">
     <span class="travel-stat-val">{{ countries | size }}</span>
     <span class="travel-stat-label">countries</span>
@@ -31,218 +29,300 @@ images:
   </div>
 </div>
 
-<div id="travel-map" style="height: 480px; border-radius: 8px; overflow: hidden;"></div>
-<p class="text-muted mt-1 mb-4"><small>Click a highlighted country to see cities visited.</small></p>
+<div id="travel-map-wrap" class="travel-map-wrap mb-2">
+  <svg id="travel-map-svg" class="travel-map-svg" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+  <div id="travel-map-tooltip" class="travel-map-tooltip" aria-hidden="true"></div>
+</div>
+<div class="travel-map-legend mb-5">
+  <span class="travel-legend-swatch travel-legend-visited"></span><span class="travel-legend-label">Visited</span>
+  <span class="travel-legend-swatch travel-legend-city"></span><span class="travel-legend-label">Cities</span>
+</div>
 
-### Where I've been
+### Countries & Cities
 
-<div id="travel-donut" style="height: 280px;"></div>
+<div class="accordion travel-accordion mb-5" id="travelAccordion">
+  {% assign sorted_countries = countries | sort: "name" %}
+  {% for country in sorted_countries %}
+    {% assign country_cities = cities | where: "country", country.name %}
+    {% assign continent_slug = country.continent | downcase | replace: " ", "-" %}
+    <div class="accordion-item travel-accordion-item">
+      <h2 class="accordion-header" id="heading-{{ forloop.index }}">
+        <button class="accordion-button collapsed travel-accordion-btn" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-{{ forloop.index }}"
+                aria-expanded="false"
+                aria-controls="collapse-{{ forloop.index }}">
+          <span class="travel-country-flag">{{ country.flag }}</span>
+          <span class="travel-country-name">{{ country.name }}</span>
+          <span class="travel-country-meta">
+            <span class="badge travel-continent-badge travel-continent-{{ continent_slug }}">{{ country.continent }}</span>
+            <span class="travel-city-count">{{ country_cities | size }}&nbsp;{% if country_cities.size == 1 %}city{% else %}cities{% endif %}</span>
+          </span>
+        </button>
+      </h2>
+      <div id="collapse-{{ forloop.index }}" class="accordion-collapse collapse"
+           aria-labelledby="heading-{{ forloop.index }}">
+        <div class="accordion-body travel-accordion-body">
+          <div class="travel-city-pills">
+            {% for city in country_cities %}
+              <span class="travel-city-pill">{{ city.name }}</span>
+            {% endfor %}
+            {% if country_cities.size == 0 %}
+              <span class="travel-city-pill text-muted">No cities logged</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 
 ### Photos
 
-<div class="swiper mySwiper mt-3">
-  <div class="swiper-wrapper">
-    {% for i in (1..6) %}
-    <div class="swiper-slide">
-      {% capture img_path %}assets/img/projects/fun/travel/travel-{{ i }}.webp{% endcapture %}
-      {% include figure.liquid loading="lazy" path=img_path class="img-fluid rounded z-depth-1" alt="Travel photo" zoomable=true %}
-    </div>
-    {% endfor %}
+<div id="travel-gallery-section">
+  <div class="swiper mySwiper mt-3" id="travelSwiper" style="display:none">
+    <div class="swiper-wrapper" id="travelSwiperWrapper"></div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  <div class="travel-gallery-placeholder" id="travelGalleryPlaceholder">
+    <i class="fa-regular fa-images fa-2x"></i>
+    <p>No travel photos yet — check back later.</p>
+  </div>
 </div>
-
-<!-- Add travel photos as: assets/img/projects/fun/travel/travel-1.webp through travel-6.webp -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  new Swiper('.mySwiper', {
-    slidesPerView: 1,
-    spaceBetween: 16,
-    loop: true,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    breakpoints: {
-      576: { slidesPerView: 2 },
-      992: { slidesPerView: 3 }
-    }
-  });
-});
-</script>
 
 <script>
 (function () {
-  var visitedCountries = {{ countries | map: "name" | jsonify }};
-  var cityData = {{ cities | jsonify }};
-  var continentData = [
-    {% assign grouped = countries | group_by: "continent" %}
-    {% for g in grouped %}
-      { name: '{{ g.name }}', value: {{ g.items | size }} }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
+  /* ── Data injected at build time ─────────────────────────────────────── */
+  var VISITED_COUNTRIES = {{ countries | map: "name" | jsonify }};
+  var CITY_DATA         = {{ cities | jsonify }};
+  var RAW_COUNTRIES     = {{ countries | jsonify }};
+
+  /* ── Continent lookup ────────────────────────────────────────────────── */
+  var COUNTRY_CONTINENT = {};
+  RAW_COUNTRIES.forEach(function (c) { COUNTRY_CONTINENT[c.name] = c.continent; });
+  var visitedSet = new Set(VISITED_COUNTRIES);
+
+  /* ── Color palettes ──────────────────────────────────────────────────── */
+  var PAL = {
+    light: {
+      'North America': '#4575b4',
+      'Europe':        '#e67e22',
+      'Asia':          '#27ae60',
+      _unvisited:      '#e0e0e0',
+      _border:         '#ffffff'
+    },
+    dark: {
+      'North America': '#58a6ff',
+      'Europe':        '#f5a623',
+      'Asia':          '#4ade80',
+      _unvisited:      '#333333',
+      _border:         '#2a2a2a'
+    }
+  };
+  var CITY_DOT = {
+    light: { fill: '#c0392b', stroke: '#ffffff' },
+    dark:  { fill: '#f97583', stroke: '#1c1c1d' }
+  };
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
+  function pal()     { return isDark() ? PAL.dark  : PAL.light; }
+  function cityDot() { return isDark() ? CITY_DOT.dark : CITY_DOT.light; }
 
-  var map, tileLayer, geoLayer, cityMarkers = [];
-  var donutChart;
+  /* ── Shared D3 state ─────────────────────────────────────────────────── */
+  var svg, projection, geoPath, countriesG, citiesG;
 
-  var TILES = {
-    light: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
-    dark: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-  };
-
-  var CONTINENT_COLORS = {
-    'North America': '#4575b4',
-    'Europe': '#e67e22',
-    'Asia': '#27ae60'
-  };
-
-  function countryStyle(feature) {
-    var name = feature.properties.name || '';
-    var visited = new Set(visitedCountries);
-    var isVisited = visited.has(name);
-    var dark = isDark();
-    return {
-      fillColor: isVisited ? (dark ? '#58a6ff' : '#4575b4') : (dark ? '#2d333b' : '#d3d3d3'),
-      fillOpacity: isVisited ? 0.65 : (dark ? 0.4 : 0.3),
-      color: dark ? '#444c56' : '#fff',
-      weight: 0.5
-    };
-  }
-
-  function cityStyle() {
-    var dark = isDark();
-    return {
-      radius: 4,
-      fillColor: dark ? '#f97583' : '#e84848',
-      color: dark ? '#2d333b' : '#fff',
-      weight: 1,
-      fillOpacity: 0.8
-    };
-  }
-
+  /* ── Map init ────────────────────────────────────────────────────────── */
   function initMap() {
-    var mapEl = document.getElementById('travel-map');
-    if (!mapEl || typeof L === 'undefined') return;
+    var el = document.getElementById('travel-map-svg');
+    if (!el || typeof d3 === 'undefined') return;
 
-    var dark = isDark();
-    map = L.map(mapEl, { scrollWheelZoom: false }).setView([20, 0], 2);
+    var W = 960, H = 500;
+    svg = d3.select(el);
 
-    tileLayer = L.tileLayer(dark ? TILES.dark : TILES.light, {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: 19
-    }).addTo(map);
+    projection = d3.geoNaturalEarth1()
+      .scale(160)
+      .translate([W / 2, H / 2]);
+
+    geoPath   = d3.geoPath().projection(projection);
+    countriesG = svg.append('g').attr('class', 'countries-layer');
+    citiesG    = svg.append('g').attr('class', 'cities-layer');
 
     fetch('{{ "/assets/json/world-countries.geojson" | relative_url }}')
       .then(function (r) { return r.json(); })
       .then(function (geojson) {
-        var visited = new Set(visitedCountries);
-        geoLayer = L.geoJSON(geojson, {
-          style: countryStyle,
-          onEachFeature: function (feature, layer) {
-            var name = feature.properties.name || '';
-            if (visited.has(name)) {
-              layer.bindTooltip(name);
-              var countryCities = cityData.filter(function (c) { return c.country === name; });
-              if (countryCities.length > 0) {
-                var cityNames = countryCities.map(function (c) { return c.name; }).join(', ');
-                var cityCount = countryCities.length;
-                var label = cityCount + (cityCount === 1 ? ' city' : ' cities');
-                layer.bindPopup('<strong>' + name + '</strong><br/><em>' + label + '</em>: ' + cityNames);
-              } else {
-                layer.bindPopup('<strong>' + name + '</strong>');
-              }
-            } else {
-              layer.bindTooltip(name, { className: 'leaflet-tooltip-unvisited', opacity: 0.6 });
-            }
-          }
-        }).addTo(map);
+        renderCountries(geojson);
+        renderCities();
       })
-      .catch(function (err) { console.warn('Failed to load country data:', err); });
-
-    cityData.forEach(function (city) {
-      if (city.lat && city.lon) {
-        var marker = L.circleMarker([city.lat, city.lon], cityStyle())
-          .bindTooltip(city.name + ', ' + city.country)
-          .addTo(map);
-        cityMarkers.push(marker);
-      }
-    });
+      .catch(function (e) { console.warn('Travel map GeoJSON load failed:', e); });
   }
 
-  function buildDonutOption() {
-    var dark = isDark();
-    var textColor = dark ? '#c8c8c8' : '#333333';
-    return {
-      tooltip: {
-        trigger: 'item',
-        formatter: function (p) { return p.name + ': ' + p.value + ' countr' + (p.value === 1 ? 'y' : 'ies'); }
-      },
-      legend: {
-        bottom: 0,
-        textStyle: { color: textColor, fontSize: 12 }
-      },
-      series: [{
-        type: 'pie',
-        radius: ['40%', '65%'],
-        center: ['50%', '45%'],
-        avoidLabelOverlap: true,
-        itemStyle: { borderRadius: 6, borderColor: dark ? '#22223a' : '#fff', borderWidth: 2 },
-        label: {
-          show: true,
-          formatter: '{b}\n{c}',
-          color: textColor,
-          fontSize: 12
-        },
-        data: continentData.map(function (d) {
-          return { name: d.name, value: d.value, itemStyle: { color: CONTINENT_COLORS[d.name] || '#888' } };
-        })
-      }]
-    };
-  }
-
-  function initDonut() {
-    var el = document.getElementById('travel-donut');
-    if (!el || typeof echarts === 'undefined') return;
-    if (donutChart) { echarts.dispose(el); }
-    donutChart = echarts.init(el);
-    donutChart.setOption(buildDonutOption());
-  }
-
-  function updateTheme() {
-    if (map) {
-      var dark = isDark();
-      tileLayer.setUrl(dark ? TILES.dark : TILES.light);
-      if (geoLayer) { geoLayer.setStyle(countryStyle); }
-      var style = cityStyle();
-      cityMarkers.forEach(function (m) { m.setStyle(style); });
+  function countryFill(name) {
+    var p = pal();
+    if (visitedSet.has(name)) {
+      return p[COUNTRY_CONTINENT[name]] || p['North America'];
     }
-    initDonut();
+    return p._unvisited;
   }
 
-  window.addEventListener('resize', function () {
-    if (donutChart) { donutChart.resize(); }
-  });
+  function renderCountries(geojson) {
+    var tooltip = document.getElementById('travel-map-tooltip');
+    var wrap    = document.getElementById('travel-map-wrap');
 
+    countriesG.selectAll('path')
+      .data(geojson.features)
+      .enter()
+      .append('path')
+      .attr('d', geoPath)
+      .attr('class', function (d) {
+        return visitedSet.has(d.properties.name) ? 'country-visited' : 'country-unvisited';
+      })
+      .attr('fill',   function (d) { return countryFill(d.properties.name); })
+      .attr('stroke', pal()._border)
+      .attr('stroke-width', 0.5)
+      .on('mouseenter', function (event, d) {
+        var name = d.properties.name;
+        if (!visitedSet.has(name)) return;
+        var citiesHere = CITY_DATA.filter(function (c) { return c.country === name; });
+        var html = '<strong>' + name + '</strong>';
+        if (citiesHere.length > 0) {
+          html += '<br><span class="tt-cities">' + citiesHere.map(function (c) { return c.name; }).join(' · ') + '</span>';
+        }
+        tooltip.innerHTML = html;
+        tooltip.classList.add('visible');
+        tooltip.removeAttribute('aria-hidden');
+      })
+      .on('mousemove', function (event) {
+        var svgBox = document.getElementById('travel-map-svg').getBoundingClientRect();
+        tooltip.style.left = (event.clientX - svgBox.left + 14) + 'px';
+        tooltip.style.top  = (event.clientY - svgBox.top  + 14) + 'px';
+      })
+      .on('mouseleave', function () {
+        tooltip.classList.remove('visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+      })
+      .on('click', function (event, d) {
+        var name = d.properties.name;
+        if (!visitedSet.has(name)) return;
+        var btns = document.querySelectorAll('.travel-accordion-btn');
+        btns.forEach(function (btn) {
+          if (btn.querySelector('.travel-country-name').textContent.trim() === name) {
+            if (btn.classList.contains('collapsed')) { btn.click(); }
+            btn.closest('.travel-accordion-item').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
+
+    updateMapColors();
+  }
+
+  function updateMapColors() {
+    if (!countriesG) return;
+    var p = pal();
+    countriesG.selectAll('path')
+      .attr('fill',   function (d) { return countryFill(d.properties.name); })
+      .attr('stroke', p._border);
+  }
+
+  function renderCities() {
+    var dot = cityDot();
+    citiesG.selectAll('circle')
+      .data(CITY_DATA.filter(function (c) { return c.lat && c.lon; }))
+      .enter()
+      .append('circle')
+      .attr('class', 'city-dot')
+      .attr('cx', function (d) { var p = projection([d.lon, d.lat]); return p ? p[0] : -9999; })
+      .attr('cy', function (d) { var p = projection([d.lon, d.lat]); return p ? p[1] : -9999; })
+      .attr('r', 5)
+      .attr('fill',         dot.fill)
+      .attr('stroke',       dot.stroke)
+      .attr('stroke-width', 1.5)
+      .append('title')
+      .text(function (d) { return d.name + ', ' + d.country; });
+  }
+
+  function updateCityColors() {
+    if (!citiesG) return;
+    var dot = cityDot();
+    citiesG.selectAll('circle.city-dot')
+      .attr('fill',   dot.fill)
+      .attr('stroke', dot.stroke);
+  }
+
+  /* ── Photo gallery (graceful empty-state) ────────────────────────────── */
+  function initGallery() {
+    var wrapper     = document.getElementById('travelSwiperWrapper');
+    var swiperEl    = document.getElementById('travelSwiper');
+    var placeholder = document.getElementById('travelGalleryPlaceholder');
+    if (!wrapper) return;
+
+    var TOTAL = 6;
+    var BASE  = '{{ "/assets/img/projects/fun/travel/travel-" | relative_url }}';
+    var loaded = [], probed = 0;
+
+    for (var i = 1; i <= TOTAL; i++) {
+      (function (idx) {
+        var img = new Image();
+        img.onload = function () { loaded.push({ idx: idx, src: img.src }); finish(); };
+        img.onerror = finish;
+        img.src = BASE + idx + '.webp';
+      })(i);
+    }
+
+    function finish() {
+      probed++;
+      if (probed < TOTAL) return;
+      if (loaded.length === 0) return; /* keep placeholder */
+      loaded.sort(function (a, b) { return a.idx - b.idx; });
+      loaded.forEach(function (item) {
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        var img = document.createElement('img');
+        img.src = item.src;
+        img.className = 'img-fluid rounded z-depth-1';
+        img.alt = 'Travel photo';
+        img.loading = 'lazy';
+        slide.appendChild(img);
+        wrapper.appendChild(slide);
+      });
+      placeholder.style.display = 'none';
+      swiperEl.style.display = '';
+      if (typeof Swiper !== 'undefined') {
+        new Swiper('#travelSwiper', {
+          slidesPerView: 1,
+          spaceBetween: 16,
+          loop: loaded.length > 3,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          breakpoints: { 576: { slidesPerView: 2 }, 992: { slidesPerView: 3 } }
+        });
+      }
+    }
+  }
+
+  /* ── Theme observer ──────────────────────────────────────────────────── */
   new MutationObserver(function (mutations) {
     mutations.forEach(function (m) {
-      if (m.attributeName === 'data-theme') { updateTheme(); }
+      if (m.attributeName === 'data-theme') {
+        updateMapColors();
+        updateCityColors();
+      }
     });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  function initAll() {
+  /* ── Boot ────────────────────────────────────────────────────────────── */
+  function boot() {
     initMap();
-    initDonut();
+    initGallery();
   }
 
   if (document.readyState === 'complete') {
-    setTimeout(initAll, 0);
+    boot();
   } else {
-    window.addEventListener('load', initAll);
+    window.addEventListener('load', boot);
   }
 })();
 </script>
