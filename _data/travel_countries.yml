@@ -4,29 +4,36 @@
 
 - name: United States of America
   continent: North America
+  flag: "🇺🇸"
   lat: 42.4077
   lon: -71.1045
 - name: Spain
   continent: Europe
+  flag: "🇪🇸"
   lat: 41.2983
   lon: 2.08
 - name: France
   continent: Europe
+  flag: "🇫🇷"
   lat: 42.5161
   lon: 3.1066
 - name: Japan
   continent: Asia
+  flag: "🇯🇵"
   lat: 35.6762
   lon: 139.6503
 - name: Taiwan
   continent: Asia
+  flag: "🇹🇼"
   lat: 25.033
   lon: 121.5654
 - name: Thailand
   continent: Asia
+  flag: "🇹🇭"
   lat: 13.7563
   lon: 100.5018
 - name: Germany
   continent: Europe
+  flag: "🇩🇪"
   lat: 52.52
   lon: 13.405

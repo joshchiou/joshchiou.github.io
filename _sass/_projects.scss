@@ -449,6 +449,202 @@ html[data-theme="dark"] .github-profile-orgs-icons img {
   p { margin: 0; font-size: 0.85rem; }
 }
 
+// ── Travel map (D3 SVG) ───────────────────────────────────────────────────────
+
+.travel-map-wrap {
+  position: relative;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--global-bg-color);
+}
+
+.travel-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  path {
+    transition: fill 0.25s ease, stroke 0.25s ease;
+
+    &.country-visited {
+      cursor: pointer;
+      &:hover { filter: brightness(1.14); }
+    }
+
+    &.country-unvisited {
+      pointer-events: none;
+    }
+  }
+
+  circle.city-dot {
+    transition: fill 0.25s ease, stroke 0.25s ease;
+    pointer-events: none;
+  }
+}
+
+.travel-map-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--global-card-bg-color);
+  border: 1px solid var(--global-divider-color);
+  border-radius: 6px;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.82rem;
+  color: var(--global-text-color);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  max-width: 240px;
+  line-height: 1.45;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 10;
+
+  &.visible { opacity: 1; }
+
+  .tt-cities {
+    color: var(--global-text-color-light);
+    font-size: 0.76rem;
+  }
+}
+
+// ── Map legend ────────────────────────────────────────────────────────────────
+
+.travel-map-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+}
+
+.travel-legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  flex-shrink: 0;
+}
+
+.travel-legend-visited {
+  background: #4575b4;
+}
+
+html[data-theme="dark"] .travel-legend-visited {
+  background: #58a6ff;
+}
+
+.travel-legend-city {
+  border-radius: 50%;
+  background: #c0392b;
+  width: 10px;
+  height: 10px;
+}
+
+html[data-theme="dark"] .travel-legend-city {
+  background: #f97583;
+}
+
+.travel-legend-label {
+  margin-right: 0.6rem;
+}
+
+// ── Countries & Cities accordion ──────────────────────────────────────────────
+
+.travel-accordion {
+  --bs-accordion-bg: var(--global-bg-color);
+  --bs-accordion-active-bg: var(--global-code-bg-color);
+  --bs-accordion-btn-color: var(--global-text-color);
+  --bs-accordion-active-color: var(--global-text-color);
+  --bs-accordion-border-color: var(--global-divider-color);
+  --bs-accordion-btn-focus-box-shadow: none;
+
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.travel-accordion-item {
+  border: none;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  &:last-child { border-bottom: none; }
+}
+
+.travel-accordion-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  &::after { margin-left: 0; }
+
+  &:focus { box-shadow: none; }
+}
+
+.travel-country-flag {
+  font-size: 1.35rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.travel-country-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.travel-country-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+
+.travel-continent-badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.18em 0.55em;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.travel-continent-north-america { background: #4575b4; }
+.travel-continent-europe         { background: #e67e22; }
+.travel-continent-asia           { background: #27ae60; }
+
+.travel-city-count {
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+  white-space: nowrap;
+}
+
+.travel-accordion-body {
+  background: var(--global-code-bg-color);
+  padding: 0.75rem 1rem 0.9rem;
+}
+
+.travel-city-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.travel-city-pill {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--global-text-color);
+  background: var(--global-bg-color);
+}
+
 /*******************************************************************************
  * Bike garage — carousel
  ******************************************************************************/
