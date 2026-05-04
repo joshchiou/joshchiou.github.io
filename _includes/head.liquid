@@ -174,7 +174,7 @@
 {% endif %}
 
 {% if page.url == '/' or page.permalink == '/' %}
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON-LD Structured Data: Person -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -231,6 +231,28 @@
         "https://www.scopus.com/authid/detail.uri?authorId=57204148845",
         "https://www.researchgate.net/profile/Joshua-Chiou"
       ]
+    }
+  </script>
+  <!-- JSON-LD Structured Data: WebSite with SearchAction (enables sitelinks search box) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Joshua Chiou",
+      "url": "https://joshchiou.github.io",
+      "description": "Personal academic website of Joshua Chiou — Senior Advisor, Genomics at Lilly.",
+      "author": {
+        "@type": "Person",
+        "name": "Joshua Chiou"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://joshchiou.github.io/publications/?query={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     }
   </script>
 {% endif %}

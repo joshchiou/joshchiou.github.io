@@ -217,6 +217,13 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  # Inline news items are rendered in the news/about aggregation pages.
+  # Their individual /news/<slug>/ URLs are thin duplicates with no search value.
+  - scope:
+      path: ""
+      type: "news"
+    values:
+      sitemap: false
 
 sass:
   style: compressed
