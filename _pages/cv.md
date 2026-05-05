@@ -3,7 +3,7 @@ layout: cv
 permalink: /cv/
 title: cv
 description: >
-  Curriculum vitae of Joshua Chiou — experience in statistical genetics,
+  Curriculum vitae for Joshua Chiou. Experience in statistical genetics,
   translational proteomics, and computational biology at Lilly and Pfizer.
 nav: true
 nav_order: 5

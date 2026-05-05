@@ -10,7 +10,7 @@ category: fun
 {% assign s = site.data.hass_stats %}
 
 I run [Home Assistant](https://www.home-assistant.io/) on a self-hosted server as the hub for
-home automation — controlling lights, climate, and media while monitoring solar production from
+home automation to control lights, climate, and media while monitoring solar production from
 a SunPower PV system. The system is designed around one hard constraint: **if the internet goes
 down, everything still works.**
 
