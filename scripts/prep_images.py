@@ -41,7 +41,14 @@ try:
 except ImportError:
     HAS_PIEXIF = False
 
-SUPPORTED_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.tiff', '.tif', '.bmp', '.webp'}
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+    HAS_HEIF = True
+except ImportError:
+    HAS_HEIF = False
+
+SUPPORTED_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.tiff', '.tif', '.bmp', '.webp', '.heic', '.heif'}
 
 # EXIF orientation tag
 ORIENTATION_TAG = 274  # 0x0112
@@ -171,6 +178,12 @@ def main():
 
     if not images:
         sys.exit(f'No supported images found in {src_dir}')
+
+    if not HAS_HEIF:
+        heic = [f for f in images if f.suffix.lower() in {'.heic', '.heif'}]
+        if heic:
+            print(f'  Warning: {len(heic)} HEIC file(s) found but pillow-heif is not installed.')
+            print('  Install it with: pip install pillow-heif\n')
 
     print(f'\n{"DRY RUN — " if args.dry_run else ""}Processing {len(images)} image(s)')
     print(f'  Quality: {args.quality}  Max: {args.max_width}×{args.max_height}px')
