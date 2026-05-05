@@ -15,7 +15,7 @@ chart:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
-<p class="text-muted mb-4">I ride a 2002 LeMond Zurich 9 miles to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bikes wherever we travel.</p>
+<p class="text-muted mb-4">I ride a 2002 LeMond Zurich 18 miles to commute to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bike trips wherever we travel.</p>
 
 <h2 class="page-chapter">By the numbers</h2>
 
@@ -82,7 +82,7 @@ chart:
 
 <h2 class="page-chapter">The bikes</h2>
 
-<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-90s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the road drivetrains run on hot-waxed chain: strip the factory grease, melt wax in a slow cooker, re-dip every few hundred miles.</p>
+<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-90s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the drivetrains run on hot-waxed chain: strip the factory grease, melted wax in a slow cooker, re-dip every few hundred miles or whenever I remember.</p>
 
 <div class="bike-carousel">
   <div class="bike-carousel-viewport">
