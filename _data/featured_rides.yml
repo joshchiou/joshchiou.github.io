@@ -1,0 +1,27 @@
+- title: Sun Moon Lake loop
+  location: "Nantou, Taiwan"
+  date: 2024-10-12
+  distance_km: 91.92
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-travel-sun-moon-lake.webp
+  story: "91 km around the lake on a rented Giant. Longest ride of the year."
+
+- title: Antibes to Nice coastal ride
+  location: "French Riviera"
+  date: 2024-09-07
+  distance_km: 75.53
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-travel-antibes-nice.webp
+  story: "Along the coast between Antibes and Nice on a rental. Summer traffic made it interesting."
+
+- title: Acadia carriage roads
+  location: "Bar Harbor, ME"
+  date: 2024-09-01
+  distance_km: 69.2
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-gravel-acadia-carriage-road.webp
+  story: "Car-free gravel through the park. We bring the Stumpjumpers up every fall."
+
+- title: Bangkok bike tour
+  location: "Bangkok, Thailand"
+  date: 2024-08-17
+  distance_km: 22.65
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-travel-bangkok.webp
+  story: "Guided tour through backstreets and along the canals. 95 degrees and worth it."

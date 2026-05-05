@@ -75,6 +75,10 @@ def compute_stats(rides: list[dict]) -> dict:
     total_distance_km = round(sum(a["distance"] for a in rides) / 1000, 1)
     total_elevation_m = round(sum(a["total_elevation_gain"] for a in rides))
 
+    distances_km = [a["distance"] / 1000 for a in rides]
+    longest_ride_km = round(max(distances_km), 1) if distances_km else 0
+    avg_ride_km = round(sum(distances_km) / len(distances_km), 1) if distances_km else 0
+
     monthly: defaultdict[str, float] = defaultdict(float)
     for a in rides:
         monthly[a["start_date_local"][:7]] += a["distance"] / 1000
@@ -88,9 +92,31 @@ def compute_stats(rides: list[dict]) -> dict:
         "total_rides": len(rides),
         "total_distance_km": total_distance_km,
         "total_elevation_m": total_elevation_m,
+        "longest_ride_km": longest_ride_km,
+        "avg_ride_km": avg_ride_km,
         "monthly": monthly_list,
         "updated_at": datetime.now(timezone.utc).isoformat(),
     }
+
+
+def compute_ride_log(rides: list[dict], limit: int = 15) -> list[dict]:
+    """Returns the most recent rides with name, distance, elevation, speed."""
+    sorted_rides = sorted(rides, key=lambda a: a["start_date_local"], reverse=True)
+    log = []
+    for a in sorted_rides[:limit]:
+        entry = {
+            "date": a["start_date_local"][:10],
+            "name": a.get("name", "Ride"),
+            "distance_km": round(a["distance"] / 1000, 1),
+            "elevation_m": round(a.get("total_elevation_gain", 0)),
+            "moving_time_min": round(a.get("moving_time", 0) / 60),
+        }
+        if a.get("average_speed", 0) > 0:
+            entry["avg_speed_kmh"] = round(a["average_speed"] * 3.6, 1)
+        if a.get("commute"):
+            entry["type"] = "commute"
+        log.append(entry)
+    return log
 
 
 def write_json(path: Path, data) -> None:
@@ -115,10 +141,12 @@ def main() -> None:
 
     calendar_data = compute_calendar_data(rides)
     stats = compute_stats(rides)
+    ride_log = compute_ride_log(rides)
 
     data_dir = REPO_ROOT / "_data"
     write_json(data_dir / "strava_calendar.json", calendar_data)
     write_json(data_dir / "strava_stats.json", stats)
+    write_json(data_dir / "strava_rides.json", ride_log)
 
     print(f"\nDone. {stats['total_rides']} rides · "
           f"{stats['total_distance_km']} km · "

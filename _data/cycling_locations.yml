@@ -1,0 +1,24 @@
+- name: Boston
+  type: commute
+  coords: [42.36, -71.06]
+- name: Nahant
+  type: road
+  coords: [42.43, -70.92]
+- name: Middlesex Fells
+  type: road
+  coords: [42.45, -71.10]
+- name: Beaver Brook
+  type: gravel
+  coords: [42.83, -71.65]
+- name: Acadia
+  type: gravel
+  coords: [44.35, -68.21]
+- name: Antibes
+  type: travel
+  coords: [43.58, 7.12]
+- name: Bangkok
+  type: travel
+  coords: [13.75, 100.50]
+- name: Sun Moon Lake
+  type: travel
+  coords: [23.85, 120.91]
