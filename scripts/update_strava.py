@@ -28,7 +28,6 @@ RIDE_TYPES = {"Ride", "VirtualRide", "EBikeRide"}
 TOKEN_URL = "https://www.strava.com/oauth/token"
 ACTIVITIES_URL = "https://www.strava.com/api/v3/athlete/activities"
 REPO_ROOT = Path(__file__).parent.parent
-ASSETS_DATA_DIR = REPO_ROOT / "assets" / "data"
 
 
 def get_access_token() -> str:
@@ -120,9 +119,6 @@ def main() -> None:
     data_dir = REPO_ROOT / "_data"
     write_json(data_dir / "strava_calendar.json", calendar_data)
     write_json(data_dir / "strava_stats.json", stats)
-
-    ASSETS_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    write_json(ASSETS_DATA_DIR / "strava_calendar.json", calendar_data)
 
     print(f"\nDone. {stats['total_rides']} rides · "
           f"{stats['total_distance_km']} km · "
