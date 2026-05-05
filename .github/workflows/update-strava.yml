@@ -2,7 +2,7 @@ name: Update Strava Data
 
 on:
   schedule:
-    - cron: "0 6 */2 * *" # Every 2 days at 06:00 UTC
+    - cron: "0 6 * * *" # Daily at 06:00 UTC
   workflow_dispatch: # Allow manual trigger from GitHub Actions UI
 
 jobs:
@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 

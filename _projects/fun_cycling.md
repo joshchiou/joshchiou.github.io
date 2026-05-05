@@ -1,14 +1,12 @@
 ---
 layout: page
 title: Cycling
-description: Strava-powered cycling stats, activity calendar and all-time totals.
+description: Six bikes ranging from 1996 to 2007, a slow cooker full of chain wax, and a few years of Strava data.
 img: assets/img/projects/fun/cycling.svg
 importance: 2
 category: fun
 chart:
   echarts: true
-images:
-  slider: true
 ---
 
 {% assign stats = site.data.strava_stats %}
@@ -18,9 +16,9 @@ images:
 
 <h2 class="page-chapter">The bikes</h2>
 
-<p class="text-muted mb-4">Two 2002 LeMond steel frames. The Zurich is my daily commuter and the Tourmalet is the backup. On weekends my wife and I explore the Boston area together, ranging from short loops around the Fells to longer rides out to Nahant, Castle Island, and beyond.</p>
+<p class="text-muted mb-4">The fleet has grown to six bikes: four vintage LeMond road frames and two late-90s Specialized Stumpjumpers I hunted down and rebuilt as gravel bikes, inspired by builds I came across on r/xbiking. I ride the Zurich 9 miles to work and back, year-round — ice is basically the only thing that stops me. On weekends my wife and I ride whichever bikes fit the terrain, from road loops around the Fells and out to Nahant to gravel days in Acadia and Beaver Brook.</p>
 
-<p class="text-muted mb-4">I service both bikes myself. This includes cable swaps, brake and derailleur adjustments, bearing overhauls, and occasional full rebuilds. Both drivetrains run on hot-waxed chain: I strip the factory grease, melt wax in a slow cooker, and re-dip every few hundred miles. The drivetrain stays noticeably cleaner and quieter compared to wet lube, and touching up the wax mid-season is quick. Every bike I work on teaches me something new, which is a big part of why I enjoy it.</p>
+<p class="text-muted mb-4">I do all my own wrenching across the fleet, from cable swaps and bearing overhauls to full drivetrain upgrades. The Zurich went from Ultegra 3x9 to a modern 105 2x11 setup; my wife's Etape went from Tiagra 3x8 to a cleaner 2x10. I use an ultrasonic cleaner to strip and degrease parts before reassembly, and I have a truing stand and a full set of tools for cassettes, bottom brackets, and bearings. All the road drivetrains run on hot-waxed chain: strip the factory grease, melt wax in a slow cooker, re-dip every few hundred miles. It stays cleaner and quieter than wet lube. Every bike I work on teaches me something new.</p>
 
 <div class="bike-carousel">
   <div class="bike-carousel-viewport">
@@ -73,18 +71,28 @@ images:
 
 <h2 class="page-chapter">The rides</h2>
 
-<div class="swiper bike-gallery-swiper mb-4">
-  <div class="swiper-wrapper">
-    {% for photo in site.data.bike_gallery %}
-    <div class="swiper-slide">
-      <img src="{{ photo.url }}" alt="{{ photo.caption }}" loading="lazy" style="width:100%;display:block;">
-      <div class="swiper-slide-caption">{{ photo.caption }}</div>
+<p class="text-muted mb-4">Road rides around Boston, gravel days in Acadia and Beaver Brook, and wherever we can find bike-friendly routes when we travel.</p>
+
+<div class="ride-gallery mb-4">
+  <div class="ride-gallery-viewport">
+    <div class="ride-gallery-track" id="rideTrack">
+      {% for photo in site.data.bike_gallery %}
+      <div class="ride-gallery-slide" data-caption="{{ photo.caption }}">
+        <img src="{{ photo.url }}" alt="{{ photo.caption }}" loading="lazy">
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+    <button class="ride-gallery-btn ride-gallery-btn--prev" id="ridePrev" aria-label="Previous photo">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="ride-gallery-btn ride-gallery-btn--next" id="rideNext" aria-label="Next photo">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
   </div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  <div class="ride-gallery-footer">
+    <p class="ride-gallery-caption" id="rideCaption"></p>
+    <div class="ride-gallery-dots" id="rideDots"></div>
+  </div>
 </div>
 
 
@@ -554,18 +562,48 @@ images:
 
   // ── Ride gallery ─────────────────────────────────────────────────────────
   function initRideGallery() {
-    var el = document.querySelector('.bike-gallery-swiper');
-    if (el && typeof Swiper !== 'undefined') {
-      new Swiper('.bike-gallery-swiper', {
-        slidesPerView: 1,
-        pagination: { el: '.bike-gallery-swiper .swiper-pagination', clickable: true },
-        navigation: {
-          nextEl: '.bike-gallery-swiper .swiper-button-next',
-          prevEl: '.bike-gallery-swiper .swiper-button-prev'
-        },
-        autoHeight: true
-      });
+    var track = document.getElementById('rideTrack');
+    if (!track) return;
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.ride-gallery-slide'));
+    var n = slides.length;
+    var captions = slides.map(function (s) { return s.getAttribute('data-caption') || ''; });
+
+    var cur = 0;
+    var dots = [];
+    var dotsEl = document.getElementById('rideDots');
+    var prevBtn = document.getElementById('ridePrev');
+    var nextBtn = document.getElementById('rideNext');
+    var capEl = document.getElementById('rideCaption');
+
+    if (n <= 1) {
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
     }
+
+    for (var i = 0; i < n; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'ride-gallery-dot';
+      dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+      (function (idx) { dot.addEventListener('click', function () { goRide(idx); }); })(i);
+      dotsEl.appendChild(dot);
+      dots.push(dot);
+    }
+
+    function goRide(idx) {
+      cur = Math.max(0, Math.min(idx, n - 1));
+      track.style.transform = 'translateX(-' + (cur * slides[0].offsetWidth) + 'px)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
+      if (prevBtn) prevBtn.disabled = cur === 0;
+      if (nextBtn) nextBtn.disabled = cur === n - 1;
+      if (capEl) capEl.textContent = captions[cur];
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goRide(cur - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goRide(cur + 1); });
+    goRide(0);
+
+    window._rideGalleryGo = goRide;
+    window._rideGalleryCur = function () { return cur; };
   }
 
   // ── View tabs (calendar / monthly / cumulative) ─────────────────────────
@@ -602,6 +640,7 @@ images:
     if (cumChart && isVisible(document.getElementById('cycling-cumulative'))) { cumChart.resize(); }
     // Re-snap carousel after resize
     if (window._bikeCarouselGo) { window._bikeCarouselGo(window._bikeCarouselCur()); }
+    if (window._rideGalleryGo) { window._rideGalleryGo(window._rideGalleryCur()); }
   });
 
   new MutationObserver(function (mutations) {

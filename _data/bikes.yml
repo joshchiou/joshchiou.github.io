@@ -98,7 +98,7 @@
 - name: Lemond Buenos Aires
   year: 2001
   image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-tall-bike.webp
-  status: Tall bike
+  status: Large frame
   groups:
     - label: Frame & Fit
       items:
