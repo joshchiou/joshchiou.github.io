@@ -1507,3 +1507,14 @@ html[data-theme="dark"] .chart-toggle-btn:hover:not(.active) {
   padding-left: 12px;
   margin: 0;
 }
+
+/*******************************************************************************
+ * Gallery carousel caption
+ ******************************************************************************/
+
+.swiper-slide-caption {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--global-text-color-light);
+  padding: 0.4rem 0 0.25rem;
+}
