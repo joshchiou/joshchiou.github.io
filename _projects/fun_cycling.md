@@ -62,18 +62,6 @@ chart:
 </a>
 
 
-<h2 class="page-chapter">Recent rides</h2>
-
-<div class="ride-log-wrap mb-4">
-  <table class="ride-log">
-    <thead>
-      <tr><th>Date</th><th>Name</th><th>Distance</th><th>Time</th></tr>
-    </thead>
-    <tbody id="ride-log-body"></tbody>
-  </table>
-</div>
-
-
 <h2 class="page-chapter">Highlights</h2>
 
 <p class="text-muted mb-3">A few rides that stand out.</p>
@@ -90,11 +78,6 @@ chart:
   </div>
   {% endfor %}
 </div>
-
-
-<h2 class="page-chapter">Where I ride</h2>
-
-<div id="cycling-map" class="cycling-map mb-4"></div>
 
 
 <h2 class="page-chapter">The bikes</h2>
@@ -158,9 +141,7 @@ chart:
 <script>
 window._cyclingData = {
   monthly: {{ site.data.strava_stats.monthly | jsonify }},
-  calendar: {{ site.data.strava_calendar | jsonify }},
-  rides: {{ site.data.strava_rides | jsonify }},
-  locations: {{ site.data.cycling_locations | jsonify }}
+  calendar: {{ site.data.strava_calendar | jsonify }}
 };
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
