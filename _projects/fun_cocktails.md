@@ -5,6 +5,8 @@ description: Notes from the house bar.
 img: assets/img/projects/fun/cocktails.svg
 importance: 3
 category: fun
+images:
+  slider: true
 ---
 
 Mostly classic cocktails with occasional detours into original recipes. Current obsessions
@@ -86,3 +88,34 @@ involves a good amaro. I have a soft spot for funky rums and tiki cocktails.
 </div>
 
 </div>
+
+### Photos
+
+<div class="swiper cocktail-gallery-swiper mb-4">
+  <div class="swiper-wrapper">
+    {% for photo in site.data.cocktail_gallery %}
+    <div class="swiper-slide">
+      <img src="{{ photo.url }}" alt="Cocktail" loading="lazy" style="width:100%;display:block;">
+    </div>
+    {% endfor %}
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<script>
+window.addEventListener('load', function () {
+  if (typeof Swiper !== 'undefined') {
+    new Swiper('.cocktail-gallery-swiper', {
+      slidesPerView: 1,
+      pagination: { el: '.cocktail-gallery-swiper .swiper-pagination', clickable: true },
+      navigation: {
+        nextEl: '.cocktail-gallery-swiper .swiper-button-next',
+        prevEl: '.cocktail-gallery-swiper .swiper-button-prev'
+      },
+      autoHeight: true
+    });
+  }
+});
+</script>
