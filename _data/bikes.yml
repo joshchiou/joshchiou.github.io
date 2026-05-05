@@ -1,6 +1,6 @@
 - name: Lemond Zurich
   year: 2002
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-daily-driver.webp
   status: Daily driver
   groups:
     - label: Frame & Fit
@@ -22,7 +22,7 @@
 
 - name: Lemond Tourmalet
   year: 2002
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-backup-bike.webp
   status: Backup bike
   groups:
     - label: Frame & Fit
@@ -40,7 +40,7 @@
 
 - name: Lemond Etape
   year: 2007
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-bike.webp
   status: Wife's main bike
   groups:
     - label: Frame & Fit
@@ -61,7 +61,7 @@
 
 - name: Specialized Stumpjumper M2
   year: 1998
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-gravel-bike.webp
   status: Gravel bike
   groups:
     - label: Frame & Fit
@@ -79,7 +79,7 @@
 
 - name: Specialized Stumpjumper M2
   year: 1996
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-gravel-bike.webp
   status: Wife's gravel bike
   groups:
     - label: Frame & Fit
@@ -97,7 +97,7 @@
 
 - name: Lemond Buenos Aires
   year: 2001
-  image: null
+  image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-tall-bike.webp
   status: Tall bike
   groups:
     - label: Frame & Fit
