@@ -1700,3 +1700,18 @@ ninja-keys::part(ninja-input-wrapper) {
     }
   }
 }
+
+.page-chapter {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--global-divider-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+
+  &:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}

@@ -16,11 +16,11 @@ images:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
+<h2 class="page-chapter">The bikes</h2>
+
 <p class="text-muted mb-4">Two 2002 LeMond steel frames — the Zurich is my daily commuter and the Tourmalet is the backup. On weekends my wife and I explore the Boston area together, ranging from short loops around the Fells to longer rides out to Nahant, Castle Island, and beyond.</p>
 
 <p class="text-muted mb-4">I service both bikes myself — cable swaps, brake and derailleur adjustments, bearing overhauls, and occasional full rebuilds. Both drivetrains run on hot-waxed chain: I strip the factory grease, melt wax in a slow cooker, and re-dip every few hundred miles. The drivetrain stays noticeably cleaner and quieter compared to wet lube, and touching up the wax mid-season is quick. Every bike I work on teaches me something new, which is a big part of why I enjoy it.</p>
-
-### Bike fleet
 
 <div class="bike-carousel">
   <div class="bike-carousel-viewport">
@@ -71,7 +71,7 @@ images:
   </div>
 </div>
 
-### Ride photos
+<h2 class="page-chapter">The rides</h2>
 
 <div class="swiper bike-gallery-swiper mb-4">
   <div class="swiper-wrapper">
@@ -88,7 +88,7 @@ images:
 </div>
 
 
-### Stats
+<h2 class="page-chapter">By the numbers</h2>
 
 {% if stats.total_rides %}
 <div class="row mb-2 text-center">
@@ -116,22 +116,22 @@ images:
   <small class="text-muted">Last ride: <span id="last-ride-date"></span> &middot; <span id="last-ride-dist"></span></small>
 </div>
 
-### Activity calendar (year to date)
+<div class="chart-toggle chart-view-tabs mb-2">
+  <button class="chart-toggle-btn chart-view-btn active" data-view="calendar">Calendar</button>
+  <button class="chart-toggle-btn chart-view-btn" data-view="monthly">Monthly</button>
+  <button class="chart-toggle-btn chart-view-btn" data-view="cumulative">Cumulative</button>
+</div>
 
-<div id="cycling-calendar"></div>
-<p class="text-muted mt-1 mb-4"><small>Each cell is one day; color shows miles ridden.</small></p>
+<div id="cycling-calendar" class="cycling-chart-pane"></div>
+<div id="cycling-monthly" class="cycling-chart-pane" style="display:none; height: 280px;"></div>
+<div id="cycling-cumulative" class="cycling-chart-pane" style="display:none; height: 250px;"></div>
 
-### Monthly distance
-
-<div class="chart-toggle mb-2">
+<div class="chart-toggle monthly-sub-toggle mb-2 mt-2" id="monthlySubToggle" style="display:none">
   <button class="chart-toggle-btn active" data-view="alltime">All-time</button>
   <button class="chart-toggle-btn" data-view="byyear">By year</button>
 </div>
-<div id="cycling-monthly" style="height: 280px;"></div>
 
-### Cumulative distance
-
-<div id="cycling-cumulative" style="height: 250px;"></div>
+<p class="text-muted mt-1 mb-4"><small id="chart-caption">Each cell is one day; color shows miles ridden.</small></p>
 
 <script>
 (function () {
@@ -457,13 +457,16 @@ images:
     }
   }
 
-  function initOtherCharts() {
+  function initBarChart() {
     var barEl = document.getElementById('cycling-monthly');
     if (barEl && window.echarts) {
       if (barChart) { echarts.dispose(barEl); }
       barChart = echarts.init(barEl);
       barChart.setOption(buildBarOption());
     }
+  }
+
+  function initCumChart() {
     var cumEl = document.getElementById('cycling-cumulative');
     if (cumEl && window.echarts) {
       if (cumChart) { echarts.dispose(cumEl); }
@@ -472,9 +475,34 @@ images:
     }
   }
 
-  function initAllCharts() {
-    initCalChart();
-    initOtherCharts();
+  // ── View switcher (calendar / monthly / cumulative) ─────────────────────
+  var chartCaptions = {
+    calendar:   'Each cell is one day; color shows miles ridden.',
+    monthly:    'Miles per month — toggle for year-over-year comparison.',
+    cumulative: 'Running total miles over time.'
+  };
+
+  function showView(view) {
+    var panes = {
+      calendar:   document.getElementById('cycling-calendar'),
+      monthly:    document.getElementById('cycling-monthly'),
+      cumulative: document.getElementById('cycling-cumulative')
+    };
+    Object.keys(panes).forEach(function (k) {
+      if (panes[k]) panes[k].style.display = (k === view) ? '' : 'none';
+    });
+    var sub = document.getElementById('monthlySubToggle');
+    if (sub) sub.style.display = (view === 'monthly') ? '' : 'none';
+    var cap = document.getElementById('chart-caption');
+    if (cap) cap.textContent = chartCaptions[view] || '';
+
+    // Lazy init + resize on reveal (ECharts can't measure hidden containers)
+    if (view === 'calendar' && !calChart) initCalChart();
+    if (view === 'monthly'  && !barChart) initBarChart();
+    if (view === 'cumulative' && !cumChart) initCumChart();
+    if (view === 'calendar' && calChart) calChart.resize();
+    if (view === 'monthly'  && barChart) barChart.resize();
+    if (view === 'cumulative' && cumChart) cumChart.resize();
   }
 
   // ── Bike carousel ────────────────────────────────────────────────────────
@@ -540,56 +568,62 @@ images:
     }
   }
 
-  // ── Toggle buttons ───────────────────────────────────────────────────────
-  document.querySelectorAll('.chart-toggle-btn').forEach(function (btn) {
+  // ── View tabs (calendar / monthly / cumulative) ─────────────────────────
+  document.querySelectorAll('.chart-view-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      document.querySelectorAll('.chart-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.chart-view-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      showView(btn.getAttribute('data-view'));
+    });
+  });
+
+  // ── Monthly sub-toggle (all-time / by-year) ─────────────────────────────
+  document.querySelectorAll('.monthly-sub-toggle .chart-toggle-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.monthly-sub-toggle .chart-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
       currentView = btn.getAttribute('data-view');
-      var barEl = document.getElementById('cycling-monthly');
-      if (barEl && window.echarts) {
-        if (barChart) { echarts.dispose(barEl); }
-        barChart = echarts.init(barEl);
-        barChart.setOption(buildBarOption());
-      }
+      initBarChart();
     });
   });
 
   // ── Resize & theme ───────────────────────────────────────────────────────
+  function isVisible(el) { return el && el.offsetParent !== null; }
+
   window.addEventListener('resize', function () {
-    if (calChart) {
-      var calEl = document.getElementById('cycling-calendar');
+    var calEl = document.getElementById('cycling-calendar');
+    if (calChart && isVisible(calEl)) {
       var mobile = window.innerWidth < 576;
       calEl.style.height = (mobile ? 180 : 155) + 'px';
       calChart.resize();
       calChart.setOption(buildCalOption());
     }
-    if (barChart) { barChart.resize(); }
-    if (cumChart) { cumChart.resize(); }
+    if (barChart && isVisible(document.getElementById('cycling-monthly'))) { barChart.resize(); }
+    if (cumChart && isVisible(document.getElementById('cycling-cumulative'))) { cumChart.resize(); }
     // Re-snap carousel after resize
     if (window._bikeCarouselGo) { window._bikeCarouselGo(window._bikeCarouselCur()); }
   });
 
   new MutationObserver(function (mutations) {
     mutations.forEach(function (m) {
-      if (m.attributeName === 'data-theme') { initAllCharts(); }
+      if (m.attributeName === 'data-theme') {
+        // Re-init only charts that have been instantiated
+        if (calChart) initCalChart();
+        if (barChart) initBarChart();
+        if (cumChart) initCumChart();
+      }
     });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   // ── Boot ─────────────────────────────────────────────────────────────────
-  if (document.readyState === 'complete') {
-    initAllCharts();
+  function boot() {
+    initCalChart();           // default view is calendar; init eagerly
     initBikeCarousel();
     initRideGallery();
     showPaceStat();
-  } else {
-    window.addEventListener('load', function () {
-      initAllCharts();
-      initBikeCarousel();
-      initRideGallery();
-      showPaceStat();
-    });
   }
+  if (document.readyState === 'complete') { boot(); }
+  else { window.addEventListener('load', boot); }
 })();
 </script>
 
