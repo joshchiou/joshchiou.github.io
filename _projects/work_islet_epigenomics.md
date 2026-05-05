@@ -8,12 +8,18 @@ category: work
 related_publications: true
 ---
 
-The pancreatic islet contains multiple interacting cell types (beta, alpha, delta, and others),
-each with distinct transcriptional programs and disease associations. My PhD work applied
-single-cell ATAC-seq to human islets to generate high-resolution maps of cell-type-specific
-chromatin accessibility, revealing regulatory programs active in each cell type and linking
-them to type 2 diabetes GWAS loci {% cite chiou2021single %}. This provided a
-framework for interpreting non-coding genetic variants in the context of islet cell-type identity.
+<div class="project-tldr">
+  <strong>TL;DR</strong>
+  Single-cell chromatin maps of human pancreatic islets revealed how type 2 diabetes risk variants alter gene regulation at the cell type level.
+</div>
+
+Hundreds of genetic variants influence type 2 diabetes risk, but most sit in non-coding
+regions of the genome where their function is invisible without cell-type-specific regulatory
+maps. My PhD work applied single-cell ATAC-seq to human islets to generate high-resolution
+maps of chromatin accessibility in each cell type (beta, alpha, delta, and others), revealing
+which regulatory programs are active in each and linking them to type 2 diabetes GWAS loci
+{% cite chiou2021single %}. This provided a framework for interpreting non-coding genetic
+variants in the context of islet cell-type identity.
 
 Complementary work characterized how environmental and nutrient signals reshape the islet
 epigenome to control adaptive insulin secretion {% cite islet2023nutrient %}, and examined

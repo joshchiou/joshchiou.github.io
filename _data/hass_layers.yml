@@ -1,0 +1,80 @@
+- label: Devices
+  layer: devices
+  chips:
+    - icon: fa-solid fa-solar-panel
+      title: SunPower PV
+      desc: "Residential solar array monitored in real time via the SunPower PVS gateway on the local network. Production data feeds the HA energy dashboard through the ha-esunpower integration."
+    - icon: fa-solid fa-gauge
+      title: Smart Meter
+      desc: "Utility meter that broadcasts consumption data over 433 MHz AMR radio. An RTL-SDR USB dongle passively receives these one-way transmissions — no utility account access required."
+    - icon: fa-solid fa-lightbulb
+      title: IKEA Tradfri
+      desc: "Zigbee bulbs, outlet plugs, and motion sensors from IKEA's Tradfri line. Paired directly to Zigbee2MQTT — no IKEA hub or cloud dependency."
+    - icon: fa-solid fa-toggle-on
+      title: SONOFF
+      desc: "Zigbee switches, relays, and sensors. Paired directly to Zigbee2MQTT for fully local operation."
+    - icon: fa-solid fa-temperature-half
+      title: Smart Thermostat
+      desc: "Wi-Fi thermostat integrated directly into Home Assistant. Occupancy-based automations adjust setpoints to avoid conditioning an empty house."
+    - icon: fa-solid fa-battery-three-quarters
+      title: UPS
+      desc: "Uninterruptible power supply protecting the server. NUT (Network UPS Tools) exposes battery charge, load percentage, and estimated runtime as HA sensor entities."
+
+- label: Protocol
+  layer: protocol
+  chips:
+    - icon: fa-solid fa-wifi
+      title: Zigbee 802.15.4
+      desc: "Low-power mesh radio protocol coordinated by an SLZB-06 Zigbee coordinator. Handles all IKEA and SONOFF devices. Traffic is decoded by Zigbee2MQTT and published to the local MQTT broker."
+    - icon: fa-solid fa-share-nodes
+      title: Thread / Matter
+      desc: "IPv6-based mesh protocol for newer smart home devices. Thread border routers bridge the mesh to the local IP network. HA has native Matter support — no cloud commissioning required."
+    - icon: fa-solid fa-tower-broadcast
+      title: AMR 433 MHz
+      desc: "Automatic Meter Reading: one-way radio packets broadcast by the utility smart meter. Received passively by the RTL-SDR dongle and decoded by RTLAMR2MQTT. No pairing or utility account access needed."
+
+- label: Bridges
+  layer: bridges
+  chips:
+    - icon: fa-solid fa-arrows-left-right
+      title: Zigbee2MQTT
+      desc: "Translates Zigbee radio traffic from the SLZB-06 coordinator into MQTT messages. Supports 3000+ devices. The primary bridge for all Zigbee devices — no vendor clouds involved."
+    - icon: fa-solid fa-satellite-dish
+      title: RTLAMR2MQTT
+      desc: "Decodes AMR utility meter readings received by the RTL-SDR dongle and publishes them as MQTT messages. Runs as a Docker container alongside the SDR device."
+    - icon: fa-solid fa-sitemap
+      title: OpenThread
+      desc: "Thread border router daemon (otbr-agent) that connects the Thread 802.15.4 mesh to the local IP network, enabling Matter-over-Thread devices to reach Home Assistant."
+    - icon: fa-solid fa-battery-three-quarters
+      title: NUT
+      desc: "Network UPS Tools monitors the UPS over USB and exposes battery charge, load, and runtime estimates. The HA NUT integration pulls these as sensor entities."
+
+- label: Core
+  layer: core
+  core: true
+  chips:
+    - icon: fa-solid fa-house
+      title: Home Assistant
+      desc: "The automation engine — runs as a Docker container on the home server (Ubuntu 24.04 LTS). Consumes MQTT events from the bridges, runs all automations on-device, and serves the Lovelace UI over the local network."
+    - icon: fa-solid fa-solar-panel
+      title: ha-esunpower
+      desc: "Custom integration for SunPower PV systems. Adapted from an open-source fork; I contributed a fix for a memory-leak crash when the PVS gateway serial is an IP address (PR #64)."
+    - icon: fa-solid fa-arrows-left-right
+      title: Mosquitto MQTT
+      desc: "Local MQTT broker running as a Docker container. All bridges (Zigbee2MQTT, RTLAMR2MQTT, NUT) publish to this broker; Home Assistant subscribes to receive device state updates."
+
+- label: Dashboards
+  layer: dashboards
+  chips:
+    - icon: fa-solid fa-chart-line
+      title: Energy Dashboard
+      desc: "Built-in HA energy dashboard showing solar production vs. grid consumption in real time and historically. Data comes from ha-esunpower (production) and the AMR smart meter (consumption)."
+    - icon: fa-solid fa-sliders
+      title: Lighting
+      desc: "Lovelace dashboard for manual scene and circadian lighting control. Automations adjust color temperature throughout the day; override scenes are a single tap."
+    - icon: fa-solid fa-temperature-half
+      title: Climate
+      desc: "Smart thermostat control with occupancy-based automations. When the house is empty the thermostat backs off; it pre-conditions before regular arrival times."
+    - icon: fa-solid fa-table-cells
+      title: Custom Cards
+      desc: "Purpose-built Lovelace cards for energy monitoring and at-a-glance system status. Designed for zero training — anyone in the house can read and operate them."

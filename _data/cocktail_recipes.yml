@@ -1,0 +1,44 @@
+- name: Negroni
+  method: stirred
+  ingredients:
+    - 1 oz gin
+    - 1 oz Campari
+    - 1 oz sweet vermouth
+  note: "Strained into a coupe, orange peel expressed. Endlessly riffable — swap gin for rum (Kingston Negroni) mezcal (Oaxaca Negroni), Campari for Cynar, or vermouth for Punt e Mes."
+
+- name: Manhattan
+  method: stirred
+  ingredients:
+    - 2 oz rye
+    - 1 oz sweet vermouth
+    - 2 dashes Angostura
+  note: "Strained, Luxardo cherry. Workhorse ryes (Rittenhouse, Wild Turkey 101) and fresh vermouth for an everyday sipper."
+
+- name: Paper Plane
+  method: shaken
+  ingredients:
+    - 0.75 oz bourbon
+    - 0.75 oz Aperol
+    - 0.75 oz Amaro Nonino
+    - 0.75 oz lemon juice
+  note: "One of the few modern classics that earns the equal-parts format. Every ingredient pulls weight."
+
+- name: Jungle Bird
+  method: shaken
+  ingredients:
+    - 1.5 oz dark rum
+    - 0.75 oz Campari
+    - 1.5 oz pineapple juice
+    - 0.5 oz fresh lime juice
+    - 0.5 oz simple syrup
+  note: "One of my favorite tiki cocktails to make at home. I prefer using a mix of Jamaican rums like Appleton Estate and Smith & Cross. Fresh pineapple juice is key here, usually sourced from Trader Joe's."
+
+- name: Saturn
+  method: shaken
+  ingredients:
+    - 1.5 oz dry gin
+    - 0.5 oz orgeat
+    - 0.5 oz fresh lemon juice
+    - 0.25 oz passionfruit syrup
+    - 0.25 oz falernum
+  note: "A classic tiki cocktail that feels like it shouldn't be because it lacks rum. I love this cocktail but the hardest ingredient to source is always the passionfruit syrup. One workaround is to buy frozen passionfruit juice cubes and blend with simple to make the syrup."

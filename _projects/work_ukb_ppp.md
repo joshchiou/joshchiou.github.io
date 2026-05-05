@@ -8,6 +8,11 @@ category: work
 related_publications: true
 ---
 
+<div class="project-tldr">
+  <strong>TL;DR</strong>
+  Mapped the genetic architecture of 3k plasma proteins across 54k participants in the UK Biobank, now a foundational resource for drug target discovery and validation.
+</div>
+
 The [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/)
 (UKB-PPP) was a pre-competitive consortium of thirteen pharmaceutical companies and the UK Biobank,
 profiling ~3,000 plasma proteins using the Olink Proximity Extension Assay across 54,306

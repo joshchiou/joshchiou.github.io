@@ -8,6 +8,11 @@ category: work
 related_publications: true
 ---
 
+<div class="project-tldr">
+  <strong>TL;DR</strong>
+  T1D genetic risk maps to exocrine cells in the pancreas, not just the islets, implicating previously overlooked cell types in disease pathogenesis.
+</div>
+
 Type 1 diabetes (T1D) has long been understood as a disease of the pancreatic islets, where
 immune-mediated destruction of insulin-producing beta cells drives hyperglycemia. My PhD work
 challenged this tissue-centric view by integrating T1D genome-wide association study (GWAS)
