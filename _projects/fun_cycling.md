@@ -7,6 +7,8 @@ importance: 2
 category: fun
 chart:
   echarts: true
+images:
+  slider: true
 ---
 
 {% assign stats = site.data.strava_stats %}
@@ -67,6 +69,22 @@ chart:
       <i class="fa-solid fa-chevron-right"></i>
     </button>
   </div>
+</div>
+
+### Ride photos
+
+<div class="swiper bike-gallery-swiper mb-4">
+  <div class="swiper-wrapper">
+    {% for photo in site.data.bike_gallery %}
+    <div class="swiper-slide">
+      <img src="{{ photo.url }}" alt="{{ photo.caption }}" loading="lazy" style="width:100%;display:block;">
+      <div class="swiper-slide-caption">{{ photo.caption }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
 </div>
 
 
@@ -506,6 +524,22 @@ chart:
     window._bikeCarouselCur = function () { return cur; };
   }
 
+  // ── Ride gallery ─────────────────────────────────────────────────────────
+  function initRideGallery() {
+    var el = document.querySelector('.bike-gallery-swiper');
+    if (el && typeof Swiper !== 'undefined') {
+      new Swiper('.bike-gallery-swiper', {
+        slidesPerView: 1,
+        pagination: { el: '.bike-gallery-swiper .swiper-pagination', clickable: true },
+        navigation: {
+          nextEl: '.bike-gallery-swiper .swiper-button-next',
+          prevEl: '.bike-gallery-swiper .swiper-button-prev'
+        },
+        autoHeight: true
+      });
+    }
+  }
+
   // ── Toggle buttons ───────────────────────────────────────────────────────
   document.querySelectorAll('.chart-toggle-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -546,11 +580,13 @@ chart:
   if (document.readyState === 'complete') {
     initAllCharts();
     initBikeCarousel();
+    initRideGallery();
     showPaceStat();
   } else {
     window.addEventListener('load', function () {
       initAllCharts();
       initBikeCarousel();
+      initRideGallery();
       showPaceStat();
     });
   }
