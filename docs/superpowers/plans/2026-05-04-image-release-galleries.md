@@ -301,17 +301,17 @@ git commit -m "data: add bike ride gallery data file"
 - [ ] **Step 1: Write the file**
 
 ```yaml
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/20240511_152817.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_0579.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_1344.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_1495.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_1704.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_1776.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_2086.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_2979.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/IMG_5214.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/PXL_20210220_072803154.PORTRAIT.webp
-- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/PXL_20240524_161029474.PORTRAIT.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-bar-goto-nyc.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-bar-moonshiner-paris.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-bar-neroli-paris.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-logo-claires-cocktails.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-original-claires-cocktails-2023.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-original-claires-cocktails-2024.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-original-mix.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-original-peaflower-sour.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-original-whiskey-sour.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-restaurant-cha-yen-watertown.webp
+- url: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/cocktails-restaurant-season-to-taste-cambridge.webp
 ```
 
 - [ ] **Step 2: Verify Jekyll builds without error**
