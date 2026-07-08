@@ -22,7 +22,7 @@ TOP_JOURNALS = {"Nature", "Cell", "Nature Genetics"}
 GOOGLE_SCHOLAR_TIMEOUT = 15
 
 
-def count_bib_entries(bib_path: Path) -> tuple[int, list[dict]]:
+def count_bib_entries(bib_path: Path) -> tuple[int, int, list[dict]]:
     text = bib_path.read_text()
     total = len(re.findall(r"^@\w+\{", text, re.MULTILINE))
     journal_counts: dict[str, int] = {}
