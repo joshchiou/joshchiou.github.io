@@ -126,6 +126,29 @@ layout: default
       })();
     </script>
 
+    <!--
+      Selected work: surfaces the strongest project pages, which were
+      otherwise only reachable through the nav. Selection follows the same
+      `importance` ordering the projects page uses, so re-ranking there
+      changes what appears here.
+    -->
+    {% assign work_projects = site.projects | where: 'category', 'work' | sort: 'importance' %}
+    {% if work_projects.size > 0 %}
+      <div class="animate-in">
+        <h2 class="about-section-heading">
+          <a href="{{ '/projects/' | relative_url }}" style="color: inherit">selected work</a>
+        </h2>
+        <div class="about-work-grid">
+          {% for project in work_projects limit: 3 %}
+            <a class="about-work-card" href="{{ project.url | relative_url }}">
+              <h3 class="about-work-card-title">{{ project.title }}</h3>
+              <p class="about-work-card-desc">{{ project.description }}</p>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
       <div class="animate-in">
