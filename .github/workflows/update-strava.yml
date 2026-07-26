@@ -46,12 +46,20 @@ jobs:
           title: "Strava sync is failing"
           token: ${{ secrets.GITHUB_TOKEN }}
           guidance: |
-            Likely causes:
+            Read the 403 body in the log before acting — these look identical from
+            the status code alone, and the token refresh succeeds in every case.
 
-            - **403 naming `activity:read_permission` as `missing`** — the refresh
-              token lacks the `activity:read_all` scope. Re-authorize the app with
-              that scope and update the `STRAVA_REFRESH_TOKEN` secret. Note the
-              token refresh itself still succeeds in this case, so the failure
-              appears at the first activities request.
+            - **Developer Program subscription lapsed.** Since 30 June 2026 Strava
+              requires a paid subscription (~$11.99/month) for Standard tier API
+              access. Personal single-user apps are Standard tier. This is the most
+              likely cause of a 403 that appears without any code change.
+            - **403 naming `activity:read_permission` as `missing`** — the token
+              lacks the `activity:read_all` scope. Re-authorize and update the
+              `STRAVA_REFRESH_TOKEN` secret.
             - **401** — the refresh token was revoked; re-authorize.
             - **429 / rate limit** — transient, and already retried.
+
+            If the subscription is the cause and you don't want to pay, the site can
+            run on the Apple Health backfill alone: keep `_data/health_rides.json`
+            up to date with `scripts/parse_apple_health.py` and disable this
+            workflow.

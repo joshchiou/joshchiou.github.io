@@ -38,8 +38,12 @@ jobs:
       # Runs after the commit on purpose: a stale citation count shouldn't stop
       # the paper count (which is read from papers.bib and always current) from
       # being published. This step only decides whether to raise the alarm.
+      # 35 days, not 28: the scraper genuinely fails about half the time, and the
+      # longest observed gap between two confirmed-successful fetches (measured
+      # from citation changes in git history, May-Jul 2026) was 21 days. A
+      # threshold too close to that would page on normal intermittency.
       - name: Fail if Scholar data has gone stale
-        run: python scripts/update_scholar.py --check-freshness 28
+        run: python scripts/update_scholar.py --check-freshness 35
 
       - name: Report failure
         if: failure()

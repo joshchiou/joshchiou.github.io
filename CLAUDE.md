@@ -51,9 +51,14 @@ docker compose up
 **Strava:** `scripts/update_strava.py` — run manually or via `.github/workflows/update-strava.yml`.
 Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
 GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
-The refresh token needs the `activity:read_all` scope — without it the activities endpoint
-returns 403 while the token refresh itself still succeeds. On failure the workflow opens a
-single tracking issue rather than failing silently.
+**Strava API access is paid as of 30 June 2026.** Standard tier (which is what a personal
+single-user app gets) requires a Strava Developer Program subscription, ~$11.99/month. Without
+it the activities endpoint returns 403 while the token refresh still succeeds — which is exactly
+how this pipeline broke on 2026-07-03. A missing `activity:read_all` scope produces the same
+status code, so always read the 403 response body (now logged by `scripts/_http.py`) before
+concluding which it is. If the subscription isn't renewed, the cycling page can run entirely on
+the Apple Health backfill below; disable the workflow and keep `_data/health_rides.json` current.
+On failure the workflow opens a single tracking issue rather than failing silently.
 
 **Apple Health backfill:** `scripts/parse_apple_health.py ~/Downloads/export.zip` — run locally
 after iPhone → Health → profile → Export All Health Data. Writes `_data/health_rides.json`
@@ -76,6 +81,15 @@ own and opens a PR proposing `_data/contributions.yml` entries (weekly via
 placeholder `type`, and the PR title as a provisional `blurb` — always curate before merging.
 Defaults to only PRs merged after the newest date already in the file; use `--since` to widen.
 Run without `--pr` for a dry run.
+
+**Scholar caveat:** Google has no official Scholar API, so `update_scholar.py` shells out to
+`scholarly`, which scrapes. Measured against citation changes in git history (May–Jul 2026) only
+about 40% of weekly runs actually reach Google; the rest silently preserve the previous numbers.
+That is why the script records `last_success_at` (advanced only by a real fetch) and marks
+preserved runs `source: "preserved"` — a run that exits 0 is not evidence the fetch worked. The
+workflow's `--check-freshness 35` gate catches a permanently stuck scraper. Free alternatives with
+real APIs exist if the counts ever need to be reliable: OpenAlex (no key), Semantic Scholar, and
+Crossref — all report lower counts than Google Scholar because they index less.
 
 **Shared HTTP:** all API-facing scripts use `scripts/_http.py` (`request_with_retry` /
 `get_json`) for retry, backoff, `Retry-After` and rate-limit handling. Add new API calls through
