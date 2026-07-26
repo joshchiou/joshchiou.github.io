@@ -3,6 +3,16 @@
 # type: bug fix | performance | feature | packaging | compatibility
 # language: Python | R | etc.
 
+- repo: zqfang/GSEApy
+  url: https://github.com/zqfang/GSEApy
+  pr_title: "Fix fgsea multilevel p-values: apply denomProb normalisation and estimator selection"
+  pr_url: https://github.com/zqfang/GSEApy/pull/365
+  date: 2026-07-25
+  type: bug fix
+  language: Python
+  featured: true
+  blurb: Fixed a statistical bug in GSEApy's multilevel GSEA where p-values came out ~1.9x too small and biased the BH-adjusted FDR; restored fgsea's per-sign normalization and simple-estimator branch so null p-values are properly uniform.
+
 - repo: smcneece/ha-esunpower
   url: https://github.com/smcneece/ha-esunpower
   pr_title: "fix: prevent memory leak crash when PVS serial is an IP address"
@@ -30,6 +40,15 @@
   language: Python
   featured: true
   blurb: Parallelized inverse-document-frequency computation in dimensionality reduction, cutting runtime on large datasets.
+
+- repo: scverse/SnapATAC2
+  url: https://github.com/scverse/SnapATAC2
+  pr_title: "Update _basic.py"
+  pr_url: https://github.com/scverse/SnapATAC2/pull/399
+  date: 2025-05-30
+  type: bug fix
+  language: Python
+  blurb: Fixed a crash when writing TF-IDF counts to an AnnData object opened in read-only mode with inplace=False.
 
 - repo: stephenslab/susieR
   url: https://github.com/stephenslab/susieR
