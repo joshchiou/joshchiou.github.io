@@ -44,6 +44,19 @@ MAX_PAGES = 100  # safety valve against a pagination loop (200/page = 20k activi
 # previously recorded rides (see the guard in main()).
 RIDE_COUNT_DROP_TOLERANCE = 0.8
 
+# Backfilled rides from Apple Health (see scripts/parse_apple_health.py). These
+# cover periods that never reached Strava, so they are merged with the API
+# results on every run rather than written into the output files once — a run
+# that only wrote API data would otherwise erase them.
+HEALTH_RIDES_PATH = REPO_ROOT / "_data" / "health_rides.json"
+
+# Two records describe the same ride if they start within this many minutes of
+# each other and their distances agree within the tolerance below. Matching on
+# start time (not date) matters: a commute produces two rides on the same day,
+# and collapsing them by date would silently halve the count.
+DEDUPE_MINUTES = 25
+DEDUPE_DISTANCE_RATIO = 0.25
+
 
 def get_access_token() -> str:
     resp = request_with_retry("POST", TOKEN_URL, data={
@@ -93,6 +106,78 @@ def _is_ride(a: dict) -> bool:
 def _local_date(a: dict) -> str:
     # Fall back to start_date (UTC) if the local variant is missing.
     return (a.get("start_date_local") or a.get("start_date") or "")[:10]
+
+
+def _start_dt(a: dict) -> datetime | None:
+    """Local start time, for duplicate detection."""
+    raw = (a.get("start_date_local") or a.get("start_date") or "").strip()
+    if not raw:
+        return None
+    cleaned = raw.replace("Z", "")
+    try:
+        return datetime.fromisoformat(cleaned).replace(tzinfo=None)
+    except ValueError:
+        return None
+
+
+def load_health_rides() -> list[dict]:
+    """Backfilled Apple Health rides, already in Strava's activity shape."""
+    if not HEALTH_RIDES_PATH.exists():
+        return []
+    try:
+        data = json.loads(HEALTH_RIDES_PATH.read_text())
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"WARNING: could not read {HEALTH_RIDES_PATH.name} ({e}); ignoring backfill")
+        return []
+    if not isinstance(data, list):
+        print(f"WARNING: {HEALTH_RIDES_PATH.name} is not a list; ignoring backfill")
+        return []
+    return data
+
+
+def _is_duplicate(candidate: dict, existing: list[dict]) -> bool:
+    """True if `candidate` looks like a ride already present in `existing`."""
+    cand_dt = _start_dt(candidate)
+    cand_km = _distance_km(candidate)
+    if cand_dt is None:
+        return False
+    for other in existing:
+        other_dt = _start_dt(other)
+        if other_dt is None:
+            continue
+        if abs((cand_dt - other_dt).total_seconds()) > DEDUPE_MINUTES * 60:
+            continue
+        other_km = _distance_km(other)
+        # Distances rarely match exactly: Health and Strava disagree slightly on
+        # GPS smoothing and auto-pause. Compare proportionally, and treat two
+        # zero-distance records at the same time as the same ride.
+        if max(cand_km, other_km) == 0:
+            return True
+        if abs(cand_km - other_km) / max(cand_km, other_km) <= DEDUPE_DISTANCE_RATIO:
+            return True
+    return False
+
+
+def merge_with_backfill(api_rides: list[dict]) -> tuple[list[dict], int, int]:
+    """Combine Strava rides with the Health backfill.
+
+    Strava wins on conflicts: its records carry richer fields (speed, commute
+    flag, names) and are what "View on Strava" links to. Returns
+    (merged, added, skipped_as_duplicate).
+    """
+    health = [r for r in load_health_rides() if _is_ride(r)]
+    if not health:
+        return api_rides, 0, 0
+
+    merged = list(api_rides)
+    added = skipped = 0
+    for rec in health:
+        if _is_duplicate(rec, merged):
+            skipped += 1
+            continue
+        merged.append(rec)
+        added += 1
+    return merged, added, skipped
 
 
 def compute_calendar_data(rides: list[dict]) -> list[list]:
@@ -183,8 +268,16 @@ def main() -> None:
 
     print("Fetching all activities...")
     activities = fetch_all_activities(token)
-    rides = [a for a in activities if _is_ride(a)]
-    print(f"Found {len(rides)} cycling activities out of {len(activities)} total")
+    api_rides = [a for a in activities if _is_ride(a)]
+    print(f"Found {len(api_rides)} cycling activities out of {len(activities)} total")
+
+    # Merge before the guard below, not after: once the backfill is in place the
+    # published total includes it, so comparing an API-only count against that
+    # total would look like a collapse on every single run.
+    rides, added, dupes = merge_with_backfill(api_rides)
+    if added or dupes:
+        print(f"Apple Health backfill: +{added} rides, {dupes} already in Strava "
+              f"→ {len(rides)} total")
 
     # Last-known-good guard. Ride history is append-only in practice, so a
     # sharp drop in ride count means a truncated/failed fetch (auth hiccup,
@@ -195,7 +288,7 @@ def main() -> None:
     # deleting a stray ride doesn't wedge the pipeline permanently.
     previous_rides = load_existing_stats().get("total_rides", 0)
     if previous_rides > 0 and len(rides) < previous_rides * RIDE_COUNT_DROP_TOLERANCE:
-        print(f"Only {len(rides)} rides returned vs {previous_rides} previously — "
+        print(f"Only {len(rides)} rides available vs {previous_rides} previously — "
               "treating as an incomplete fetch and preserving existing data files.")
         return
     if not rides:

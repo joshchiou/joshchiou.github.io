@@ -49,6 +49,18 @@ docker compose up
 **Strava:** `scripts/update_strava.py` — run manually or via `.github/workflows/update-strava.yml`.
 Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
 GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
+The refresh token needs the `activity:read_all` scope — without it the activities endpoint
+returns 403 while the token refresh itself still succeeds. On failure the workflow opens a
+single tracking issue rather than failing silently.
+
+**Apple Health backfill:** `scripts/parse_apple_health.py ~/Downloads/export.zip` — run locally
+after iPhone → Health → profile → Export All Health Data. Writes `_data/health_rides.json`
+(cycling only, in Strava's activity shape). `update_strava.py` merges that file with the API
+results on every run and drops duplicates by start time (±25 min) and distance (±25%), so
+same-day commutes survive but rides present in both sources are counted once. The merge happens
+*before* the drop-tolerance guard, and the file must stay committed — the daily job rewrites
+`strava_*.json` from scratch, so anything not re-merged each run disappears.
+Handles both pre- and post-iOS 16 export layouts; `--dry-run` prints per-month coverage first.
 
 **Travel:** `scripts/parse_location_history.py /path/to/location-history.json` — run locally after
 downloading from Google Maps → Timeline → Export timeline data (JSON).
