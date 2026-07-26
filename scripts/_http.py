@@ -60,6 +60,22 @@ def _wait_seconds(
     return backoff
 
 
+def _detail(resp: requests.Response, limit: int = 400) -> str:
+    """Short, log-safe rendition of an error response body.
+
+    APIs put the actionable reason in the body, not the status line: Strava
+    answers a missing OAuth scope with 403 and
+    ``{"errors":[{"resource":"AccessToken","field":"activity:read_permission",
+    "code":"missing"}]}``. Without this, a scope problem is indistinguishable
+    from a rate limit or an outage — which is exactly how a broken pipeline can
+    fail identically for weeks. Only ever called for non-2xx responses.
+    """
+    body = (resp.text or "").strip().replace("\n", " ")
+    if len(body) > limit:
+        body = body[:limit] + "…"
+    return f"HTTP {resp.status_code} {resp.reason} — {body}" if body else f"HTTP {resp.status_code} {resp.reason}"
+
+
 def request_with_retry(
     method: str,
     url: str,
@@ -75,7 +91,8 @@ def request_with_retry(
 
     Returns the successful response. Raises ``requests.RequestException`` (or
     ``HTTPError`` via ``raise_for_status``) once retries are exhausted, and
-    raises immediately for non-retryable 4xx such as 401/404.
+    raises immediately for non-retryable 4xx such as 401/404. Error responses
+    are logged with the provider's own explanation (see ``_detail``).
     """
     for attempt in range(max_retries + 1):
         try:
@@ -91,17 +108,19 @@ def request_with_retry(
         is_rate_limit = _rate_limited(resp, remaining_header)
         if is_rate_limit or resp.status_code >= 500:
             if attempt == max_retries:
-                resp.raise_for_status()
-                # A 403 rate-limit won't raise above on some providers; be explicit.
                 raise requests.HTTPError(
-                    f"{resp.status_code} after {max_retries} retries: {url}", response=resp
+                    f"{_detail(resp)} (after {max_retries} retries): {url}", response=resp
                 )
             wait = _wait_seconds(resp, attempt, backoff_base, reset_header, is_rate_limit)
-            log(f"  HTTP {resp.status_code}; retrying in {wait}s [{attempt + 1}/{max_retries}]")
+            log(f"  {_detail(resp, 200)}; retrying in {wait}s [{attempt + 1}/{max_retries}]")
             time.sleep(wait)
             continue
 
-        resp.raise_for_status()
+        if not resp.ok:
+            # Non-retryable (401/403/404/…). Surface the provider's reason so the
+            # fix is obvious from the log alone.
+            log(f"  {_detail(resp)}: {url}")
+            raise requests.HTTPError(f"{_detail(resp)}: {url}", response=resp)
         return resp
 
     raise RuntimeError("request_with_retry exhausted retries without returning")
