@@ -19,65 +19,30 @@ Requirements: pip install requests
 import json
 import os
 import sys
-import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 try:
-    import requests
+    import requests  # noqa: F401  (used indirectly via _http)
 except ImportError:
     print("Error: requests not installed. Run: pip install requests")
     sys.exit(1)
+
+from _http import request_with_retry
 
 RIDE_TYPES = {"Ride", "VirtualRide", "EBikeRide", "GravelRide", "MountainBikeRide"}
 TOKEN_URL = "https://www.strava.com/oauth/token"
 ACTIVITIES_URL = "https://www.strava.com/api/v3/athlete/activities"
 REPO_ROOT = Path(__file__).parent.parent
 
-# Retry tuning
-MAX_RETRIES = 4
-BACKOFF_BASE = 2  # seconds: 2, 4, 8, 16
 MAX_PAGES = 100  # safety valve against a pagination loop (200/page = 20k activities)
 
-
-def request_with_retry(method: str, url: str, **kwargs) -> requests.Response:
-    """HTTP request that retries on network errors, 429, and 5xx responses.
-
-    Honors the Retry-After header when Strava rate-limits. Raises for any
-    non-retryable 4xx and re-raises the last error if all retries are exhausted.
-    """
-    last_exc: Exception | None = None
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            resp = requests.request(method, url, **kwargs)
-        except requests.RequestException as e:
-            last_exc = e
-            if attempt == MAX_RETRIES:
-                raise
-            wait = BACKOFF_BASE ** (attempt + 1)
-            print(f"  Network error ({e}); retrying in {wait}s "
-                  f"[{attempt + 1}/{MAX_RETRIES}]")
-            time.sleep(wait)
-            continue
-
-        if resp.status_code == 429 or resp.status_code >= 500:
-            if attempt == MAX_RETRIES:
-                resp.raise_for_status()
-            retry_after = resp.headers.get("Retry-After")
-            wait = int(retry_after) if retry_after and retry_after.isdigit() \
-                else BACKOFF_BASE ** (attempt + 1)
-            print(f"  HTTP {resp.status_code}; retrying in {wait}s "
-                  f"[{attempt + 1}/{MAX_RETRIES}]")
-            time.sleep(wait)
-            continue
-
-        resp.raise_for_status()
-        return resp
-
-    if last_exc:
-        raise last_exc
-    raise RuntimeError("request_with_retry exhausted retries without a response")
+# Preserve existing data if a fetch returns fewer than this fraction of the
+# previously recorded rides (see the guard in main()).
+RIDE_COUNT_DROP_TOLERANCE = 0.8
 
 
 def get_access_token() -> str:
@@ -221,14 +186,19 @@ def main() -> None:
     rides = [a for a in activities if _is_ride(a)]
     print(f"Found {len(rides)} cycling activities out of {len(activities)} total")
 
-    # Last-known-good guard: never overwrite existing data with an empty result.
-    # An empty response almost always means an API/auth hiccup rather than a
-    # genuine "zero rides ever," so keep whatever we already have on disk.
+    # Last-known-good guard. Ride history is append-only in practice, so a
+    # sharp drop in ride count means a truncated/failed fetch (auth hiccup,
+    # pagination cut short, schema change) rather than real data. Preserve the
+    # existing files in that case instead of publishing a regression.
+    #
+    # The threshold is deliberately loose rather than "any decrease" so that
+    # deleting a stray ride doesn't wedge the pipeline permanently.
+    previous_rides = load_existing_stats().get("total_rides", 0)
+    if previous_rides > 0 and len(rides) < previous_rides * RIDE_COUNT_DROP_TOLERANCE:
+        print(f"Only {len(rides)} rides returned vs {previous_rides} previously — "
+              "treating as an incomplete fetch and preserving existing data files.")
+        return
     if not rides:
-        existing = load_existing_stats()
-        if existing.get("total_rides", 0) > 0:
-            print("No rides returned — preserving existing data files (last known good).")
-            return
         print("No rides returned and no existing data — writing empty datasets.")
 
     calendar_data = compute_calendar_data(rides)

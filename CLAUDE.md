@@ -20,9 +20,15 @@ al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publi
 
 ## Tagline
 
-Two places to update together when role/focus changes:
+Three places to update together when role/focus changes:
 1. `_pages/about.md` subtitle (visible header)
 2. `_config.yml` description (meta tag)
+3. `_includes/head.liquid` homepage Person JSON-LD (`jobTitle`, `worksFor`, `description`)
+
+The homepage Person + WebSite structured data is hand-curated in `head.liquid`.
+`_includes/metadata.liquid` deliberately skips the homepage so the same subject
+isn't described by two competing entities; both reference the same
+`@id` (`https://joshchiou.github.io/#person`).
 
 ## Build
 
@@ -49,6 +55,22 @@ downloading from Google Maps → Timeline → Export timeline data (JSON).
 Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via Nominatim and
 caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
 restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
+
+**Contributions:** `scripts/update_contributions.py` — finds merged PRs to repos the user doesn't
+own and opens a PR proposing `_data/contributions.yml` entries (weekly via
+`.github/workflows/update-contributions.yml`). Proposed entries carry `needs_review: true`, a
+placeholder `type`, and the PR title as a provisional `blurb` — always curate before merging.
+Defaults to only PRs merged after the newest date already in the file; use `--since` to widen.
+Run without `--pr` for a dry run.
+
+**Shared HTTP:** all API-facing scripts use `scripts/_http.py` (`request_with_retry` /
+`get_json`) for retry, backoff, `Retry-After` and rate-limit handling. Add new API calls through
+it rather than calling `requests` directly. `update_scholar.py` is the exception — it shells out
+to `scholarly` instead of making HTTP calls itself.
+
+Each pipeline preserves last-known-good data rather than publishing a regression when an API
+misbehaves (see the drop-tolerance guard in `update_strava.py` and the preserve-on-failure paths
+in `update_github.py` / `update_scholar.py`).
 
 ## Bib keys for key papers
 

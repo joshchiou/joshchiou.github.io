@@ -17,10 +17,14 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 try:
-    import requests
+    import requests  # noqa: F401  (used indirectly via _http)
 except ImportError:
     sys.exit("requests not installed. Run: pip install requests")
+
+from _http import request_with_retry
 
 ORCID_ID = "0000-0002-4618-0647"
 ORCID_API = f"https://pub.orcid.org/v3.0/{ORCID_ID}/works"
@@ -28,37 +32,14 @@ S2_API = "https://api.semanticscholar.org/graph/v1/paper"
 
 BIB_PATH = Path(__file__).resolve().parent.parent / "_bibliography" / "papers.bib"
 
-MAX_RETRIES = 4
-BACKOFF_BASE = 2  # seconds: 2, 4, 8, 16
-
-
 def get_with_retry(url: str, **kwargs) -> requests.Response:
-    """GET that retries on network errors, 429, and 5xx (honoring Retry-After).
+    """GET that retries transient failures.
 
     Semantic Scholar's keyless endpoint is aggressively rate-limited, so a plain
     request is likely to hit 429; retrying with backoff avoids silently dropping
-    newly published papers. Raises on non-retryable errors / exhausted retries.
+    newly published papers.
     """
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            resp = requests.get(url, **kwargs)
-        except requests.RequestException:
-            if attempt == MAX_RETRIES:
-                raise
-            time.sleep(BACKOFF_BASE ** (attempt + 1))
-            continue
-
-        if resp.status_code == 429 or resp.status_code >= 500:
-            if attempt == MAX_RETRIES:
-                resp.raise_for_status()
-            retry_after = resp.headers.get("Retry-After")
-            wait = int(retry_after) if retry_after and retry_after.isdigit() \
-                else BACKOFF_BASE ** (attempt + 1)
-            print(f"  HTTP {resp.status_code}; retrying in {wait}s")
-            time.sleep(wait)
-            continue
-
-        return resp
+    return request_with_retry("GET", url, **kwargs)
 
 
 def extract_existing_dois(bib_path: Path) -> set[str]:

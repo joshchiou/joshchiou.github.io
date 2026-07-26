@@ -1,0 +1,45 @@
+name: Discover New Contributions
+
+on:
+  schedule:
+    - cron: "31 10 * * 5" # Every Friday 10:31 UTC
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Only consider PRs merged after this date (YYYY-MM-DD)"
+        required: false
+        type: string
+
+jobs:
+  discover-contributions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Discover and propose new contributions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "${{ inputs.since }}" ]; then
+            python scripts/update_contributions.py --pr --since "${{ inputs.since }}"
+          else
+            python scripts/update_contributions.py --pr
+          fi

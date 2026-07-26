@@ -12,14 +12,17 @@ Usage:
 import json
 import os
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 try:
-    import requests
+    import requests  # noqa: F401  (used indirectly via _http)
 except ImportError:
     sys.exit("requests not installed. Run: pip install requests")
+
+from _http import get_json
 
 GITHUB_USER = "joshchiou"
 API_BASE = "https://api.github.com"
@@ -27,8 +30,11 @@ REPO_ROOT = Path(__file__).parent.parent
 REPOS_PATH = REPO_ROOT / "_data" / "repositories.yml"
 OUT_PATH = REPO_ROOT / "_data" / "github_stats.json"
 
-MAX_RETRIES = 4
-BACKOFF_BASE = 2  # seconds: 2, 4, 8, 16
+# GitHub signals quota exhaustion with 403 + these headers rather than 429.
+RATE_LIMIT_KWARGS = {
+    "remaining_header": "X-RateLimit-Remaining",
+    "reset_header": "X-RateLimit-Reset",
+}
 
 
 def get_headers() -> dict:
@@ -43,45 +49,9 @@ def get_headers() -> dict:
 
 
 def fetch_json(url: str, headers: dict) -> dict | list | None:
-    """GET JSON, retrying on network errors, rate limits, and 5xx responses.
-
-    Returns None once retries are exhausted so callers can degrade gracefully
-    (e.g. skip one repo) rather than crashing the whole run.
-    """
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            resp = requests.get(url, headers=headers, timeout=30)
-        except requests.RequestException as e:
-            if attempt == MAX_RETRIES:
-                print(f"  Failed: {url} — {e}")
-                return None
-            wait = BACKOFF_BASE ** (attempt + 1)
-            print(f"  Network error ({e}); retrying in {wait}s")
-            time.sleep(wait)
-            continue
-
-        # GitHub signals rate limiting with 403/429 + a zero remaining header.
-        rate_limited = resp.status_code in (429, 403) and \
-            resp.headers.get("X-RateLimit-Remaining") == "0"
-        if rate_limited or resp.status_code >= 500:
-            if attempt == MAX_RETRIES:
-                print(f"  Failed: {url} — HTTP {resp.status_code}")
-                return None
-            reset = resp.headers.get("X-RateLimit-Reset")
-            wait = BACKOFF_BASE ** (attempt + 1)
-            if rate_limited and reset and reset.isdigit():
-                wait = max(wait, min(int(reset) - int(time.time()) + 1, 300))
-            print(f"  HTTP {resp.status_code}; retrying in {wait}s")
-            time.sleep(wait)
-            continue
-
-        try:
-            resp.raise_for_status()
-            return resp.json()
-        except Exception as e:
-            print(f"  Failed: {url} — {e}")
-            return None
-    return None
+    """GET JSON, returning None on failure so callers can degrade gracefully
+    (e.g. skip one repo) rather than crashing the whole run."""
+    return get_json(url, headers=headers, timeout=30, **RATE_LIMIT_KWARGS)
 
 
 def get_featured_repos() -> list[str]:
