@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cycling
-description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
+description: Six bikes, a slow cooker full of chain wax, and a couple years of ride data.
 img: assets/img/projects/fun/cycling.svg
 importance: 2
 category: fun
@@ -64,7 +64,7 @@ chart:
 
 <h2 class="page-chapter">Recent rides</h2>
 
-<p class="text-muted mb-3">The last few rides, straight from Strava.</p>
+<p class="text-muted mb-3">The most recent rides.</p>
 
 <div class="ride-log-wrap">
   <table class="ride-log">
@@ -172,4 +172,21 @@ window._cyclingData = {
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
 
-<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem; opacity: 0.6;">Data via Strava API{% if site.data.health_rides %}, backfilled from Apple Health{% endif %} · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>
+{% comment %}
+Credit only the sources that actually contributed rides. `ride_sources` is
+written by update_strava.py from the merged dataset, so it stays correct
+whether the data came from Strava, Apple Health, or both.
+{% endcomment %}
+{% assign from_health = stats.ride_sources.apple_health | default: 0 %}
+{% assign from_strava = stats.ride_sources.strava | default: 0 %}
+
+<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem; opacity: 0.6;">
+  {% if from_health > 0 and from_strava > 0 %}
+    Data from Apple Health and the Strava API
+  {% elsif from_health > 0 %}
+    Data from Apple Health
+  {% else %}
+    Data via Strava API
+  {% endif %}
+  · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}
+</p>

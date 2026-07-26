@@ -1,9 +1,18 @@
 name: Update Strava Data
 
+# DISABLED as of 2026-07-26. Strava put Standard tier API access behind a paid
+# Developer Program subscription (~$11.99/month) on 30 June 2026, and this job
+# has returned 403 on every run since 3 July. The cycling page is now built from
+# the Apple Health backfill instead — see update-cycling.yml.
+#
+# To re-enable: subscribe, confirm the token still has activity:read_all, then
+# restore the `schedule` block below. The script and its tests are unchanged, so
+# nothing else needs touching; it will merge the API results with the Health
+# backfill exactly as before.
 on:
-  schedule:
-    - cron: "0 6 * * *" # Daily at 06:00 UTC
-  workflow_dispatch: # Allow manual trigger from GitHub Actions UI
+  # schedule:
+  #   - cron: "0 6 * * *" # Daily at 06:00 UTC
+  workflow_dispatch: # Manual trigger only while the subscription is lapsed
 
 jobs:
   update-strava:

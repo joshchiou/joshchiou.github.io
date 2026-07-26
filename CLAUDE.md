@@ -60,14 +60,26 @@ concluding which it is. If the subscription isn't renewed, the cycling page can 
 the Apple Health backfill below; disable the workflow and keep `_data/health_rides.json` current.
 On failure the workflow opens a single tracking issue rather than failing silently.
 
-**Apple Health backfill:** `scripts/parse_apple_health.py ~/Downloads/export.zip` — run locally
-after iPhone → Health → profile → Export All Health Data. Writes `_data/health_rides.json`
-(cycling only, in Strava's activity shape). `update_strava.py` merges that file with the API
-results on every run and drops duplicates by start time (±25 min) and distance (±25%), so
-same-day commutes survive but rides present in both sources are counted once. The merge happens
-_before_ the drop-tolerance guard, and the file must stay committed — the daily job rewrites
-`strava_*.json` from scratch, so anything not re-merged each run disappears.
-Handles both pre- and post-iOS 16 export layouts; `--dry-run` prints per-month coverage first.
+**Apple Health backfill (now the primary cycling source):** `scripts/parse_apple_health.py
+~/Downloads/export.zip` — run locally after iPhone → Health → profile → Export All Health Data.
+Writes `_data/health_rides.json` (cycling only, in Strava's activity shape). Handles both pre- and
+post-iOS 16 export layouts; `--dry-run` prints per-month coverage first.
+
+Committing that one file is the whole update: `.github/workflows/update-cycling.yml` fires on any
+push touching it and runs `update_strava.py --offline`, which rebuilds
+`strava_calendar/stats/rides.json` from the backfill without calling Strava. Never hand-edit the
+derived files.
+
+`update_strava.py` merges the backfill with API results (when the API is available) on every run,
+dropping duplicates by start time (±25 min) and distance (±25%) — matching on start time, not
+date, so a two-way commute isn't collapsed into one ride. Two guards protect the switchover, both
+bypassed by `--force`: it declines to write if any month present in the current data has no rides
+in the new dataset, and preserves the existing files if the total drops more than 20%. Declining
+exits non-zero under `--offline` (an explicit rebuild that does nothing must not report success)
+but exits 0 for a scheduled API poll, where the next run self-heals.
+
+The derived files carry `ride_sources` so the page credits Apple Health and/or Strava accurately
+rather than inferring it from arithmetic that deduping would skew.
 
 **Travel:** `scripts/parse_location_history.py /path/to/location-history.json` — run locally after
 downloading from Google Maps → Timeline → Export timeline data (JSON).

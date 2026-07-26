@@ -163,6 +163,18 @@ def main():
     if last_success_at:
         stats["last_success_at"] = last_success_at
 
+    # Skip the write when nothing meaningful moved, so the commit log records
+    # real changes instead of a daily timestamp bump. `updated_at` is excluded
+    # from the comparison (it always differs) and isn't rendered anywhere; a
+    # successful fetch always advances last_success_at, so successes still write
+    # even when the citation count happens to be unchanged.
+    def _substantive(d: dict) -> dict:
+        return {k: v for k, v in d.items() if k != "updated_at"}
+
+    if existing and _substantive(existing) == _substantive(stats):
+        print("No change since last run — leaving the file untouched (no commit).")
+        return
+
     OUT_PATH.write_text(json.dumps(stats, indent=2) + "\n")
     print(f"Wrote {OUT_PATH}")
 

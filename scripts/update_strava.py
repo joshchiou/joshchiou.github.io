@@ -16,6 +16,7 @@ than overwriting good data with an empty result).
 Requirements: pip install requests
 """
 
+import argparse
 import json
 import os
 import sys
@@ -210,8 +211,15 @@ def compute_stats(rides: list[dict]) -> dict:
         for k, v in sorted(monthly.items())
     ]
 
+    # Which sources actually contributed, so the page can credit them accurately
+    # instead of inferring it from arithmetic that deduping would skew.
+    by_source: defaultdict[str, int] = defaultdict(int)
+    for a in rides:
+        by_source[a.get("source") or "strava"] += 1
+
     return {
         "total_rides": len(rides),
+        "ride_sources": dict(sorted(by_source.items())),
         "total_distance_km": total_distance_km,
         "total_elevation_m": total_elevation_m,
         "longest_ride_km": longest_ride_km,
@@ -257,19 +265,48 @@ def write_json(path: Path, data) -> None:
     print(f"  → {path}")
 
 
+def months_covered(rides: list[dict]) -> set[str]:
+    return {_local_date(a)[:7] for a in rides if _local_date(a)}
+
+
+def check_month_coverage(rides: list[dict]) -> list[str]:
+    """Months that the previous dataset covered but the new one doesn't.
+
+    Guards the Strava-to-Apple-Health switchover: if Health is missing a period
+    that Strava had, rebuilding would quietly erase those rides from the site.
+    """
+    existing = load_existing_stats()
+    previous = {m["month"] for m in existing.get("monthly", []) if m.get("month")}
+    return sorted(previous - months_covered(rides))
+
+
 def main() -> None:
-    for var in ("STRAVA_CLIENT_ID", "STRAVA_CLIENT_SECRET", "STRAVA_REFRESH_TOKEN"):
-        if not os.environ.get(var):
-            print(f"Error: environment variable {var} is not set")
-            sys.exit(1)
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--offline", action="store_true",
+                    help="skip the Strava API and build purely from _data/health_rides.json")
+    ap.add_argument("--force", action="store_true",
+                    help="write even if the new data drops months the old data covered")
+    args = ap.parse_args()
 
-    print("Refreshing Strava access token...")
-    token = get_access_token()
+    if args.offline:
+        # Strava's API needs a paid Developer Program subscription as of
+        # 30 June 2026; this path keeps the cycling page working without it.
+        print("Offline mode: building from the Apple Health backfill only.")
+        api_rides: list[dict] = []
+    else:
+        for var in ("STRAVA_CLIENT_ID", "STRAVA_CLIENT_SECRET", "STRAVA_REFRESH_TOKEN"):
+            if not os.environ.get(var):
+                print(f"Error: environment variable {var} is not set")
+                sys.exit(1)
 
-    print("Fetching all activities...")
-    activities = fetch_all_activities(token)
-    api_rides = [a for a in activities if _is_ride(a)]
-    print(f"Found {len(api_rides)} cycling activities out of {len(activities)} total")
+        print("Refreshing Strava access token...")
+        token = get_access_token()
+
+        print("Fetching all activities...")
+        activities = fetch_all_activities(token)
+        api_rides = [a for a in activities if _is_ride(a)]
+        print(f"Found {len(api_rides)} cycling activities out of {len(activities)} total")
 
     # Merge before the guard below, not after: once the backfill is in place the
     # published total includes it, so comparing an API-only count against that
@@ -279,18 +316,49 @@ def main() -> None:
         print(f"Apple Health backfill: +{added} rides, {dupes} already in Strava "
               f"→ {len(rides)} total")
 
-    # Last-known-good guard. Ride history is append-only in practice, so a
-    # sharp drop in ride count means a truncated/failed fetch (auth hiccup,
-    # pagination cut short, schema change) rather than real data. Preserve the
-    # existing files in that case instead of publishing a regression.
+    # Two regression guards, both skipped by --force. Whether declining to write
+    # is an error depends on why we ran:
     #
-    # The threshold is deliberately loose rather than "any decrease" so that
-    # deleting a stray ride doesn't wedge the pipeline permanently.
-    previous_rides = load_existing_stats().get("total_rides", 0)
-    if previous_rides > 0 and len(rides) < previous_rides * RIDE_COUNT_DROP_TOLERANCE:
-        print(f"Only {len(rides)} rides available vs {previous_rides} previously — "
-              "treating as an incomplete fetch and preserving existing data files.")
-        return
+    #   * A scheduled API poll can preserve and exit 0 — tomorrow's run fixes a
+    #     transient truncation, and failing daily would be noise.
+    #   * An --offline rebuild runs because the backfill just changed, so the
+    #     caller is waiting for a specific update. Silently doing nothing there
+    #     would report success while the site stayed stale, so it exits non-zero
+    #     and lets the workflow raise an issue.
+    def refuse(lines: list[str]) -> None:
+        for line in lines:
+            print(line)
+        if args.offline:
+            sys.exit(1)
+
+    if not args.force:
+        # Month-level check first: it is the more specific, more actionable
+        # signal, and a source switch can keep the total healthy while losing a
+        # particular stretch.
+        lost_months = check_month_coverage(rides)
+        if lost_months:
+            refuse([
+                f"\nDeclining to write: {len(lost_months)} month(s) in the current data "
+                "have no rides in the new dataset:",
+                f"  {', '.join(lost_months)}",
+                "Those rides are probably in Strava but outside the Apple Health export.",
+                "Check the export reaches back far enough, or pass --force to accept the loss.",
+            ])
+            return
+
+        # Ride history is append-only in practice, so a sharp drop in the total
+        # means an incomplete fetch rather than real data. Loose rather than
+        # "any decrease" so deleting one stray ride can't wedge the pipeline.
+        previous_rides = load_existing_stats().get("total_rides", 0)
+        if previous_rides > 0 and len(rides) < previous_rides * RIDE_COUNT_DROP_TOLERANCE:
+            refuse([
+                f"Only {len(rides)} rides available vs {previous_rides} previously — "
+                "treating as incomplete and preserving the existing data files.",
+            ])
+            return
+    elif check_month_coverage(rides):
+        print(f"WARNING (--force): dropping months {', '.join(check_month_coverage(rides))}")
+
     if not rides:
         print("No rides returned and no existing data — writing empty datasets.")
 
