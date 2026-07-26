@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -28,3 +29,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/update_publications.py --pr
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Publication discovery is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Likely causes:
+
+            - **ORCID unreachable or schema changed** — the works endpoint is parsed
+              defensively, so a hard failure means the request itself failed.
+            - **Semantic Scholar 429** — its keyless endpoint is heavily throttled;
+              already retried with backoff.
+            - **`gh pr create` failed** — a branch for these entries may already exist.

@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -43,3 +44,16 @@ jobs:
           else
             python scripts/update_contributions.py --pr
           fi
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Contribution discovery is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Likely causes:
+
+            - **Search API rate limit** — stricter than the core API; already retried.
+            - **`gh pr create` failed** — an `auto/new-contributions-*` branch may
+              already exist from a previous run.

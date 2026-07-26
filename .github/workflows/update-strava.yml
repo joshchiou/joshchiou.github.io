@@ -39,36 +39,19 @@ jobs:
           git diff --staged --quiet || git commit -m "chore: update Strava activity data"
           git push
 
-      # A scheduled job that fails quietly can stay broken for weeks (this one
-      # failed 23 days running in July 2026 before anyone noticed). Raise a
-      # single tracking issue so the breakage is visible, and don't reopen or
-      # re-comment while that issue is still open.
-      - name: Open an issue if the sync failed
+      - name: Report failure
         if: failure()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TITLE: "Strava sync is failing"
-          RUN_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        run: |
-          open_issue=$(gh issue list --state open --search "$TITLE in:title" \
-            --json number --jq '.[0].number // empty')
-          if [ -n "$open_issue" ]; then
-            echo "Issue #$open_issue is already tracking this failure; not commenting."
-            exit 0
-          fi
-          gh issue create --title "$TITLE" --body "$(cat <<EOF
-          The scheduled Strava sync failed. The site is now serving stale ride data.
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Strava sync is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Likely causes:
 
-          **Failed run:** $RUN_URL
-
-          The run log names the reason the Strava API gave. Common causes:
-
-          - **403 with \`activity:read_permission\` \`missing\`** — the refresh token
-            lacks the \`activity:read_all\` scope. Re-authorize the app with that
-            scope and update the \`STRAVA_REFRESH_TOKEN\` secret.
-          - **401** — the refresh token was revoked; re-authorize.
-          - **429 / rate limit** — transient; the script already retries.
-
-          Close this issue once the sync succeeds again.
-          EOF
-          )"
+            - **403 naming `activity:read_permission` as `missing`** — the refresh
+              token lacks the `activity:read_all` scope. Re-authorize the app with
+              that scope and update the `STRAVA_REFRESH_TOKEN` secret. Note the
+              token refresh itself still succeeds in this case, so the failure
+              appears at the first activities request.
+            - **401** — the refresh token was revoked; re-authorize.
+            - **429 / rate limit** — transient, and already retried.

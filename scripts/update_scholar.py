@@ -9,8 +9,10 @@ Usage:
     python3 scripts/update_scholar.py
 """
 
+import argparse
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -75,13 +77,53 @@ print(json.dumps({{"citations": a.get("citedby", 0), "h_index": a.get("hindex", 
         return None
 
 
+def check_freshness(max_age_days: int) -> int:
+    """Exit status for the workflow's staleness gate.
+
+    This job preserves last-known-good numbers and exits 0 when Scholar can't be
+    reached, which is right for the site but means it never fails loudly — it
+    would happily serve year-old citation counts while reporting success. The
+    workflow therefore checks how long it has actually been since a live fetch.
+    """
+    stats = load_existing_stats()
+    last = stats.get("last_success_at")
+    if not last:
+        print("No last_success_at recorded yet — cannot assess staleness; skipping.")
+        return 0
+    try:
+        ts = datetime.fromisoformat(last)
+    except ValueError:
+        print(f"Unparseable last_success_at ({last!r}); skipping.")
+        return 0
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=timezone.utc)
+    age = (datetime.now(timezone.utc) - ts).days
+    print(f"Last successful Scholar fetch: {last} ({age} days ago)")
+    if age > max_age_days:
+        print(f"STALE: no successful fetch for {age} days (threshold {max_age_days}).")
+        return 1
+    return 0
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check-freshness", type=int, metavar="DAYS",
+                    help="don't fetch; exit 1 if the last successful fetch is older than DAYS")
+    args = ap.parse_args()
+
+    if args.check_freshness is not None:
+        sys.exit(check_freshness(args.check_freshness))
+
     total_papers, top_journal_papers, top_journals = count_bib_entries(BIB_PATH)
     print(f"Bib: {total_papers} papers, {top_journal_papers} in top journals")
     print(f"  Journals: {', '.join(j['name'] + ' (' + str(j['count']) + ')' for j in top_journals)}")
 
     existing = load_existing_stats()
     scholar = fetch_google_scholar(SCHOLAR_ID)
+    now = datetime.now(timezone.utc).isoformat()
+    # Only a live fetch advances this; preserving carries the old value forward,
+    # which is what makes a long stale streak visible at all.
+    last_success_at = existing.get("last_success_at")
 
     if scholar is None:
         if existing.get("citations", 0) > 0:
@@ -90,12 +132,15 @@ def main():
                 "citations": existing["citations"],
                 "h_index": existing["h_index"],
                 "i10_index": existing.get("i10_index", 0),
-                "source": existing.get("source", "preserved"),
+                # Deliberately not existing["source"]: claiming "google_scholar"
+                # on a run that never reached Google Scholar hides the failure.
+                "source": "preserved",
             }
         else:
             print("Google Scholar failed and no existing data — using zeros")
             scholar = {"citations": 0, "h_index": 0, "i10_index": 0, "source": "none"}
     else:
+        last_success_at = now
         prev_citations = existing.get("citations", 0)
         if scholar["citations"] < prev_citations:
             print(f"WARNING: New citations ({scholar['citations']}) < previous ({prev_citations})")
@@ -113,8 +158,10 @@ def main():
         "h_index": scholar["h_index"],
         "i10_index": scholar["i10_index"],
         "source": scholar["source"],
-        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": now,
     }
+    if last_success_at:
+        stats["last_success_at"] = last_success_at
 
     OUT_PATH.write_text(json.dumps(stats, indent=2) + "\n")
     print(f"Wrote {OUT_PATH}")
