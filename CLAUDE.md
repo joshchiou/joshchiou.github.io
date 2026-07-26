@@ -5,11 +5,12 @@ Personal website — al-folio Jekyll fork. Claude Code context.
 ## What this is
 
 Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Customizations live in:
+
 - `_pages/about.md` — landing page content
 - `_data/cv.yml` — CV data (experience, education, skills, awards)
 - `_bibliography/papers.bib` — all publications (jekyll-scholar)
 - `_news/*.md` — news items shown on the about page
-- `_projects/*.md` — project cards (work_ and fun_ prefixes)
+- `_projects/*.md` — project cards (work* and fun* prefixes)
 - `_data/contributions.yml` — curated open-source PR list
 - `_data/strava_calendar.json`, `_data/strava_stats.json` — auto-updated by GitHub Actions
 - `_data/travel_countries.yml`, `_data/travel_cities.yml` — from Takeout script
@@ -21,6 +22,7 @@ al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publi
 ## Tagline
 
 Three places to update together when role/focus changes:
+
 1. `_pages/about.md` subtitle (visible header)
 2. `_config.yml` description (meta tag)
 3. `_includes/head.liquid` homepage Person JSON-LD (`jobTitle`, `worksFor`, `description`)
@@ -58,7 +60,7 @@ after iPhone → Health → profile → Export All Health Data. Writes `_data/he
 (cycling only, in Strava's activity shape). `update_strava.py` merges that file with the API
 results on every run and drops duplicates by start time (±25 min) and distance (±25%), so
 same-day commutes survive but rides present in both sources are counted once. The merge happens
-*before* the drop-tolerance guard, and the file must stay committed — the daily job rewrites
+_before_ the drop-tolerance guard, and the file must stay committed — the daily job rewrites
 `strava_*.json` from scratch, so anything not re-merged each run disappears.
 Handles both pre- and post-iOS 16 export layouts; `--dry-run` prints per-month coverage first.
 
@@ -86,9 +88,9 @@ in `update_github.py` / `update_scholar.py`).
 
 ## Bib keys for key papers
 
-- `chiou2021interpreting` — T1D + exocrine pancreas, *Nature* 2021
+- `chiou2021interpreting` — T1D + exocrine pancreas, _Nature_ 2021
 - `chiou2021single` — islet scATAC-seq, 2021
-- `sun2023plasma` — UKB-PPP, *Nature* 2023
+- `sun2023plasma` — UKB-PPP, _Nature_ 2023
 - `intact2025multi` — Multi-INTACT methods paper
 
 ## Don't touch unless re-templating
@@ -104,6 +106,7 @@ Each project card has a thumbnail image set via `img:` in its frontmatter. Curre
 abstract SVGs in `assets/img/projects/work/` and `assets/img/projects/fun/`.
 
 To replace an SVG with a real image:
+
 1. Run `python3 scripts/prep_images.py /path/to/source assets/img/projects/work/` (or `fun/`)
 2. Update the `img:` field in the project's `_projects/*.md` frontmatter
 3. Optionally add `img_position: top` (or `center`, `bottom`) to control cropping via CSS `object-position`

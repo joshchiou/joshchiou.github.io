@@ -142,6 +142,7 @@ Selected merged pull requests to community scientific software.
 </div>
 
 {% assign current_year = "" %}
+
 <ul class="list-unstyled" id="contrib-list">
   {% for c in sorted_contribs %}
     {% assign c_year = c.date | date: "%Y" %}

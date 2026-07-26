@@ -59,12 +59,12 @@ layout: default
           </div>
         </div>
         {% if stats.top_journals.size > 0 %}
-        <div class="about-journals">
-          <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
-          {% for journal in stats.top_journals %}
-            <span class="about-journal-pill">{{ journal.name }}</span>
-          {% endfor %}
-        </div>
+          <div class="about-journals">
+            <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
+            {% for journal in stats.top_journals %}
+              <span class="about-journal-pill">{{ journal.name }}</span>
+            {% endfor %}
+          </div>
         {% endif %}
       </div>
       <div class="about-cta">
@@ -77,72 +77,72 @@ layout: default
       </div>
     </div>
     <script>
-    (function () {
-      var els = document.querySelectorAll('#stat-papers, #stat-citations, #stat-hindex');
-      var animated = false;
+      (function () {
+        var els = document.querySelectorAll('#stat-papers, #stat-citations, #stat-hindex');
+        var animated = false;
 
-      function animateCountUp(el, target, duration) {
-        var start = 0;
-        var startTime = null;
-        function step(ts) {
-          if (!startTime) startTime = ts;
-          var progress = Math.min((ts - startTime) / duration, 1);
-          var eased = 1 - Math.pow(1 - progress, 3);
-          var current = Math.round(eased * target);
-          el.textContent = current.toLocaleString();
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      function triggerCountUp() {
-        if (animated) return;
-        animated = true;
-        els.forEach(function (el) {
-          var n = parseInt(el.textContent, 10);
-          if (!isNaN(n) && n > 0) {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              el.textContent = n.toLocaleString();
-            } else {
-              animateCountUp(el, n, 1200);
-            }
+        function animateCountUp(el, target, duration) {
+          var start = 0;
+          var startTime = null;
+          function step(ts) {
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.round(eased * target);
+            el.textContent = current.toLocaleString();
+            if (progress < 1) requestAnimationFrame(step);
           }
-        });
-      }
+          requestAnimationFrame(step);
+        }
 
-      var bar = document.querySelector('.about-hero-bar');
-      if (bar) {
-        var observer = new MutationObserver(function (mutations) {
-          mutations.forEach(function (m) {
-            if (m.target.classList.contains('visible')) {
-              triggerCountUp();
-              observer.disconnect();
+        function triggerCountUp() {
+          if (animated) return;
+          animated = true;
+          els.forEach(function (el) {
+            var n = parseInt(el.textContent, 10);
+            if (!isNaN(n) && n > 0) {
+              if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                el.textContent = n.toLocaleString();
+              } else {
+                animateCountUp(el, n, 1200);
+              }
             }
           });
-        });
-        observer.observe(bar, { attributes: true, attributeFilter: ['class'] });
-        if (bar.classList.contains('visible')) triggerCountUp();
-      }
-    })();
+        }
+
+        var bar = document.querySelector('.about-hero-bar');
+        if (bar) {
+          var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (m) {
+              if (m.target.classList.contains('visible')) {
+                triggerCountUp();
+                observer.disconnect();
+              }
+            });
+          });
+          observer.observe(bar, { attributes: true, attributeFilter: ['class'] });
+          if (bar.classList.contains('visible')) triggerCountUp();
+        }
+      })();
     </script>
 
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
       <div class="animate-in">
-      <h2 class="about-section-heading">
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
+        <h2 class="about-section-heading">
+          <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        </h2>
+        {% include news.liquid limit=true %}
       </div>
     {% endif %}
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <div class="animate-in">
-      <h2 class="about-section-heading mt-4">
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
-      </h2>
-      {% include selected_papers.liquid %}
+        <h2 class="about-section-heading mt-4">
+          <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
+        </h2>
+        {% include selected_papers.liquid %}
       </div>
     {% endif %}
 

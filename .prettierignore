@@ -4,8 +4,25 @@
 assets/css/main.scss
 assets/js/search-data.js
 assets/js/distillpub/template.v2.js
+assets/js/distillpub/transforms.v2.js
 assets/js/search/*.js
 assets/plotly/demo.html
 lighthouse_results/**
 _posts/2015-10-20-math.md
 _sass/font-awesome/*.scss
+
+# Written minified by the data pipelines (scripts/update_strava.py and
+# scripts/parse_apple_health.py use compact JSON separators), so Prettier and
+# the pipeline would fight over them on every run and `prettier --check` could
+# never pass. github_stats.json and scholar_stats.json are written indented and
+# are deliberately still checked.
+_data/strava_calendar.json
+_data/strava_rides.json
+_data/strava_stats.json
+_data/health_rides.json
+
+# Large generated/third-party data assets, not hand-edited.
+assets/json/world-countries.geojson
+
+# Fixed verification file supplied by Google; must be served byte-for-byte.
+google4c76b57158d30499.html

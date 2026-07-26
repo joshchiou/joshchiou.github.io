@@ -76,17 +76,17 @@
 <!-- Dark Mode: inline critical anti-flicker, defer the rest -->
 {% if site.enable_darkmode %}
   <script>
-    (function(){
-      var ts = localStorage.getItem("theme");
-      if (ts !== "dark" && ts !== "light" && ts !== "system") ts = "system";
-      document.documentElement.setAttribute("data-theme-setting", ts);
+    (function () {
+      var ts = localStorage.getItem('theme');
+      if (ts !== 'dark' && ts !== 'light' && ts !== 'system') ts = 'system';
+      document.documentElement.setAttribute('data-theme-setting', ts);
       var theme;
-      if (ts === "system") {
-        theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+      if (ts === 'system') {
+        theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       } else {
         theme = ts;
       }
-      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
   <link
