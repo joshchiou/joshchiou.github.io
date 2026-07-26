@@ -52,7 +52,7 @@ chart:
   <button class="chart-toggle-btn chart-view-btn" data-view="cumulative">Cumulative</button>
 </div>
 
-<div id="cycling-calendar" class="cycling-chart-pane"></div>
+<div id="cycling-calendar" class="cycling-chart-pane" data-requires="echarts" data-fallback-hide=".chart-view-tabs, #chart-caption"></div>
 <div id="cycling-monthly" class="cycling-chart-pane" style="display:none; height: 280px;"></div>
 <div id="cycling-cumulative" class="cycling-chart-pane" style="display:none; height: 250px;"></div>
 
@@ -79,7 +79,7 @@ chart:
 
 <p class="text-muted mb-3">Commutes and weekend loops around Boston, plus rides picked up while traveling.</p>
 
-<div id="cycling-map" class="cycling-map mb-2"></div>
+<div id="cycling-map" class="cycling-map mb-2" data-requires="leaflet"></div>
 <div class="mb-4" style="font-size: 0.8rem; color: var(--global-text-color-light);">
   <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#2980b9;margin-right:4px;"></span>Commute
   &nbsp;&nbsp;<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#27ae60;margin-right:4px;"></span>Road

@@ -356,6 +356,39 @@ html[data-theme="dark"] .github-profile-orgs-icons img {
 }
 
 /*******************************************************************************
+ * Contributions summary stats
+ ******************************************************************************/
+
+.contrib-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+.contrib-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.contrib-stat-val {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--global-theme-color);
+  line-height: 1.2;
+}
+
+.contrib-stat-label {
+  font-size: 0.72rem;
+  color: var(--global-text-color-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/*******************************************************************************
  * Contributions filter bar
  ******************************************************************************/
 

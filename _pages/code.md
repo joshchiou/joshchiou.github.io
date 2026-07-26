@@ -107,6 +107,22 @@ Selected merged pull requests to community scientific software.
 {% assign sorted_contribs = site.data.contributions | sort: "date" | reverse %}
 {% assign all_types = sorted_contribs | map: "type" | uniq | compact %}
 {% assign all_langs = sorted_contribs | map: "language" | uniq | compact %}
+{% assign all_projects = sorted_contribs | map: "repo" | uniq | compact %}
+
+<div class="contrib-stats">
+  <div class="contrib-stat">
+    <span class="contrib-stat-val">{{ sorted_contribs | size }}</span>
+    <span class="contrib-stat-label">merged PRs</span>
+  </div>
+  <div class="contrib-stat">
+    <span class="contrib-stat-val">{{ all_projects | size }}</span>
+    <span class="contrib-stat-label">projects</span>
+  </div>
+  <div class="contrib-stat">
+    <span class="contrib-stat-val">{{ all_langs | size }}</span>
+    <span class="contrib-stat-label">languages</span>
+  </div>
+</div>
 
 <div class="contrib-filters mb-3" id="contrib-filters">
   <div class="contrib-filter-group">
