@@ -21,7 +21,34 @@ GitHub → Settings → Developer settings → **Fine-grained personal access to
 Copy the token. It goes on your phone, so keep it narrow — this is why it is a
 fine-grained token scoped to one repo rather than a classic token.
 
-## 2. Build the Shortcut
+## 2. Prove the server side works — before touching the phone
+
+Run this from any machine with the token. It exercises the whole chain: the
+dispatch, the ingest, the dedupe, the rebuild, the commit. No phone involved.
+
+```bash
+export GH_RIDE_TOKEN='github_pat_...'
+
+curl -i -X POST \
+  -H "Authorization: Bearer $GH_RIDE_TOKEN" \
+  -H "Accept: application/vnd.github+json" \
+  https://api.github.com/repos/joshchiou/joshchiou.github.io/dispatches \
+  -d '{"event_type":"new-rides","client_payload":{"rides":[
+        {"start":"2026-07-26T08:10:00","distance_km":14.5,
+         "elevation_m":120,"duration_min":45}]}}'
+```
+
+Expect `HTTP/2 204` and an empty body. Then watch Actions → **Ingest Rides**.
+
+Do this first. It means that when the Shortcut misbehaves later, you already
+know the server half is fine and the problem is on the phone — which is the
+only half you can't easily debug.
+
+Undo the test ride by deleting that entry from `_data/health_rides.json` and
+letting `update-cycling.yml` rebuild, or just leave it and let the real ride
+for that slot deduplicate against it.
+
+## 3. Build the Shortcut
 
 Shortcuts app → new shortcut, named e.g. "Post ride".
 
@@ -56,7 +83,7 @@ Shortcuts app → new shortcut, named e.g. "Post ride".
 A successful dispatch returns **204 No Content** with an empty body. An empty
 response is success, not failure.
 
-## 3. Automate it
+## 4. Automate it
 
 Shortcuts → Automation → New.
 
@@ -67,7 +94,7 @@ Shortcuts → Automation → New.
 
 Turn **Ask Before Running** off so it fires unattended.
 
-## 4. Check it
+## 5. Check it
 
 Ride, or run the Shortcut by hand. Then look at Actions → **Ingest Rides**. It
 will merge the ride, rebuild the derived data, and commit.
