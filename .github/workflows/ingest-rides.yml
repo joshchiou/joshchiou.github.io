@@ -1,0 +1,80 @@
+name: Ingest Rides
+
+# Receives cycling workouts pushed from the phone and updates the site.
+#
+# Apple Health has no cloud API, so nothing here can pull the data — an
+# automation on the phone posts it. Trigger with:
+#
+#   POST https://api.github.com/repos/<owner>/<repo>/dispatches
+#   Authorization: Bearer <fine-grained PAT, contents:write on this repo only>
+#   Accept: application/vnd.github+json
+#   {"event_type": "new-rides",
+#    "client_payload": {"rides": [
+#       {"start": "2026-07-26T08:10:00", "distance_km": 14.5,
+#        "elevation_m": 120, "duration_min": 45}
+#    ]}}
+#
+# Posting the same ride twice is safe: ingest_rides.py deduplicates against
+# what is already recorded.
+#
+# This job rebuilds the derived data itself rather than leaving it to
+# update-cycling.yml, because a push made with the default GITHUB_TOKEN does
+# not trigger further workflow runs.
+
+on:
+  repository_dispatch:
+    types: [new-rides]
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Merge posted rides into the backfill
+        env:
+          # Passed through the environment, never interpolated into the shell:
+          # this payload is attacker-controlled if the phone's token leaks.
+          RIDES_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+        run: python scripts/ingest_rides.py --payload-env RIDES_PAYLOAD
+
+      - name: Rebuild the derived cycling data
+        run: python scripts/update_strava.py --offline
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/health_rides.json _data/strava_calendar.json \
+                  _data/strava_stats.json _data/strava_rides.json
+          git diff --staged --quiet || git commit -m "chore: add rides from Apple Health"
+          git push
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Ride ingest is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            A phone automation posted rides but they could not be applied.
+
+            - **"Payload is not valid JSON" / "contained no workouts"** — the
+              Shortcut is sending a different shape. The accepted shapes are
+              documented at the top of `scripts/ingest_rides.py`.
+            - **The rebuild declined to write** — the log names months that would
+              have been lost. Usually harmless here, since ingest only adds rides;
+              check the log before forcing.

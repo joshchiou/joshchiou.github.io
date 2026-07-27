@@ -70,6 +70,15 @@ push touching it and runs `update_strava.py --offline`, which rebuilds
 `strava_calendar/stats/rides.json` from the backfill without calling Strava. Never hand-edit the
 derived files.
 
+**Automatic ride ingest:** `scripts/ingest_rides.py` receives cycling workouts posted from the
+phone (Apple Health has no cloud API, so nothing can pull) and merges them into
+`_data/health_rides.json` using the same dedupe. `.github/workflows/ingest-rides.yml` runs it on a
+`repository_dispatch` of type `new-rides`, then rebuilds and commits in the _same_ job — a push
+made with the default `GITHUB_TOKEN` does not trigger other workflows, so it cannot rely on
+update-cycling.yml firing. The payload is passed via an env var, never interpolated into a shell,
+since it is attacker-controlled if the phone token leaks. Setup instructions for the Shortcut are
+in `docs/ride-ingest-setup.md`; accepted payload shapes are documented at the top of the script.
+
 `update_strava.py` merges the backfill with API results (when the API is available) on every run,
 dropping duplicates by start time (±25 min) and distance (±25%) — matching on start time, not
 date, so a two-way commute isn't collapsed into one ride. Two guards protect the switchover, both
@@ -96,10 +105,12 @@ Run without `--pr` for a dry run.
 
 **Scholar caveat:** Google has no official Scholar API, so `update_scholar.py` shells out to
 `scholarly`, which scrapes. Measured against citation changes in git history (May–Jul 2026) only
-about 40% of weekly runs actually reach Google; the rest silently preserve the previous numbers.
-That is why the script records `last_success_at` (advanced only by a real fetch) and marks
-preserved runs `source: "preserved"` — a run that exits 0 is not evidence the fetch worked. The
-workflow's `--check-freshness 35` gate catches a permanently stuck scraper. Free alternatives with
+about 40% of runs actually reach Google; the rest silently preserve the previous numbers. That is
+why the script records `last_success_at` (advanced only by a real fetch) and marks preserved runs
+`source: "preserved"` — a run that exits 0 is not evidence the fetch worked. Runs that fetch
+nothing leave the file untouched, which is what makes the daily schedule affordable: commits
+record real changes rather than a timestamp bump. The workflow's `--check-freshness 21` gate
+catches a permanently stuck scraper. Free alternatives with
 real APIs exist if the counts ever need to be reliable: OpenAlex (no key), Semantic Scholar, and
 Crossref — all report lower counts than Google Scholar because they index less.
 

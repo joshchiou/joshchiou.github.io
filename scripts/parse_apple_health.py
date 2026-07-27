@@ -29,6 +29,7 @@ elements are released as we go rather than building a full tree in memory.
 
 import argparse
 import json
+import re
 import sys
 import xml.etree.ElementTree as ET
 import zipfile
@@ -94,11 +95,23 @@ def parse_health_datetime(raw: str | None) -> datetime | None:
             return dt.replace(tzinfo=None)
         except ValueError:
             continue
-    # Last resort: ISO-ish strings.
     try:
         return datetime.fromisoformat(stamp).replace(tzinfo=None)
     except ValueError:
-        return None
+        pass
+    # Hand-built Shortcuts format dates themselves and readily emit single-digit
+    # components ("2026-07-26T8:10:00"), which every parser above rejects. Pull
+    # the fields out directly rather than losing the ride.
+    m = re.match(
+        r"^\s*(\d{4})-(\d{1,2})-(\d{1,2})[T ](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?", stamp
+    )
+    if m:
+        y, mo, d, h, mi, s = (int(g) if g else 0 for g in m.groups())
+        try:
+            return datetime(y, mo, d, h, mi, s)
+        except ValueError:
+            return None
+    return None
 
 
 def _elevation_m(workout: ET.Element) -> float:
