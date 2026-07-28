@@ -23,6 +23,11 @@ fine-grained token scoped to one repo rather than a classic token.
 
 ## 2. Prove the server side works — before touching the phone
 
+> **Merge this branch to `master` first.** `repository_dispatch` only ever runs
+> workflows that exist on the **default branch** — a dispatch aimed at a feature
+> branch still returns `204`, but nothing runs. Testing before the merge looks
+> like a pass and proves nothing.
+
 Run this from any machine with the token. It exercises the whole chain: the
 dispatch, the ingest, the dedupe, the rebuild, the commit. No phone involved.
 
