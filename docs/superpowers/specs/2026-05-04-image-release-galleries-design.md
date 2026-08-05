@@ -41,14 +41,14 @@ Requires: `gh` CLI authenticated, `pillow-heif` installed.
 
 Add `image:` field to each bike pointing to the release asset URL. Mapping:
 
-| Bike | File |
-|------|------|
-| Lemond Zurich (Daily driver) | `bikes-daily-driver.webp` |
-| Lemond Tourmalet (Backup) | `bikes-backup-bike.webp` |
-| Lemond Etape (Wife's main) | `bikes-wifes-bike.webp` |
-| Specialized Stumpjumper 1998 (Gravel) | `bikes-gravel-bike.webp` |
+| Bike                                         | File                           |
+| -------------------------------------------- | ------------------------------ |
+| Lemond Zurich (Daily driver)                 | `bikes-daily-driver.webp`      |
+| Lemond Tourmalet (Backup)                    | `bikes-backup-bike.webp`       |
+| Lemond Etape (Wife's main)                   | `bikes-wifes-bike.webp`        |
+| Specialized Stumpjumper 1998 (Gravel)        | `bikes-gravel-bike.webp`       |
 | Specialized Stumpjumper 1996 (Wife's gravel) | `bikes-wifes-gravel-bike.webp` |
-| Lemond Buenos Aires (Tall bike) | `bikes-tall-bike.webp` |
+| Lemond Buenos Aires (Tall bike)              | `bikes-tall-bike.webp`         |
 
 Base URL: `https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/`
 
@@ -56,16 +56,16 @@ Base URL: `https://github.com/joshchiou/joshchiou.github.io/releases/download/im
 
 8 entries with `url` and `caption`:
 
-| File | Caption |
-|------|---------|
+| File                                     | Caption                |
+| ---------------------------------------- | ---------------------- |
 | `bikes-gravel-acadia-carriage-road.webp` | Acadia · Carriage Road |
-| `bikes-gravel-acadia-eagle-lake.webp` | Acadia · Eagle Lake |
-| `bikes-gravel-beaver-brook.webp` | Beaver Brook |
-| `bikes-road-dorchester.webp` | Dorchester |
-| `bikes-road-nahant.webp` | Nahant |
-| `bikes-travel-antibes-nice.webp` | Antibes · Nice |
-| `bikes-travel-bangkok.webp` | Bangkok |
-| `bikes-travel-sun-moon-lake.webp` | Sun Moon Lake |
+| `bikes-gravel-acadia-eagle-lake.webp`    | Acadia · Eagle Lake    |
+| `bikes-gravel-beaver-brook.webp`         | Beaver Brook           |
+| `bikes-road-dorchester.webp`             | Dorchester             |
+| `bikes-road-nahant.webp`                 | Nahant                 |
+| `bikes-travel-antibes-nice.webp`         | Antibes · Nice         |
+| `bikes-travel-bangkok.webp`              | Bangkok                |
+| `bikes-travel-sun-moon-lake.webp`        | Sun Moon Lake          |
 
 ### `_data/cocktail_gallery.yml` — cocktail photos (new file)
 
@@ -102,6 +102,7 @@ Resulting filenames:
 ## 5. Image Parameters
 
 All conversions use `prep_images.py` defaults:
+
 - Quality: 82
 - Max width: 1600 px
 - Max height: 1200 px

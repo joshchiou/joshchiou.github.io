@@ -15,16 +15,26 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 try:
-    import requests
+    import requests  # noqa: F401  (used indirectly via _http)
 except ImportError:
     sys.exit("requests not installed. Run: pip install requests")
+
+from _http import get_json
 
 GITHUB_USER = "joshchiou"
 API_BASE = "https://api.github.com"
 REPO_ROOT = Path(__file__).parent.parent
 REPOS_PATH = REPO_ROOT / "_data" / "repositories.yml"
 OUT_PATH = REPO_ROOT / "_data" / "github_stats.json"
+
+# GitHub signals quota exhaustion with 403 + these headers rather than 429.
+RATE_LIMIT_KWARGS = {
+    "remaining_header": "X-RateLimit-Remaining",
+    "reset_header": "X-RateLimit-Reset",
+}
 
 
 def get_headers() -> dict:
@@ -39,13 +49,9 @@ def get_headers() -> dict:
 
 
 def fetch_json(url: str, headers: dict) -> dict | list | None:
-    try:
-        resp = requests.get(url, headers=headers, timeout=30)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception as e:
-        print(f"  Failed: {url} — {e}")
-        return None
+    """GET JSON, returning None on failure so callers can degrade gracefully
+    (e.g. skip one repo) rather than crashing the whole run."""
+    return get_json(url, headers=headers, timeout=30, **RATE_LIMIT_KWARGS)
 
 
 def get_featured_repos() -> list[str]:
@@ -58,22 +64,40 @@ def get_featured_repos() -> list[str]:
     return [r["repo"] for r in data.get("github_repos", [])]
 
 
+def load_existing_stats() -> dict:
+    if OUT_PATH.exists():
+        try:
+            return json.loads(OUT_PATH.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {}
+
+
 def main():
     headers = get_headers()
+    existing = load_existing_stats()
 
     print(f"Fetching profile for {GITHUB_USER}...")
     profile = fetch_json(f"{API_BASE}/users/{GITHUB_USER}", headers)
     if not profile:
-        sys.exit("Failed to fetch GitHub profile")
+        # Don't clobber good data on a transient failure; leave the file as-is.
+        print("Failed to fetch GitHub profile — keeping existing github_stats.json")
+        return
 
     print("Fetching all repos for star count...")
     all_repos = []
     page = 1
+    stars_ok = True
     while True:
         batch = fetch_json(
             f"{API_BASE}/users/{GITHUB_USER}/repos?per_page=100&page={page}",
             headers,
         )
+        if batch is None:
+            # A page failed: the star total would be undercounted, so mark it
+            # unreliable and fall back to the last known value below.
+            stars_ok = False
+            break
         if not batch:
             break
         all_repos.extend(batch)
@@ -82,10 +106,15 @@ def main():
         page += 1
 
     total_stars = sum(r.get("stargazers_count", 0) for r in all_repos)
-    print(f"  {len(all_repos)} repos, {total_stars} total stars")
+    if not stars_ok and existing.get("total_stars"):
+        print(f"  Star count incomplete — preserving previous total ({existing['total_stars']})")
+        total_stars = existing["total_stars"]
+    else:
+        print(f"  {len(all_repos)} repos, {total_stars} total stars")
 
     featured = get_featured_repos()
     print(f"Fetching metadata for {len(featured)} featured repos...")
+    existing_repos = existing.get("repos", {})
     repos = {}
     for slug in featured:
         data = fetch_json(f"{API_BASE}/repos/{slug}", headers)
@@ -98,6 +127,10 @@ def main():
             }
             print(f"  {slug}: {repos[slug]['language']}, "
                   f"{repos[slug]['stars']} stars, {repos[slug]['forks']} forks")
+        elif slug in existing_repos:
+            # Keep the last known metadata for this repo rather than dropping it.
+            repos[slug] = existing_repos[slug]
+            print(f"  {slug}: fetch failed — preserving previous data")
 
     stats = {
         "avatar_url": profile.get("avatar_url", ""),

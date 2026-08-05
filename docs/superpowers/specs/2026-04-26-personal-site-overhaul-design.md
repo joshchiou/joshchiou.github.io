@@ -10,13 +10,13 @@
 
 ### Pages kept (4 nav items)
 
-| Page          | Permalink        | Status                              |
-| ------------- | ---------------- | ----------------------------------- |
-| about         | `/`              | Customized — minor rewrites         |
-| publications  | `/publications/` | Customized — keep                   |
-| projects      | `/projects/`     | **Repopulate** — replace template   |
-| cv            | `/cv/`           | Customized — keep                   |
-| repositories  | `/repositories/` | **Restructure** — contributions-led |
+| Page         | Permalink        | Status                              |
+| ------------ | ---------------- | ----------------------------------- |
+| about        | `/`              | Customized — minor rewrites         |
+| publications | `/publications/` | Customized — keep                   |
+| projects     | `/projects/`     | **Repopulate** — replace template   |
+| cv           | `/cv/`           | Customized — keep                   |
+| repositories | `/repositories/` | **Restructure** — contributions-led |
 
 `repositories` is reachable from the about-page social row (GitHub icon → list page), not from the top nav. Top nav stays at four items: about · publications · projects · cv.
 
@@ -118,34 +118,34 @@ Replace `display_categories: [work, fun]` content. The `projects.md` page itself
 
 Each card has: `title`, `description` (1 line), `category: work`, `img: assets/img/projects/<slug>.{jpg,png,webp}` (user-supplied), `importance: <int>`, `related_publications: true` (where applicable), and a body that is 2 paragraphs + paper/code links.
 
-1. **`work_t1d-exocrine-pancreas.md`** — *Type 1 diabetes and the exocrine pancreas* (PhD)
-   - Anchor: Chiou et al. *Nature* 2021
+1. **`work_t1d-exocrine-pancreas.md`** — _Type 1 diabetes and the exocrine pancreas_ (PhD)
+   - Anchor: Chiou et al. _Nature_ 2021
    - Code: `joshchiou/T1D_snATAC`
    - Importance: 1
 
-2. **`work_islet-single-cell-epigenomics.md`** — *Single-cell epigenomics of human pancreatic islets* (PhD)
+2. **`work_islet-single-cell-epigenomics.md`** — _Single-cell epigenomics of human pancreatic islets_ (PhD)
    - Anchors: scATAC-seq + multi-omic islet papers from your bib
    - Importance: 2
 
-3. **`work_ukb-ppp.md`** — *UK Biobank Pharma Proteomics Project* (Pfizer/consortium)
-   - Anchor: Sun et al. *Nature* 2023 + the follow-up consortium papers in your bib
+3. **`work_ukb-ppp.md`** — _UK Biobank Pharma Proteomics Project_ (Pfizer/consortium)
+   - Anchor: Sun et al. _Nature_ 2023 + the follow-up consortium papers in your bib
    - Importance: 3
 
-4. **`work_pfizer-target-discovery.md`** — *Human-genetics-driven target discovery for cardiovascular and renal disease* (Pfizer)
+4. **`work_pfizer-target-discovery.md`** — _Human-genetics-driven target discovery for cardiovascular and renal disease_ (Pfizer)
    - No specific targets named; describes approach (genetics + functional genomics + multi-omics → portfolio).
    - Importance: 4
 
-5. **`work_lilly-obesity-proteomics.md`** — *Translational proteomics for obesity clinical trials* (Lilly, current)
+5. **`work_lilly-obesity-proteomics.md`** — _Translational proteomics for obesity clinical trials_ (Lilly, current)
    - Forward-looking placeholder; describes the program scope without trial specifics.
    - Importance: 5
 
 #### Fun cards (5)
 
-1. **`fun_home-assistant.md`** — *Home Assistant*
+1. **`fun_home-assistant.md`** — _Home Assistant_
    - Body: brief tour of the setup, screenshot of a dashboard, link to `ha-esunpower` fork.
    - Importance: 1
 
-2. **`fun_cycling.md`** — *On the bike* (Strava-powered, dynamic)
+2. **`fun_cycling.md`** — _On the bike_ (Strava-powered, dynamic)
    - Hero visual: **GitHub-style activity calendar** — one square per day, color intensity = distance. Generated from Strava API. Privacy-safe: no routes shown (most rides are commutes).
    - Supporting: 3-stat strip (all-time totals: rides, distance, elevation).
    - Detail page: monthly distance bar chart (all-time).
@@ -155,17 +155,17 @@ Each card has: `title`, `description` (1 line), `category: work`, `img: assets/i
    - Implementation: ECharts heatmap calendar (already in template) for activity calendar; small stat callouts beneath.
    - Importance: 2
 
-3. **`fun_cocktails.md`** — *Cocktails*
+3. **`fun_cocktails.md`** — _Cocktails_
    - Body: short note + photo gallery using medium-zoom (already in template).
    - Importance: 3
 
-4. **`fun_cats.md`** — *Cats* — **Claire**
+4. **`fun_cats.md`** — _Cats_ — **Claire**
    - `assets/img/projects/fun/cats/claire-main.jpg` → card hero (558K, already in repo).
    - `claire-gallery-1.jpg` through `claire-gallery-5.jpg` → medium-zoom gallery on detail page (15MB total; imagemagick generates WebP at build time, no manual compression needed).
    - Body: one sentence + gallery.
    - Importance: 4
 
-5. **`fun_travel.md`** — *Travel* (Takeout-powered, manually refreshed)
+5. **`fun_travel.md`** — _Travel_ (Takeout-powered, manually refreshed)
    - **Card hero**: visited-countries choropleth using ECharts world map (just needs country name list; built-in, no external GeoJSON required).
    - **Stat strip**: X countries · Y cities.
    - **Detail page**: Leaflet city dot map with markers at `_data/travel-cities.yml` locations.
@@ -187,7 +187,7 @@ Each card has: `title`, `description` (1 line), `category: work`, `img: assets/i
 
 Use the existing `repository/repo.liquid` include (the GitHub-stats card embed). Repos:
 
-- `joshchiou/T1D_snATAC` (data/code companion to the *Nature* T1D paper)
+- `joshchiou/T1D_snATAC` (data/code companion to the _Nature_ T1D paper)
 - `joshchiou/joshchiou.github.io` (this site)
 
 (Drops the "GitHub users" featured-user card and the "trophies" section — both feel out of register for an academic page. We disable `repo_trophies` in `_config.yml`.)
@@ -208,7 +208,6 @@ A new `_data/contributions.yml` lists ~6–8 most substantive merged PRs. Schema
   title: Compatibility with rpy2
   date: 2025-02-25
   blurb: Restored Python interop so susieR can be called from rpy2 pipelines.
-
 # … 4–6 more …
 ```
 

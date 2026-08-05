@@ -5,11 +5,21 @@
 // Typography
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   line-height: 1.65;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   letter-spacing: -0.02em;
 }
 
@@ -864,7 +874,9 @@ footer.sticky-bottom {
     border-radius: 8px;
     padding-top: 10px;
     padding-bottom: 10px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
 
     &:focus {
       border-color: var(--global-theme-color);
@@ -888,7 +900,9 @@ footer.sticky-bottom {
     border-radius: 4px;
     font-size: 0.85rem;
     line-height: 1;
-    transition: color 0.15s ease, background-color 0.15s ease;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
 
     &:hover {
       color: var(--global-text-color);
@@ -1669,7 +1683,9 @@ ninja-keys::part(ninja-input-wrapper) {
 .animate-in {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s ease-out;
 
   &.visible {
     opacity: 1;
@@ -1714,4 +1730,61 @@ ninja-keys::part(ninja-input-wrapper) {
     padding-top: 0;
     border-top: none;
   }
+}
+
+// About page — selected work cards.
+// Mirrors .repo-card on the code page so the two read as one system.
+.about-work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.about-work-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  background: var(--global-card-bg-color);
+  text-decoration: none;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--global-theme-color);
+    text-decoration: none;
+  }
+}
+
+.about-work-card-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 0.35rem;
+  color: var(--global-theme-color);
+}
+
+.about-work-card-desc {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--global-text-color-light);
+  margin: 0;
+  // Keep every card the same height regardless of blurb length.
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Shown in place of a chart/map when its CDN library fails to load
+.lib-fallback-note {
+  padding: 1rem 1.25rem;
+  border: 1px dashed var(--global-divider-color);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  text-align: center;
 }

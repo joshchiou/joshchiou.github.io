@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cycling
-description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
+description: Six bikes, a slow cooker full of chain wax, and a couple years of ride data.
 img: assets/img/projects/fun/cycling.svg
 importance: 2
 category: fun
@@ -20,6 +20,7 @@ chart:
 <h2 class="page-chapter">By the numbers</h2>
 
 {% if stats.total_rides %}
+
 <div class="row mb-2 text-center">
   <div class="col-4">
     <h3 class="mb-0">{{ stats.total_rides }}</h3>
@@ -51,7 +52,7 @@ chart:
   <button class="chart-toggle-btn chart-view-btn" data-view="cumulative">Cumulative</button>
 </div>
 
-<div id="cycling-calendar" class="cycling-chart-pane"></div>
+<div id="cycling-calendar" class="cycling-chart-pane" data-requires="echarts" data-fallback-hide=".chart-view-tabs, #chart-caption"></div>
 <div id="cycling-monthly" class="cycling-chart-pane" style="display:none; height: 280px;"></div>
 <div id="cycling-cumulative" class="cycling-chart-pane" style="display:none; height: 250px;"></div>
 
@@ -61,6 +62,30 @@ chart:
   <i class="fa-brands fa-strava"></i> View on Strava
 </a>
 
+<h2 class="page-chapter">Recent rides</h2>
+
+<p class="text-muted mb-3">The most recent rides.</p>
+
+<div class="ride-log-wrap">
+  <table class="ride-log">
+    <thead>
+      <tr><th>Date</th><th>Ride</th><th>Distance</th><th>Time</th></tr>
+    </thead>
+    <tbody id="ride-log-body"></tbody>
+  </table>
+</div>
+
+<h2 class="page-chapter">Where I ride</h2>
+
+<p class="text-muted mb-3">Commutes and weekend loops around Boston, plus rides picked up while traveling.</p>
+
+<div id="cycling-map" class="cycling-map mb-2" data-requires="leaflet"></div>
+<div class="mb-4" style="font-size: 0.8rem; color: var(--global-text-color-light);">
+  <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#2980b9;margin-right:4px;"></span>Commute
+  &nbsp;&nbsp;<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#27ae60;margin-right:4px;"></span>Road
+  &nbsp;&nbsp;<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#e67e22;margin-right:4px;"></span>Gravel
+  &nbsp;&nbsp;<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#8e44ad;margin-right:4px;"></span>Travel
+</div>
 
 <h2 class="page-chapter">Highlights</h2>
 
@@ -78,7 +103,6 @@ chart:
   </div>
   {% endfor %}
 </div>
-
 
 <h2 class="page-chapter">The bikes</h2>
 
@@ -141,9 +165,28 @@ chart:
 <script>
 window._cyclingData = {
   monthly: {{ site.data.strava_stats.monthly | jsonify }},
-  calendar: {{ site.data.strava_calendar | jsonify }}
+  calendar: {{ site.data.strava_calendar | jsonify }},
+  rides: {{ site.data.strava_rides | jsonify }},
+  locations: {{ site.data.cycling_locations | jsonify }}
 };
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
 
-<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem; opacity: 0.6;">Data via Strava API · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>
+{% comment %}
+Credit only the sources that actually contributed rides. `ride_sources` is
+written by update_strava.py from the merged dataset, so it stays correct
+whether the data came from Strava, Apple Health, or both.
+{% endcomment %}
+{% assign from_health = stats.ride_sources.apple_health | default: 0 %}
+{% assign from_strava = stats.ride_sources.strava | default: 0 %}
+
+<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem; opacity: 0.6;">
+  {% if from_health > 0 and from_strava > 0 %}
+    Data from Apple Health and the Strava API
+  {% elsif from_health > 0 %}
+    Data from Apple Health
+  {% else %}
+    Data via Strava API
+  {% endif %}
+  · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}
+</p>

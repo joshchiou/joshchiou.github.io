@@ -31,7 +31,7 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
   </div>
 </div>
 
-<div id="travel-map-wrap" class="travel-map-wrap mb-2">
+<div id="travel-map-wrap" class="travel-map-wrap mb-2" data-requires="d3" data-fallback-hide=".travel-map-hint, .travel-map-legend">
   <svg id="travel-map-svg" class="travel-map-svg" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
   <div id="travel-map-tooltip" class="travel-map-tooltip" aria-hidden="true"></div>
   <button id="travel-map-reset" class="travel-map-reset-btn" title="Reset zoom">

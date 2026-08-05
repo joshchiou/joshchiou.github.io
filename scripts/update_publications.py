@@ -17,16 +17,29 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 try:
-    import requests
+    import requests  # noqa: F401  (used indirectly via _http)
 except ImportError:
     sys.exit("requests not installed. Run: pip install requests")
+
+from _http import request_with_retry
 
 ORCID_ID = "0000-0002-4618-0647"
 ORCID_API = f"https://pub.orcid.org/v3.0/{ORCID_ID}/works"
 S2_API = "https://api.semanticscholar.org/graph/v1/paper"
 
 BIB_PATH = Path(__file__).resolve().parent.parent / "_bibliography" / "papers.bib"
+
+def get_with_retry(url: str, **kwargs) -> requests.Response:
+    """GET that retries transient failures.
+
+    Semantic Scholar's keyless endpoint is aggressively rate-limited, so a plain
+    request is likely to hit 429; retrying with backoff avoids silently dropping
+    newly published papers.
+    """
+    return request_with_retry("GET", url, **kwargs)
 
 
 def extract_existing_dois(bib_path: Path) -> set[str]:
@@ -37,9 +50,18 @@ def extract_existing_dois(bib_path: Path) -> set[str]:
     return dois
 
 
+def _nested(d, *keys):
+    """Walk a chain of dict keys, tolerating None/missing at any level."""
+    for k in keys:
+        if not isinstance(d, dict):
+            return None
+        d = d.get(k)
+    return d
+
+
 def fetch_orcid_works() -> list[dict]:
     headers = {"Accept": "application/json"}
-    resp = requests.get(ORCID_API, headers=headers, timeout=30)
+    resp = get_with_retry(ORCID_API, headers=headers, timeout=30)
     resp.raise_for_status()
     data = resp.json()
 
@@ -49,14 +71,15 @@ def fetch_orcid_works() -> list[dict]:
         if not summaries:
             continue
         summary = summaries[0]
-        title = summary.get("title", {}).get("title", {}).get("value", "")
-        year = summary.get("publication-date", {}).get("year", {}).get("value", "")
-        journal = summary.get("journal-title", {}).get("value", "") if summary.get("journal-title") else ""
+        title = _nested(summary, "title", "title", "value") or ""
+        year = _nested(summary, "publication-date", "year", "value") or ""
+        journal = _nested(summary, "journal-title", "value") or ""
 
         doi = None
-        for eid in summary.get("external-ids", {}).get("external-id", []):
+        external_ids = _nested(summary, "external-ids", "external-id") or []
+        for eid in external_ids:
             if eid.get("external-id-type") == "doi":
-                doi = eid.get("external-id-value", "").strip()
+                doi = (eid.get("external-id-value") or "").strip()
                 break
 
         if doi:
@@ -68,7 +91,7 @@ def fetch_orcid_works() -> list[dict]:
 def fetch_s2_metadata(doi: str) -> dict | None:
     url = f"{S2_API}/DOI:{doi}?fields=title,authors,venue,year,externalIds,abstract"
     try:
-        resp = requests.get(url, timeout=15)
+        resp = get_with_retry(url, timeout=15)
         if resp.status_code == 404:
             return None
         resp.raise_for_status()
