@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -35,3 +36,20 @@ jobs:
           git add _data/github_stats.json
           git diff --staged --quiet || git commit -m "chore: update GitHub stats"
           git push
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "GitHub stats sync is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Likely causes:
+
+            - **403 with `X-RateLimit-Remaining: 0`** — quota exhausted; already
+              retried with backoff.
+            - **404 on a featured repo** — it was renamed, made private, or deleted.
+              Fix the slug in `_data/repositories.yml`.
+
+            Previous stats are preserved on failure, so the site keeps the last known
+            good values rather than showing zeros.

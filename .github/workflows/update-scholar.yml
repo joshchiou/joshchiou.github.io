@@ -2,7 +2,11 @@ name: Update Scholar Stats
 
 on:
   schedule:
-    - cron: "23 7 * * 3" # Every Wednesday 07:23 UTC
+    # Daily, not weekly. scholarly scrapes Google Scholar and only about 40% of
+    # attempts get through, so a weekly cadence meant the published citation
+    # count was routinely 2-3 weeks behind. Runs where the fetch fails now leave
+    # the file untouched, so extra attempts cost nothing in commit noise.
+    - cron: "23 7 * * *" # Daily 07:23 UTC
   workflow_dispatch: # Allow manual trigger from GitHub Actions UI
 
 jobs:
@@ -10,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -33,3 +38,27 @@ jobs:
           git add _data/scholar_stats.json
           git diff --staged --quiet || git commit -m "chore: update scholar stats [skip ci]"
           git push
+
+      # Runs after the commit on purpose: a stale citation count shouldn't stop
+      # the paper count (which is read from papers.bib and always current) from
+      # being published. This step only decides whether to raise the alarm.
+      # 21 days. With ~30 attempts a month instead of ~4, three weeks without a
+      # single success is a much stronger signal than it was on the weekly
+      # schedule, where the longest normal gap between confirmed successes was
+      # itself 21 days. Google blocks in stretches, so this stays well clear of
+      # ordinary intermittency.
+      - name: Fail if Scholar data has gone stale
+        run: python scripts/update_scholar.py --check-freshness 21
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Scholar stats have been stale for weeks"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Google Scholar is scraped rather than an API, so intermittent blocking is
+            normal and the script preserves the last known good citation counts. This
+            issue means the fetch has not succeeded for a long time (see
+            `last_success_at` in `_data/scholar_stats.json`), so the displayed citation
+            count and h-index are drifting further out of date.

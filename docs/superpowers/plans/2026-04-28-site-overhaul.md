@@ -13,6 +13,7 @@
 ## File Map
 
 **New files:**
+
 - `scripts/update_github.py` — fetches GitHub profile + repo stats, writes JSON
 - `scripts/update_publications.py` — ORCID + Semantic Scholar pub discovery, creates PRs
 - `.github/workflows/update-github.yml` — weekly GitHub stats Action
@@ -22,6 +23,7 @@
 - `assets/data/strava_calendar.json` — externalized Strava heatmap data
 
 **Modified files:**
+
 - `_config.yml` — enable search, add GoatCounter config
 - `_includes/head.liquid` — preconnect hints, inline theme init, GoatCounter include
 - `_layouts/about.liquid` — dynamic journal pills from data
@@ -38,6 +40,7 @@
 - `.github/workflows/deploy.yml` — image optimization step + Lighthouse CI
 
 **Deleted files:**
+
 - `assets/img/prof_pic_color.png` (14MB, unreferenced)
 
 ---
@@ -47,6 +50,7 @@
 Quick wins: remove the 14MB unreferenced image, add preconnect hints, flip search on.
 
 **Files:**
+
 - Delete: `assets/img/prof_pic_color.png`
 - Modify: `_includes/head.liquid:1-11`
 - Modify: `_config.yml:51`
@@ -58,9 +62,11 @@ rm assets/img/prof_pic_color.png
 ```
 
 Verify it's not referenced:
+
 ```bash
 grep -r "prof_pic_color" --include="*.md" --include="*.liquid" --include="*.yml" --include="*.html" .
 ```
+
 Expected: no output.
 
 - [ ] **Step 2: Add preconnect hints to head.liquid**
@@ -69,18 +75,21 @@ In `_includes/head.liquid`, insert after line 2 (`{% include metadata.liquid %}`
 
 ```html
 <!-- Preconnect to external origins -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 ```
 
-- [ ] **Step 3: Enable site search in _config.yml**
+- [ ] **Step 3: Enable site search in \_config.yml**
 
 Change line 51 from:
+
 ```yaml
 search_enabled: false
 ```
+
 to:
+
 ```yaml
 search_enabled: true
 ```
@@ -90,6 +99,7 @@ search_enabled: true
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: "done" with no errors.
 
 - [ ] **Step 5: Commit**
@@ -106,6 +116,7 @@ git commit -m "perf: remove 14MB dead asset, add preconnect hints, enable search
 Make `update_scholar.py` preserve last-known-good values on failure, add plausibility checks, and output per-journal counts for dynamic pills. Update `about.liquid` to render pills from data.
 
 **Files:**
+
 - Modify: `scripts/update_scholar.py`
 - Modify: `_layouts/about.liquid:61-68`
 - Modify: `_data/scholar_stats.json`
@@ -256,11 +267,12 @@ python3 -c "import json; d=json.load(open('_data/scholar_stats.json')); print(js
 ```
 
 Expected output like:
+
 ```json
 [
-  {"name": "Nature", "count": 4},
-  {"name": "Nature Genetics", "count": 3},
-  {"name": "Cell", "count": 2}
+  { "name": "Nature", "count": 4 },
+  { "name": "Nature Genetics", "count": 3 },
+  { "name": "Cell", "count": 2 }
 ]
 ```
 
@@ -269,27 +281,27 @@ Expected output like:
 In `_layouts/about.liquid`, replace lines 61-68 (the hardcoded journal pills block):
 
 ```liquid
-        {% if stats.top_journal_papers > 0 %}
-        <div class="about-journals">
-          <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
-          <span class="about-journal-pill">Nature</span>
-          <span class="about-journal-pill">Cell</span>
-          <span class="about-journal-pill">Nature Genetics</span>
-        </div>
-        {% endif %}
+{% if stats.top_journal_papers > 0 %}
+  <div class="about-journals">
+    <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
+    <span class="about-journal-pill">Nature</span>
+    <span class="about-journal-pill">Cell</span>
+    <span class="about-journal-pill">Nature Genetics</span>
+  </div>
+{% endif %}
 ```
 
 with:
 
 ```liquid
-        {% if stats.top_journals.size > 0 %}
-        <div class="about-journals">
-          <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
-          {% for journal in stats.top_journals %}
-            <span class="about-journal-pill">{{ journal.name }}</span>
-          {% endfor %}
-        </div>
-        {% endif %}
+{% if stats.top_journals.size > 0 %}
+  <div class="about-journals">
+    <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
+    {% for journal in stats.top_journals %}
+      <span class="about-journal-pill">{{ journal.name }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
 ```
 
 - [ ] **Step 5: Build and verify**
@@ -297,6 +309,7 @@ with:
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds, no errors.
 
 - [ ] **Step 6: Commit**
@@ -313,6 +326,7 @@ git commit -m "feat: scholar stats reliability + dynamic journal pills from pape
 New script and workflow to fetch GitHub data at build time. Rewrite the `/code` page to use `site.data.github_stats` instead of client-side API calls.
 
 **Files:**
+
 - Create: `scripts/update_github.py`
 - Create: `.github/workflows/update-github.yml`
 - Create: `_data/github_stats.json`
@@ -498,7 +512,7 @@ jobs:
           git push
 ```
 
-- [ ] **Step 5: Rewrite _pages/code.md to use build-time data**
+- [ ] **Step 5: Rewrite \_pages/code.md to use build-time data**
 
 Replace the entire `<script>` block (lines 76-133 in `_pages/code.md`) and update the profile card HTML to use Liquid data. The full replacement for `_pages/code.md`:
 
@@ -652,6 +666,7 @@ Selected merged pull requests to community scientific software.
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds. The `/code` page renders GitHub stats from data file with zero `<script>` blocks.
 
 - [ ] **Step 7: Commit**
@@ -668,6 +683,7 @@ git commit -m "feat: build-time GitHub stats — eliminate client-side API calls
 Run `prep_images.py` on cat photos, add CI safety net in deploy.yml.
 
 **Files:**
+
 - Modify: `assets/img/projects/fun/cats/` (new WebP files)
 - Modify: `.github/workflows/deploy.yml:47-54`
 
@@ -692,16 +708,16 @@ Expected: 6 `.webp` files, each much smaller than the original JPEGs.
 In `.github/workflows/deploy.yml`, add a new step after "Setup Python" (after line 46) and before "Install and Build" (line 47):
 
 ```yaml
-      - name: Optimize unprocessed images 🖼️
-        run: |
-          pip3 install Pillow
-          find assets/img -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -size +500k | while read img; do
-            webp="${img%.*}.webp"
-            if [ ! -f "$webp" ]; then
-              echo "Optimizing: $img"
-              python3 scripts/prep_images.py "$(dirname "$img")" "$(dirname "$img")" --keep-names
-            fi
-          done
+- name: Optimize unprocessed images 🖼️
+  run: |
+    pip3 install Pillow
+    find assets/img -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -size +500k | while read img; do
+      webp="${img%.*}.webp"
+      if [ ! -f "$webp" ]; then
+        echo "Optimizing: $img"
+        python3 scripts/prep_images.py "$(dirname "$img")" "$(dirname "$img")" --keep-names
+      fi
+    done
 ```
 
 - [ ] **Step 4: Build and verify**
@@ -709,6 +725,7 @@ In `.github/workflows/deploy.yml`, add a new step after "Setup Python" (after li
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 5: Commit**
@@ -725,6 +742,7 @@ git commit -m "perf: optimize cat gallery images to WebP + add CI image safety n
 Add GoatCounter integration behind a config flag.
 
 **Files:**
+
 - Create: `_includes/scripts/goatcounter.liquid`
 - Modify: `_config.yml:348-350`
 - Modify: `_includes/head.liquid` (end of file)
@@ -735,12 +753,11 @@ Create `_includes/scripts/goatcounter.liquid`:
 
 ```html
 {% if site.enable_goatcounter and site.goatcounter_code %}
-  <script data-goatcounter="https://{{ site.goatcounter_code }}.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://{{ site.goatcounter_code }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 {% endif %}
 ```
 
-- [ ] **Step 2: Add GoatCounter config to _config.yml**
+- [ ] **Step 2: Add GoatCounter config to \_config.yml**
 
 After line 350 (`enable_pirsch_analytics: false`), add:
 
@@ -762,6 +779,7 @@ At the end of `_includes/head.liquid`, just before the closing line, add:
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds. Since `enable_goatcounter` is false, no script tag is emitted.
 
 - [ ] **Step 5: Commit**
@@ -780,6 +798,7 @@ git commit -m "feat: add GoatCounter analytics integration (disabled by default)
 Move calendar heatmap data from inline Liquid to an external JSON file loaded via fetch. Add loading skeleton.
 
 **Files:**
+
 - Modify: `scripts/update_strava.py:96-121`
 - Create: `assets/data/strava_calendar.json`
 - Modify: `_projects/fun_cycling.md:87-95`
@@ -835,6 +854,7 @@ with:
 ```
 
 Then wrap the calendar-dependent code in a fetch call. Replace the full `<script>` block (lines 87 to the closing `</script>` on line 335) with the version that:
+
 - Fetches `assets/data/strava_calendar.json` via `fetch()`
 - Shows a loading skeleton on the calendar div while loading
 - Keeps monthly/cumulative data inlined (small, static)
@@ -1121,6 +1141,7 @@ The full replacement `<script>` block:
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds. The cycling page HTML no longer contains the full calendar JSON array inline.
 
 - [ ] **Step 5: Verify calendar data is NOT inlined**
@@ -1128,6 +1149,7 @@ Expected: build succeeds. The cycling page HTML no longer contains the full cale
 ```bash
 grep -c "strava_calendar" _site/projects/fun_cycling/index.html
 ```
+
 Expected: 0 (no inline data reference) or only the fetch URL.
 
 - [ ] **Step 6: Commit**
@@ -1144,6 +1166,7 @@ git commit -m "perf: externalize Strava calendar data — load via fetch instead
 Extract the critical anti-flicker code into an inline script in head.liquid. Move everything else to a deferred script.
 
 **Files:**
+
 - Modify: `_includes/head.liquid:72-84`
 - Modify: `assets/js/theme.js`
 
@@ -1155,16 +1178,16 @@ In `_includes/head.liquid`, replace lines 72-84:
 <!-- Dark Mode -->
 <script src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
 {% if site.enable_darkmode %}
-  <link
-    defer
-    rel="stylesheet"
-    href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url | bust_file_cache }}"
-    media="none"
-    id="highlight_theme_dark"
-  >
-  <script>
-    initTheme();
-  </script>
+<link
+  defer
+  rel="stylesheet"
+  href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url | bust_file_cache }}"
+  media="none"
+  id="highlight_theme_dark"
+/>
+<script>
+  initTheme();
+</script>
 {% endif %}
 ```
 
@@ -1173,27 +1196,27 @@ with:
 ```html
 <!-- Dark Mode: inline critical anti-flicker, defer the rest -->
 {% if site.enable_darkmode %}
-  <script>
-    (function(){
-      var ts = localStorage.getItem("theme");
-      if (ts !== "dark" && ts !== "light" && ts !== "system") ts = "system";
-      document.documentElement.setAttribute("data-theme-setting", ts);
-      var theme;
-      if (ts === "system") {
-        theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
-      } else {
-        theme = ts;
-      }
-      document.documentElement.setAttribute("data-theme", theme);
-    })();
-  </script>
-  <link
-    defer
-    rel="stylesheet"
-    href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url | bust_file_cache }}"
-    media="none"
-    id="highlight_theme_dark"
-  >
+<script>
+  (function () {
+    var ts = localStorage.getItem("theme");
+    if (ts !== "dark" && ts !== "light" && ts !== "system") ts = "system";
+    document.documentElement.setAttribute("data-theme-setting", ts);
+    var theme;
+    if (ts === "system") {
+      theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    } else {
+      theme = ts;
+    }
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<link
+  defer
+  rel="stylesheet"
+  href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url | bust_file_cache }}"
+  media="none"
+  id="highlight_theme_dark"
+/>
 {% endif %}
 <script defer src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
 ```
@@ -1203,10 +1226,11 @@ with:
 Add at the very end of `assets/js/theme.js` (after line 252), so it runs when the deferred script loads:
 
 ```javascript
-
 // Self-initialize when loaded as deferred script
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", function () { initTheme(); });
+  document.addEventListener("DOMContentLoaded", function () {
+    initTheme();
+  });
 } else {
   initTheme();
 }
@@ -1238,6 +1262,7 @@ let initTheme = () => {
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 4: Verify the inline script is in head and theme.js is deferred**
@@ -1246,6 +1271,7 @@ Expected: build succeeds.
 grep -n "data-theme-setting" _site/index.html | head -3
 grep -n "defer.*theme.js" _site/index.html | head -3
 ```
+
 Expected: inline `data-theme-setting` script in head, `<script defer src="...theme.js">` later.
 
 - [ ] **Step 5: Commit**
@@ -1262,6 +1288,7 @@ git commit -m "perf: inline critical theme init, defer rest of theme.js"
 New script that discovers publications from ORCID, fetches metadata from Semantic Scholar, and creates PRs with draft BibTeX entries.
 
 **Files:**
+
 - Create: `scripts/update_publications.py`
 - Create: `.github/workflows/update-publications.yml`
 
@@ -1511,6 +1538,7 @@ git commit -m "feat: auto-discover publications via ORCID + Semantic Scholar, cr
 Add missing page descriptions and ScholarlyArticle JSON-LD to publication entries.
 
 **Files:**
+
 - Modify: `_pages/about.md` (frontmatter)
 - Modify: `_pages/cv.md` (frontmatter)
 - Modify: `_pages/news.md` (frontmatter)
@@ -1546,8 +1574,8 @@ description: >
 At the very end of `_layouts/bib.liquid`, just before the closing `</div>` of the outermost row div, add:
 
 ```liquid
-  {% if site.serve_schema_org and entry.doi %}
-    <script type="application/ld+json">
+{% if site.serve_schema_org and entry.doi %}
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
@@ -1557,8 +1585,8 @@ At the very end of `_layouts/bib.liquid`, just before the closing `</div>` of th
       "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "{{ entry.doi }}"},
       "url": "https://doi.org/{{ entry.doi }}"
     }
-    </script>
-  {% endif %}
+  </script>
+{% endif %}
 ```
 
 - [ ] **Step 3: Build and verify**
@@ -1566,6 +1594,7 @@ At the very end of `_layouts/bib.liquid`, just before the closing `</div>` of th
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 4: Verify JSON-LD appears in publication pages**
@@ -1573,6 +1602,7 @@ Expected: build succeeds.
 ```bash
 grep -c "ScholarlyArticle" _site/publications/index.html
 ```
+
 Expected: a count matching the number of publications with DOIs.
 
 - [ ] **Step 5: Commit**
@@ -1589,6 +1619,7 @@ git commit -m "seo: add page descriptions + ScholarlyArticle structured data for
 Add Lighthouse CI to the deploy pipeline.
 
 **Files:**
+
 - Modify: `.github/workflows/deploy.yml`
 
 - [ ] **Step 1: Add Lighthouse CI step to deploy.yml**
@@ -1596,26 +1627,26 @@ Add Lighthouse CI to the deploy pipeline.
 In `.github/workflows/deploy.yml`, add after the "Purge unused CSS" step (after line 58) and before "Upload Pages artifact":
 
 ```yaml
-      - name: Lighthouse CI audit 🔦
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: |
-            _site/index.html
-            _site/publications/index.html
-          uploadArtifacts: true
-          configJson: |
-            {
-              "ci": {
-                "assert": {
-                  "assertions": {
-                    "categories:performance": ["warn", {"minScore": 0.8}],
-                    "categories:accessibility": ["warn", {"minScore": 0.95}],
-                    "categories:best-practices": ["warn", {"minScore": 0.9}],
-                    "categories:seo": ["warn", {"minScore": 0.9}]
-                  }
-                }
-              }
+- name: Lighthouse CI audit 🔦
+  uses: treosh/lighthouse-ci-action@v12
+  with:
+    urls: |
+      _site/index.html
+      _site/publications/index.html
+    uploadArtifacts: true
+    configJson: |
+      {
+        "ci": {
+          "assert": {
+            "assertions": {
+              "categories:performance": ["warn", {"minScore": 0.8}],
+              "categories:accessibility": ["warn", {"minScore": 0.95}],
+              "categories:best-practices": ["warn", {"minScore": 0.9}],
+              "categories:seo": ["warn", {"minScore": 0.9}]
             }
+          }
+        }
+      }
 ```
 
 Note: uses `warn` (not `error`) so it reports but doesn't block deploy initially.
@@ -1634,6 +1665,7 @@ git commit -m "ci: add Lighthouse CI audit to deploy pipeline (assertion mode)"
 Add graceful handling when Strava data is missing.
 
 **Files:**
+
 - Modify: `_projects/fun_cycling.md:12-68`
 
 - [ ] **Step 1: Add data-missing guard to the stats section**
@@ -1665,6 +1697,7 @@ with:
 ### Stats
 
 {% if stats.total_rides %}
+
 <div class="row mb-4 text-center">
   <div class="col-4">
     <h3 class="mb-0">{{ stats.total_rides }}</h3>
@@ -1689,6 +1722,7 @@ with:
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 3: Commit**
@@ -1705,6 +1739,7 @@ git commit -m "ux: add graceful fallback when Strava data is missing on cycling 
 Upgrade the cat gallery from a basic Bootstrap grid to a Swiper gallery with lazy loading.
 
 **Files:**
+
 - Modify: `_projects/fun_cats.md`
 
 - [ ] **Step 1: Rewrite fun_cats.md with Swiper gallery**
@@ -1770,6 +1805,7 @@ Expected: at least one include file that loads Swiper CSS/JS when the page has `
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 4: Commit**
@@ -1786,6 +1822,7 @@ git commit -m "ux: upgrade cat gallery to Swiper carousel with lazy loading"
 Group open-source contributions by year in the `/code` page.
 
 **Files:**
+
 - Modify: `_pages/code.md` (contributions section)
 
 - [ ] **Step 1: Replace the contributions list with year-grouped version**
@@ -1793,14 +1830,16 @@ Group open-source contributions by year in the `/code` page.
 In `_pages/code.md`, replace the contributions `<ul>` block (everything from `<ul class="list-unstyled">` to the closing `</ul>`) with:
 
 ```liquid
-{% assign sorted_contribs = site.data.contributions | sort: "date" | reverse %}
-{% assign current_year = "" %}
+{% assign sorted_contribs = site.data.contributions | sort: 'date' | reverse %}
+{% assign current_year = '' %}
 <ul class="list-unstyled">
   {% for c in sorted_contribs %}
-    {% assign c_year = c.date | date: "%Y" %}
+    {% assign c_year = c.date | date: '%Y' %}
     {% if c_year != current_year %}
       {% assign current_year = c_year %}
-      <li class="mt-4 mb-2"><h4 class="text-muted">{{ current_year }}</h4></li>
+      <li class="mt-4 mb-2">
+        <h4 class="text-muted">{{ current_year }}</h4>
+      </li>
     {% endif %}
     <li class="mb-4 contribution-item">
       <div class="mb-1">
@@ -1812,15 +1851,24 @@ In `_pages/code.md`, replace the contributions `<ul>` block (everything from `<u
       </div>
       <div class="mb-1">
         {% if c.type %}
-          {% if c.type == "bug fix" %}{% assign tc = "badge-bug" %}
-          {% elsif c.type == "performance" %}{% assign tc = "badge-perf" %}
-          {% elsif c.type == "feature" %}{% assign tc = "badge-feature" %}
-          {% elsif c.type == "packaging" %}{% assign tc = "badge-pkg" %}
-          {% elsif c.type == "compatibility" %}{% assign tc = "badge-compat" %}
-          {% else %}{% assign tc = "badge-compat" %}{% endif %}
+          {% if c.type == 'bug fix' -%}
+            {%- assign tc = 'badge-bug' %}
+          {% elsif c.type == 'performance' -%}
+            {%- assign tc = 'badge-perf' %}
+          {% elsif c.type == 'feature' -%}
+            {%- assign tc = 'badge-feature' %}
+          {% elsif c.type == 'packaging' -%}
+            {%- assign tc = 'badge-pkg' %}
+          {% elsif c.type == 'compatibility' -%}
+            {%- assign tc = 'badge-compat' %}
+          {% else -%}
+            {%- assign tc = 'badge-compat' -%}
+          {%- endif %}
           <span class="badge-type {{ tc }}">{{ c.type }}</span>
         {% endif %}
-        {% if c.language %}<span class="badge-type badge-lang">{{ c.language }}</span>{% endif %}
+        {% if c.language -%}
+          <span class="badge-type badge-lang">{{ c.language }}</span>
+        {%- endif %}
       </div>
       <div class="mb-1">
         <small class="text-muted">{{ c.blurb }}</small>
@@ -1838,6 +1886,7 @@ In `_pages/code.md`, replace the contributions `<ul>` block (everything from `<u
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
 ```
+
 Expected: build succeeds.
 
 - [ ] **Step 3: Commit**
@@ -1852,6 +1901,7 @@ git commit -m "ux: group open-source contributions by year on /code page"
 ## Self-Review Checklist
 
 **Spec coverage:**
+
 - [x] 1a Dead asset cleanup → Task 1 Step 1
 - [x] 1b Image optimization → Task 4
 - [x] 1c Build-time GitHub stats → Task 3

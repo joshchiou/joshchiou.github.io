@@ -257,7 +257,9 @@
         <a class="abstract btn btn-sm z-depth-0" role="button"><i class="fa-solid fa-file-lines fa-sm"></i> Abstract</a>
       {% endif %}
       {% if entry.doi %}
-        <a href="https://doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"><i class="fa-solid fa-link fa-sm"></i> DOI</a>
+        <a href="https://doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-link fa-sm"></i> DOI</a
+        >
       {% endif %}
       {% if entry.arxiv %}
         <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener">arXiv</a>
@@ -267,16 +269,22 @@
       {% endif %}
       {% if entry.html %}
         {% if entry.html contains '://' %}
-          <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"><i class="ai ai-google-scholar"></i> Scholar</a>
+          <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"
+            ><i class="ai ai-google-scholar"></i> Scholar</a
+          >
         {% else %}
           <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
         {% endif %}
       {% endif %}
       {% if entry.pdf %}
         {% if entry.pdf contains '://' %}
-          <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf fa-sm"></i> PDF</a>
+          <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"
+            ><i class="fa-solid fa-file-pdf fa-sm"></i> PDF</a
+          >
         {% else %}
-          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="fa-solid fa-file-pdf fa-sm"></i> PDF</a>
+          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="fa-solid fa-file-pdf fa-sm"></i> PDF</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.supp %}
@@ -295,7 +303,9 @@
         <a href="{{ entry.blog }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener">Blog</a>
       {% endif %}
       {% if entry.code %}
-        <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"><i class="fa-solid fa-code fa-sm"></i> Code</a>
+        <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-code fa-sm"></i> Code</a
+        >
       {% endif %}
       {% if entry.poster %}
         {% if entry.poster contains '://' %}
@@ -315,7 +325,9 @@
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener">Website</a>
       {% endif %}
       {% if entry.project_url %}
-        <a href="{{ entry.project_url | relative_url }}" class="btn btn-sm z-depth-0 btn-project" role="button"><i class="fa-solid fa-arrow-up-right-from-square fa-sm"></i> View project</a>
+        <a href="{{ entry.project_url | relative_url }}" class="btn btn-sm z-depth-0 btn-project" role="button"
+          ><i class="fa-solid fa-arrow-up-right-from-square fa-sm"></i> View project</a
+        >
       {% endif %}
       {% if site.enable_publication_badges and site.enable_publication_badges.altmetric %}
         {% if entry.altmetric and entry.altmetric != 'false' %}
@@ -434,15 +446,15 @@
   </div>
   {% if site.serve_schema_org and entry.doi %}
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ScholarlyArticle",
-      "headline": {{ entry.title | jsonify }},
-      "datePublished": "{{ entry.year }}",
-      {% if entry.journal %}"isPartOf": {"@type": "Periodical", "name": {{ entry.journal | jsonify }}},{% endif %}
-      "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "{{ entry.doi }}"},
-      "url": "https://doi.org/{{ entry.doi }}"
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": {{ entry.title | jsonify }},
+        "datePublished": "{{ entry.year }}",
+        {% if entry.journal %}"isPartOf": {"@type": "Periodical", "name": {{ entry.journal | jsonify }}},{% endif %}
+        "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "{{ entry.doi }}"},
+        "url": "https://doi.org/{{ entry.doi }}"
+      }
     </script>
   {% endif %}
 </div>

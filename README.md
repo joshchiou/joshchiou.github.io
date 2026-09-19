@@ -21,15 +21,15 @@ docker compose up
 
 ## Structure
 
-| Path | Purpose |
-|---|---|
-| `_pages/about.md` | Landing page |
-| `_data/cv.yml` | CV data |
-| `_bibliography/papers.bib` | Publications (jekyll-scholar) |
-| `_news/*.md` | News items |
-| `_projects/*.md` | Project cards |
-| `_data/contributions.yml` | Open-source PR list |
-| `scripts/update_strava.py` | Strava data pipeline |
+| Path                                | Purpose                                    |
+| ----------------------------------- | ------------------------------------------ |
+| `_pages/about.md`                   | Landing page                               |
+| `_data/cv.yml`                      | CV data                                    |
+| `_bibliography/papers.bib`          | Publications (jekyll-scholar)              |
+| `_news/*.md`                        | News items                                 |
+| `_projects/*.md`                    | Project cards                              |
+| `_data/contributions.yml`           | Open-source PR list                        |
+| `scripts/update_strava.py`          | Strava data pipeline                       |
 | `scripts/parse_location_history.py` | Google Maps Timeline parser for travel map |
 
 ## Data pipelines

@@ -1,0 +1,74 @@
+name: Rebuild Cycling Data
+
+# Regenerates the derived cycling files from the Apple Health backfill whenever
+# that backfill changes. This is what keeps the cycling page current now that the
+# Strava API is behind a paid subscription (see update-strava.yml).
+#
+# The derived files are rebuilt in CI rather than committed by hand so that
+# _data/health_rides.json stays the single thing you have to update: export from
+# Health, run scripts/parse_apple_health.py, commit that one file.
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - "_data/health_rides.json"
+      - "scripts/update_strava.py"
+      - "scripts/parse_apple_health.py"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Write even if the rebuild drops months the current data covers"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  rebuild-cycling:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Rebuild cycling data from the Apple Health backfill
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python scripts/update_strava.py --offline --force
+          else
+            python scripts/update_strava.py --offline
+          fi
+
+      - name: Commit regenerated data files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/strava_calendar.json _data/strava_stats.json _data/strava_rides.json
+          git diff --staged --quiet || git commit -m "chore: rebuild cycling data from Apple Health"
+          git push
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Cycling data rebuild is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Most likely the rebuild refused to write because the new dataset has no
+            rides for months the current data covers — the log names them. That
+            usually means the Apple Health export didn't reach back far enough, not
+            that the rides are gone.
+
+            Re-export from Health and re-run `scripts/parse_apple_health.py`, or
+            dispatch this workflow with `force: true` to accept the loss.

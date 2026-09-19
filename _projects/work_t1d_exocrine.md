@@ -28,7 +28,7 @@ programs during T1D progression {% cite chiou2025singlecell %}. Together, these 
 the field's view of T1D from a purely islet-centric disease to one with measurable exocrine
 contributions, opening new avenues for early detection and intervention.
 
-Data and code: [joshchiou/T1D\_snATAC](https://github.com/joshchiou/T1D_snATAC)
+Data and code: [joshchiou/T1D_snATAC](https://github.com/joshchiou/T1D_snATAC)
 
 ---
 

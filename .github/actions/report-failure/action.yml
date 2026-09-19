@@ -1,0 +1,55 @@
+name: Report pipeline failure
+description: >
+  Open a single tracking issue when a scheduled data pipeline fails. A quiet
+  scheduled job can stay broken for weeks (the Strava sync failed 23 days
+  running in July 2026 before anyone noticed), so failures need a visible
+  artefact rather than only a red run in the Actions tab.
+
+inputs:
+  title:
+    description: >
+      Issue title. Also the de-duplication key: while an open issue with this
+      exact title exists, no new issue or comment is created, so a job failing
+      daily produces one issue rather than thirty.
+    required: true
+  guidance:
+    description: Markdown appended to the issue body — likely causes and fixes.
+    required: false
+    default: ""
+  token:
+    description: Token with issues:write.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        TITLE: ${{ inputs.title }}
+        GUIDANCE: ${{ inputs.guidance }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        WORKFLOW: ${{ github.workflow }}
+      run: |
+        set -euo pipefail
+
+        open_issue=$(gh issue list --state open --search "$TITLE in:title" \
+          --json number,title \
+          --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n1)
+
+        if [ -n "$open_issue" ]; then
+          echo "Issue #$open_issue is already tracking this failure; nothing to do."
+          exit 0
+        fi
+
+        {
+          printf '**%s** failed, so the data it maintains is now stale.\n\n' "$WORKFLOW"
+          printf '**Failed run:** %s\n' "$RUN_URL"
+          if [ -n "$GUIDANCE" ]; then
+            printf '\n%s\n' "$GUIDANCE"
+          fi
+          printf '\nThe run log has the API response body, which usually names the cause.\n'
+          printf 'Close this issue once the job succeeds again.\n'
+        } > /tmp/issue-body.md
+
+        gh issue create --title "$TITLE" --body-file /tmp/issue-body.md

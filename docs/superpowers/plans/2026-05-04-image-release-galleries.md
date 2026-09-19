@@ -12,23 +12,24 @@
 
 ## File Map
 
-| Action | Path | Purpose |
-|--------|------|---------|
-| Modify | `scripts/prep_images.py` | Add HEIC/HEIF support |
-| Create | `scripts/requirements.txt` | Pin Pillow + pillow-heif |
-| Create | `scripts/publish_images.sh` | Convert → upload to GitHub release |
-| Modify | `_data/bikes.yml` | Add `image:` URL to 6 fleet entries |
-| Create | `_data/bike_gallery.yml` | 8 ride photos with captions |
-| Create | `_data/cocktail_gallery.yml` | 11 cocktail photos, no captions |
-| Modify | `_sass/_projects.scss` | Add `.swiper-slide-caption` style |
-| Modify | `_projects/fun_cycling.md` | Add `images: slider: true`, ride gallery section, Swiper init |
-| Modify | `_projects/fun_cocktails.md` | Add `images: slider: true`, photos section, Swiper init |
+| Action | Path                         | Purpose                                                       |
+| ------ | ---------------------------- | ------------------------------------------------------------- |
+| Modify | `scripts/prep_images.py`     | Add HEIC/HEIF support                                         |
+| Create | `scripts/requirements.txt`   | Pin Pillow + pillow-heif                                      |
+| Create | `scripts/publish_images.sh`  | Convert → upload to GitHub release                            |
+| Modify | `_data/bikes.yml`            | Add `image:` URL to 6 fleet entries                           |
+| Create | `_data/bike_gallery.yml`     | 8 ride photos with captions                                   |
+| Create | `_data/cocktail_gallery.yml` | 11 cocktail photos, no captions                               |
+| Modify | `_sass/_projects.scss`       | Add `.swiper-slide-caption` style                             |
+| Modify | `_projects/fun_cycling.md`   | Add `images: slider: true`, ride gallery section, Swiper init |
+| Modify | `_projects/fun_cocktails.md` | Add `images: slider: true`, photos section, Swiper init       |
 
 ---
 
 ## Task 1: Add HEIC support to `scripts/prep_images.py`
 
 **Files:**
+
 - Modify: `scripts/prep_images.py`
 
 - [ ] **Step 1: Add the pillow-heif import block**
@@ -88,6 +89,7 @@ git commit -m "feat: add HEIC/HEIF support to prep_images.py"
 ## Task 2: Create `scripts/requirements.txt`
 
 **Files:**
+
 - Create: `scripts/requirements.txt`
 
 - [ ] **Step 1: Write the file**
@@ -118,6 +120,7 @@ git commit -m "chore: add scripts/requirements.txt with Pillow and pillow-heif"
 ## Task 3: Create `scripts/publish_images.sh`
 
 **Files:**
+
 - Create: `scripts/publish_images.sh`
 
 - [ ] **Step 1: Write the script**
@@ -215,6 +218,7 @@ Expected: 19 `.webp` filenames listed — 6 fleet bikes + 8 ride photos + 11 coc
 ## Task 5: Update `_data/bikes.yml` with fleet image URLs
 
 **Files:**
+
 - Modify: `_data/bikes.yml`
 
 - [ ] **Step 1: Replace `image: null` with the release URL for each bike**
@@ -224,14 +228,14 @@ The base URL for all assets is:
 
 Apply these six changes (change each `image: null` to the corresponding URL):
 
-| Entry | New value |
-|-------|-----------|
-| Lemond Zurich (Daily driver) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-daily-driver.webp` |
-| Lemond Tourmalet (Backup bike) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-backup-bike.webp` |
-| Lemond Etape (Wife's main bike) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-bike.webp` |
-| Specialized Stumpjumper 1998 (Gravel bike) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-gravel-bike.webp` |
+| Entry                                             | New value                                                                                                          |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Lemond Zurich (Daily driver)                      | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-daily-driver.webp`      |
+| Lemond Tourmalet (Backup bike)                    | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-backup-bike.webp`       |
+| Lemond Etape (Wife's main bike)                   | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-bike.webp`        |
+| Specialized Stumpjumper 1998 (Gravel bike)        | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-gravel-bike.webp`       |
 | Specialized Stumpjumper 1996 (Wife's gravel bike) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-gravel-bike.webp` |
-| Lemond Buenos Aires (Tall bike) | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-tall-bike.webp` |
+| Lemond Buenos Aires (Tall bike)                   | `image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-tall-bike.webp`         |
 
 - [ ] **Step 2: Verify Jekyll builds without error**
 
@@ -253,6 +257,7 @@ git commit -m "data: add fleet bike image URLs from images-v1 release"
 ## Task 6: Create `_data/bike_gallery.yml`
 
 **Files:**
+
 - Create: `_data/bike_gallery.yml`
 
 - [ ] **Step 1: Write the file**
@@ -296,6 +301,7 @@ git commit -m "data: add bike ride gallery data file"
 ## Task 7: Create `_data/cocktail_gallery.yml`
 
 **Files:**
+
 - Create: `_data/cocktail_gallery.yml`
 
 - [ ] **Step 1: Write the file**
@@ -334,6 +340,7 @@ git commit -m "data: add cocktail gallery data file"
 ## Task 8: Add `.swiper-slide-caption` style to `_sass/_projects.scss`
 
 **Files:**
+
 - Modify: `_sass/_projects.scss`
 
 - [ ] **Step 1: Append the caption style at the end of the file**
@@ -373,6 +380,7 @@ git commit -m "style: add swiper-slide-caption for gallery carousels"
 ## Task 9: Add ride gallery carousel to `fun_cycling.md`
 
 **Files:**
+
 - Modify: `_projects/fun_cycling.md`
 
 - [ ] **Step 1: Add `images: slider: true` to the frontmatter**
@@ -450,55 +458,55 @@ Replace it with:
 In the existing `<script>` block at the bottom of the page, find the line that reads `// ── Toggle buttons ──`. Insert the new function immediately before that comment line:
 
 ```javascript
-  // ── Ride gallery ─────────────────────────────────────────────────────────
-  function initRideGallery() {
-    var el = document.querySelector('.bike-gallery-swiper');
-    if (el && typeof Swiper !== 'undefined') {
-      new Swiper('.bike-gallery-swiper', {
-        slidesPerView: 1,
-        pagination: { el: '.bike-gallery-swiper .swiper-pagination', clickable: true },
-        navigation: {
-          nextEl: '.bike-gallery-swiper .swiper-button-next',
-          prevEl: '.bike-gallery-swiper .swiper-button-prev'
-        },
-        autoHeight: true
-      });
-    }
+// ── Ride gallery ─────────────────────────────────────────────────────────
+function initRideGallery() {
+  var el = document.querySelector(".bike-gallery-swiper");
+  if (el && typeof Swiper !== "undefined") {
+    new Swiper(".bike-gallery-swiper", {
+      slidesPerView: 1,
+      pagination: { el: ".bike-gallery-swiper .swiper-pagination", clickable: true },
+      navigation: {
+        nextEl: ".bike-gallery-swiper .swiper-button-next",
+        prevEl: ".bike-gallery-swiper .swiper-button-prev",
+      },
+      autoHeight: true,
+    });
   }
+}
 ```
 
 Then update the two boot call sites at the bottom of the same script block. Change:
 
 ```javascript
-  if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
+  initAllCharts();
+  initBikeCarousel();
+  showPaceStat();
+} else {
+  window.addEventListener("load", function () {
     initAllCharts();
     initBikeCarousel();
     showPaceStat();
-  } else {
-    window.addEventListener('load', function () {
-      initAllCharts();
-      initBikeCarousel();
-      showPaceStat();
-    });
-  }
+  });
+}
 ```
 
 to:
 
 ```javascript
-  if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
+  initAllCharts();
+  initBikeCarousel();
+  initRideGallery();
+  showPaceStat();
+} else {
+  window.addEventListener("load", function () {
     initAllCharts();
     initBikeCarousel();
     initRideGallery();
     showPaceStat();
-  } else {
-    window.addEventListener('load', function () {
-      initAllCharts();
-      initBikeCarousel();
-      initRideGallery();
-      showPaceStat();
-    });
-  }
+  });
+}
 ```
 
 - [ ] **Step 4: Verify Jekyll builds without error**
@@ -529,6 +537,7 @@ git commit -m "feat: add ride photo gallery carousel to Cycling page"
 ## Task 10: Add photos carousel to `fun_cocktails.md`
 
 **Files:**
+
 - Modify: `_projects/fun_cocktails.md`
 
 - [ ] **Step 1: Add `images: slider: true` to the frontmatter**
@@ -572,7 +581,7 @@ Add after the closing `</div>` of the recipe grid:
   <div class="swiper-wrapper">
     {% for photo in site.data.cocktail_gallery %}
     <div class="swiper-slide">
-      <img src="{{ photo.url }}" alt="Cocktail" loading="lazy" style="width:100%;display:block;">
+      <img src="{{ photo.url }}" alt="Cocktail" loading="lazy" style="width:100%;display:block;" />
     </div>
     {% endfor %}
   </div>
@@ -582,19 +591,19 @@ Add after the closing `</div>` of the recipe grid:
 </div>
 
 <script>
-window.addEventListener('load', function () {
-  if (typeof Swiper !== 'undefined') {
-    new Swiper('.cocktail-gallery-swiper', {
-      slidesPerView: 1,
-      pagination: { el: '.cocktail-gallery-swiper .swiper-pagination', clickable: true },
-      navigation: {
-        nextEl: '.cocktail-gallery-swiper .swiper-button-next',
-        prevEl: '.cocktail-gallery-swiper .swiper-button-prev'
-      },
-      autoHeight: true
-    });
-  }
-});
+  window.addEventListener("load", function () {
+    if (typeof Swiper !== "undefined") {
+      new Swiper(".cocktail-gallery-swiper", {
+        slidesPerView: 1,
+        pagination: { el: ".cocktail-gallery-swiper .swiper-pagination", clickable: true },
+        navigation: {
+          nextEl: ".cocktail-gallery-swiper .swiper-button-next",
+          prevEl: ".cocktail-gallery-swiper .swiper-button-prev",
+        },
+        autoHeight: true,
+      });
+    }
+  });
 </script>
 ```
 

@@ -1,15 +1,25 @@
 name: Update Strava Data
 
+# DISABLED as of 2026-07-26. Strava put Standard tier API access behind a paid
+# Developer Program subscription (~$11.99/month) on 30 June 2026, and this job
+# has returned 403 on every run since 3 July. The cycling page is now built from
+# the Apple Health backfill instead — see update-cycling.yml.
+#
+# To re-enable: subscribe, confirm the token still has activity:read_all, then
+# restore the `schedule` block below. The script and its tests are unchanged, so
+# nothing else needs touching; it will merge the API results with the Health
+# backfill exactly as before.
 on:
-  schedule:
-    - cron: "0 6 * * *" # Daily at 06:00 UTC
-  workflow_dispatch: # Allow manual trigger from GitHub Actions UI
+  # schedule:
+  #   - cron: "0 6 * * *" # Daily at 06:00 UTC
+  workflow_dispatch: # Manual trigger only while the subscription is lapsed
 
 jobs:
   update-strava:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -37,3 +47,28 @@ jobs:
           git add _data/strava_calendar.json _data/strava_stats.json _data/strava_rides.json
           git diff --staged --quiet || git commit -m "chore: update Strava activity data"
           git push
+
+      - name: Report failure
+        if: failure()
+        uses: ./.github/actions/report-failure
+        with:
+          title: "Strava sync is failing"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          guidance: |
+            Read the 403 body in the log before acting — these look identical from
+            the status code alone, and the token refresh succeeds in every case.
+
+            - **Developer Program subscription lapsed.** Since 30 June 2026 Strava
+              requires a paid subscription (~$11.99/month) for Standard tier API
+              access. Personal single-user apps are Standard tier. This is the most
+              likely cause of a 403 that appears without any code change.
+            - **403 naming `activity:read_permission` as `missing`** — the token
+              lacks the `activity:read_all` scope. Re-authorize and update the
+              `STRAVA_REFRESH_TOKEN` secret.
+            - **401** — the refresh token was revoked; re-authorize.
+            - **429 / rate limit** — transient, and already retried.
+
+            If the subscription is the cause and you don't want to pay, the site can
+            run on the Apple Health backfill alone: keep `_data/health_rides.json`
+            up to date with `scripts/parse_apple_health.py` and disable this
+            workflow.

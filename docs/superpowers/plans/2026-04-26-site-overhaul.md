@@ -17,6 +17,7 @@
 ## File Map
 
 ### Created
+
 - `_projects/work_t1d_exocrine.md`
 - `_projects/work_islet_epigenomics.md`
 - `_projects/work_ukb_ppp.md`
@@ -39,6 +40,7 @@
 - `UPSTREAM_README.md`
 
 ### Modified
+
 - `_config.yml` — remove blog, comments, external sources; add SEO; update description/keywords
 - `_pages/about.md` — subtitle + opening paragraph
 - `_pages/projects.md` — update description
@@ -50,9 +52,11 @@
 - `README.md` — rewrite as personal site README
 
 ### Deleted
+
 - `scripts/parse_takeout.py` — replaced by `scripts/parse_location_history.py`
 
 ### Deleted
+
 - `_pages/about_einstein.md`, `profiles.md`, `teaching.md`, `blog.md`, `dropdown.md`
 - `_posts/*.md` (28 files)
 - `_projects/1_project.md` … `10_project.md`
@@ -125,18 +129,18 @@ git rm assets/img/1.jpg assets/img/2.jpg assets/img/3.jpg assets/img/4.jpg \
 Remove lines 87–98 — three conditional blocks that reference the deleted includes. The lines to remove are:
 
 ```liquid
-  {% if site.related_blog_posts.enabled %}
-    {% if page.related_posts == null or page.related_posts %}
-      {% include related_posts.liquid %}
-    {% endif %}
+{% if site.related_blog_posts.enabled %}
+  {% if page.related_posts == null or page.related_posts %}
+    {% include related_posts.liquid %}
   {% endif %}
+{% endif %}
 
-  {% if site.disqus_shortname and page.disqus_comments %}
-    {% include disqus.liquid %}
-  {% endif %}
-  {% if site.giscus and page.giscus_comments %}
-    {% include giscus.liquid %}
-  {% endif %}
+{% if site.disqus_shortname and page.disqus_comments %}
+  {% include disqus.liquid %}
+{% endif %}
+{% if site.giscus and page.giscus_comments %}
+  {% include giscus.liquid %}
+{% endif %}
 ```
 
 After removing those 12 lines, the end of `_layouts/post.liquid` should be:
@@ -323,10 +327,10 @@ jekyll-archives:
 In the `plugins:` list, remove these four lines:
 
 ```yaml
-  - jekyll-archives
-  - jekyll-jupyter-notebook
-  - jekyll-paginate-v2
-  - jekyll-twitter-plugin
+- jekyll-archives
+- jekyll-jupyter-notebook
+- jekyll-paginate-v2
+- jekyll-twitter-plugin
 ```
 
 - [ ] **Disable repo trophies**
@@ -343,8 +347,8 @@ repo_trophies:
 In the `exclude:` list, add after the last entry:
 
 ```yaml
-  - docs/
-  - scripts/
+- docs/
+- scripts/
 ```
 
 - [ ] **Build and verify**
@@ -417,27 +421,27 @@ Joined <a href="https://www.lilly.com" target="_blank">Lilly</a> as Senior Advis
 In `_data/cv.yml`, find the Senior Principal Computational Geneticist entry (year 2023–2025) and update `maindescription` to use "cardiovascular and renal disease" (currently says "renal and cardiovascular disease"):
 
 ```yaml
-    - title: Senior Principal Computational Geneticist
-      institution: Pfizer
-      location: Cambridge, MA
-      year: 2023 - 2025
-      maindescription: >-
-        I collaborated with cross-functional teams for cardiovascular and renal target discovery integrating human
-        genetics, functional genomics, and large language models, while driving delivery of scalable
-        cloud infrastructure for large-scale genomics analysis across the organization.
+- title: Senior Principal Computational Geneticist
+  institution: Pfizer
+  location: Cambridge, MA
+  year: 2023 - 2025
+  maindescription: >-
+    I collaborated with cross-functional teams for cardiovascular and renal target discovery integrating human
+    genetics, functional genomics, and large language models, while driving delivery of scalable
+    cloud infrastructure for large-scale genomics analysis across the organization.
 ```
 
 Also update the Senior Computational Geneticist entry (year 2021–2023):
 
 ```yaml
-    - title: Senior Computational Geneticist
-      institution: Pfizer
-      location: Cambridge, MA
-      year: 2021 - 2023
-      maindescription: >-
-        I partnered with biologists to identify novel targets for cardiovascular and renal disease
-        through integrative multi-omics, with several advancing into the portfolio, and served as the
-        genetics expert for indication expansion teams.
+- title: Senior Computational Geneticist
+  institution: Pfizer
+  location: Cambridge, MA
+  year: 2021 - 2023
+  maindescription: >-
+    I partnered with biologists to identify novel targets for cardiovascular and renal disease
+    through integrative multi-omics, with several advancing into the portfolio, and served as the
+    genetics expert for indication expansion teams.
 ```
 
 - [ ] **Update projects page description**
@@ -528,7 +532,7 @@ programs during T1D progression {% cite chiou2025singlecell %}. Together, these 
 the field's view of T1D from a purely islet-centric disease to one with measurable exocrine
 contributions, opening new avenues for early detection and intervention.
 
-Data and code: [joshchiou/T1D\_snATAC](https://github.com/joshchiou/T1D_snATAC)
+Data and code: [joshchiou/T1D_snATAC](https://github.com/joshchiou/T1D_snATAC)
 ```
 
 - [ ] **Create `_projects/work_islet_epigenomics.md`**
@@ -917,6 +921,7 @@ git rm scripts/parse_takeout.py
 ```
 
 The new script `scripts/parse_location_history.py` is already committed. It:
+
 - Accepts a single JSON file path (not a directory)
 - Geocodes **all** unique placeIDs (289 in the current export) before applying filters, so the cache is complete regardless of threshold changes
 - Caches results to `scripts/.geocode_cache.json` (first run ~5 min at 1 req/sec; re-runs instant)
@@ -937,6 +942,7 @@ python scripts/parse_location_history.py /path/to/location-history.json
 ```
 
 Expected output:
+
 ```
 Loading: /path/to/location-history.json
   3138 timeline entries
@@ -1175,6 +1181,7 @@ STRAVA_CLIENT_ID=your_id STRAVA_CLIENT_SECRET=your_secret \
 ```
 
 Expected output:
+
 ```
 Refreshing Strava access token...
 Fetching all activities...
@@ -1219,7 +1226,7 @@ The ECharts calendar heatmap embeds `site.data.strava_calendar` via Liquid (rend
 
 - [ ] **Create `_projects/fun_cycling.md`**
 
-```markdown
+````markdown
 ---
 layout: page
 title: On the Bike
@@ -1274,6 +1281,7 @@ chart:
   }]
 }
 ```
+````
 
 ### Monthly distance (all-time)
 
@@ -1295,7 +1303,8 @@ chart:
 ```
 
 <small class="text-muted">Updated {{ stats.updated_at | date: "%b %-d, %Y" | default: "never" }} via Strava API.</small>
-```
+
+````
 
 Note: the backtick fences above are literal in the markdown — they become `<pre><code class="language-echarts">` blocks that the template's ECharts script processes.
 
@@ -1303,7 +1312,7 @@ Note: the backtick fences above are literal in the markdown — they become `<pr
 
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
-```
+````
 
 Navigate to `http://localhost:4000/projects/fun-cycling/` in the dev server. With placeholder data (`[]`), the charts will render as empty. After running `update_strava.py`, rebuild and verify the calendar shows colored squares and the bar chart shows monthly data. Toggle dark mode and confirm the chart respects the theme (ECharts dark mode is automatic via `echartsTheme`).
 
@@ -1438,6 +1447,7 @@ map: true
 ```
 
 **Known limitation:** The country name in `travel_countries.yml` (from Takeout parsing) must match the `ADMIN` property in the countries GeoJSON. Common mismatches to watch for after populating real data:
+
 - "United States" vs "United States of America" — fix in `COUNTRY_ALIASES` in `parse_takeout.py`
 - "United Kingdom" — usually matches
 - Check the browser console after populating real data; unmatched countries won't be highlighted
@@ -1468,7 +1478,7 @@ git commit -m "projects: add travel card with Leaflet choropleth and city marker
 
 - [ ] **Create `CLAUDE.md`**
 
-```markdown
+````markdown
 # CLAUDE.md
 
 Personal website — al-folio Jekyll fork. Claude Code context.
@@ -1476,11 +1486,12 @@ Personal website — al-folio Jekyll fork. Claude Code context.
 ## What this is
 
 Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Customizations live in:
+
 - `_pages/about.md` — landing page content
 - `_data/cv.yml` — CV data (experience, education, skills, awards)
 - `_bibliography/papers.bib` — all publications (jekyll-scholar)
 - `_news/*.md` — news items shown on the about page
-- `_projects/*.md` — project cards (work_ and fun_ prefixes)
+- `_projects/*.md` — project cards (work* and fun* prefixes)
 - `_data/contributions.yml` — curated open-source PR list
 - `_data/strava_calendar.json`, `_data/strava_stats.json` — auto-updated by GitHub Actions
 - `_data/travel_countries.yml`, `_data/travel_cities.yml` — from Takeout script
@@ -1492,6 +1503,7 @@ al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publi
 ## Tagline
 
 Two places to update together when role/focus changes:
+
 1. `_pages/about.md` subtitle (visible header)
 2. `_config.yml` description (meta tag)
 
@@ -1502,6 +1514,7 @@ bundle install          # first time only
 bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
 ```
+````
 
 ## Data pipelines
 
@@ -1517,9 +1530,9 @@ restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
 ## Bib keys for key papers
 
-- `chiou2021interpreting` — T1D + exocrine pancreas, *Nature* 2021
+- `chiou2021interpreting` — T1D + exocrine pancreas, _Nature_ 2021
 - `chiou2021single` — islet scATAC-seq, 2021
-- `sun2023plasma` — UKB-PPP, *Nature* 2023
+- `sun2023plasma` — UKB-PPP, _Nature_ 2023
 - `intact2025multi` — Multi-INTACT methods paper
 
 ## Don't touch unless re-templating
@@ -1528,18 +1541,19 @@ restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 - `assets/libs/` — vendored JS libraries
 - `_config.yml` third_party_libraries block — library versions/integrity hashes
 - `bin/` — CI scripts (upstream)
-```
+
+````
 
 - [ ] **Archive upstream README**
 
 ```bash
 cp README.md UPSTREAM_README.md
 git add UPSTREAM_README.md
-```
+````
 
 - [ ] **Rewrite `README.md`**
 
-```markdown
+````markdown
 # joshchiou.github.io
 
 Personal website of Joshua Chiou — [joshchiou.github.io](https://joshchiou.github.io).
@@ -1552,32 +1566,34 @@ Built on [al-folio](https://github.com/alshedivat/al-folio) by Maruan Al-Shediva
 bundle install
 bundle exec jekyll serve
 ```
+````
 
 Site runs at `http://localhost:4000`.
 
 ## Structure
 
-| Path | Purpose |
-|---|---|
-| `_pages/about.md` | Landing page |
-| `_data/cv.yml` | CV data |
-| `_bibliography/papers.bib` | Publications (jekyll-scholar) |
-| `_news/*.md` | News items |
-| `_projects/*.md` | Project cards |
-| `_data/contributions.yml` | Open-source PR list |
-| `scripts/update_strava.py` | Strava data pipeline |
+| Path                                | Purpose                                    |
+| ----------------------------------- | ------------------------------------------ |
+| `_pages/about.md`                   | Landing page                               |
+| `_data/cv.yml`                      | CV data                                    |
+| `_bibliography/papers.bib`          | Publications (jekyll-scholar)              |
+| `_news/*.md`                        | News items                                 |
+| `_projects/*.md`                    | Project cards                              |
+| `_data/contributions.yml`           | Open-source PR list                        |
+| `scripts/update_strava.py`          | Strava data pipeline                       |
 | `scripts/parse_location_history.py` | Google Maps Timeline parser for travel map |
 
 ## Data pipelines
 
 See `CLAUDE.md` for details on the Strava and travel data pipelines.
-```
+
+````
 
 - [ ] **Build and verify**
 
 ```bash
 bundle exec jekyll build --strict_front_matter 2>&1 | tail -5
-```
+````
 
 - [ ] **Commit**
 
@@ -1615,19 +1631,19 @@ Start: `bundle exec jekyll serve`
 
 Check each page in both light and dark mode, and at mobile width (375px):
 
-| Page | Check |
-|---|---|
-| `/` (about) | Subtitle correct, news shows "Joined Lilly…" (past tense), selected publications render |
-| `/publications/` | All papers render, Altmetric/Dimensions badges load, co-first asterisks correct |
-| `/projects/` | Both work and fun categories show, all 10 cards have titles and descriptions |
-| `/projects/work-type-1-diabetes…/` | Citations render, no broken links |
-| `/projects/fun-cats/` | Gallery images load, imagemagick WebP variants used |
-| `/projects/fun-cycling/` | ECharts calendar and bar chart render (populated if Strava script has been run) |
-| `/projects/fun-travel/` | Leaflet map loads, no console errors |
-| `/cv/` | All sections render, PDF link works, skill chips display |
-| `/repositories/` | Two repo cards + 8 contribution list items |
-| `/news/` | Full news list renders |
-| `404.html` | Loads, redirect text present |
+| Page                               | Check                                                                                   |
+| ---------------------------------- | --------------------------------------------------------------------------------------- |
+| `/` (about)                        | Subtitle correct, news shows "Joined Lilly…" (past tense), selected publications render |
+| `/publications/`                   | All papers render, Altmetric/Dimensions badges load, co-first asterisks correct         |
+| `/projects/`                       | Both work and fun categories show, all 10 cards have titles and descriptions            |
+| `/projects/work-type-1-diabetes…/` | Citations render, no broken links                                                       |
+| `/projects/fun-cats/`              | Gallery images load, imagemagick WebP variants used                                     |
+| `/projects/fun-cycling/`           | ECharts calendar and bar chart render (populated if Strava script has been run)         |
+| `/projects/fun-travel/`            | Leaflet map loads, no console errors                                                    |
+| `/cv/`                             | All sections render, PDF link works, skill chips display                                |
+| `/repositories/`                   | Two repo cards + 8 contribution list items                                              |
+| `/news/`                           | Full news list renders                                                                  |
+| `404.html`                         | Loads, redirect text present                                                            |
 
 - [ ] **Verify OG/Schema.org meta**
 

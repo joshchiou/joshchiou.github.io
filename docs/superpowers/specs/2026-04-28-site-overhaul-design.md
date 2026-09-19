@@ -27,6 +27,7 @@ The cat gallery has 15MB of unoptimized JPEGs (individual files up to 4.5MB). Th
 The `/code` page currently makes 3+ serial unauthenticated GitHub API calls on every page load. No caching, no error handling, easily rate-limited (60 req/hr for unauthenticated).
 
 **New script:** `scripts/update_github.py`
+
 - Fetches profile data (`/users/joshchiou`), aggregated star count (`/users/joshchiou/repos?per_page=100`), and per-featured-repo metadata (language, stars, forks).
 - Uses `GITHUB_TOKEN` for authenticated requests (5,000 req/hr).
 - Writes `_data/github_stats.json` with: avatar URL, name, public_repos, followers, total_stars, and a `repos` object keyed by `owner/name` with language, stars, forks.
@@ -38,11 +39,13 @@ The `/code` page currently makes 3+ serial unauthenticated GitHub API calls on e
 ### 1d. Preconnect hints
 
 Add to `_includes/head.liquid`:
+
 ```html
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 ```
+
 Saves ~100-300ms on first paint by establishing connections early.
 
 ### 1e. Strava data externalization
@@ -66,6 +69,7 @@ Currently `{{ site.data.strava_calendar | jsonify }}` is inlined in the cycling 
 New script: `scripts/update_publications.py`
 
 **Data flow:**
+
 1. Fetch publication list from **ORCID public API** (`GET /v3.0/0000-0002-4618-0647/works`). Returns DOIs, titles, journal names, years.
 2. For each DOI not already present in `_bibliography/papers.bib`, fetch full metadata from **Semantic Scholar API** (`GET /graph/v1/paper/DOI:{doi}?fields=title,authors,venue,year,externalIds,abstract`).
 3. Generate draft BibTeX entries matching the existing format:
@@ -83,6 +87,7 @@ New script: `scripts/update_publications.py`
 Revise `scripts/update_scholar.py`:
 
 **Citation metrics strategy:**
+
 - **Primary:** Google Scholar via `scholarly` library with 15-second timeout (spawned in subprocess, as current implementation does).
 - **On failure:** Preserve the last known good values from `_data/scholar_stats.json`. Do NOT fall back to Semantic Scholar for display metrics — the 27% citation gap (7,529 GS vs 5,464 S2 as of 2026-04-28) makes S2 numbers misleading.
 - **Plausibility check:** Only update if new citation count >= previous count (citations don't decrease). If scholarly returns a value below the last known, log a warning and keep the existing value.
@@ -95,12 +100,13 @@ Revise `scripts/update_scholar.py`:
 Currently, the about page hardcodes `<span class="about-journal-pill">Nature</span>` etc. in `_layouts/about.liquid`.
 
 **Action:** Extend `update_scholar.py` to scan `papers.bib` for journals in the `TOP_JOURNALS` set and write a `top_journals` array to `scholar_stats.json`:
+
 ```json
 {
   "top_journals": [
-    {"name": "Nature", "count": 4},
-    {"name": "Cell", "count": 2},
-    {"name": "Nature Genetics", "count": 3}
+    { "name": "Nature", "count": 4 },
+    { "name": "Cell", "count": 2 },
+    { "name": "Nature Genetics", "count": 3 }
   ]
 }
 ```
@@ -110,6 +116,7 @@ Update `about.liquid` to iterate over `stats.top_journals`. If a new top journal
 ### 2d. Image optimization CI step
 
 Add a step in `deploy.yml` (after checkout, before Jekyll build) that:
+
 1. Finds image files in `assets/img/` that are `.jpg`, `.jpeg`, or `.png` and larger than 500KB without corresponding WebP variants already committed.
 2. Runs `prep_images.py` on them to generate WebP responsive variants as build artifacts (not committed — they supplement what's already in the repo).
 3. This acts as a safety net for images that were committed without being pre-optimized.
@@ -119,6 +126,7 @@ Add a step in `deploy.yml` (after checkout, before Jekyll build) that:
 Add `treosh/lighthouse-ci-action@v12` (or latest) to `deploy.yml` after the Jekyll build step.
 
 **Configuration:**
+
 - Test the built `_site/index.html` and `_site/publications/index.html` (two representative pages).
 - Budgets: performance >= 80, accessibility >= 95, best-practices >= 90, SEO >= 90.
 - Failures posted as GitHub check annotations. Does not block deploy initially (assertion mode) — can be switched to enforcement once baselines are met.
@@ -136,11 +144,11 @@ No additional code needed — the template handles index generation and UI.
 ### 3b. GoatCounter analytics
 
 **Integration:**
+
 - Sign up at goatcounter.com (free for personal/non-commercial use).
 - Add a `<script>` tag to `_includes/head.liquid` (or a new `_includes/scripts/goatcounter.liquid` partial for clean separation):
   ```html
-  <script data-goatcounter="https://SITECODE.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://SITECODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   ```
 - Gate behind a config flag: `enable_goatcounter: true` + `goatcounter_code: SITECODE` in `_config.yml`.
 - No cookies, no consent banner, GDPR-compliant, ~3.5KB script.
@@ -150,6 +158,7 @@ No additional code needed — the template handles index generation and UI.
 ### 3c. SEO improvements
 
 **Per-page meta descriptions:** Add `description:` frontmatter to pages that lack it:
+
 - `cv.md` — "Curriculum vitae of Joshua Chiou — experience, education, publications, and skills in computational genetics and proteomics."
 - Any other pages missing descriptions.
 
@@ -168,6 +177,7 @@ No additional code needed — the template handles index generation and UI.
 The page exists with 6 photos in a basic Bootstrap grid. Photos are 558KB to 4.5MB each.
 
 **Actions:**
+
 1. Run `prep_images.py` on all cat photos to generate WebP responsive variants.
 2. Replace the basic grid with a Swiper gallery (already in al-folio's third-party libs). Thumbnails load first; clicking opens full-size in a lightbox.
 3. Add `loading="lazy"` to all gallery images.
@@ -177,6 +187,7 @@ The page exists with 6 photos in a basic Bootstrap grid. Photos are 558KB to 4.5
 Lower priority. The existing layout on `/code` is functional.
 
 **Enhancements:**
+
 - Group contributions by year with year headers.
 - Add subtle language color dots (matching repo card style) next to each contribution.
 - No structural changes needed.

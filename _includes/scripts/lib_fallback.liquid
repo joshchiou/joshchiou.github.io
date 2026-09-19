@@ -1,0 +1,64 @@
+{% comment %}
+  Graceful degradation for CDN-hosted chart/map libraries.
+
+  ECharts, Leaflet and D3 are loaded from jsdelivr with SRI hashes. If the CDN
+  is unreachable — or an integrity hash stops matching — the library global is
+  simply absent and the affected pane renders as a blank box with no
+  explanation. This replaces that blank box with a short notice.
+
+  Usage: mark the container with data-requires="echarts|leaflet|d3" (space
+  separated for multiple). Optionally add data-fallback-hide="<selectors>" to
+  hide now-meaningless controls (view toggles, legends, hints).
+{% endcomment %}
+{% if page.chart.echarts or page.map or page.d3 %}
+  <script>
+    (function () {
+      var LIBS = {
+        echarts: function () {
+          return typeof window.echarts !== 'undefined';
+        },
+        leaflet: function () {
+          return typeof window.L !== 'undefined';
+        },
+        d3: function () {
+          return typeof window.d3 !== 'undefined';
+        },
+      };
+      var LABELS = { echarts: 'the charts', leaflet: 'the map', d3: 'the map' };
+
+      function check() {
+        var panes = document.querySelectorAll('[data-requires]');
+        Array.prototype.forEach.call(panes, function (el) {
+          var needed = (el.getAttribute('data-requires') || '').split(/\s+/);
+          var missing = needed.filter(function (name) {
+            return LIBS[name] && !LIBS[name]();
+          });
+          if (missing.length === 0) return;
+
+          var note = document.createElement('div');
+          note.className = 'lib-fallback-note';
+          note.setAttribute('role', 'status');
+          note.textContent =
+            'Couldn’t load ' + (LABELS[missing[0]] || 'this content') + ' — a required library didn’t load. Reloading the page usually fixes it.';
+
+          el.innerHTML = '';
+          el.appendChild(note);
+          /* Panes are sized for a chart/map that will never arrive. */
+          el.style.height = 'auto';
+          el.style.minHeight = '0';
+
+          var hide = el.getAttribute('data-fallback-hide');
+          if (hide) {
+            Array.prototype.forEach.call(document.querySelectorAll(hide), function (h) {
+              h.style.display = 'none';
+            });
+          }
+        });
+      }
+
+      /* Run after load so the libraries and their consumers have had their turn. */
+      if (document.readyState === 'complete') check();
+      else window.addEventListener('load', check);
+    })();
+  </script>
+{% endif %}

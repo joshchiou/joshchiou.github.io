@@ -32,6 +32,12 @@
   ></script>
 {% endif %}
 
+<!--
+  Scroll entrance animations. Loaded separately from common.js so that
+  content is never left invisible when jQuery fails to load.
+-->
+<script defer src="{{ '/assets/js/reveal.js' | relative_url | bust_file_cache }}"></script>
+
 <!-- Load Common JS -->
 <script src="{{ '/assets/js/no_defer.js' | relative_url | bust_file_cache }}"></script>
 <script defer src="{{ '/assets/js/common.js' | relative_url | bust_file_cache }}"></script>
