@@ -1,0 +1,13 @@
+# Media coverage, shown on the publications page (_includes/press.liquid).
+# Newest first. `paper` is an optional bib key from _bibliography/papers.bib.
+- outlet: SelectScience
+  title: New insights into human disease that could propel drug development
+  year: 2023
+  url: https://www.selectscience.net/article/new-insights-into-human-disease-that-could-propel-drug-development
+  paper: sun2023plasma
+
+- outlet: UC San Diego Today
+  title: Genetic tools help identify a cellular culprit for type 1 diabetes
+  year: 2021
+  url: https://today.ucsd.edu/story/genetic-tools-help-identify-a-cellular-culprit-for-type-1-diabetes
+  paper: chiou2021interpreting

@@ -112,7 +112,10 @@ x_username: # your X handle
 youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
-contact_note:
+contact_note: >-
+  I'm glad to hear about speaking invitations, scientific collaborations, and mentoring or
+  career conversations, especially with scientists considering a move into industry. Email
+  is the best way to reach me. (I can't discuss unpublished work at Lilly.)
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification

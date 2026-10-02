@@ -1,0 +1,17 @@
+{% comment %} Media coverage list for the publications page, from _data/press.yml {% endcomment %}
+{% if site.data.press %}
+  <h2 class="pub-section-heading press-heading" id="press">Press</h2>
+  <ul class="talks-list press-list">
+    {% for item in site.data.press %}
+      <li class="talk-item">
+        <div class="talk-year">{{ item.year }}</div>
+        <div class="talk-body">
+          <div class="talk-title">
+            <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+          </div>
+          <div class="talk-meta">{{ item.outlet }}</div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

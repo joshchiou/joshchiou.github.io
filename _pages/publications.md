@@ -23,4 +23,6 @@ nav_order: 1
 
 {% include talks.liquid %}
 
+{% include press.liquid %}
+
 </div>

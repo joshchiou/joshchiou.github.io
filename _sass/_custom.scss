@@ -351,6 +351,15 @@ html[data-theme="dark"] {
   }
 }
 
+// Homepage contact note under the social icons
+article .social .contact-note {
+  max-width: 56ch;
+  margin: 0.75rem auto 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--global-text-color-light);
+}
+
 // Scroll entrance animations: visible by default, hidden only once the
 // observer in assets/js/common.js has started (html.anim-ready).
 .animate-in {
