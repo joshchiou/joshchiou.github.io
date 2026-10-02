@@ -155,9 +155,18 @@
       items:
         - "Member, American Society for Human Genetics (ASHG)"
 
-- title: Invited Talks & Presentations
+- title: Talks & Presentations
   type: time_table
   contents:
+    - title: "Tirzepatide was associated with differential proteomic responses compared to semaglutide: exploratory findings from the SURMOUNT-5 trial"
+      institution: EASD 62nd Annual Meeting
+      location: Milan, Italy
+      year: 2026
+      description:
+        - Oral presentation
+      linkitems:
+        - linkname: abstract
+          link: "https://easddistribute.m-anage.com/from.storage?image=DRQMKAdip9FzW2MCANbX41tkQmjbrlQspmPo0v0BxT9lAgy13X6VS7zqtYA0Botg0"
     - title: "Advancing Early Target Discovery through Large-Scale Proteomics and Expansion Plans for the UKB-PPP"
       institution: Festival of Genomics Boston
       location: Boston, MA
