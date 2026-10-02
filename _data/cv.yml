@@ -62,7 +62,7 @@
       location: Menlo Park, CA
       year: 2015 - 2016
       icon_label: IDx
-      icon_bg: "#ff9902"
+      icon_bg: "#9c5300"
       previous_title: Research Associate
       previous_year: 2015
       roles:
@@ -104,7 +104,7 @@
       location: Los Angeles, CA
       year: 2011 - 2015
       icon_label: UCLA
-      icon_bg: "#2774AE"
+      icon_bg: "#1a4f7a"
       icon_color: "#FFD100"
 
 - title: Selected Publications

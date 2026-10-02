@@ -28,7 +28,7 @@ arms, and genetic causal inference (Mendelian randomization, pQTL colocalization
 signals in biology rather than confounding. I also build the analytical infrastructure
 (pipelines, data models, dashboards) that supports the broader clinical omics team.
 
-### SURMOUNT-5: tirzepatide versus semaglutide
+## SURMOUNT-5: tirzepatide versus semaglutide
 
 SURMOUNT-5 compared tirzepatide (10 and 15 mg) head-to-head with semaglutide (1.7 and 2.4 mg) in
 adults with obesity. A head-to-head design is unusually informative for proteomics: both arms lose

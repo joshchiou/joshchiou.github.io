@@ -2,6 +2,109 @@
  * Site-specific overrides, imported last so they win over upstream al-folio.
  ******************************************************************************/
 
+// -----------------------------------------------------------------------------
+// Accessibility: theme colors that meet WCAG AA (4.5:1 for body text)
+// -----------------------------------------------------------------------------
+// Light: stock #2980b9 is 4.3:1 on white and grey #828282 is 3.8:1.
+:root {
+  --global-theme-color: #1d6aa5; // 5.7:1 on white
+  --global-hover-color: #175a8c;
+  --global-text-color-light: #6b6b6b; // 5.3:1 on white
+}
+
+// Dark: grey #828282 is 4.4:1 on #1c1c1d and cyan #2698ba drops to 4.2:1 on tinted cards.
+html[data-theme="dark"] {
+  --global-theme-color: #3fb0d4; // 6.8:1 on #1c1c1d
+  --global-hover-color: #6cc4e0;
+  --global-text-color-light: #a0a0a0; // 6.5:1 on #1c1c1d
+
+  .text-muted {
+    color: var(--global-text-color-light) !important;
+  }
+
+  // The brighter dark accent needs dark text when it is a background.
+  .contrib-filter-btn.active,
+  .chart-toggle-btn.active,
+  .bike-card-status,
+  .strava-link:hover,
+  .about-cta-primary,
+  .about-cta-primary:hover,
+  .about-journal-pill {
+    color: #1c1c1d;
+  }
+}
+
+// Inline links in prose: distinguishable without relying on color.
+.post article p a:not(.btn),
+.post article li a:not(.btn),
+.post-description a,
+.news a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Visible keyboard focus everywhere.
+a,
+button,
+input,
+summary,
+[tabindex] {
+  &:focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// Projects page section labels were divider-colored (1.2:1).
+.projects h2.category {
+  color: var(--global-text-color-light);
+}
+
+// CV timeline education year: #e67e22 is 2.8:1 on white.
+.timeline-year--edu {
+  color: #a85400;
+
+  html[data-theme="dark"] & {
+    color: #f0a050;
+  }
+}
+
+// Publication and contribution badges.
+.publications ol.bibliography li .links .badge-preprint,
+.badge-preprint {
+  color: #212529 !important; // white on #f0ad4e is 1.9:1
+}
+
+.badge-perf {
+  background-color: #8f5d0a;
+}
+
+// Cycling year-over-year delta (set by assets/js/cycling.js).
+.stat-delta-up {
+  color: #1e8449;
+}
+
+.stat-delta-down {
+  color: #c0392b;
+}
+
+html[data-theme="dark"] {
+  .stat-delta-up {
+    color: #4cc97a;
+  }
+
+  .stat-delta-down {
+    color: #ff7b6b;
+  }
+}
+
 // Talks list (publications page, from _includes/talks.liquid)
 .talks-list {
   list-style: none;

@@ -54,7 +54,7 @@
     var sign = yoyDelta >= 0 ? '+' : '';
     var pct = yoyPct !== null ? ' (' + sign + yoyPct + '%)' : '';
     el.textContent = sign + yoyDelta + ' mi vs ' + prevYear + pct + ' · on pace for ~' + projFull + ' mi';
-    el.style.color = yoyDelta >= 0 ? '#27ae60' : '#e74c3c';
+    el.classList.add(yoyDelta >= 0 ? 'stat-delta-up' : 'stat-delta-down');
     if (sep) sep.style.display = '';
   }
 
