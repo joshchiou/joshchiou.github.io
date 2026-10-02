@@ -59,6 +59,27 @@ Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via
 caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
 restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
+**Publication metadata:** run the "Enrich Publication Metadata" workflow (manual trigger) to
+add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
+`scripts/enrich_bib.py`; it opens a PR. Selected papers also carry a hand-written `tldr`
+(plain-language summary) and a `preview` image path.
+
+## Homepage and publications data
+
+- `_data/research_themes.yml` — the three research theme cards on the homepage
+- `_data/press.yml` — media coverage listed on /publications/ (newest first)
+- `_data/cv.yml` "Talks & Presentations" — also rendered on /publications/; add slides/video
+  links as `linkitems` (`linkname: slides`, `link: https://doi.org/...`)
+- `contact_note` in `_config.yml` — text under the homepage social icons
+
+## Talk slides (Zenodo)
+
+Slides are archived on Zenodo (DOI, permanent), not committed to this public repo.
+`scripts/zenodo_deposit.py META.json slides.pdf` creates a **draft** only; Josh publishes it.
+Metadata lives in `docs/talks/*.zenodo.json`. Needs `ZENODO_TOKEN` (deposit:write scope) and
+`zenodo.org` allowed in the environment's network settings. Get employer clearance before
+posting any deck: the EASD 2026 deck (© Lilly) is not cleared and must not be uploaded.
+
 ## Bib keys for key papers
 
 - `chiou2021interpreting` — T1D + exocrine pancreas, *Nature* 2021

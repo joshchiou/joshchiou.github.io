@@ -1,0 +1,31 @@
+{
+  "upload_type": "presentation",
+  "title": "Advancing early target discovery through large-scale proteomics and expansion plans for the UKB-PPP",
+  "creators": [
+    {
+      "name": "Chiou, Joshua",
+      "affiliation": "Pfizer",
+      "orcid": "0000-0002-4618-0647"
+    }
+  ],
+  "description": "<p>Slides from an invited talk at the Festival of Genomics Boston, 25 June 2025. The talk reviews the UK Biobank Pharma Proteomics Project (UKB-PPP) pilot, in which plasma levels of about 3,000 proteins were measured in 54,000 UK Biobank participants, and shows how pairing protein quantitative trait loci (pQTLs) with large-scale human genetics, through colocalization and Mendelian randomization, supports early target discovery. Two examples are presented: the Activin pathway for chronic kidney disease and CD300LG for residual cardiovascular risk. The talk closes with plans for the next phase of UKB-PPP, which is profiling the full UK Biobank cohort.</p>",
+  "keywords": [
+    "proteomics",
+    "pQTL",
+    "UK Biobank",
+    "UKB-PPP",
+    "Mendelian randomization",
+    "colocalization",
+    "target discovery",
+    "chronic kidney disease",
+    "cardiovascular disease"
+  ],
+  "publication_date": "2025-06-25",
+  "conference_title": "Festival of Genomics Boston",
+  "conference_acronym": "FoG Boston 2025",
+  "conference_dates": "25 June 2025",
+  "conference_place": "Boston, MA, USA",
+  "access_right": "open",
+  "license": "cc-by-nc-nd-4.0",
+  "language": "eng"
+}
