@@ -6,7 +6,7 @@ import requests
 import yaml
 
 OUT = Path("scratch-figures")
-PMCIDS = ["PMC10567551", "PMC10560508", "PMC9037575", "PMC6505525", "PMC10550816"]
+PMCIDS = []  # done in the first run
 UA = {"User-Agent": "Mozilla/5.0 (joshchiou.github.io figure fetch)"}
 
 
@@ -62,7 +62,29 @@ for pmcid in PMCIDS:
             print(pmcid, "PMC page failed:", e)
 
 # Gallery photos already on the images-v1 release
-for yml in ("_data/bike_gallery.yml", "_data/cocktail_gallery.yml", "_data/bikes.yml"):
+# Publisher (Springer Nature) figure images, by DOI and file prefix
+SPRINGER = {
+    "sun2023plasma": ("10.1038/s41586-023-06592-6", "41586_2023_6592"),
+    "chiou2021interpreting": ("10.1038/s41586-021-03552-w", "41586_2021_3552"),
+    "chiou2021single": ("10.1038/s41588-021-00823-0", "41588_2021_823"),
+    "greenwald2019pancreatic": ("10.1038/s41467-019-09975-4", "41467_2019_9975"),
+    "wang2023integrating": ("10.1038/s41588-023-01397-9", "41588_2023_1397"),
+}
+for key, (doi, prefix) in SPRINGER.items():
+    art = "art%3A" + doi.replace("/", "%2F")
+    for n in range(1, 9):
+        for ext in ("png", "jpg"):
+            url = f"https://media.springernature.com/full/springer-static/image/{art}/MediaObjects/{prefix}_Fig{n}_HTML.{ext}"
+            try:
+                r = get(url)
+                if r.headers.get("content-type", "").startswith("image"):
+                    save(OUT / "springer" / key / f"Fig{n}.{ext}", r.content)
+                    break
+            except Exception as e:
+                if ext == "jpg":
+                    print("  missing", key, n, e)
+
+for yml in ():  # photos done in the first run
     try:
         items = yaml.safe_load(Path(yml).read_text()) or []
     except Exception as e:
