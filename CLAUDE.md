@@ -111,10 +111,22 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 
 ## Project card images
 
-Each project card has a thumbnail image set via `img:` in its frontmatter. Currently using
-abstract SVGs in `assets/img/projects/work/` and `assets/img/projects/fun/`.
+Each project card has a 16:10 image set via `img:` in its frontmatter, in `assets/img/projects/work/`
+and `assets/img/projects/fun/`:
+- Paper cards (T1D, islet, UKB-PPP) use cropped panels from Josh's papers. The same crops serve as
+  `preview` thumbnails in `papers.bib`; other selected papers' thumbnails are in
+  `assets/img/publication_preview/`.
+- Lilly, Pfizer, and Home Assistant are drawn by `scripts/render_project_art.py` from synthetic data
+  (no real results; the Lilly and Pfizer cards say so in their credit line).
+- Travel is drawn by `scripts/render_travel_card.py` from the travel data files. Re-run it after
+  editing them. Those files are auto-generated, so hand additions (Milan and Rome, 2026) are lost
+  on a Takeout re-run unless the export includes them.
+- `img_credit:` in a project's frontmatter adds a "Card image: …" attribution line at the bottom of
+  its page. Every figure taken from a paper needs one.
+- `og_image:` points at a JPG copy in `assets/img/projects/og/` (social sites don't read WebP/SVG
+  reliably). Regenerate it when the card image changes.
 
-To replace an SVG with a real image:
+To replace a card image with a photo:
 1. Run `python3 scripts/prep_images.py /path/to/source assets/img/projects/work/` (or `fun/`)
 2. Update the `img:` field in the project's `_projects/*.md` frontmatter
 3. Optionally add `img_position: top` (or `center`, `bottom`) to control cropping via CSS `object-position`

@@ -2,7 +2,9 @@
 layout: page
 title: UK Biobank Pharma Proteomics Project
 description: Pre-competitive consortium mapping the genetic architecture of the human plasma proteome.
-img: assets/img/projects/work/ukb-ppp.svg
+img: assets/img/projects/work/ukb-ppp-pqtl-map.webp
+img_credit: "Figure adapted from Sun et al., <em>Nature</em> 2023 (Fig. 2a), CC BY 4.0."
+og_image: https://joshchiou.github.io/assets/img/projects/og/ukb-ppp-pqtl-map.jpg
 importance: 3
 category: work
 related_publications: true

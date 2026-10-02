@@ -2,7 +2,8 @@
 layout: page
 title: Cocktails
 description: Home bartending notes — classic recipes, amaro obsessions, and tiki detours.
-img: assets/img/projects/fun/cocktails.svg
+img: assets/img/projects/fun/cocktails-peaflower-sour.webp
+og_image: https://joshchiou.github.io/assets/img/projects/og/cocktails-peaflower-sour.jpg
 importance: 3
 category: fun
 images:

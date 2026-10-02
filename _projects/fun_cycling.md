@@ -2,7 +2,8 @@
 layout: page
 title: Cycling
 description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
-img: assets/img/projects/fun/cycling.svg
+img: assets/img/projects/fun/cycling-acadia.webp
+og_image: https://joshchiou.github.io/assets/img/projects/og/cycling-acadia.jpg
 importance: 2
 category: fun
 map: true

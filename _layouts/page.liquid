@@ -38,4 +38,8 @@ layout: default
       {% bibliography --cited_in_order %}
     </div>
   {% endif %}
+
+  {% if page.img_credit %}
+    <p class="project-img-credit">Card image: {{ page.img_credit }}</p>
+  {% endif %}
 </div>
