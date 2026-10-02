@@ -4,7 +4,7 @@ title: Translational Proteomics for Obesity Clinical Trials
 description: Mechanistic and biomarker insights from large-scale proteomics in phase 2/3 obesity trials, including the SURMOUNT-5 head-to-head comparison.
 img: assets/img/projects/work/lilly-proteomics.webp
 img_credit: "Illustration with synthetic data; it shows no study results."
-og_image: https://joshchiou.github.io/assets/img/projects/og/lilly-proteomics.jpg
+og_image: /assets/img/projects/og/lilly-proteomics.jpg
 importance: 5
 category: work
 related_publications: false

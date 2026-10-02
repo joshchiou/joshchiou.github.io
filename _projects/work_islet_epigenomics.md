@@ -4,7 +4,7 @@ title: Single-Cell Epigenomics of Pancreatic Islets
 description: Mapping cell-type-specific chromatin accessibility and its role in diabetes genetic risk.
 img: assets/img/projects/work/islet-scatac-umap.webp
 img_credit: "Figure adapted from Chiou et al., <em>Nature Genetics</em> 2021 (Fig. 1a)."
-og_image: https://joshchiou.github.io/assets/img/projects/og/islet-scatac-umap.jpg
+og_image: /assets/img/projects/og/islet-scatac-umap.jpg
 importance: 2
 category: work
 related_publications: true
