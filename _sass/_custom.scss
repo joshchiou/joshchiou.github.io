@@ -309,6 +309,48 @@ html[data-theme="dark"] {
   }
 }
 
+// Publication thumbnails and plain-language summaries (_layouts/bib.liquid)
+.publications ol.bibliography li {
+  .pub-thumb {
+    padding-right: 0;
+
+    .preview {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--global-divider-color);
+      margin-top: 0.2rem;
+    }
+  }
+
+  .pub-tldr {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--global-text-color-light);
+    margin: 0.15rem 0 0.25rem;
+  }
+}
+
+// Phones: thumbnails would push the title below the fold; hide them.
+@media (max-width: 575.98px) {
+  .publications ol.bibliography li .pub-thumb {
+    display: none;
+  }
+}
+
+// The CV keeps its compact list style.
+.cv-publications {
+  .pub-thumb,
+  .pub-tldr {
+    display: none !important;
+  }
+
+  ol.bibliography li .col-sm-10 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 // Scroll entrance animations: visible by default, hidden only once the
 // observer in assets/js/common.js has started (html.anim-ready).
 .animate-in {
