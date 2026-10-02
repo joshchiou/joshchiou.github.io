@@ -9,15 +9,7 @@
     }
   ],
   "description": "<p>Slides from an invited talk at the Festival of Genomics Boston, 25 June 2025, on using large-scale plasma proteomics from the UK Biobank Pharma Proteomics Project (UKB-PPP) together with human genetics for early target discovery, and on plans for the next phase of UKB-PPP.</p>",
-  "keywords": [
-    "proteomics",
-    "pQTL",
-    "UK Biobank",
-    "UKB-PPP",
-    "Mendelian randomization",
-    "colocalization",
-    "target discovery"
-  ],
+  "keywords": ["proteomics", "pQTL", "UK Biobank", "UKB-PPP", "Mendelian randomization", "colocalization", "target discovery"],
   "publication_date": "2025-06-25",
   "conference_title": "Festival of Genomics Boston",
   "conference_acronym": "FoG Boston 2025",
