@@ -79,6 +79,7 @@ Slides are archived on Zenodo (DOI, permanent), not committed to this public rep
 Metadata lives in `docs/talks/*.zenodo.json`. Needs `ZENODO_TOKEN` (deposit:write scope) and
 `zenodo.org` allowed in the environment's network settings. Get employer clearance before
 posting any deck: the EASD 2026 deck (© Lilly) is not cleared and must not be uploaded.
+The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not upload until he says so.
 
 ## Bib keys for key papers
 

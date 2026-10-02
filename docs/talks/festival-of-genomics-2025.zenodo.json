@@ -8,7 +8,7 @@
       "orcid": "0000-0002-4618-0647"
     }
   ],
-  "description": "<p>Slides from an invited talk at the Festival of Genomics Boston, 25 June 2025. The talk reviews the UK Biobank Pharma Proteomics Project (UKB-PPP) pilot, in which plasma levels of about 3,000 proteins were measured in 54,000 UK Biobank participants, and shows how pairing protein quantitative trait loci (pQTLs) with large-scale human genetics, through colocalization and Mendelian randomization, supports early target discovery. Two examples are presented: the Activin pathway for chronic kidney disease and CD300LG for residual cardiovascular risk. The talk closes with plans for the next phase of UKB-PPP, which is profiling the full UK Biobank cohort.</p>",
+  "description": "<p>Slides from an invited talk at the Festival of Genomics Boston, 25 June 2025, on using large-scale plasma proteomics from the UK Biobank Pharma Proteomics Project (UKB-PPP) together with human genetics for early target discovery, and on plans for the next phase of UKB-PPP.</p>",
   "keywords": [
     "proteomics",
     "pQTL",
@@ -16,9 +16,7 @@
     "UKB-PPP",
     "Mendelian randomization",
     "colocalization",
-    "target discovery",
-    "chronic kidney disease",
-    "cardiovascular disease"
+    "target discovery"
   ],
   "publication_date": "2025-06-25",
   "conference_title": "Festival of Genomics Boston",
