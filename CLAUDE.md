@@ -23,7 +23,7 @@ al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publi
 Places to update together when role/focus changes:
 1. `_pages/about.md` subtitle, front-matter description, and first paragraph
 2. `_config.yml` description (meta tag)
-3. `_includes/head.liquid` JSON-LD `jobTitle`
+3. `_includes/head.liquid` JSON-LD `jobTitle` and WebSite `description`
 4. `_data/cv.yml` current role (add a `roles` entry, keep the previous one)
 5. `assets/img/og-image.svg` (social preview), then `python3 scripts/render_og_image.py`
    to regenerate `og-image.png` (set `CHROMIUM_PATH` if Playwright's browser isn't installed)
