@@ -126,15 +126,8 @@ layout: default
     })();
     </script>
 
-    <!-- News -->
-    {% if page.news and site.announcements.enabled %}
-      <div class="animate-in">
-      <h2 class="about-section-heading">
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
-      </div>
-    {% endif %}
+    <!-- Research themes -->
+    <div class="animate-in">{% include research_themes.liquid %}</div>
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
@@ -143,6 +136,16 @@ layout: default
         <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
       </h2>
       {% include selected_papers.liquid %}
+      </div>
+    {% endif %}
+
+    <!-- News -->
+    {% if page.news and site.announcements.enabled %}
+      <div class="animate-in">
+      <h2 class="about-section-heading">
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+      </h2>
+      {% include news.liquid limit=true %}
       </div>
     {% endif %}
 
