@@ -37,6 +37,24 @@ def extract_existing_dois(bib_path: Path) -> set[str]:
     return dois
 
 
+def normalize_title(title: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+
+def extract_existing_titles(bib_path: Path) -> set[str]:
+    """Normalized titles in papers.bib, to catch the same paper under another DOI."""
+    text = bib_path.read_text()
+    return {normalize_title(m.group(1)) for m in re.finditer(r"^\s*title\s*=\s*\{(.+?)\},?\s*$", text, re.M | re.I)}
+
+
+def title_already_listed(title: str, existing_titles: set[str]) -> bool:
+    """True if the title matches an existing one, or one contains the other (e.g. "Multi-INTACT: ...")."""
+    t = normalize_title(title)
+    if not t:
+        return False
+    return any(t == e or (len(t) > 40 and (t in e or e in t)) for e in existing_titles)
+
+
 def fetch_orcid_works() -> list[dict]:
     headers = {"Accept": "application/json"}
     resp = requests.get(ORCID_API, headers=headers, timeout=30)
@@ -122,8 +140,12 @@ def main():
     existing_dois = extract_existing_dois(BIB_PATH)
     print(f"  {len(existing_dois)} DOIs already in papers.bib")
 
-    new_works = [w for w in orcid_works if w["doi"] not in existing_dois]
-    print(f"  {len(new_works)} new DOIs to process")
+    existing_titles = extract_existing_titles(BIB_PATH)
+    new_works = [
+        w for w in orcid_works
+        if w["doi"] not in existing_dois and not title_already_listed(w.get("title", ""), existing_titles)
+    ]
+    print(f"  {len(new_works)} new works to process (DOI and title not already in papers.bib)")
 
     if not new_works:
         print("No new publications found.")

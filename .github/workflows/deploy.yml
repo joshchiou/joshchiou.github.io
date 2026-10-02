@@ -18,6 +18,12 @@ on:
       - "**.yml"
       - "Gemfile"
       - "Gemfile.lock"
+  # Data workflows push with GITHUB_TOKEN, which doesn't trigger push events,
+  # so redeploy explicitly after they finish.
+  workflow_run:
+    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Update Strava Data"]
+    types: [completed]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -31,6 +37,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️

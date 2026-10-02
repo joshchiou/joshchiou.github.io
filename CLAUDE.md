@@ -59,6 +59,19 @@ Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via
 caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
 restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
+**Scholar stats:** `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
+`scholarly` needs `bibtexparser<2` (pinned in the workflow). On a failed fetch the script exits
+non-zero and leaves `_data/scholar_stats.json` unchanged, so a red run means stale numbers.
+
+**Refresh chain:** the Scholar, GitHub stats, and Strava workflows push with `GITHUB_TOKEN`, which
+doesn't trigger push-based workflows, so `deploy.yml` also runs on `workflow_run` after each of
+them succeeds. New data workflows that should update the live site must be added to that list.
+
+**New publications:** `scripts/update_publications.py` (weekly) opens a PR with ORCID works whose
+DOI and title aren't already in `papers.bib`; preprint versions with different titles still appear
+and should be rejected in review. Needs repo setting "Allow GitHub Actions to create and approve
+pull requests" (Settings → Actions → General).
+
 **Publication metadata:** run the "Enrich Publication Metadata" workflow (manual trigger) to
 add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
 `scripts/enrich_bib.py`; it opens a PR. Selected papers also carry a hand-written `tldr`

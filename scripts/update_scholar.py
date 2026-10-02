@@ -2,8 +2,9 @@
 """Fetch Google Scholar stats and count publications from papers.bib.
 
 Writes _data/scholar_stats.json with citation count, h-index, paper counts,
-top-journal breakdown, and update metadata. Preserves last-known-good values
-on fetch failure.
+top-journal breakdown, and update metadata. If the Scholar fetch fails, exits
+non-zero and leaves the file untouched, so the workflow run turns red instead
+of committing stale numbers with a fresh timestamp.
 
 Usage:
     python3 scripts/update_scholar.py
@@ -11,6 +12,7 @@ Usage:
 
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,7 +21,7 @@ BIB_PATH = Path(__file__).resolve().parent.parent / "_bibliography" / "papers.bi
 OUT_PATH = Path(__file__).resolve().parent.parent / "_data" / "scholar_stats.json"
 
 TOP_JOURNALS = {"Nature", "Cell", "Nature Genetics"}
-GOOGLE_SCHOLAR_TIMEOUT = 15
+GOOGLE_SCHOLAR_TIMEOUT = 60
 
 
 def count_bib_entries(bib_path: Path) -> tuple[int, list[dict]]:
@@ -48,7 +50,7 @@ def load_existing_stats() -> dict:
 
 
 def fetch_google_scholar(scholar_id: str) -> dict | None:
-    import subprocess, sys
+    import subprocess
     code = f"""
 import json
 from scholarly import scholarly
@@ -84,17 +86,7 @@ def main():
     scholar = fetch_google_scholar(SCHOLAR_ID)
 
     if scholar is None:
-        if existing.get("citations", 0) > 0:
-            print("Google Scholar failed — preserving last known good values")
-            scholar = {
-                "citations": existing["citations"],
-                "h_index": existing["h_index"],
-                "i10_index": existing.get("i10_index", 0),
-                "source": existing.get("source", "preserved"),
-            }
-        else:
-            print("Google Scholar failed and no existing data — using zeros")
-            scholar = {"citations": 0, "h_index": 0, "i10_index": 0, "source": "none"}
+        sys.exit(f"Google Scholar fetch failed; leaving {OUT_PATH.name} unchanged")
     else:
         prev_citations = existing.get("citations", 0)
         if scholar["citations"] < prev_citations:
