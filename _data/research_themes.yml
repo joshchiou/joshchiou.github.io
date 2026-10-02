@@ -1,0 +1,22 @@
+# Research themes shown on the homepage (_includes/research_themes.liquid).
+# Keep descriptions to one plain-language sentence.
+- title: Clinical trial proteomics
+  description: >-
+    Measuring thousands of blood proteins in obesity trials to learn how drugs like
+    tirzepatide and semaglutide work, beyond the weight they take off.
+  url: /projects/work_lilly_proteomics/
+  img: assets/img/projects/work/lilly-proteomics.svg
+
+- title: Population proteomics & genetics
+  description: >-
+    Linking genetic variation to blood protein levels across the UK Biobank to find
+    and validate new drug targets.
+  url: /projects/work_ukb_ppp/
+  img: assets/img/projects/work/ukb-ppp.svg
+
+- title: Diabetes genetics & single-cell epigenomics
+  description: >-
+    Pinpointing which pancreatic cell types and regulatory elements carry genetic risk
+    for type 1 and type 2 diabetes.
+  url: /projects/work_t1d_exocrine/
+  img: assets/img/projects/work/t1d-exocrine.svg

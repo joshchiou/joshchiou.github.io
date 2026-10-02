@@ -1,16 +1,27 @@
 - title: Experience
   type: time_table
   contents:
-    - title: Senior Advisor, Genomics
+    - title: Director, Genomics
       institution: Lilly
       location: Boston, MA
       year: 2025 - now
       icon_label: LLY
       icon_bg: "#d52b1e"
-      maindescription: >-
-        I collaborate with clinicians, biologists, and statisticians to generate mechanistic and biomarker
-        insights from large-scale proteomics across phase 2/3 obesity trials, while building the
-        analytical infrastructure supporting clinical omics research.
+      previous_title: Senior Advisor, Genomics
+      previous_year: 2025 - 2026
+      roles:
+        - title: Director, Genomics
+          year: 2026 - now
+          maindescription: >-
+            I lead translational proteomics strategy across late-stage obesity and cardiometabolic trials,
+            including head-to-head comparisons such as SURMOUNT-5, turning large-scale clinical omics into
+            mechanistic and biomarker insights that inform clinical development decisions.
+        - title: Senior Advisor, Genomics
+          year: 2025 - 2026
+          maindescription: >-
+            I collaborated with clinicians, biologists, and statisticians to generate mechanistic and biomarker
+            insights from large-scale proteomics across phase 2/3 obesity trials, while building the
+            analytical infrastructure supporting clinical omics research.
 
     - title: Senior Principal Computational Geneticist
       institution: Pfizer
@@ -51,7 +62,7 @@
       location: Menlo Park, CA
       year: 2015 - 2016
       icon_label: IDx
-      icon_bg: "#ff9902"
+      icon_bg: "#9c5300"
       previous_title: Research Associate
       previous_year: 2015
       roles:
@@ -93,7 +104,7 @@
       location: Los Angeles, CA
       year: 2011 - 2015
       icon_label: UCLA
-      icon_bg: "#2774AE"
+      icon_bg: "#1a4f7a"
       icon_color: "#FFD100"
 
 - title: Selected Publications
@@ -144,9 +155,18 @@
       items:
         - "Member, American Society for Human Genetics (ASHG)"
 
-- title: Invited Talks & Presentations
+- title: Talks & Presentations
   type: time_table
   contents:
+    - title: "Tirzepatide was associated with differential proteomic responses compared to semaglutide: exploratory findings from the SURMOUNT-5 trial"
+      institution: EASD 62nd Annual Meeting
+      location: Milan, Italy
+      year: 2026
+      description:
+        - Oral presentation
+      linkitems:
+        - linkname: abstract
+          link: "https://easddistribute.m-anage.com/from.storage?image=DRQMKAdip9FzW2MCANbX41tkQmjbrlQspmPo0v0BxT9lAgy13X6VS7zqtYA0Botg0"
     - title: "Advancing Early Target Discovery through Large-Scale Proteomics and Expansion Plans for the UKB-PPP"
       institution: Festival of Genomics Boston
       location: Boston, MA

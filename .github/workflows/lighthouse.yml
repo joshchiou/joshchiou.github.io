@@ -30,6 +30,8 @@ jobs:
             --collect.url=https://joshchiou.github.io/publications/ \
             --collect.url=https://joshchiou.github.io/projects/ \
             --collect.url=https://joshchiou.github.io/code/ \
+            --collect.url=https://joshchiou.github.io/cv/ \
+            --collect.url=https://joshchiou.github.io/news/ \
             --collect.numberOfRuns=3 \
             --upload.target=temporary-public-storage \
             --assert.assertions.categories:performance=["warn",{"minScore":0.8}] \

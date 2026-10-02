@@ -21,4 +21,8 @@ nav_order: 1
 
 {% bibliography %}
 
+{% include talks.liquid %}
+
+{% include press.liquid %}
+
 </div>

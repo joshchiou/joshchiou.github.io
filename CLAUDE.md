@@ -20,9 +20,13 @@ al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publi
 
 ## Tagline
 
-Two places to update together when role/focus changes:
-1. `_pages/about.md` subtitle (visible header)
+Places to update together when role/focus changes:
+1. `_pages/about.md` subtitle, front-matter description, and first paragraph
 2. `_config.yml` description (meta tag)
+3. `_includes/head.liquid` JSON-LD `jobTitle` and WebSite `description`
+4. `_data/cv.yml` current role (add a `roles` entry, keep the previous one)
+5. `assets/img/og-image.svg` (social preview), then `python3 scripts/render_og_image.py`
+   to regenerate `og-image.png` (set `CHROMIUM_PATH` if Playwright's browser isn't installed)
 
 ## Build
 
@@ -38,6 +42,11 @@ Or with Docker (recommended — matches CI environment):
 docker compose up
 ```
 
+**CV PDF:** `assets/pdf/CV.pdf` is not committed. The deploy workflow renders `/cv/` to PDF with
+`scripts/build_cv_pdf.py` (Playwright + Chromium), so it always matches `_data/cv.yml`. Print layout
+lives in the `@media print` block of `_sass/_custom.scss`. To preview locally after a build:
+`python3 scripts/build_cv_pdf.py --out ~/CV.pdf` (set `CHROMIUM_PATH` if needed).
+
 ## Data pipelines
 
 **Strava:** `scripts/update_strava.py` — run manually or via `.github/workflows/update-strava.yml`.
@@ -50,6 +59,28 @@ Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via
 caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
 restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
+**Publication metadata:** run the "Enrich Publication Metadata" workflow (manual trigger) to
+add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
+`scripts/enrich_bib.py`; it opens a PR. Selected papers also carry a hand-written `tldr`
+(plain-language summary) and a `preview` image path.
+
+## Homepage and publications data
+
+- `_data/research_themes.yml` — the three research theme cards on the homepage
+- `_data/press.yml` — media coverage listed on /publications/ (newest first)
+- `_data/cv.yml` "Talks & Presentations" — also rendered on /publications/; add slides/video
+  links as `linkitems` (`linkname: slides`, `link: https://doi.org/...`)
+- `contact_note` in `_config.yml` — text under the homepage social icons
+
+## Talk slides (Zenodo)
+
+Slides are archived on Zenodo (DOI, permanent), not committed to this public repo.
+`scripts/zenodo_deposit.py META.json slides.pdf` creates a **draft** only; Josh publishes it.
+Metadata lives in `docs/talks/*.zenodo.json`. Needs `ZENODO_TOKEN` (deposit:write scope) and
+`zenodo.org` allowed in the environment's network settings. Get employer clearance before
+posting any deck: the EASD 2026 deck (© Lilly) is not cleared and must not be uploaded.
+The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not upload until he says so.
+
 ## Bib keys for key papers
 
 - `chiou2021interpreting` — T1D + exocrine pancreas, *Nature* 2021
@@ -59,7 +90,8 @@ restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
 ## Don't touch unless re-templating
 
-- `_sass/` — al-folio CSS (upstream), except custom additions at the end of `_base.scss`
+- `_sass/` — al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
+  `_projects.scss`). Put new site-specific styles in `_sass/_custom.scss`, which is imported last.
 - `assets/libs/` — vendored JS libraries
 - `_config.yml` third_party_libraries block — library versions/integrity hashes
 - `bin/` — CI scripts (upstream)

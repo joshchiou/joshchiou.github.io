@@ -8,7 +8,7 @@ layout: default
   </style>
 {% endif %}
 
-<div class="post">
+<div class="post{% if page.collection == 'projects' %} post--project{% endif %}">
   {% include breadcrumbs.liquid %}
   <header class="post-header">
     {% if page.project_intro %}

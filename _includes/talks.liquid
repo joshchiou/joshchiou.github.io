@@ -1,0 +1,32 @@
+{% comment %}
+  Talks list for the publications page. Reads the "Talks & Presentations"
+  section of _data/cv.yml so the CV and this list share one source.
+{% endcomment %}
+{% assign talks_section = site.data.cv | where: 'title', 'Talks & Presentations' | first %}
+{% if talks_section %}
+  <h2 class="pub-section-heading talks-heading" id="talks">Talks &amp; Presentations</h2>
+  <ul class="talks-list">
+    {% for talk in talks_section.contents %}
+      <li class="talk-item">
+        <div class="talk-year">{{ talk.year }}</div>
+        <div class="talk-body">
+          <div class="talk-title">{{ talk.title }}</div>
+          <div class="talk-meta">
+            {{ talk.institution -}}
+            {%- if talk.location %} · {{ talk.location }}{% endif %}
+            {%- if talk.description %} · {{ talk.description | join: ', ' }}{% endif %}
+          </div>
+          {% if talk.linkitems %}
+            <div class="talk-links">
+              {% for item in talk.linkitems %}
+                <a href="{{ item.link }}" class="btn btn-sm z-depth-0" target="_blank" rel="noopener noreferrer">
+                  {{- item.linkname | default: 'link' -}}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
