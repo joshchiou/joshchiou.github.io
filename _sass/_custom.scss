@@ -166,6 +166,100 @@ html[data-theme="dark"] {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Visual polish
+// -----------------------------------------------------------------------------
+// Project cards: compact title scale, muted summary, subtle hover lift.
+.projects .card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  .card-body {
+    padding: 1rem 1.1rem 1.1rem;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--global-text-color-light);
+  }
+}
+
+.projects a:hover .card,
+.projects a:focus-visible .card {
+  transform: translateY(-3px);
+}
+
+// Project pages: keep prose to a comfortable reading measure (~70 characters).
+.post--project {
+  .post-description,
+  article > p,
+  article > ul,
+  article > ol,
+  article > h2,
+  article > h3,
+  article > blockquote,
+  article > .project-tldr {
+    max-width: 70ch;
+  }
+
+  article > h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+// Numbers that line up: years, stats, counts.
+.talk-year,
+.timeline-year,
+.cv .badge,
+.publication-count {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects .card {
+    transition: none;
+  }
+
+  .projects a:hover .card,
+  .projects a:focus-visible .card {
+    transform: none;
+  }
+}
+
+// Scroll entrance animations: visible by default, hidden only once the
+// observer in assets/js/common.js has started (html.anim-ready).
+.animate-in {
+  opacity: 1;
+  transform: none;
+}
+
+html.anim-ready .animate-in:not(.visible) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.anim-ready .animate-in:not(.visible) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 // CV print header: hidden on screen, shown in print / generated PDF
 .cv-print-header {
   display: none;

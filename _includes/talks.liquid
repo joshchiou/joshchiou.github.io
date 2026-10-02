@@ -12,13 +12,16 @@
         <div class="talk-body">
           <div class="talk-title">{{ talk.title }}</div>
           <div class="talk-meta">
-            {{ talk.institution }}{% if talk.location %} · {{ talk.location }}{% endif %}
+            {{ talk.institution -}}
+            {%- if talk.location %} · {{ talk.location }}{% endif %}
             {%- if talk.description %} · {{ talk.description | join: ', ' }}{% endif %}
           </div>
           {% if talk.linkitems %}
             <div class="talk-links">
               {% for item in talk.linkitems %}
-                <a href="{{ item.link }}" class="btn btn-sm z-depth-0" target="_blank" rel="noopener noreferrer">{{ item.linkname | default: 'link' }}</a>
+                <a href="{{ item.link }}" class="btn btn-sm z-depth-0" target="_blank" rel="noopener noreferrer">
+                  {{- item.linkname | default: 'link' -}}
+                </a>
               {% endfor %}
             </div>
           {% endif %}

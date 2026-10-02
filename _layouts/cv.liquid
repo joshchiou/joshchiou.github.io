@@ -27,11 +27,12 @@ layout: default
     {% assign cv_experience = site.data.cv | where: 'title', 'Experience' | first %}
     {% assign cv_current = cv_experience.contents | first %}
     <div class="cv-print-header">
-      <div class="cv-print-name">{{ site.first_name }} {{ site.last_name }}, PhD</div>
-      <div class="cv-print-role">{{ cv_current.title }} · {{ cv_current.institution }}</div>
-      <div class="cv-print-contact">
-        {{ site.email }} · {{ site.url | remove: 'https://' }} · {{ cv_current.location }}
+      <div class="cv-print-name">
+        {{ site.first_name }}
+        {{ site.last_name }}, PhD
       </div>
+      <div class="cv-print-role">{{ cv_current.title }} · {{ cv_current.institution }}</div>
+      <div class="cv-print-contact">{{ site.email }} · {{ site.url | remove: 'https://' }} · {{ cv_current.location }}</div>
     </div>
 
     <article>

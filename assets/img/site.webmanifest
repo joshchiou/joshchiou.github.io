@@ -1,0 +1,11 @@
+{
+  "name": "Joshua Chiou",
+  "short_name": "J. Chiou",
+  "icons": [
+    { "src": "/assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ],
+  "theme_color": "#1d6aa5",
+  "background_color": "#ffffff",
+  "display": "browser"
+}
