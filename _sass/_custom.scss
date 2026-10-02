@@ -1,0 +1,64 @@
+/*******************************************************************************
+ * Site-specific overrides, imported last so they win over upstream al-folio.
+ ******************************************************************************/
+
+// Talks list (publications page, from _includes/talks.liquid)
+.talks-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 2rem;
+
+  .talk-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--global-divider-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .talk-year {
+    flex: 0 0 3.5rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--global-text-color-light);
+  }
+
+  .talk-body {
+    min-width: 0;
+  }
+
+  .talk-title {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .talk-meta {
+    font-size: 0.9rem;
+    color: var(--global-text-color-light);
+    margin-top: 0.15rem;
+  }
+
+  .talk-links {
+    margin-top: 0.4rem;
+
+    a.btn {
+      color: var(--global-text-color);
+      border: 1px solid var(--global-text-color);
+      padding: 0.2rem 0.75rem;
+      margin: 0.25rem 0 0;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      text-transform: none;
+      transition: all 0.15s ease;
+
+      &:hover {
+        color: var(--global-theme-color);
+        border-color: var(--global-theme-color);
+        background-color: color-mix(in srgb, var(--global-theme-color) 5%, transparent);
+      }
+    }
+  }
+}
