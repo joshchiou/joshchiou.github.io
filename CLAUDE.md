@@ -42,6 +42,11 @@ Or with Docker (recommended — matches CI environment):
 docker compose up
 ```
 
+**CV PDF:** `assets/pdf/CV.pdf` is not committed. The deploy workflow renders `/cv/` to PDF with
+`scripts/build_cv_pdf.py` (Playwright + Chromium), so it always matches `_data/cv.yml`. Print layout
+lives in the `@media print` block of `_sass/_custom.scss`. To preview locally after a build:
+`python3 scripts/build_cv_pdf.py --out ~/CV.pdf` (set `CHROMIUM_PATH` if needed).
+
 ## Data pipelines
 
 **Strava:** `scripts/update_strava.py` — run manually or via `.github/workflows/update-strava.yml`.
@@ -63,7 +68,8 @@ restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
 ## Don't touch unless re-templating
 
-- `_sass/` — al-folio CSS (upstream), except custom additions at the end of `_base.scss`
+- `_sass/` — al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
+  `_projects.scss`). Put new site-specific styles in `_sass/_custom.scss`, which is imported last.
 - `assets/libs/` — vendored JS libraries
 - `_config.yml` third_party_libraries block — library versions/integrity hashes
 - `bin/` — CI scripts (upstream)

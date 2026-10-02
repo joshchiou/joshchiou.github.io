@@ -62,3 +62,149 @@
     }
   }
 }
+
+// CV print header: hidden on screen, shown in print / generated PDF
+.cv-print-header {
+  display: none;
+}
+
+// Print stylesheet, used for the generated CV PDF (scripts/build_cv_pdf.py)
+@media print {
+  @page {
+    size: letter;
+    margin: 0.6in 0.65in;
+  }
+
+  :root,
+  html[data-theme="dark"] {
+    --global-bg-color: #fff;
+    --global-text-color: #111;
+    --global-text-color-light: #555;
+    --global-theme-color: #1d6aa5;
+    --global-divider-color: #ddd;
+    --global-card-bg-color: #fff;
+  }
+
+  body {
+    padding-top: 0 !important;
+    font-size: 10.5pt;
+    background: #fff !important;
+  }
+
+  header,
+  footer,
+  #back-to-top,
+  .navbar,
+  progress,
+  ninja-keys,
+  .cv-timeline,
+  .post-header,
+  .bibsearch-input-wrapper {
+    display: none !important;
+  }
+
+  // Bootstrap's print CSS forces a 992px minimum width; let content fit the page.
+  body,
+  .container {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .container {
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  // TOC sidebar column: hide it and let the content column take the full width.
+  #toc-sidebar,
+  .container > .row > .col-sm-3 {
+    display: none !important;
+  }
+
+  .container > .row {
+    margin: 0;
+  }
+
+  .container > .row > .col-sm-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  // Web-only controls (DOI/Scholar/source buttons, anchors) add noise on paper.
+  .cv .links,
+  .cv .btncv,
+  .cv .anchor {
+    display: none !important;
+  }
+
+  .cv .bibliography > li {
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
+  }
+
+  .cv-print-header {
+    display: block;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #111;
+
+    .cv-print-name {
+      font-size: 20pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .cv-print-role {
+      font-size: 12pt;
+      color: #333;
+    }
+
+    .cv-print-contact {
+      font-size: 9.5pt;
+      color: #555;
+    }
+  }
+
+  .cv .card {
+    display: block !important; // flex cards don't fragment across pages
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0.5rem !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .cv .card-title {
+    break-after: avoid;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.2rem;
+  }
+
+  // Keep small units together; whole entries may span pages to avoid big gaps.
+  .cv .cv-sub-role,
+  .cv .bibliography > li,
+  .cv tr {
+    break-inside: avoid;
+  }
+
+  // Flex containers fragment poorly; stack entries as blocks and stop the
+  // date column stretching to the full entry height.
+  .cv .list-group {
+    display: block !important;
+  }
+
+  .cv .list-group-item > .row {
+    align-items: flex-start;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .animate-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

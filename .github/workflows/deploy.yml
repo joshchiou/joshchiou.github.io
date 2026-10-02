@@ -67,6 +67,11 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
+      - name: Generate CV PDF 📄
+        run: |
+          pip3 install playwright
+          python3 -m playwright install --with-deps chromium
+          python3 scripts/build_cv_pdf.py
       - name: Upload Pages artifact 📦
         uses: actions/upload-pages-artifact@v5
         with:
