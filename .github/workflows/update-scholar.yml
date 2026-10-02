@@ -21,7 +21,8 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install scholarly
+        # scholarly imports bibtexparser 1.x APIs that 2.x removed
+        run: pip install scholarly "bibtexparser<2"
 
       - name: Fetch and update Scholar stats
         run: python scripts/update_scholar.py
