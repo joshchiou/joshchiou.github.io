@@ -21,6 +21,7 @@ chart:
 <h2 class="page-chapter">By the numbers</h2>
 
 {% if stats.total_rides %}
+
 <div class="row mb-2 text-center">
   <div class="col-4">
     <h3 class="mb-0">{{ stats.total_rides }}</h3>
@@ -62,7 +63,6 @@ chart:
   <i class="fa-brands fa-strava"></i> View on Strava
 </a>
 
-
 <h2 class="page-chapter">Highlights</h2>
 
 <p class="text-muted mb-3">A few rides that stand out.</p>
@@ -79,7 +79,6 @@ chart:
   </div>
   {% endfor %}
 </div>
-
 
 <h2 class="page-chapter">The bikes</h2>
 

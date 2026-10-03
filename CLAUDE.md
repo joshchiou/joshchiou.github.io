@@ -13,6 +13,7 @@ This file is the starting point for a new session; the guides below hold the det
   kind of text.
 
 Two writing rules apply to all visible text, docs, and commit messages:
+
 1. **American English** (analyze, color, modeling, gray, traveled).
 2. **No em dashes.** Rewrite with a comma, colon, parentheses, or a new sentence. En dashes only in
    number ranges. `grep -rn "—" _pages _projects _news _data _includes _layouts _config.yml _bibliography assets/js`
@@ -21,6 +22,7 @@ Two writing rules apply to all visible text, docs, and commit messages:
 ## What this is
 
 Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Content lives in:
+
 - `_pages/about.md`: landing page content
 - `_data/cv.yml`: CV data (experience, education, talks, skills, awards)
 - `_bibliography/papers.bib`: all publications (jekyll-scholar)
@@ -40,6 +42,7 @@ new includes `research_themes.liquid`, `talks.liquid`, `press.liquid`.
 ## Tagline
 
 Places to update together when role/focus changes:
+
 1. `_pages/about.md` subtitle, front-matter description, and first paragraph
 2. `_config.yml` description (meta tag)
 3. `_includes/head.liquid` JSON-LD `jobTitle` and WebSite `description`
@@ -115,9 +118,9 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 
 ## Bib keys for key papers
 
-- `chiou2021interpreting`: T1D and exocrine pancreas, *Nature* 2021
+- `chiou2021interpreting`: T1D and exocrine pancreas, _Nature_ 2021
 - `chiou2021single`: islet scATAC-seq, 2021
-- `sun2023plasma`: UKB-PPP, *Nature* 2023
+- `sun2023plasma`: UKB-PPP, _Nature_ 2023
 - `intact2025multi`: Multi-INTACT methods paper
 - SURMOUNT-5 proteomics: not yet published; see "Pending" in docs/site-guide.md for what to do when it is
 
@@ -133,8 +136,9 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 
 Each project card has a 16:10 image set via `img:` in its frontmatter, in `assets/img/projects/work/`
 and `assets/img/projects/fun/`:
+
 - Paper cards use cropped panels from Josh's papers: T1D uses the Manhattan plot (Chiou 2021
-  *Nature* Fig. 1a), islet the scATAC UMAP, UKB-PPP the pQTL map. The same crops serve as
+  _Nature_ Fig. 1a), islet the scATAC UMAP, UKB-PPP the pQTL map. The same crops serve as
   `preview` thumbnails in `papers.bib`; other selected papers' thumbnails are in
   `assets/img/publication_preview/`.
 - Lilly, Pfizer, and Home Assistant are drawn by `scripts/render_project_art.py` from synthetic data
@@ -151,6 +155,7 @@ and `assets/img/projects/fun/`:
   reliably). Regenerate it when the card image changes.
 
 To replace a card image with a photo:
+
 1. Run `python3 scripts/prep_images.py /path/to/source assets/img/projects/work/` (or `fun/`)
 2. Update the `img:` field in the project's `_projects/*.md` frontmatter
 3. Optionally add `img_position: top` (or `center`, `bottom`) to control cropping via CSS `object-position`

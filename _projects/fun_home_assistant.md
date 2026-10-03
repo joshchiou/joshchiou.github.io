@@ -17,6 +17,7 @@ climate, media, and utility monitoring. The whole system follows one rule: **if 
 down, everything still works.**
 
 {% if s.automations or s.entities or s.integrations or s.since %}
+
 <div class="hass-stats">
   <div class="hass-stat">
     <span class="hass-stat-val">{{ s.automations | default: "n/a" }}</span>
@@ -46,7 +47,8 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
 <div class="hass-diagram">
 
 {% for layer in site.data.hass_layers %}
-  {% if layer.core %}
+{% if layer.core %}
+
   <div class="hass-layer hass-layer--core" data-layer="{{ layer.layer }}">
   {% else %}
   <div class="hass-layer" data-layer="{{ layer.layer }}">
@@ -64,7 +66,8 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
     </div>
   </div>
 
-  {% unless forloop.last %}
+{% unless forloop.last %}
+
   <div class="hass-connector" aria-hidden="true">
     <svg class="hass-flow-svg" viewBox="0 0 300 24" preserveAspectRatio="none">
       <line class="hass-flow-line--1" x1="25%" y1="0" x2="25%" y2="24" stroke="#18bcf2" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>

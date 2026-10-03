@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       countEl.hidden = true;
       return;
     }
-    const visible = document.querySelectorAll(
-      ".bibliography > li:not(.unloaded)",
-    ).length;
+    const visible = document.querySelectorAll(".bibliography > li:not(.unloaded)").length;
     const total = document.querySelectorAll(".bibliography > li").length;
     countEl.textContent = `Showing ${visible} of ${total}`;
     countEl.hidden = false;
@@ -26,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // actual bibsearch logic
   const filterItems = (searchTerm) => {
-    document
-      .querySelectorAll(".bibliography, .unloaded")
-      .forEach((element) => element.classList.remove("unloaded"));
+    document.querySelectorAll(".bibliography, .unloaded").forEach((element) => element.classList.remove("unloaded"));
 
     // highlight-search-term
     if (CSS.highlights) {
@@ -80,9 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Hide selected heading when filtering
-    const selectedHeading = document.querySelector(
-      "h2.bibliography.selected-heading",
-    );
+    const selectedHeading = document.querySelector("h2.bibliography.selected-heading");
     if (selectedHeading && searchTerm) {
       selectedHeading.classList.add("unloaded");
     }

@@ -79,8 +79,13 @@ The fun pages pull from their own data files: cycling from `_data/strava_*.json`
 | Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json`; a red run means the numbers are stale               |
 | Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                     |
 | Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                             |
-| Lint, Check for broken links        | Pull requests                                                 | Prettier and lychee; both already fail on master for pre-existing issues                  |
+| Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass      |
 | Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                    |
+
+Generated data files, vendored files, and the historical notes in `docs/superpowers/` are listed in
+`.prettierignore`. Sites that block bots, gated URLs, and Liquid expressions (which lychee would
+read as literal paths) are listed in `.lycheeignore`. Run `npx prettier --write .` before
+committing template or style changes.
 
 Data workflows push with `GITHUB_TOKEN`, which does not trigger other workflows, so `deploy.yml`
 lists each of them under `workflow_run`. Add any new data workflow to that list.

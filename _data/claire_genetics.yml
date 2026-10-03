@@ -27,7 +27,7 @@ chromosomes:
   - id: A2
     segments:
       - { cls: c-polycat, width: 30 }
-      - { cls: c-exotic,  width: 70 }
+      - { cls: c-exotic, width: 70 }
   - id: A3
     segments:
       - { cls: c-eastern, width: 65 }
@@ -71,11 +71,11 @@ chromosomes:
   - id: E3
     segments:
       - { cls: c-eastern, width: 20 }
-      - { cls: c-persian, width: 5  }
+      - { cls: c-persian, width: 5 }
   - id: F1
     segments:
       - { cls: c-western, width: 20 }
-      - { cls: c-polycat, width: 5  }
+      - { cls: c-polycat, width: 5 }
   - id: F2
     segments:
       - { cls: c-eastern, width: 30 }

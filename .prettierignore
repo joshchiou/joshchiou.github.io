@@ -9,3 +9,19 @@ assets/plotly/demo.html
 lighthouse_results/**
 _posts/2015-10-20-math.md
 _sass/font-awesome/*.scss
+
+# Written by data workflows (scripts/update_*.py, parse_location_history.py);
+# formatting them would be undone on the next automated update.
+_data/strava_*.json
+_data/github_stats.json
+_data/scholar_stats.json
+_data/travel_countries.yml
+_data/travel_cities.yml
+
+# Vendored or third-party files
+assets/json/world-countries.geojson
+assets/js/distillpub/
+google*.html
+
+# Historical design notes, kept as written
+docs/superpowers/

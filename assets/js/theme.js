@@ -250,7 +250,9 @@ let initTheme = () => {
 
 // Self-initialize when loaded as deferred script
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", function () { initTheme(); });
+  document.addEventListener("DOMContentLoaded", function () {
+    initTheme();
+  });
 } else {
   initTheme();
 }

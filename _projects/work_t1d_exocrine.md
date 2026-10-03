@@ -28,7 +28,7 @@ across disease stages showed how regulatory programs in each cell type change as
 {% cite chiou2025singlecell %}. Together, these studies make the case that T1D involves the
 exocrine pancreas as well as the islets.
 
-Data and code: [joshchiou/T1D\_snATAC](https://github.com/joshchiou/T1D_snATAC)
+Data and code: [joshchiou/T1D_snATAC](https://github.com/joshchiou/T1D_snATAC)
 
 ---
 
