@@ -10,3 +10,7 @@ https://twitter.com
 https://x.com
 # Gated behind a reviewer token until the SURMOUNT-5 proteomics paper is published
 https://surmount5-proteomics.lilly.com
+# Returns 403 to automated checkers
+https://www.ukbiobank.ac.uk
+# Liquid expressions in source files ({{ ... }}), which lychee reads as literal paths
+(%7B%7B|\{\{)

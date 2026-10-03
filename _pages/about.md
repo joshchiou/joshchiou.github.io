@@ -22,4 +22,4 @@ I am a Director of Genomics at [Lilly](https://www.lilly.com), where I lead tran
 
 I completed my PhD in [Biomedical Sciences](https://biomedsci.ucsd.edu/) at [UC San Diego](https://ucsd.edu/), where I used statistical genetics and single-cell epigenomics to study type 1 and type 2 diabetes risk mechanisms.
 
-[View full CV →](/cv/)
+[View full CV →]({{ '/cv/' | relative_url }})
