@@ -100,6 +100,9 @@ COUNTRY_ALIASES = {
     "Hong Kong": "Hong Kong S.A.R.",
     "Macau SAR": "Macao S.A.R",
     "Macau": "Macao S.A.R",
+    "Holy See": "Vatican City",
+    "Vatican City State": "Vatican City",
+    "Città del Vaticano": "Vatican City",
 }
 
 
@@ -196,7 +199,7 @@ def geocode_place(place_id: str, lat: float, lon: float, cache: dict) -> dict | 
     try:
         resp = requests.get(
             NOMINATIM_URL,
-            params={"format": "json", "lat": lat, "lon": lon, "zoom": 10},
+            params={"format": "json", "lat": lat, "lon": lon, "zoom": 10, "accept-language": "en"},
             headers=NOMINATIM_HEADERS,
             timeout=15,
         )

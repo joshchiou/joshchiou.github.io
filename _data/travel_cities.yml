@@ -250,3 +250,7 @@
   country: Italy
   lat: 41.9028
   lon: 12.4964
+- name: Vatican City
+  country: Vatican City
+  lat: 41.9022
+  lon: 12.4539

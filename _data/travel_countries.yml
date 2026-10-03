@@ -42,3 +42,8 @@
   flag: "🇮🇹"
   lat: 45.4642
   lon: 9.19
+- name: Vatican City
+  continent: Europe
+  flag: "🇻🇦"
+  lat: 41.9022
+  lon: 12.4539
