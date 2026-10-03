@@ -1,22 +1,26 @@
 # Research themes shown on the homepage (_includes/research_themes.liquid).
-# Keep descriptions to one plain-language sentence.
+# Keep descriptions to one plain-language sentence. Images are 5:2 (1200x480), two panels
+# side by side on white; img_credit names the sources and shows as the image's tooltip.
 - title: Clinical trial proteomics
   description: >-
     Measuring thousands of blood proteins in obesity trials to learn how drugs like
     tirzepatide and semaglutide work, beyond the weight they take off.
   url: /projects/work_lilly_proteomics/
-  img: assets/img/projects/work/lilly-proteomics.webp
+  img: assets/img/research_themes/clinical-trial-proteomics.webp
+  img_credit: Illustration with synthetic data; it shows no study results.
 
-- title: Population proteomics & genetics
+- title: Population proteomics and genetics
   description: >-
     Linking genetic variation to blood protein levels across the UK Biobank to find
     and validate new drug targets.
   url: /projects/work_ukb_ppp/
-  img: assets/img/projects/work/ukb-ppp-pqtl-map.webp
+  img: assets/img/research_themes/population-proteomics.webp
+  img_credit: Figures adapted from Sun et al., Nature 2023 (Figs. 2a and 3c), CC BY 4.0.
 
-- title: Diabetes genetics & single-cell epigenomics
+- title: Diabetes genetics and single-cell epigenomics
   description: >-
-    Pinpointing which pancreatic cell types and regulatory elements carry genetic risk
+    Identifying which pancreatic cell types and regulatory elements carry genetic risk
     for type 1 and type 2 diabetes.
   url: /projects/work_t1d_exocrine/
-  img: assets/img/projects/work/t1d-pancreas-umap.webp
+  img: assets/img/research_themes/diabetes-genetics.webp
+  img_credit: Figures adapted from Chiou et al., Nature 2021 (Fig. 1a) and Chiou et al., Nature Genetics 2021 (Fig. 1a).

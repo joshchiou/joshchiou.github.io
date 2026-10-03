@@ -275,7 +275,9 @@ ul.timeline li::before {
   font-size: 0.78rem;
   color: var(--global-text-color);
   background-color: transparent;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
   white-space: nowrap;
 
   &:hover {
@@ -314,7 +316,9 @@ ul.timeline li::before {
   align-items: flex-start;
   padding-bottom: 1.25rem;
 
-  &:last-child { padding-bottom: 0; }
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
 
 .timeline-marker {

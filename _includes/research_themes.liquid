@@ -5,7 +5,17 @@
     {% for theme in site.data.research_themes %}
       <a class="research-theme" href="{{ theme.url | relative_url }}">
         {% if theme.img %}
-          <img class="research-theme-img" src="{{ theme.img | relative_url }}" alt="" loading="lazy" width="320" height="120">
+          <img
+            class="research-theme-img"
+            src="{{ theme.img | relative_url }}"
+            alt=""
+            loading="lazy"
+            width="1200"
+            height="480"
+            {% if theme.img_credit %}
+              title="{{ theme.img_credit | escape }}"
+            {% endif %}
+          >
         {% endif %}
         <div class="research-theme-body">
           <h3 class="research-theme-title">{{ theme.title }}</h3>

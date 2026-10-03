@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Genetics-Driven Novel Target Discovery
-description: Integrative multi-omics pipeline for identifying and validating drug targets at Pfizer.
+title: Genetics-Driven Target Discovery
+description: Genetics and multi-omics pipelines for finding and validating drug targets at Pfizer.
 img: assets/img/projects/work/pfizer-targets.webp
 img_credit: "Illustration with synthetic data; it shows no study results."
 og_image: /assets/img/projects/og/pfizer-targets.jpg
@@ -12,25 +12,23 @@ related_publications: false
 
 <div class="project-tldr">
   <strong>TL;DR</strong>
-  Built cloud-native genomics infrastructure pipelines for integrative target discovery at Pfizer.
+  Built the genetics pipelines and cloud infrastructure Pfizer used to find and prioritize drug targets.
 </div>
 
-When I joined Pfizer's Internal Medicine Research Unit, genetics-informed target discovery
-relied on ad-hoc analyses run by individual scientists on legacy HPC infrastructure. There was
-no scalable, reusable pipeline connecting GWAS evidence to functional genomics to target
-nomination. Over 4+ years I built that connective layer: an integrative approach combining
-human genetic evidence (GWAS, exome-wide association studies, colocalization, and Mendelian
-randomization) with functional genomics layers including single-cell chromatin accessibility,
-eQTL and pQTL datasets, and deep learning-based functional predictions to nominate and
-prioritize novel targets with genetic support for efficacy and selectivity. Several targets
-identified through this pipeline advanced into the Pfizer portfolio.
+When I joined Pfizer's Internal Medicine Research Unit, genetics-based target discovery relied
+on one-off analyses run by individual scientists on an aging HPC cluster. Nothing reusable
+connected GWAS evidence to functional genomics to a target nomination. Over four years I built
+that pipeline. It combined human genetic evidence (GWAS, exome-wide association studies,
+colocalization, and Mendelian randomization) with functional genomics, including single-cell
+chromatin accessibility, eQTL and pQTL data, and deep learning predictions of variant function,
+to find and rank new targets with genetic support for efficacy and selectivity. Several targets
+it found advanced into the Pfizer portfolio.
 
-Beyond individual target programs, I led the development of cloud-native genomics infrastructure
-on AWS, enabling large-scale analyses across the organization: scalable GWAS and fine-mapping
-pipelines, standardized summary statistics harmonization, and integration of emerging
-multi-omics datasets. This was a cross-organizational collaboration spanning Internal Medicine,
-Inflammation & Immunology, Statistics, and Machine Learning & Computational Sciences.
+I also led the move of Pfizer's genomics analysis to AWS: GWAS and fine-mapping pipelines that
+scale, a standard way to harmonize summary statistics, and support for new multi-omics datasets.
+That work involved teams from Internal Medicine, Inflammation & Immunology, Statistics, and
+Machine Learning & Computational Sciences.
 
 ---
 
-**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the pQTL resource that informed target prioritization analyses described above.
+**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}), the pQTL data behind some of the target ranking described above.

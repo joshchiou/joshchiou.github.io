@@ -23,10 +23,10 @@
   {% capture title %}{{ site.title }}{% endcapture %}
 {% endif %}
 
-<!-- Build SEO-optimised page title: home gets name + role tagline; sub-pages capitalize -->
+<!-- Build SEO-optimized page title: home gets name + role tagline; sub-pages capitalize -->
 {% if page.url == '/' or page.permalink == '/' %}
   {% assign _tagline = site.description | strip_newlines | split: '.' | first | strip %}
-  {% capture seo_title %}{{ title }} — {{ _tagline }}{% endcapture %}
+  {% capture seo_title %}{{ title }} | {{ _tagline }}{% endcapture %}
 {% elsif page.url == '/blog/index.html' %}
   {% capture seo_title %}{{ page.title | capitalize }} | {{ title }}{% endcapture %}
 {% elsif page.title and page.title != 'blank' and page.title != '' %}
@@ -75,7 +75,7 @@
     {% endunless %}
     <meta property="og:image" content="{{ og_image }}">
   {% endif %}
-  <meta property="og:locale" content="{{ site.lang }}">
+  <meta property="og:locale" content="{{ site.lang | replace: '-', '_' }}">
 
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary_large_image">

@@ -271,9 +271,11 @@ html[data-theme="dark"] {
     }
   }
 
+  // Images are made at 5:2 so the whole figure shows at every width.
   .research-theme-img {
     width: 100%;
-    height: 96px;
+    height: auto;
+    aspect-ratio: 5 / 2;
     object-fit: cover;
     display: block;
   }
@@ -546,5 +548,35 @@ html.anim-ready .animate-in:not(.visible) {
   .animate-in {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+// Card headings use h3 so heading levels don't skip (they sit under page h2s).
+// These keep the sizes the old h4/h5 tags had.
+.hass-principle-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.recipe-card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contrib-year-header h3 {
+  font-size: 1.5rem;
+}
+
+// Home Assistant chips: #0ea5d9 text is 2.5:1 on the tinted chip in light mode.
+.hass-chip.active,
+.hass-chip--core {
+  color: #08739a; // 4.8:1 on the tinted chip
+}
+
+html[data-theme="dark"] {
+  .hass-chip.active,
+  .hass-chip--core {
+    color: #0ea5d9; // 6.0:1 on the dark background
   }
 }

@@ -7,6 +7,7 @@ unlabeled data that implies no real results.
 
 Usage:
     python3 scripts/render_project_art.py   # writes the Lilly, Pfizer, and Home Assistant card images
+                                            # and the homepage clinical trial proteomics image
 
 Requires: pip install numpy matplotlib pillow
 """
@@ -33,12 +34,11 @@ YELLOW_DARK = "#c98500"
 NEUTRAL = "#c9c8c3"
 NEUTRAL_DARK = "#a3a29d"
 
-plt.rcParams.update({"svg.fonttype": "none", "figure.facecolor": SURFACE, "axes.facecolor": SURFACE})
+plt.rcParams.update({"svg.fonttype": "none", "svg.hashsalt": "joshchiou", "figure.facecolor": SURFACE, "axes.facecolor": SURFACE})
 
 
-def canvas():
-    fig = plt.figure(figsize=(8, 5))  # 16:10
-    return fig
+def canvas(size=(8, 5)):
+    return plt.figure(figsize=size)  # 16:10 by default
 
 
 def clean_axes(ax, baseline=True):
@@ -51,8 +51,8 @@ def clean_axes(ax, baseline=True):
     ax.set_yticks([])
 
 
-def save(fig, rel):
-    """SVG for light drawings; WebP (1600x1000) for scatter-heavy ones to keep files small."""
+def save(fig, rel, dpi=200):
+    """SVG for light drawings; WebP for scatter-heavy ones to keep files small."""
     out = ROOT / rel
     if out.suffix == ".webp":
         from io import BytesIO
@@ -60,7 +60,7 @@ def save(fig, rel):
         from PIL import Image
 
         buf = BytesIO()
-        fig.savefig(buf, format="png", dpi=200, facecolor=SURFACE)
+        fig.savefig(buf, format="png", dpi=dpi, facecolor=SURFACE)
         Image.open(buf).convert("RGB").save(out, "WEBP", quality=90, method=6)
     else:
         fig.savefig(out, format="svg", facecolor=SURFACE, metadata={"Date": None})
@@ -68,9 +68,9 @@ def save(fig, rel):
     print(f"Wrote {rel}")
 
 
-def lilly(rng):
+def lilly(rng, rel="assets/img/projects/work/lilly-proteomics.webp", size=(8, 5), dpi=200):
     """Two-arm longitudinal protein trajectories + a volcano plot."""
-    fig = canvas()
+    fig = canvas(size)
     weeks = np.array([0, 24, 72])
 
     ax = fig.add_axes([0.06, 0.12, 0.52, 0.78])
@@ -106,7 +106,7 @@ def lilly(rng):
     lim = np.abs(fc).max() * 1.08
     ax2.set_xlim(-lim, lim)
     ax2.set_ylim(0, p.max() * 1.08)
-    save(fig, "assets/img/projects/work/lilly-proteomics.webp")
+    save(fig, rel, dpi)
 
 
 def pfizer(rng):
@@ -208,6 +208,8 @@ def home_assistant(rng):
 
 def main():
     lilly(np.random.default_rng(7))
+    # 5:2 version for the homepage research theme card
+    lilly(np.random.default_rng(7), "assets/img/research_themes/clinical-trial-proteomics.webp", (10, 4), 120)
     pfizer(np.random.default_rng(11))
     home_assistant(np.random.default_rng(3))
 
