@@ -82,8 +82,11 @@ caches to `scripts/.geocode_cache.json`. Review cities file before committing (n
 restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
 
 **Scholar stats:** `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
-`scholarly` needs `bibtexparser<2` (pinned in the workflow). On a failed fetch the script exits
-non-zero and leaves `_data/scholar_stats.json` unchanged, so a red run means stale numbers.
+Google Scholar blocks GitHub Actions runners, so the workflow reads the profile through SerpAPI
+(Google Scholar Author API) using the `SERPAPI_KEY` repo secret; the free plan covers a weekly
+run. Without the key the script falls back to `scholarly` (needs `bibtexparser<2`), which only
+works off CI. On a failed fetch the script exits non-zero and leaves `_data/scholar_stats.json`
+unchanged, so a red run means stale numbers.
 
 **Refresh chain:** the Scholar, GitHub stats, and Strava workflows push with `GITHUB_TOKEN`, which
 doesn't trigger push-based workflows, so `deploy.yml` also runs on `workflow_run` after each of
