@@ -181,3 +181,22 @@ bioRxiv DOIs under both prefixes.
 
 **Why not mark preprints by hand in the bib entry.** The DOI check already works for every older
 preprint, and a per-entry flag is easy to forget.
+
+## D-013: The Timeline parser only appends to the travel files
+
+_Recorded 2026-10-03 (owner's request) · `scripts/parse_location_history.py`_
+
+**Context.** The parser regenerated both travel files from scratch. That dropped the hand-added
+Milan and Rome entries, the `continent` and `flag` fields on every country, and the `state` field
+on US cities, none of which the parser produced. It also brought back every city that had been
+pruned as noise. Since Google moved Timeline onto the phone, exports are manual, so partial
+exports of recent months are the likely way to add trips.
+
+**Decision.** A re-run appends only countries and cities missing from the files, at the end, and
+never rewrites existing lines. New countries get a `flag` from the ISO code and need a `continent`
+by hand; new US cities get a `state`. Every city the script has proposed is recorded in
+`scripts/.travel_seen.json`, so one deleted from `travel_cities.yml` is not proposed again.
+
+**Why not commit the seen list.** It names every town the script has proposed, including ones
+deliberately left off the site, and the repo is public. The cost is that a machine without the file
+proposes previously deleted cities once more.

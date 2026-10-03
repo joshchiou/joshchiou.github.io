@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-10-03 · branch `master` · `cbc975c`_
+_Last updated: 2026-10-03 · branch `master` · `3a6f8e0`_
 
 The one-page handoff: what is true right now, what is waiting on whom, and where the detail
 lives. Rewritten in place at the end of each working session; history is in git and in
@@ -42,8 +42,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 3. Settled decisions
 
-The full append-only log, twelve entries from D-001 to D-012, is [`DECISIONS.md`](DECISIONS.md).
-All twelve were settled this session.
+The full append-only log, thirteen entries from D-001 to D-013, is [`DECISIONS.md`](DECISIONS.md).
+All thirteen were settled on 2026-10-03.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -59,6 +59,7 @@ All twelve were settled this session.
 | D-010 | The CV PDF is rendered at deploy time, not committed                                              | [D-010](DECISIONS.md#d-010-the-cv-pdf-is-rendered-at-deploy-time-not-committed)                           |
 | D-011 | Data workflows redeploy the site through `workflow_run`                                           | [D-011](DECISIONS.md#d-011-data-workflows-redeploy-the-site-through-workflow_run)                         |
 | D-012 | The Preprint badge matches both `10.1101/` and `10.64898/`                                        | [D-012](DECISIONS.md#d-012-newer-medrxiv-and-biorxiv-dois-use-the-1064898-prefix)                         |
+| D-013 | The Timeline parser only appends; deleted cities stay deleted                                     | [D-013](DECISIONS.md#d-013-the-timeline-parser-only-appends-to-the-travel-files)                          |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
@@ -82,9 +83,6 @@ All twelve were settled this session.
    `claude/project-graphics`, `claude/scholar-serpapi`, `claude/vidra-preprint`. Closed PR #54:
    `auto/new-publications-1790979034`. Not checked: `copilot/fix-doi-errors-in-publications`.
    Keep `claude/personal-website-review-g4soy3`; it is PR #49's branch.
-6. **Travel hand additions are fragile.** Milan and Rome (2026) were added by hand to the travel
-   data files, which `parse_location_history.py` regenerates. A Takeout re-run drops them unless
-   the export includes them; re-add them and re-run `render_travel_card.py` if so.
 
 ## 5. Known-stale documentation
 
