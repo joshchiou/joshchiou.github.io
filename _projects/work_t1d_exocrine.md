@@ -12,23 +12,21 @@ related_publications: true
 
 <div class="project-tldr">
   <strong>TL;DR</strong>
-  T1D genetic risk maps to exocrine cells in the pancreas, not just the islets, implicating previously overlooked cell types in disease pathogenesis.
+  Much of the genetic risk for type 1 diabetes acts in exocrine pancreas cells, not only in the islets.
 </div>
 
-Type 1 diabetes (T1D) has long been understood as a disease of the pancreatic islets, where
-immune-mediated destruction of insulin-producing beta cells drives hyperglycemia. My PhD work
-challenged this tissue-centric view by integrating T1D genome-wide association study (GWAS)
-loci with single-cell chromatin accessibility maps of the human pancreas, revealing that a
-substantial proportion of T1D risk variants are active in acinar and ductal cells, the exocrine
-compartment that secretes digestive enzymes and carries them to the gut. This finding, published in {% cite chiou2021interpreting %},
-implicated exocrine dysfunction as a previously underappreciated component of T1D pathophysiology.
+Type 1 diabetes (T1D) is usually described as a disease of the pancreatic islets: the immune
+system destroys the beta cells that make insulin. For my PhD, I combined T1D genome-wide
+association study (GWAS) results with single-cell chromatin accessibility maps of the human
+pancreas and found that many T1D risk variants are active in acinar and ductal cells. These are
+the exocrine cells that make digestive enzymes and carry them to the gut. The finding, published
+in {% cite chiou2021interpreting %}, pointed to the exocrine pancreas as part of the disease.
 
-Building on this, subsequent work from our lab showed that circulating pancreatic enzyme levels
-are a causal biomarker of T1D risk {% cite gaulton2024circulating %}, and single-cell multiome
-profiling of pancreas tissue across disease stages revealed dynamic cell-type-specific regulatory
-programs during T1D progression {% cite chiou2025singlecell %}. Together, these studies shifted
-the field's view of T1D from a purely islet-centric disease to one with measurable exocrine
-contributions, opening new avenues for early detection and intervention.
+Later work from our lab showed that blood levels of pancreatic enzymes are a causal biomarker of
+T1D risk {% cite gaulton2024circulating %}, and single-cell multiome profiling of pancreas tissue
+across disease stages showed how regulatory programs in each cell type change as T1D progresses
+{% cite chiou2025singlecell %}. Together, these studies make the case that T1D involves the
+exocrine pancreas as well as the islets.
 
 Data and code: [joshchiou/T1D\_snATAC](https://github.com/joshchiou/T1D_snATAC)
 

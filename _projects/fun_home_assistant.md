@@ -12,9 +12,8 @@ category: fun
 I run [Home Assistant](https://www.home-assistant.io/) on a self-hosted server as the hub for
 home automation. It started with solar: after installing a SunPower PV system I wanted to
 monitor production locally without depending on SunPower's cloud app, so I set up Home
-Assistant to pull data directly from the PVS gateway on my LAN. From there it grew to
-controlling lights, climate, and media while monitoring utility consumption, because the tinkerer in
-me couldn't resist. The system is designed around one hard constraint: **if the internet goes
+Assistant to pull data directly from the PVS gateway on my LAN. From there it grew to lights,
+climate, media, and utility monitoring. The whole system follows one rule: **if the internet goes
 down, everything still works.**
 
 {% if s.automations or s.entities or s.integrations or s.since %}
@@ -94,7 +93,7 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-users"></i></div>
     <h3>Zero-training UI</h3>
-    <p>Dashboards are designed to be usable by anyone in the house with no Home Assistant knowledge required.</p>
+    <p>Anyone in the house can use the dashboards without knowing anything about Home Assistant.</p>
   </div>
 </div>
 

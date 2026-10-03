@@ -14,7 +14,7 @@ images:
 {% assign cities = site.data.travel_cities %}
 {% assign continents = countries | map: "continent" | uniq %}
 
-My wife and I try to get abroad once or twice a year, plus domestic trips when we can. We don't chase bucket lists. We'd rather return somewhere we love than tick a new box. France keeps pulling us back: our honeymoon along the Côte d'Azur, a second trip from Paris down to Lake Annecy, and most recently Barcelona to Toulouse. Three trips, three different Frances.
+My wife and I try to get abroad once or twice a year, plus domestic trips when we can. We'd rather go back to places we love than keep adding new ones. France is the one we keep returning to: our honeymoon on the Côte d'Azur, a second trip from Paris down to Lake Annecy, and most recently Barcelona to Toulouse.
 
 <div class="travel-stats mb-4">
   <div class="travel-stat">

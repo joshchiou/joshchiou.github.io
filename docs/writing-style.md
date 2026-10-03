@@ -35,6 +35,37 @@ It should return nothing outside vendored libraries.
 - Claims match the paper. For unpublished work, say only what is already public, such as the EASD
   abstract, and call exploratory results exploratory.
 
+## Plain, not polished
+
+Write the way you'd explain the work to a colleague over coffee. Two failure modes to watch for:
+prose that sounds machine-made (stacked nouns, "-ing" chains, every sentence the same length) and
+prose that reaches for effect (taglines, framing, significance statements).
+
+- Say what you did and what you found. Cut sentences that only tell the reader the work matters
+  ("opening new avenues for…", "shifted the field's view…", "providing a framework for…").
+- Prefer verbs to noun phrases: "we mapped pQTLs", not "characterization of pQTLs was performed";
+  "linked", not "provided linkage".
+- One idea per sentence. Break up chains of "revealing…, linking…, enabling…".
+- No taglines or wordplay closers ("Three trips, three different Frances.") and no rhetorical
+  framing ("has long been understood as…", "challenged this view").
+- Phrases to avoid, with what to write instead:
+
+  | Avoid                                    | Write                                        |
+  | ---------------------------------------- | -------------------------------------------- |
+  | has long been understood as              | is usually described as                      |
+  | opening new avenues for                  | (cut, or name the specific next step)        |
+  | is unusually informative                 | is useful because…                           |
+  | at the intersection of                   | (say what you do)                            |
+  | foundational resource, comprehensive map | widely used dataset, one of the largest maps |
+  | an artifact that would mislead           | a side effect of weight loss                 |
+  | toolkit, connective layer, framework     | the methods, the pipeline                    |
+  | leverage, enable, drive delivery of      | use, let, build                              |
+  | previously underappreciated              | (cut, or say who missed it and why)          |
+  | tick a new box, chase bucket lists       | keep adding new places                       |
+
+- Humor is fine where it's clearly intended (the Claire timeline, the cycling card). Keep it
+  specific and dry rather than cute.
+
 ## Names and terms
 
 - **Lilly** in prose; "Eli Lilly and Company" only where a legal name is needed. Josh's title is

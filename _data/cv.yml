@@ -13,15 +13,15 @@
         - title: Director, Genomics
           year: 2026 - now
           maindescription: >-
-            I lead translational proteomics strategy across late-stage obesity and cardiometabolic trials,
-            including head-to-head comparisons such as SURMOUNT-5, turning large-scale clinical omics into
-            mechanistic and biomarker insights that inform clinical development decisions.
+            I lead translational proteomics across late-stage obesity and cardiometabolic trials,
+            including head-to-head comparisons such as SURMOUNT-5, using large-scale proteomics to
+            explain how drugs work and to find biomarkers that inform clinical development.
         - title: Senior Advisor, Genomics
           year: 2025 - 2026
           maindescription: >-
-            I collaborated with clinicians, biologists, and statisticians to generate mechanistic and biomarker
-            insights from large-scale proteomics across phase 2/3 obesity trials, while building the
-            analytical infrastructure supporting clinical omics research.
+            I worked with clinicians, biologists, and statisticians on large-scale proteomics from phase 2/3
+            obesity trials to study drug mechanisms and biomarkers, and built the analysis infrastructure
+            for clinical omics.
 
     - title: Senior Principal Computational Geneticist
       institution: Pfizer
@@ -35,15 +35,15 @@
         - title: Senior Principal Computational Geneticist
           year: 2023 - 2025
           maindescription: >-
-            I collaborated with cross-functional teams for cardiovascular and renal target discovery integrating human
-            genetics, functional genomics, and large language models, while driving delivery of scalable
-            cloud infrastructure for large-scale genomics analysis across the organization.
+            I worked with cross-functional teams on cardiovascular and renal target discovery, combining human
+            genetics, functional genomics, and large language models, and led the build-out of cloud
+            infrastructure for genomics analysis across the organization.
         - title: Senior Computational Geneticist
           year: 2021 - 2023
           maindescription: >-
-            I partnered with biologists to identify novel targets for cardiovascular and renal disease
-            through integrative multi-omics, with several advancing into the portfolio, and served as the
-            genetics expert for indication expansion teams.
+            I worked with biologists to find new targets for cardiovascular and renal disease using
+            multi-omics data, several of which advanced into the portfolio, and was the genetics expert
+            for indication expansion teams.
 
     - title: Graduate Student Researcher
       institution: UC San Diego
@@ -53,9 +53,8 @@
       icon_bg: "#182B49"
       icon_color: "#C69214"
       maindescription: >-
-        I led the largest GWAS for type 1 diabetes, implicating novel disease-relevant cell types
-        through integration of human genetics and single-cell epigenomics, and published broadly across
-        top journals throughout my PhD.
+        I led the largest GWAS of type 1 diabetes at the time and combined it with single-cell
+        epigenomics to identify new disease-relevant cell types in the pancreas.
 
     - title: Development Scientist
       institution: IncellDx
