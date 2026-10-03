@@ -243,3 +243,11 @@
   country: Japan
   lat: 35.1815
   lon: 136.9066
+- name: Milan
+  country: Italy
+  lat: 45.4642
+  lon: 9.19
+- name: Rome
+  country: Italy
+  lat: 41.9028
+  lon: 12.4964

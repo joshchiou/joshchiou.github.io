@@ -360,6 +360,30 @@ article .social .contact-note {
   color: var(--global-text-color-light);
 }
 
+// Project card images are authored at 16:10; show them whole instead of a
+// fixed 200px band that crops the sides of figures and illustrations.
+.project-img-wrap img.card-img-top {
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+// Attribution for project card images (img_credit front matter)
+.project-img-credit {
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--global-divider-color);
+  font-size: 0.8rem;
+  color: var(--global-text-color-light);
+}
+
+// Figure crops have white backgrounds: a hairline keeps them from bleeding into
+// light cards and sets them off from the page in dark mode.
+.projects .project-img-wrap,
+.research-theme-img,
+.publications ol.bibliography li .pub-thumb .preview {
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
 // Scroll entrance animations: visible by default, hidden only once the
 // observer in assets/js/common.js has started (html.anim-ready).
 .animate-in {

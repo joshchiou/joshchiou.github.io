@@ -20,7 +20,7 @@
     dark:  { 'North America': '#58a6ff', 'Europe': '#f5a623', 'Asia': '#4ade80',
              _unvisited: '#333333', _border: '#2a2a2a' }
   };
-  var BAR_COLOR = { 'North America': '#3d6aab', 'Europe': '#c96910', 'Asia': '#1f823e' };
+  var BAR_COLOR = { 'North America': '#3d6aab', 'Europe': '#b05a0c', 'Asia': '#1f823e' };
   var CITY_DOT  = {
     light: { fill: '#c0392b', stroke: '#ffffff' },
     dark:  { fill: '#f97583', stroke: '#1c1c1d' }

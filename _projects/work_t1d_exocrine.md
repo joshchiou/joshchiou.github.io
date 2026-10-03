@@ -2,7 +2,9 @@
 layout: page
 title: Type 1 Diabetes and the Exocrine Pancreas
 description: Discovering acinar cell contributions to T1D genetic risk using single-cell epigenomics.
-img: assets/img/projects/work/t1d-exocrine.svg
+img: assets/img/projects/work/t1d-pancreas-umap.webp
+img_credit: "Figure adapted from Chiou et al., <em>Nature</em> 2021 (Fig. 2a)."
+og_image: /assets/img/projects/og/t1d-pancreas-umap.jpg
 importance: 1
 category: work
 related_publications: true
