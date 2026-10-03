@@ -12,7 +12,7 @@ They also apply to this repo's docs. Commit messages and code comments should fo
    - an aside → commas or parentheses: "Joshua Chiou (Director, Genomics at Lilly)"
    - an explanation or list → a colon: "Home bartending notes: classic recipes, amaro obsessions, and tiki detours."
    - two thoughts → two sentences: "We don't chase bucket lists. We'd rather return somewhere we love."
-   - a link followed by a description → a comma or colon: "**Related:** [UK Biobank Pharma Proteomics Project](…), the pQTL resource that…"
+   - a link followed by a description → a comma or colon: `**Related:** [UK Biobank Pharma Proteomics Project](…), the pQTL resource that…`
    - a missing value in a stat tile → "n/a"
    - a title separator → a pipe: "Projects | Joshua Chiou"
 
