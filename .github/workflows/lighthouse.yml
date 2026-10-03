@@ -13,10 +13,10 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Node.js 📦
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
 
@@ -30,6 +30,8 @@ jobs:
             --collect.url=https://joshchiou.github.io/publications/ \
             --collect.url=https://joshchiou.github.io/projects/ \
             --collect.url=https://joshchiou.github.io/code/ \
+            --collect.url=https://joshchiou.github.io/cv/ \
+            --collect.url=https://joshchiou.github.io/news/ \
             --collect.numberOfRuns=3 \
             --upload.target=temporary-public-storage \
             --assert.assertions.categories:performance=["warn",{"minScore":0.8}] \

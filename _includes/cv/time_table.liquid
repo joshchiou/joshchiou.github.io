@@ -30,7 +30,10 @@
         <div class="col-xs-10 cl-sm-10 col-md-10 mt-2 mt-md-0">
           {% if content.icon_label %}
             <div class="cv-entry-header">
-              <div class="cv-icon-circle" style="background:{{ content.icon_bg }};{% if content.icon_color %} color:{{ content.icon_color }};{% endif %}">
+              <div
+                class="cv-icon-circle"
+                style="background:{{ content.icon_bg }};{% if content.icon_color %} color:{{ content.icon_color }};{% endif %}"
+              >
                 {{ content.icon_label }}
               </div>
               <div class="cv-entry-header-text">
@@ -81,7 +84,7 @@
             {% endif %}
           {% endif %}
           {% if content.icon_label %}
-              </div>
+            </div>
             </div>
           {% endif %}
           {% if content.description %}
@@ -120,8 +123,12 @@
                   {% elsif item.text %}
                     <span class="item">
                       {{- item.text -}}
-                      {%- if item.org %}<span class="cv-award-org">{{ item.org }}</span>{% endif %}
-                      {%- if item.link %}<a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="btncv z-depth-0 ml-1">source</a>{% endif %}
+                      {%- if item.org -%}
+                        <span class="cv-award-org">{{ item.org }}</span>
+                      {%- endif %}
+                      {%- if item.link -%}
+                        <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="btncv z-depth-0 ml-1">source</a>
+                      {%- endif %}
                     </span>
                   {% else %}
                     <span class="item">{{ item }}</span>

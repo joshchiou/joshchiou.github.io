@@ -17,8 +17,12 @@ nav_order: 1
 
 {% bibliography --group_by none --query @*[selected=true]* --sort_by cv_order --order ascending %}
 
-<h2 class="pub-section-heading all-heading">All Publications</h2>
+<h2 class="pub-section-heading all-heading">All publications</h2>
 
 {% bibliography %}
+
+{% include talks.liquid %}
+
+{% include press.liquid %}
 
 </div>

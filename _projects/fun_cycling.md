@@ -2,7 +2,8 @@
 layout: page
 title: Cycling
 description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
-img: assets/img/projects/fun/cycling.svg
+img: assets/img/projects/fun/cycling-acadia.webp
+og_image: /assets/img/projects/og/cycling-acadia.jpg
 importance: 2
 category: fun
 map: true
@@ -20,6 +21,7 @@ chart:
 <h2 class="page-chapter">By the numbers</h2>
 
 {% if stats.total_rides %}
+
 <div class="row mb-2 text-center">
   <div class="col-4">
     <h3 class="mb-0">{{ stats.total_rides }}</h3>
@@ -61,7 +63,6 @@ chart:
   <i class="fa-brands fa-strava"></i> View on Strava
 </a>
 
-
 <h2 class="page-chapter">Highlights</h2>
 
 <p class="text-muted mb-3">A few rides that stand out.</p>
@@ -71,14 +72,13 @@ chart:
   <div class="featured-ride-card">
     <img class="featured-ride-img" src="{{ ride.image }}" alt="{{ ride.title }}" loading="lazy">
     <div class="featured-ride-body">
-      <h4 class="featured-ride-title">{{ ride.title }}</h4>
+      <h3 class="featured-ride-title">{{ ride.title }}</h3>
       <p class="featured-ride-meta">{{ ride.location }} · {{ ride.distance_km | times: 0.621371 | round }} mi</p>
       <p class="featured-ride-story">{{ ride.story }}</p>
     </div>
   </div>
   {% endfor %}
 </div>
-
 
 <h2 class="page-chapter">The bikes</h2>
 
@@ -101,7 +101,7 @@ chart:
         <div class="bike-card-body">
           <div class="bike-card-header">
             <div>
-              <h4 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h4>
+              <h3 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h3>
             </div>
             {% if bike.status %}
               <span class="bike-card-status">{{ bike.status }}</span>
@@ -146,4 +146,4 @@ window._cyclingData = {
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
 
-<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem; opacity: 0.6;">Data via Strava API · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>
+<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem;">Data via Strava API · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>

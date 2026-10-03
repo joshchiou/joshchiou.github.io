@@ -8,7 +8,7 @@ layout: default
   </style>
 {% endif %}
 
-<div class="post">
+<div class="post{% if page.collection == 'projects' %} post--project{% endif %}">
   {% include breadcrumbs.liquid %}
   <header class="post-header">
     {% if page.project_intro %}
@@ -37,5 +37,9 @@ layout: default
     <div class="publications">
       {% bibliography --cited_in_order %}
     </div>
+  {% endif %}
+
+  {% if page.img_credit %}
+    <p class="project-img-credit">Card image: {{ page.img_credit }}</p>
   {% endif %}
 </div>

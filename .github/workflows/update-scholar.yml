@@ -13,17 +13,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install scholarly
+        # scholarly imports bibtexparser 1.x APIs that 2.x removed
+        run: pip install scholarly "bibtexparser<2"
 
       - name: Fetch and update Scholar stats
+        env:
+          # Google Scholar blocks Actions runners; SerpAPI reads the profile for us.
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
         run: python scripts/update_scholar.py
 
       - name: Commit updated data files

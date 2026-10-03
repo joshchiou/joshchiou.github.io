@@ -8,13 +8,12 @@ middle_name:
 last_name: Chiou
 email: chioujosh@gmail.com
 description: >-
-  Senior Advisor, Genomics at Lilly. Translating large-scale proteomics and human
-  genetics into mechanistic and biomarker insights to inform clinical strategy for
-  cardiometabolic and obesity drug programs.
+  Director, Genomics at Lilly. I use large-scale proteomics and human genetics to
+  understand how obesity and cardiometabolic drugs work and to find biomarkers for them.
 footer_text: ""
 keywords: proteomics, computational biology, statistical genetics, pQTL, human genetics, GWAS, single-cell genomics, biomarker discovery, target discovery, cardiometabolic, obesity, Lilly
-lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: 🧬 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+lang: en-US # the language of your site (for example: en, fr, cn, ru, etc.)
+icon: favicon.svg # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://joshchiou.github.io # the base hostname & protocol for your site
 baseurl: "" # the subpath of your site, e.g. /blog/. Leave blank for root
@@ -112,7 +111,10 @@ x_username: # your X handle
 youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
-contact_note:
+contact_note: >-
+  I'm glad to hear about speaking invitations, scientific collaborations, and mentoring or
+  career conversations, especially with scientists considering a move into industry. Email
+  is the best way to reach me. (I can't discuss unpublished work at Lilly.)
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -311,7 +313,7 @@ max_author_limit: 3 # leave blank to always show all authors
 more_authors_animation_delay: 10 # more authors are revealed on click using animation; smaller delay means faster animation
 
 # Enables publication thumbnails. If disabled, none of the publications will display thumbnails, even if specified in the bib entry.
-enable_publication_thumbnails: false
+enable_publication_thumbnails: true
 
 # -----------------------------------------------------------------------------
 # Jekyll Link Attributes
@@ -362,8 +364,8 @@ lazy_loading_images: true # enables lazy loading of images (recommended)
 enable_google_analytics: false # enables google analytics
 enable_cronitor_analytics: false # enables cronitor RUM analytics
 enable_pirsch_analytics: false # enables Pirsch analytics (https://pirsch.io/)
-enable_goatcounter: false # enables GoatCounter analytics (https://goatcounter.com/)
-goatcounter_code: # your GoatCounter site code (the subdomain part of yourcode.goatcounter.com)
+enable_goatcounter: true # enables GoatCounter analytics (https://goatcounter.com/)
+goatcounter_code: joshchiou # your GoatCounter site code (the subdomain part of yourcode.goatcounter.com)
 enable_google_verification: true # enables google site verification
 enable_bing_verification: false # enables bing site verification
 enable_masonry: true # enables automatic project cards arrangement

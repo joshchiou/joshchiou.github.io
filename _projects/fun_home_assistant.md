@@ -12,42 +12,43 @@ category: fun
 I run [Home Assistant](https://www.home-assistant.io/) on a self-hosted server as the hub for
 home automation. It started with solar: after installing a SunPower PV system I wanted to
 monitor production locally without depending on SunPower's cloud app, so I set up Home
-Assistant to pull data directly from the PVS gateway on my LAN. From there it grew to
-controlling lights, climate, and media while monitoring utility consumption — the tinkerer in
-me couldn't resist. The system is designed around one hard constraint: **if the internet goes
+Assistant to pull data directly from the PVS gateway on my LAN. From there it grew to lights,
+climate, media, and utility monitoring. The whole system follows one rule: **if the internet goes
 down, everything still works.**
 
 {% if s.automations or s.entities or s.integrations or s.since %}
+
 <div class="hass-stats">
   <div class="hass-stat">
-    <span class="hass-stat-val">{{ s.automations | default: "—" }}</span>
+    <span class="hass-stat-val">{{ s.automations | default: "n/a" }}</span>
     <span class="hass-stat-label">automations</span>
   </div>
   <div class="hass-stat">
-    <span class="hass-stat-val">{{ s.entities | default: "—" }}</span>
+    <span class="hass-stat-val">{{ s.entities | default: "n/a" }}</span>
     <span class="hass-stat-label">entities</span>
   </div>
   <div class="hass-stat">
-    <span class="hass-stat-val">{{ s.integrations | default: "—" }}</span>
+    <span class="hass-stat-val">{{ s.integrations | default: "n/a" }}</span>
     <span class="hass-stat-label">integrations</span>
   </div>
   <div class="hass-stat">
-    <span class="hass-stat-val">{{ s.since | default: "—" }}</span>
+    <span class="hass-stat-val">{{ s.since | default: "n/a" }}</span>
     <span class="hass-stat-label">since</span>
   </div>
 </div>
 {% endif %}
 
-### Architecture
+## Architecture
 
 The stack is layered: physical devices talk over radio protocols, protocol bridges translate
-those signals to MQTT, and Home Assistant consumes the events to run automations and dashboards —
+those signals to MQTT, and Home Assistant consumes the events to run automations and dashboards,
 all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap any component for details.</span>
 
 <div class="hass-diagram">
 
 {% for layer in site.data.hass_layers %}
-  {% if layer.core %}
+{% if layer.core %}
+
   <div class="hass-layer hass-layer--core" data-layer="{{ layer.layer }}">
   {% else %}
   <div class="hass-layer" data-layer="{{ layer.layer }}">
@@ -65,7 +66,8 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
     </div>
   </div>
 
-  {% unless forloop.last %}
+{% unless forloop.last %}
+
   <div class="hass-connector" aria-hidden="true">
     <svg class="hass-flow-svg" viewBox="0 0 300 24" preserveAspectRatio="none">
       <line class="hass-flow-line--1" x1="25%" y1="0" x2="25%" y2="24" stroke="#18bcf2" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
@@ -78,31 +80,31 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
 
 </div>
 
-### Design principles
+## Design principles
 
 <div class="hass-principles">
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-house-signal"></i></div>
-    <h5>Local-first</h5>
+    <h3>Local-first</h3>
     <p>No automation depends on an external cloud. Lights, climate, and energy monitoring keep working if the internet goes down.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-shield-halved"></i></div>
-    <h5>Graceful degradation</h5>
+    <h3>Graceful degradation</h3>
     <p>Every automation has a safe fallback when a sensor goes offline. The system fails open for comfort and closed for safety.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-users"></i></div>
-    <h5>Zero-training UI</h5>
-    <p>Dashboards are designed to be usable by anyone in the house with no Home Assistant knowledge required.</p>
+    <h3>Zero-training UI</h3>
+    <p>Anyone in the house can use the dashboards without knowing anything about Home Assistant.</p>
   </div>
 </div>
 
-### Open source
+## Open source
 
 The SunPower PV integration is adapted from [ha-esunpower](https://github.com/smcneece/ha-esunpower). I contributed a fix for a memory-leak crash that occurred when the PVS gateway's serial number is an IP address:
 
-- [ha-esunpower #64](https://github.com/smcneece/ha-esunpower/pull/64) — fix memory leak when `pvs_serial` is an IP address
+- [ha-esunpower #64](https://github.com/smcneece/ha-esunpower/pull/64): fix memory leak when `pvs_serial` is an IP address
 
 <script>
 (function () {
@@ -125,7 +127,7 @@ The SunPower PV integration is adapted from [ha-esunpower](https://github.com/sm
       closeAll();
       if (!wasActive) {
         chip.classList.add('active');
-        detail.innerHTML = '<strong>' + chip.dataset.title + '</strong> — ' + chip.dataset.desc;
+        detail.innerHTML = '<strong>' + chip.dataset.title + '</strong>: ' + chip.dataset.desc;
         detail.classList.add('open');
       }
     });

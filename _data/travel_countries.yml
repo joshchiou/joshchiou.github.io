@@ -37,3 +37,8 @@
   flag: "🇩🇪"
   lat: 52.52
   lon: 13.405
+- name: Italy
+  continent: Europe
+  flag: "🇮🇹"
+  lat: 45.4642
+  lon: 9.19

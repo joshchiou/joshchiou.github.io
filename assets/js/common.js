@@ -1,3 +1,34 @@
+// Scroll entrance animations. Kept outside the jQuery block so content still
+// appears if jQuery fails to load; .animate-in elements are only hidden once
+// html.anim-ready is set here (see _sass/_custom.scss).
+(function () {
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function init() {
+    var animateEls = document.querySelectorAll(".animate-in");
+    if (animateEls.length === 0) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.documentElement.classList.add("anim-ready");
+    animateEls.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+
 $(document).ready(function () {
   // add toggle functionality to abstract, award and bibtex buttons
   $("a.abstract").click(function () {
@@ -56,25 +87,4 @@ $(document).ready(function () {
   $('[data-toggle="popover"]').popover({
     trigger: "hover",
   });
-
-  // Scroll entrance animations
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var animateEls = document.querySelectorAll(".animate-in");
-    if (animateEls.length > 0) {
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-      animateEls.forEach(function (el) {
-        observer.observe(el);
-      });
-    }
-  }
 });

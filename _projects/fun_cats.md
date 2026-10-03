@@ -81,6 +81,7 @@ category: fun
         </div>
       </div>
     </div>
+
   </div>
 
 </div><!-- /claire-hero -->
@@ -93,7 +94,9 @@ category: fun
 </div>
 
 <!-- ── Timeline ──────────────────────────────────────────────────────────── -->
+
 {% for entry in claire %}
+
 <div class="claire-era">
   <div class="claire-era-header">
     <div class="claire-era-eyebrow">{{ entry.year }}</div>

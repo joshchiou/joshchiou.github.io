@@ -2,10 +2,10 @@
 layout: about
 title: about
 permalink: /
-subtitle: Senior Advisor, Genomics · Lilly · Translational Proteomics & Statistical Genetics
+subtitle: Director, Genomics · Lilly · Translational Proteomics & Statistical Genetics
 description: >
-  Joshua Chiou — Senior Advisor, Genomics at Lilly. Translating proteomics
-  and human genetics into clinical insights for cardiometabolic and obesity programs.
+  Joshua Chiou is Director, Genomics at Lilly, using proteomics and human genetics
+  to study how obesity and cardiometabolic drugs work.
 
 profile:
   align: right
@@ -18,8 +18,8 @@ selected_papers: true
 social: true
 ---
 
-I am a Senior Advisor in Genomics at [Lilly](https://www.lilly.com), and I translate large-scale proteomics into mechanistic insights to inform clinical strategy for obesity drug programs. Previously, I was a Senior Principal Computational Geneticist at [Pfizer](https://www.pfizer.com), where I led cardiovascular target discovery using human genetics and contributed to the [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/) (UKB-PPP).
+I am a Director of Genomics at [Lilly](https://www.lilly.com), where I lead translational proteomics for obesity and cardiometabolic drug programs, using blood protein measurements from large clinical trials to understand how drugs work. Most recently, I presented exploratory [proteomic findings from SURMOUNT-5]({{ '/projects/work_lilly_proteomics/' | relative_url }}), the head-to-head trial of tirzepatide and semaglutide, at EASD 2026. Previously, I was a Senior Principal Computational Geneticist at [Pfizer](https://www.pfizer.com), where I led cardiovascular target discovery using human genetics and contributed to the [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/) (UKB-PPP).
 
 I completed my PhD in [Biomedical Sciences](https://biomedsci.ucsd.edu/) at [UC San Diego](https://ucsd.edu/), where I used statistical genetics and single-cell epigenomics to study type 1 and type 2 diabetes risk mechanisms.
 
-[View full CV →](/cv/)
+[View full CV →]({{ '/cv/' | relative_url }})

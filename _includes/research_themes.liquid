@@ -1,0 +1,27 @@
+{% comment %} Homepage research themes, from _data/research_themes.yml {% endcomment %}
+{% if site.data.research_themes %}
+  <h2 class="about-section-heading">research</h2>
+  <div class="research-themes">
+    {% for theme in site.data.research_themes %}
+      <a class="research-theme" href="{{ theme.url | relative_url }}">
+        {% if theme.img %}
+          <img
+            class="research-theme-img"
+            src="{{ theme.img | relative_url }}"
+            alt=""
+            loading="lazy"
+            width="1200"
+            height="480"
+            {% if theme.img_credit %}
+              title="{{ theme.img_credit | escape }}"
+            {% endif %}
+          >
+        {% endif %}
+        <div class="research-theme-body">
+          <h3 class="research-theme-title">{{ theme.title }}</h3>
+          <p class="research-theme-desc">{{ theme.description }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}

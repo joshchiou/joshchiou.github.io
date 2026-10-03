@@ -1,5 +1,5 @@
 {
-  "total_papers": 38,
+  "total_papers": 40,
   "top_journal_papers": 9,
   "top_journals": [
     {
@@ -15,9 +15,9 @@
       "count": 1
     }
   ],
-  "citations": 8118,
-  "h_index": 27,
-  "i10_index": 34,
+  "citations": 8655,
+  "h_index": 28,
+  "i10_index": 36,
   "source": "google_scholar",
-  "updated_at": "2026-07-29T10:01:30.691005+00:00"
+  "updated_at": "2026-10-03T15:11:23.393199+00:00"
 }

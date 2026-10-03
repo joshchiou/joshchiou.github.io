@@ -68,7 +68,9 @@
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{{ site.icon }}</text></svg>"
   >
 {% elsif site.icon != blank %}
-  <link rel="shortcut icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}">
+  <link rel="icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/assets/img/site.webmanifest' | relative_url }}">
 {% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url | bust_css_cache }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
@@ -76,17 +78,17 @@
 <!-- Dark Mode: inline critical anti-flicker, defer the rest -->
 {% if site.enable_darkmode %}
   <script>
-    (function(){
-      var ts = localStorage.getItem("theme");
-      if (ts !== "dark" && ts !== "light" && ts !== "system") ts = "system";
-      document.documentElement.setAttribute("data-theme-setting", ts);
+    (function () {
+      var ts = localStorage.getItem('theme');
+      if (ts !== 'dark' && ts !== 'light' && ts !== 'system') ts = 'system';
+      document.documentElement.setAttribute('data-theme-setting', ts);
       var theme;
-      if (ts === "system") {
-        theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+      if (ts === 'system') {
+        theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       } else {
         theme = ts;
       }
-      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
   <link
@@ -183,7 +185,7 @@
       "honorificSuffix": "PhD",
       "url": "https://joshchiou.github.io",
       "image": "https://joshchiou.github.io/assets/img/prof_pic.jpg",
-      "jobTitle": "Senior Advisor, Genomics",
+      "jobTitle": "Director, Genomics",
       "worksFor": {
         "@type": "Organization",
         "name": "Lilly",
@@ -240,7 +242,7 @@
       "@type": "WebSite",
       "name": "Joshua Chiou",
       "url": "https://joshchiou.github.io",
-      "description": "Personal academic website of Joshua Chiou — Senior Advisor, Genomics at Lilly.",
+      "description": "Personal academic website of Joshua Chiou (Director, Genomics at Lilly).",
       "author": {
         "@type": "Person",
         "name": "Joshua Chiou"

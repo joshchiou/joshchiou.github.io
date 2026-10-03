@@ -18,6 +18,12 @@ on:
       - "**.yml"
       - "Gemfile"
       - "Gemfile.lock"
+  # Data workflows push with GITHUB_TOKEN, which doesn't trigger push events,
+  # so redeploy explicitly after they finish.
+  workflow_run:
+    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Update Strava Data"]
+    types: [completed]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -31,17 +37,18 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Ruby 💎
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3.5"
           bundler-cache: true
       - name: Setup Python 🐍
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.13"
           cache: "pip"
@@ -67,6 +74,11 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
+      - name: Generate CV PDF 📄
+        run: |
+          pip3 install playwright
+          python3 -m playwright install --with-deps chromium
+          python3 scripts/build_cv_pdf.py
       - name: Upload Pages artifact 📦
         uses: actions/upload-pages-artifact@v5
         with:

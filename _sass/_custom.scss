@@ -1,0 +1,582 @@
+/*******************************************************************************
+ * Site-specific overrides, imported last so they win over upstream al-folio.
+ ******************************************************************************/
+
+// -----------------------------------------------------------------------------
+// Accessibility: theme colors that meet WCAG AA (4.5:1 for body text)
+// -----------------------------------------------------------------------------
+// Light: stock #2980b9 is 4.3:1 on white and grey #828282 is 3.8:1.
+:root {
+  --global-theme-color: #1d6aa5; // 5.7:1 on white
+  --global-hover-color: #175a8c;
+  --global-text-color-light: #6b6b6b; // 5.3:1 on white
+}
+
+// Dark: grey #828282 is 4.4:1 on #1c1c1d and cyan #2698ba drops to 4.2:1 on tinted cards.
+html[data-theme="dark"] {
+  --global-theme-color: #3fb0d4; // 6.8:1 on #1c1c1d
+  --global-hover-color: #6cc4e0;
+  --global-text-color-light: #a0a0a0; // 6.5:1 on #1c1c1d
+
+  .text-muted {
+    color: var(--global-text-color-light) !important;
+  }
+
+  // The brighter dark accent needs dark text when it is a background.
+  .contrib-filter-btn.active,
+  .chart-toggle-btn.active,
+  .bike-card-status,
+  .strava-link:hover,
+  .about-cta-primary,
+  .about-cta-primary:hover,
+  .about-journal-pill {
+    color: #1c1c1d;
+  }
+}
+
+// Inline links in prose: distinguishable without relying on color.
+.post article p a:not(.btn),
+.post article li a:not(.btn),
+.post-description a,
+.news a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Visible keyboard focus everywhere.
+a,
+button,
+input,
+summary,
+[tabindex] {
+  &:focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// Projects page section labels were divider-colored (1.2:1).
+.projects h2.category {
+  color: var(--global-text-color-light);
+}
+
+// CV timeline education year: #e67e22 is 2.8:1 on white.
+.timeline-year--edu {
+  color: #a85400;
+
+  html[data-theme="dark"] & {
+    color: #f0a050;
+  }
+}
+
+// Publication and contribution badges.
+.publications ol.bibliography li .links .badge-preprint,
+.badge-preprint {
+  color: #212529 !important; // white on #f0ad4e is 1.9:1
+}
+
+.badge-perf {
+  background-color: #8f5d0a;
+}
+
+// Cycling year-over-year delta (set by assets/js/cycling.js).
+.stat-delta-up {
+  color: #1e8449;
+}
+
+.stat-delta-down {
+  color: #c0392b;
+}
+
+html[data-theme="dark"] {
+  .stat-delta-up {
+    color: #4cc97a;
+  }
+
+  .stat-delta-down {
+    color: #ff7b6b;
+  }
+}
+
+// Talks list (publications page, from _includes/talks.liquid)
+.talks-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 2rem;
+
+  .talk-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--global-divider-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .talk-year {
+    flex: 0 0 3.5rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--global-text-color-light);
+  }
+
+  .talk-body {
+    min-width: 0;
+  }
+
+  .talk-title {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .talk-meta {
+    font-size: 0.9rem;
+    color: var(--global-text-color-light);
+    margin-top: 0.15rem;
+  }
+
+  .talk-links {
+    margin-top: 0.4rem;
+
+    a.btn {
+      color: var(--global-text-color);
+      border: 1px solid var(--global-text-color);
+      padding: 0.2rem 0.75rem;
+      margin: 0.25rem 0 0;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      text-transform: none;
+      transition: all 0.15s ease;
+
+      &:hover {
+        color: var(--global-theme-color);
+        border-color: var(--global-theme-color);
+        background-color: color-mix(in srgb, var(--global-theme-color) 5%, transparent);
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Visual polish
+// -----------------------------------------------------------------------------
+// Project cards: compact title scale, muted summary, subtle hover lift.
+.projects .card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  .card-body {
+    padding: 1rem 1.1rem 1.1rem;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--global-text-color-light);
+  }
+}
+
+.projects a:hover .card,
+.projects a:focus-visible .card {
+  transform: translateY(-3px);
+}
+
+// Project pages: keep prose to a comfortable reading measure (~70 characters).
+.post--project {
+  .post-description,
+  article > p,
+  article > ul,
+  article > ol,
+  article > h2,
+  article > h3,
+  article > blockquote,
+  article > .project-tldr {
+    max-width: 70ch;
+  }
+
+  article > h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+// Numbers that line up: years, stats, counts.
+.talk-year,
+.timeline-year,
+.cv .badge,
+.publication-count {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects .card {
+    transition: none;
+  }
+
+  .projects a:hover .card,
+  .projects a:focus-visible .card {
+    transform: none;
+  }
+}
+
+// Homepage research themes (_includes/research_themes.liquid)
+.research-themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.research-theme {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--global-card-bg-color);
+  color: inherit;
+  text-decoration: none !important;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--global-theme-color);
+    transform: translateY(-2px);
+
+    .research-theme-title {
+      color: var(--global-theme-color);
+    }
+  }
+
+  // Images are made at 5:2 so the whole figure shows at every width.
+  .research-theme-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 2;
+    object-fit: cover;
+    display: block;
+  }
+
+  .research-theme-body {
+    padding: 0.8rem 0.95rem 0.95rem;
+  }
+
+  .research-theme-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 0.35rem;
+    transition: color 0.2s ease;
+  }
+
+  .research-theme-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--global-text-color-light);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .research-theme {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+}
+
+// Publication thumbnails and plain-language summaries (_layouts/bib.liquid)
+.publications ol.bibliography li {
+  .pub-thumb {
+    padding-right: 0;
+
+    .preview {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--global-divider-color);
+      margin-top: 0.2rem;
+    }
+  }
+
+  .pub-tldr {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--global-text-color-light);
+    margin: 0.15rem 0 0.25rem;
+  }
+}
+
+// Phones: thumbnails would push the title below the fold; hide them.
+@media (max-width: 575.98px) {
+  .publications ol.bibliography li .pub-thumb {
+    display: none;
+  }
+}
+
+// The CV keeps its compact list style.
+.cv-publications {
+  .pub-thumb,
+  .pub-tldr {
+    display: none !important;
+  }
+
+  ol.bibliography li .col-sm-10 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+// Homepage contact note under the social icons
+article .social .contact-note {
+  max-width: 56ch;
+  margin: 0.75rem auto 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--global-text-color-light);
+}
+
+// Project card images are authored at 16:10; show them whole instead of a
+// fixed 200px band that crops the sides of figures and illustrations.
+.project-img-wrap img.card-img-top {
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+// Attribution for project card images (img_credit front matter)
+.project-img-credit {
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--global-divider-color);
+  font-size: 0.8rem;
+  color: var(--global-text-color-light);
+}
+
+// Figure crops have white backgrounds: a hairline keeps them from bleeding into
+// light cards and sets them off from the page in dark mode.
+.projects .project-img-wrap,
+.research-theme-img,
+.publications ol.bibliography li .pub-thumb .preview {
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+// Scroll entrance animations: visible by default, hidden only once the
+// observer in assets/js/common.js has started (html.anim-ready).
+.animate-in {
+  opacity: 1;
+  transform: none;
+}
+
+html.anim-ready .animate-in:not(.visible) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.anim-ready .animate-in:not(.visible) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// CV print header: hidden on screen, shown in print / generated PDF
+.cv-print-header {
+  display: none;
+}
+
+// Print stylesheet, used for the generated CV PDF (scripts/build_cv_pdf.py)
+@media print {
+  @page {
+    size: letter;
+    margin: 0.6in 0.65in;
+  }
+
+  :root,
+  html[data-theme="dark"] {
+    --global-bg-color: #fff;
+    --global-text-color: #111;
+    --global-text-color-light: #555;
+    --global-theme-color: #1d6aa5;
+    --global-divider-color: #ddd;
+    --global-card-bg-color: #fff;
+  }
+
+  body {
+    padding-top: 0 !important;
+    font-size: 10.5pt;
+    background: #fff !important;
+  }
+
+  header,
+  footer,
+  #back-to-top,
+  .navbar,
+  progress,
+  ninja-keys,
+  .cv-timeline,
+  .post-header,
+  .bibsearch-input-wrapper {
+    display: none !important;
+  }
+
+  // Bootstrap's print CSS forces a 992px minimum width; let content fit the page.
+  body,
+  .container {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .container {
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  // TOC sidebar column: hide it and let the content column take the full width.
+  #toc-sidebar,
+  .container > .row > .col-sm-3 {
+    display: none !important;
+  }
+
+  .container > .row {
+    margin: 0;
+  }
+
+  .container > .row > .col-sm-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  // Web-only controls (DOI/Scholar/source buttons, anchors) add noise on paper.
+  .cv .links,
+  .cv .btncv,
+  .cv .anchor {
+    display: none !important;
+  }
+
+  .cv .bibliography > li {
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
+  }
+
+  .cv-print-header {
+    display: block;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #111;
+
+    .cv-print-name {
+      font-size: 20pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .cv-print-role {
+      font-size: 12pt;
+      color: #333;
+    }
+
+    .cv-print-contact {
+      font-size: 9.5pt;
+      color: #555;
+    }
+  }
+
+  .cv .card {
+    display: block !important; // flex cards don't fragment across pages
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0.5rem !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .cv .card-title {
+    break-after: avoid;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.2rem;
+  }
+
+  // Keep small units together; whole entries may span pages to avoid big gaps.
+  .cv .cv-sub-role,
+  .cv .bibliography > li,
+  .cv tr {
+    break-inside: avoid;
+  }
+
+  // Flex containers fragment poorly; stack entries as blocks and stop the
+  // date column stretching to the full entry height.
+  .cv .list-group {
+    display: block !important;
+  }
+
+  .cv .list-group-item > .row {
+    align-items: flex-start;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .animate-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+// Card headings use h3 so heading levels don't skip (they sit under page h2s).
+// These keep the sizes the old h4/h5 tags had.
+.hass-principle-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.recipe-card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contrib-year-header h3 {
+  font-size: 1.5rem;
+}
+
+// Home Assistant chips: #0ea5d9 text is 2.5:1 on the tinted chip in light mode.
+.hass-chip.active,
+.hass-chip--core {
+  color: #08739a; // 4.8:1 on the tinted chip
+}
+
+html[data-theme="dark"] {
+  .hass-chip.active,
+  .hass-chip--core {
+    color: #0ea5d9; // 6.0:1 on the dark background
+  }
+}
