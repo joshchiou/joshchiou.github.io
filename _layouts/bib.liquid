@@ -233,7 +233,7 @@
           {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
         </a>
       {% endif %}
-      {% if entry.doi contains '10.1101/' %}
+      {% if entry.doi contains '10.1101/' or entry.doi contains '10.64898/' %}
         <span class="badge-preprint">Preprint</span>
       {% endif %}
       {% if entry.abstract %}
