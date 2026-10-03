@@ -35,7 +35,7 @@ Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Content l
 - `_data/repositories.yml`, `_data/contributions.yml`: code page repos and open-source PRs
 - `_data/research_themes.yml`, `_data/press.yml`: homepage theme cards, press list
 - `_data/strava_*.json`, `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
-- `_data/travel_countries.yml`, `_data/travel_cities.yml`: from the Takeout script
+- `_data/travel_countries.yml`, `_data/travel_cities.yml`: from the Timeline script, then hand-edited
 
 Template-level files (`_sass/`, `assets/libs/`, `_layouts/`, `_includes/`) are mostly upstream
 al-folio. Customized ones: `_layouts/bib.liquid` (thumbnails, TL;DRs, badges), `_layouts/page.liquid`
@@ -79,11 +79,15 @@ lives in the `@media print` block of `_sass/_custom.scss`. To preview locally af
 Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
 GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
 
-**Travel:** `scripts/parse_location_history.py /path/to/location-history.json`, run locally after
-downloading from Google Maps → Timeline → Export timeline data (JSON).
-Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via Nominatim and
-caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
-restaurants/shops). First run ~5 min (289 places at 1 req/sec); re-runs instant.
+**Travel:** export the JSON on the phone (Google Maps → your profile → Timeline → ⋮ → Export
+Timeline data; Timeline lives on the device, so this can't be automated), then run
+`scripts/parse_location_history.py [--dry-run] /path/to/export.json`. iOS and Android exports
+both work. It only appends places missing from `_data/travel_countries.yml` and
+`_data/travel_cities.yml`, so hand edits survive (see docs/DECISIONS.md D-013). New countries need
+a `continent` added by hand; review new cities and delete noise, which stays deleted because
+proposed cities are remembered in `scripts/.travel_seen.json` (gitignored). Geocodes via Nominatim,
+cached in `scripts/.geocode_cache.json` (gitignored; first run ~5 min at 1 req/sec). Never commit
+the export itself.
 
 **Scholar stats:** `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
 Google Scholar blocks GitHub Actions runners, so the workflow reads the profile through SerpAPI
@@ -151,8 +155,7 @@ and `assets/img/projects/fun/`:
 - Lilly, Pfizer, and Home Assistant are drawn by `scripts/render_project_art.py` from synthetic data
   (no real results; the Lilly and Pfizer cards say so in their credit line).
 - Travel is drawn by `scripts/render_travel_card.py` from the travel data files. Re-run it after
-  editing them. Those files are auto-generated, so hand additions (Milan and Rome, 2026) are lost
-  on a Takeout re-run unless the export includes them.
+  editing them.
 - Homepage research theme images are separate 5:2 two-panel composites in
   `assets/img/research_themes/` (see docs/design.md); the clinical trial one comes from
   `render_project_art.py`.

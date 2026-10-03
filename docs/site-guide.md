@@ -95,7 +95,7 @@ lists each of them under `workflow_run`. Add any new data workflow to that list.
 | Script                                                                                                 | Use                                                                          |
 | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
 | `update_strava.py`, `update_github.py`, `update_scholar.py`, `update_publications.py`, `enrich_bib.py` | Run by the workflows above                                                   |
-| `parse_location_history.py`                                                                            | Rebuilds the travel data from a Google Maps Timeline export (run locally)    |
+| `parse_location_history.py`                                                                            | Adds new places from a Google Maps Timeline export (run locally)             |
 | `render_travel_card.py`                                                                                | Redraws the travel card map from the travel data                             |
 | `render_project_art.py`                                                                                | Redraws the Lilly, Pfizer, and Home Assistant card illustrations             |
 | `render_og_image.py`                                                                                   | Renders `assets/img/og-image.png` (the site-wide link preview) from its SVG  |
