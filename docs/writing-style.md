@@ -72,6 +72,7 @@ prose that reaches for effect (taglines, framing, significance statements).
   "Director, Genomics" (capitalized as a title).
 - Drug names are lowercase (tirzepatide, semaglutide); trial names keep their capitals
   (SURMOUNT-5). Gene symbols are italic where the format allows.
+- "Exocrine pancreas" means acinar and ductal cells; don't shorten it to acinar.
 - Journal names are italic: _Nature_, _Nature Genetics_.
 - Doses and units take a space: 15 mg, 2.4 mg.
 - Numbers: commas in thousands (54,000), numerals for 10 and above, and for any measurement.
