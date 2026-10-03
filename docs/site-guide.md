@@ -71,16 +71,16 @@ The fun pages pull from their own data files: cycling from `_data/strava_*.json`
 
 ## Automation
 
-| Workflow                            | When                                                          | What it does                                                                              |
-| ----------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages                        |
-| Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                           |
-| Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml` |
-| Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json`; a red run means the numbers are stale               |
-| Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                     |
-| Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                             |
-| Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass      |
-| Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                    |
+| Workflow                            | When                                                          | What it does                                                                                           |
+| ----------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages                                     |
+| Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                                        |
+| Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml`              |
+| Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json` via SerpAPI (`SERPAPI_KEY` secret); a red run means stale numbers |
+| Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                                  |
+| Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                                          |
+| Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass                   |
+| Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                                 |
 
 Generated data files, vendored files, and the historical notes in `docs/superpowers/` are listed in
 `.prettierignore`. Sites that block bots, gated URLs, and Liquid expressions (which lychee would

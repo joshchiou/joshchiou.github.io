@@ -6,13 +6,23 @@ top-journal breakdown, and update metadata. If the Scholar fetch fails, exits
 non-zero and leaves the file untouched, so the workflow run turns red instead
 of committing stale numbers with a fresh timestamp.
 
+Google Scholar blocks GitHub Actions runners, so the workflow reads the profile
+through SerpAPI's Google Scholar Author API when SERPAPI_KEY is set (repo secret).
+Without the key, it falls back to scraping Scholar directly with scholarly, which
+works from a home connection but not from CI.
+
 Usage:
-    python3 scripts/update_scholar.py
+    SERPAPI_KEY=... python3 scripts/update_scholar.py
+    python3 scripts/update_scholar.py            # scholarly fallback
 """
 
 import json
+import os
 import re
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -22,6 +32,7 @@ OUT_PATH = Path(__file__).resolve().parent.parent / "_data" / "scholar_stats.jso
 
 TOP_JOURNALS = {"Nature", "Cell", "Nature Genetics"}
 GOOGLE_SCHOLAR_TIMEOUT = 60
+SERPAPI_URL = "https://serpapi.com/search.json"
 
 
 def count_bib_entries(bib_path: Path) -> tuple[int, list[dict]]:
@@ -47,6 +58,37 @@ def load_existing_stats() -> dict:
         except (json.JSONDecodeError, KeyError):
             pass
     return {}
+
+
+def fetch_serpapi(scholar_id: str, api_key: str) -> dict | None:
+    """Read citations, h-index, and i10-index from SerpAPI's google_scholar_author engine."""
+    query = urllib.parse.urlencode({"engine": "google_scholar_author", "author_id": scholar_id, "hl": "en", "api_key": api_key})
+    try:
+        with urllib.request.urlopen(f"{SERPAPI_URL}?{query}", timeout=GOOGLE_SCHOLAR_TIMEOUT) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as e:
+        # Don't echo the request URL: it contains the API key.
+        print(f"SerpAPI request failed with HTTP {e.code}")
+        return None
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+        print(f"SerpAPI request failed: {type(e).__name__}")
+        return None
+    if "error" in data:
+        print(f"SerpAPI error: {data['error']}")
+        return None
+    metrics = {}
+    for row in data.get("cited_by", {}).get("table", []):
+        for name, values in row.items():
+            metrics[name] = values.get("all")
+    if not metrics.get("citations"):
+        print("SerpAPI response had no citation table")
+        return None
+    return {
+        "citations": int(metrics["citations"]),
+        "h_index": int(metrics.get("h_index") or 0),
+        "i10_index": int(metrics.get("i10_index") or 0),
+        "source": "google_scholar",
+    }
 
 
 def fetch_google_scholar(scholar_id: str) -> dict | None:
@@ -83,7 +125,12 @@ def main():
     print(f"  Journals: {', '.join(j['name'] + ' (' + str(j['count']) + ')' for j in top_journals)}")
 
     existing = load_existing_stats()
-    scholar = fetch_google_scholar(SCHOLAR_ID)
+    api_key = os.environ.get("SERPAPI_KEY", "").strip()
+    if api_key:
+        scholar = fetch_serpapi(SCHOLAR_ID, api_key)
+    else:
+        print("SERPAPI_KEY not set; trying Google Scholar directly")
+        scholar = fetch_google_scholar(SCHOLAR_ID)
 
     if scholar is None:
         sys.exit(f"Google Scholar fetch failed; leaving {OUT_PATH.name} unchanged")
