@@ -11,6 +11,10 @@ This file is the starting point for a new session; the guides below hold the det
   accessibility checks.
 - [docs/writing-style.md](docs/writing-style.md): voice, naming, punctuation, and patterns for each
   kind of text.
+- [docs/STATUS.md](docs/STATUS.md): what is live, what is open, and who it waits on. Rewritten at
+  the end of each session with the `handoff` skill (repo rules in `.claude/handoff-inputs.md`).
+- [docs/DECISIONS.md](docs/DECISIONS.md): append-only log of decisions and why the alternatives
+  were rejected. Check it before changing something that looks odd.
 
 Two writing rules apply to all visible text, docs, and commit messages:
 
