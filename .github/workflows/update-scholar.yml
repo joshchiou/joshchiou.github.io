@@ -25,6 +25,9 @@ jobs:
         run: pip install scholarly "bibtexparser<2"
 
       - name: Fetch and update Scholar stats
+        env:
+          # Google Scholar blocks Actions runners; SerpAPI reads the profile for us.
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
         run: python scripts/update_scholar.py
 
       - name: Commit updated data files
