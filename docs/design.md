@@ -73,6 +73,9 @@ editing:
 - They use the dataviz skill's reference palette: surface `#fcfcfb`, blue `#2a78d6`, orange
   `#eb6834`, yellow `#eda100`, gray `#c9c8c3` for context marks. Assign hues in that order and
   validate any new palette with the skill's `validate_palette.js`.
+- The Lilly card (and its homepage version) uses Lilly colors instead: red `#e0241a` (the logo red)
+  and blue `#2e5a94`, one step lighter than the deck navy `#0c376d` so the pair passes the
+  validator.
 - Thin lines, small round markers with a 1-2px surface-colored outline, no gridlines beyond a few
   faint guides.
 
