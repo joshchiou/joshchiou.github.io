@@ -31,15 +31,15 @@ one accent color, generous white space, and real figures from the work instead o
 
 ## Components
 
-| Component           | Where                               | Rules                                                                                                     |
-| ------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Project card        | `/projects/`                        | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                     |
-| Research theme card | Homepage                            | Image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
-| Project page        | `/projects/*/`                      | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                         |
-| Selected paper      | `/publications/`                    | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                         |
-| Talk                | `/publications/`                    | Year, title, venue, outlined link buttons for slides or video                                             |
-| Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                |
-| Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                |
+| Component           | Where                               | Rules                                                                                                         |
+| ------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Project card        | `/projects/`                        | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                         |
+| Research theme card | Homepage                            | 5:2 image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
+| Project page        | `/projects/*/`                      | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                             |
+| Selected paper      | `/publications/`                    | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
+| Talk                | `/publications/`                    | Year, title, venue, outlined link buttons for slides or video                                                 |
+| Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
+| Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
 
 Headings: page titles in the navigation and the homepage section labels ("research", "selected
 publications", "news") are lowercase, which is al-folio's style. Headings inside pages use sentence
@@ -51,6 +51,10 @@ reuses the CV's "Talks & Presentations" name.
 - **Project cards** are 16:10. Paper cards use a cropped panel from the paper, with annotation text
   removed so the figure reads at card size, and an `img_credit` line on the page. Photos are real
   photos. Work without public figures gets an illustration drawn from synthetic data (see below).
+- **Homepage research theme images** are 5:2 (1200x480) in `assets/img/research_themes/`: two
+  panels side by side on white, ideally from two different papers, each fitted whole into its half
+  so nothing is cropped at any screen width. `img_credit` in `_data/research_themes.yml` names the
+  sources. Never point a theme card at a 16:10 card image; it gets cropped on phones.
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
 - **Formats.** WebP for photos and dense figures, through `scripts/prep_images.py` (responsive

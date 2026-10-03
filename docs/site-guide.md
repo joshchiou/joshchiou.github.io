@@ -23,7 +23,8 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
 
 1. Name, tagline (`subtitle` in `about.md` front matter), and profile photo.
 2. Bio: two short paragraphs and a link to the CV.
-3. **research**: three theme cards from `_data/research_themes.yml`, each linking to a project.
+3. **research**: three theme cards from `_data/research_themes.yml`, each linking to a project,
+   with a 5:2 image from `assets/img/research_themes/`.
 4. **selected publications**: entries in `papers.bib` with `selected = {true}`.
 5. **news**: the most recent items from `_news/`.
 6. Contact: social icons and `contact_note` from `_config.yml`.
