@@ -53,7 +53,7 @@ reuses the CV's "Talks & Presentations" name.
   photos. Work without public figures gets an illustration drawn from synthetic data (see below).
 - **Homepage research theme images** are 5:2 (1200x480) in `assets/img/research_themes/`: two
   panels side by side on white, ideally from two different papers, each fitted whole into its half
-  so nothing is cropped at any screen width. `img_credit` in `_data/research_themes.yml` names the
+  so nothing is cropped at any screen width, with a thin gray vertical divider (4px, `#c4c4c4`) between them. `img_credit` in `_data/research_themes.yml` names the
   sources. Never point a theme card at a 16:10 card image; it gets cropped on phones.
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
