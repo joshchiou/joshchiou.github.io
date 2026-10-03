@@ -7,14 +7,14 @@
   url: /projects/work_lilly_proteomics/
   img: assets/img/projects/work/lilly-proteomics.webp
 
-- title: Population proteomics & genetics
+- title: Population proteomics and genetics
   description: >-
     Linking genetic variation to blood protein levels across the UK Biobank to find
     and validate new drug targets.
   url: /projects/work_ukb_ppp/
   img: assets/img/projects/work/ukb-ppp-pqtl-map.webp
 
-- title: Diabetes genetics & single-cell epigenomics
+- title: Diabetes genetics and single-cell epigenomics
   description: >-
     Pinpointing which pancreatic cell types and regulatory elements carry genetic risk
     for type 1 and type 2 diabetes.

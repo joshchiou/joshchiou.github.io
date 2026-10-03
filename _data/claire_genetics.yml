@@ -18,7 +18,7 @@ breeds:
     pct: 4.08
     cls: c-persian
 
-# Chromosome map — segments approximate Basepaws report at "probable" confidence.
+# Chromosome map: segments approximate Basepaws report at "probable" confidence.
 # Each segment: cls (breed color class), width (percentage of chromosome length).
 chromosomes:
   - id: A1

@@ -72,7 +72,7 @@ chart:
   <div class="featured-ride-card">
     <img class="featured-ride-img" src="{{ ride.image }}" alt="{{ ride.title }}" loading="lazy">
     <div class="featured-ride-body">
-      <h4 class="featured-ride-title">{{ ride.title }}</h4>
+      <h3 class="featured-ride-title">{{ ride.title }}</h3>
       <p class="featured-ride-meta">{{ ride.location }} · {{ ride.distance_km | times: 0.621371 | round }} mi</p>
       <p class="featured-ride-story">{{ ride.story }}</p>
     </div>
@@ -102,7 +102,7 @@ chart:
         <div class="bike-card-body">
           <div class="bike-card-header">
             <div>
-              <h4 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h4>
+              <h3 class="bike-card-title">{{ bike.year }} {{ bike.name }}</h3>
             </div>
             {% if bike.status %}
               <span class="bike-card-status">{{ bike.status }}</span>

@@ -29,14 +29,14 @@ description: >
     </div>
     <div class="github-profile-right-d">
       <div class="github-profile-stats">
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.public_repos | default: "—" }}</span><span class="gh-stat-label">repos</span></div>
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.total_stars | default: "—" }}</span><span class="gh-stat-label">stars</span></div>
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.followers | default: "—" }}</span><span class="gh-stat-label">followers</span></div>
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.public_repos | default: "n/a" }}</span><span class="gh-stat-label">repos</span></div>
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.total_stars | default: "n/a" }}</span><span class="gh-stat-label">stars</span></div>
+        <div class="gh-stat"><span class="gh-stat-val">{{ gh.followers | default: "n/a" }}</span><span class="gh-stat-label">followers</span></div>
       </div>
       <div class="gh-stat-divider"></div>
       <div class="github-profile-orgs-d">
         <div class="github-profile-orgs-icons">
-          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly & Company">
+          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly and Company">
             <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Eli Lilly">
           </a>
           <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
@@ -131,7 +131,7 @@ Selected merged pull requests to community scientific software.
     {% assign c_year = c.date | date: "%Y" %}
     {% if c_year != current_year %}
       {% assign current_year = c_year %}
-      <li class="mt-4 mb-2 contrib-year-header"><h4 class="text-muted">{{ current_year }}</h4></li>
+      <li class="mt-4 mb-2 contrib-year-header"><h3 class="text-muted">{{ current_year }}</h3></li>
     {% endif %}
     <li class="mb-4 contribution-item" data-type="{{ c.type }}" data-lang="{{ c.language }}" data-featured="{{ c.featured | default: false }}">
       <div class="mb-1">

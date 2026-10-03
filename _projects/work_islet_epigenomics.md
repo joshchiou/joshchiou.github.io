@@ -32,4 +32,4 @@ in the field for interpreting diabetes GWAS results.
 
 ---
 
-**Related:** [Type 1 Diabetes and the Exocrine Pancreas]({{ '/projects/work_t1d_exocrine/' | relative_url }}) — companion project revealing acinar cell contributions to T1D genetic risk using the same single-cell epigenomic approach.
+**Related:** [Type 1 Diabetes and the Exocrine Pancreas]({{ '/projects/work_t1d_exocrine/' | relative_url }}), companion project revealing acinar cell contributions to T1D genetic risk using the same single-cell epigenomic approach.

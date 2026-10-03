@@ -14,7 +14,7 @@ images:
 {% assign cities = site.data.travel_cities %}
 {% assign continents = countries | map: "continent" | uniq %}
 
-My wife and I try to get abroad once or twice a year, plus domestic trips when we can. We don't chase bucket lists — we'd rather return somewhere we love than tick a new box. France keeps pulling us back: our honeymoon along the Côte d'Azur, a second trip from Paris down to Lake Annecy, and most recently Barcelona to Toulouse. Three trips, three different Frances.
+My wife and I try to get abroad once or twice a year, plus domestic trips when we can. We don't chase bucket lists. We'd rather return somewhere we love than tick a new box. France keeps pulling us back: our honeymoon along the Côte d'Azur, a second trip from Paris down to Lake Annecy, and most recently Barcelona to Toulouse. Three trips, three different Frances.
 
 <div class="travel-stats mb-4">
   <div class="travel-stat">
@@ -44,11 +44,11 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
   <span class="travel-legend-swatch travel-legend-city"></span><span class="travel-legend-label">Cities</span>
 </div>
 
-### Countries & Cities
+## Countries and cities
 
 <div id="travel-bars-wrap" class="travel-bars-wrap mb-5"></div>
 
-### Photos
+## Photos
 
 <div id="travel-gallery-section">
   <div class="swiper mySwiper mt-3" id="travelSwiper" style="display:none">
@@ -59,7 +59,7 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
   </div>
   <div class="travel-gallery-placeholder" id="travelGalleryPlaceholder">
     <i class="fa-regular fa-images fa-2x"></i>
-    <p>No travel photos yet — check back later.</p>
+    <p>No travel photos yet. Check back later.</p>
   </div>
 </div>
 

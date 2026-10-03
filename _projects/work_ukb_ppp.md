@@ -30,4 +30,4 @@ across the pharmaceutical industry.
 
 ---
 
-**Related:** [Translational Proteomics for Obesity Clinical Trials]({{ '/projects/work_lilly_proteomics/' | relative_url }}) — applying the pQTL and proteomic methods from UKB-PPP to clinical trial data at Lilly.
+**Related:** [Translational Proteomics for Obesity Clinical Trials]({{ '/projects/work_lilly_proteomics/' | relative_url }}), applying the pQTL and proteomic methods from UKB-PPP to clinical trial data at Lilly.

@@ -33,4 +33,4 @@ Inflammation & Immunology, Statistics, and Machine Learning & Computational Scie
 
 ---
 
-**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the pQTL resource that informed target prioritization analyses described above.
+**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}), the pQTL resource that informed target prioritization analyses described above.

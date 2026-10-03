@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Translational Proteomics for Obesity Clinical Trials
-description: Mechanistic and biomarker insights from large-scale proteomics in phase 2/3 obesity trials, including the SURMOUNT-5 head-to-head comparison.
+description: Mechanistic and biomarker insights from large-scale proteomics in phase 2/3 obesity trials, including SURMOUNT-5.
 img: assets/img/projects/work/lilly-proteomics.webp
 img_credit: "Illustration with synthetic data; it shows no study results."
 og_image: /assets/img/projects/og/lilly-proteomics.jpg
@@ -41,6 +41,11 @@ in cardiometabolic benefit observed between the two therapies. I presented this 
 presentation at [EASD 2026](https://easddistribute.m-anage.com/from.storage?image=DRQMKAdip9FzW2MCANbX41tkQmjbrlQspmPo0v0BxT9lAgy13X6VS7zqtYA0Botg0)
 in Milan.
 
+The analysis code is public on GitHub at
+[EliLillyCo/surmount5-proteomics](https://github.com/EliLillyCo/surmount5-proteomics). An interactive
+results dashboard, [surmount5-proteomics.lilly.com](https://surmount5-proteomics.lilly.com),
+accompanies the paper and opens to the public when the paper is published.
+
 ---
 
-**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}) — the foundational proteomics resource that guides some of the analytical work described above.
+**Related:** [UK Biobank Pharma Proteomics Project]({{ '/projects/work_ukb_ppp/' | relative_url }}), the foundational proteomics resource that guides some of the analytical work described above.

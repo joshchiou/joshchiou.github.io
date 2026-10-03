@@ -4,7 +4,7 @@ title: about
 permalink: /
 subtitle: Director, Genomics · Lilly · Translational Proteomics & Statistical Genetics
 description: >
-  Joshua Chiou — Director, Genomics at Lilly. Translating proteomics
+  Joshua Chiou is Director, Genomics at Lilly, translating proteomics
   and human genetics into clinical insights for cardiometabolic and obesity programs.
 
 profile:

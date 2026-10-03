@@ -1,22 +1,41 @@
 # CLAUDE.md
 
-Personal website — al-folio Jekyll fork. Claude Code context.
+Josh Chiou's personal academic website: an al-folio Jekyll fork, deployed to GitHub Pages.
+This file is the starting point for a new session; the guides below hold the detail.
+
+## Read first
+
+- [docs/site-guide.md](docs/site-guide.md): every page, the file that feeds it, the automation, and
+  recipes for common changes (new paper, news item, talk, repo, project).
+- [docs/design.md](docs/design.md): typeface, colors, components, image rules, illustration palette,
+  accessibility checks.
+- [docs/writing-style.md](docs/writing-style.md): voice, naming, punctuation, and patterns for each
+  kind of text.
+
+Two writing rules apply to all visible text, docs, and commit messages:
+1. **American English** (analyze, color, modeling, gray, traveled).
+2. **No em dashes.** Rewrite with a comma, colon, parentheses, or a new sentence. En dashes only in
+   number ranges. `grep -rn "—" _pages _projects _news _data _includes _layouts _config.yml _bibliography assets/js`
+   should come back empty.
 
 ## What this is
 
-Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Customizations live in:
-- `_pages/about.md` — landing page content
-- `_data/cv.yml` — CV data (experience, education, skills, awards)
-- `_bibliography/papers.bib` — all publications (jekyll-scholar)
-- `_news/*.md` — news items shown on the about page
-- `_projects/*.md` — project cards (work_ and fun_ prefixes)
-- `_data/contributions.yml` — curated open-source PR list
-- `_data/strava_calendar.json`, `_data/strava_stats.json` — auto-updated by GitHub Actions
-- `_data/travel_countries.yml`, `_data/travel_cities.yml` — from Takeout script
+Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Content lives in:
+- `_pages/about.md`: landing page content
+- `_data/cv.yml`: CV data (experience, education, talks, skills, awards)
+- `_bibliography/papers.bib`: all publications (jekyll-scholar)
+- `_news/*.md`: news items shown on the about page
+- `_projects/*.md`: project cards and pages (`work_` and `fun_` prefixes)
+- `_data/repositories.yml`, `_data/contributions.yml`: code page repos and open-source PRs
+- `_data/research_themes.yml`, `_data/press.yml`: homepage theme cards, press list
+- `_data/strava_*.json`, `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
+- `_data/travel_countries.yml`, `_data/travel_cities.yml`: from the Takeout script
 
 Template-level files (`_sass/`, `assets/libs/`, `_layouts/`, `_includes/`) are mostly upstream
-al-folio. Exceptions: `_layouts/bib.liquid` (Altmetric/badges), `_includes/publication_meta.liquid`,
-`_includes/head.liquid` (Google verification).
+al-folio. Customized ones: `_layouts/bib.liquid` (thumbnails, TL;DRs, badges), `_layouts/page.liquid`
+(image credit line), `_layouts/about.liquid`, `_includes/head.liquid` (JSON-LD, Google verification),
+`_includes/metadata.liquid` (page titles, `og_image`), `_includes/publication_meta.liquid`, and the
+new includes `research_themes.liquid`, `talks.liquid`, `press.liquid`.
 
 ## Tagline
 
@@ -36,7 +55,7 @@ bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
 ```
 
-Or with Docker (recommended — matches CI environment):
+Or with Docker (recommended, since it matches CI):
 
 ```bash
 docker compose up
@@ -49,11 +68,11 @@ lives in the `@media print` block of `_sass/_custom.scss`. To preview locally af
 
 ## Data pipelines
 
-**Strava:** `scripts/update_strava.py` — run manually or via `.github/workflows/update-strava.yml`.
+**Strava:** `scripts/update_strava.py`, run manually or via `.github/workflows/update-strava.yml`.
 Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
 GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
 
-**Travel:** `scripts/parse_location_history.py /path/to/location-history.json` — run locally after
+**Travel:** `scripts/parse_location_history.py /path/to/location-history.json`, run locally after
 downloading from Google Maps → Timeline → Export timeline data (JSON).
 Outputs `_data/travel_countries.yml` and `_data/travel_cities.yml`. Geocodes via Nominatim and
 caches to `scripts/.geocode_cache.json`. Review cities file before committing (noise from
@@ -79,11 +98,11 @@ add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
 
 ## Homepage and publications data
 
-- `_data/research_themes.yml` — the three research theme cards on the homepage
-- `_data/press.yml` — media coverage listed on /publications/ (newest first)
-- `_data/cv.yml` "Talks & Presentations" — also rendered on /publications/; add slides/video
+- `_data/research_themes.yml`: the three research theme cards on the homepage
+- `_data/press.yml`: media coverage listed on /publications/ (newest first)
+- `_data/cv.yml` "Talks & Presentations": also rendered on /publications/; add slides/video
   links as `linkitems` (`linkname: slides`, `link: https://doi.org/...`)
-- `contact_note` in `_config.yml` — text under the homepage social icons
+- `contact_note` in `_config.yml`: text under the homepage social icons
 
 ## Talk slides (Zenodo)
 
@@ -96,18 +115,19 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 
 ## Bib keys for key papers
 
-- `chiou2021interpreting` — T1D + exocrine pancreas, *Nature* 2021
-- `chiou2021single` — islet scATAC-seq, 2021
-- `sun2023plasma` — UKB-PPP, *Nature* 2023
-- `intact2025multi` — Multi-INTACT methods paper
+- `chiou2021interpreting`: T1D and exocrine pancreas, *Nature* 2021
+- `chiou2021single`: islet scATAC-seq, 2021
+- `sun2023plasma`: UKB-PPP, *Nature* 2023
+- `intact2025multi`: Multi-INTACT methods paper
+- SURMOUNT-5 proteomics: not yet published; see "Pending" in docs/site-guide.md for what to do when it is
 
 ## Don't touch unless re-templating
 
-- `_sass/` — al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
+- `_sass/`: al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
   `_projects.scss`). Put new site-specific styles in `_sass/_custom.scss`, which is imported last.
-- `assets/libs/` — vendored JS libraries
-- `_config.yml` third_party_libraries block — library versions/integrity hashes
-- `bin/` — CI scripts (upstream)
+- `assets/libs/`: vendored JS libraries
+- `_config.yml` third_party_libraries block: library versions and integrity hashes
+- `bin/`: CI scripts (upstream)
 
 ## Project card images
 

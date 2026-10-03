@@ -145,7 +145,7 @@
           if (name === 'United States of America' && here.some(function (c) { return c.state; })) {
             var byState = {};
             here.forEach(function (c) {
-              var s = c.state || '—';
+              var s = c.state || 'Other';
               byState[s] = (byState[s] || 0) + 1;
             });
             summary = Object.keys(byState)

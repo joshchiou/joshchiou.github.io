@@ -1,6 +1,6 @@
 # joshchiou.github.io
 
-Personal website of Joshua Chiou — [joshchiou.github.io](https://joshchiou.github.io).
+Personal website of Joshua Chiou: [joshchiou.github.io](https://joshchiou.github.io).
 
 Built on [al-folio](https://github.com/alshedivat/al-folio) by Maruan Al-Shedivat et al.
 
@@ -32,6 +32,9 @@ docker compose up
 | `scripts/update_strava.py` | Strava data pipeline |
 | `scripts/parse_location_history.py` | Google Maps Timeline parser for travel map |
 
-## Data pipelines
+## Documentation
 
-See `CLAUDE.md` for details on the Strava and travel data pipelines.
+- [CLAUDE.md](CLAUDE.md): start here. Quick reference, build, data pipelines.
+- [docs/site-guide.md](docs/site-guide.md): how the site is laid out and how to make common changes.
+- [docs/design.md](docs/design.md): visual design rules.
+- [docs/writing-style.md](docs/writing-style.md): writing rules (American English, no em dashes).
