@@ -80,7 +80,7 @@ def lilly(rng, rel="assets/img/projects/work/lilly-proteomics.webp", size=(8, 5)
 
     ax = fig.add_axes([0.06, 0.12, 0.52, 0.78])
     clean_axes(ax)
-    for color, drop in ((LILLY_RED, 0.9), (LILLY_BLUE, 1.6)):
+    for color, drop in ((LILLY_BLUE, 0.9), (LILLY_RED, 1.6)):
         mean = np.array([0, -drop * 0.8, -drop])
         for _ in range(28):
             noise = rng.normal(0, 0.28, 3)
@@ -104,8 +104,8 @@ def lilly(rng, rel="assets/img/projects/work/lilly-proteomics.webp", size=(8, 5)
     sig = p > 3.2
     up, down = sig & (fc > 0), sig & (fc < 0)
     ax2.scatter(fc[~sig], p[~sig], s=7, color=NEUTRAL, lw=0, alpha=0.8)
-    ax2.scatter(fc[up], p[up], s=16, color=LILLY_BLUE, edgecolor=SURFACE, linewidth=0.6, zorder=3)
-    ax2.scatter(fc[down], p[down], s=16, color=LILLY_RED, edgecolor=SURFACE, linewidth=0.6, zorder=3)
+    ax2.scatter(fc[up], p[up], s=16, color=LILLY_RED, edgecolor=SURFACE, linewidth=0.6, zorder=3)
+    ax2.scatter(fc[down], p[down], s=16, color=LILLY_BLUE, edgecolor=SURFACE, linewidth=0.6, zorder=3)
     ax2.axhline(3.2, color=GRID, lw=1, ls=(0, (4, 3)), zorder=0)
     ax2.axvline(0, color=GRID, lw=1, zorder=0)
     lim = np.abs(fc).max() * 1.08
