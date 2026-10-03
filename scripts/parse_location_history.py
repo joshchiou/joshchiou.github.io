@@ -203,8 +203,8 @@ def geocode_place(place_id: str, lat: float, lon: float, cache: dict) -> dict | 
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
+        # Not cached, so the next run retries it; a cached None would skip the place forever.
         print(f"  Warning: geocoding failed for {lat:.4f},{lon:.4f}: {exc}")
-        cache[place_id] = None
         return None
 
     time.sleep(1.1)
@@ -261,7 +261,12 @@ def build_geocode_cache(timeline: list, cache: dict) -> int:
     for i, (place_id, (lat, lon)) in enumerate(unique.items(), 1):
         geocode_place(place_id, lat, lon, cache)
         if i % 20 == 0 or i == new_calls:
-            print(f"  {i}/{new_calls} geocoded")
+            print(f"  {i}/{new_calls} looked up")
+
+    failed = sum(1 for place_id in unique if place_id not in cache)
+    if failed:
+        print(f"  {failed} lookups failed and will be retried next run; "
+              "places they cover are skipped this time.")
 
     return new_calls
 
