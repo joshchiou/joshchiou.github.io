@@ -1,5 +1,10 @@
 # Media coverage, shown on the publications page (_includes/press.liquid).
 # Newest first. `paper` is an optional bib key from _bibliography/papers.bib.
+- outlet: Lilly press release
+  title: Lilly to present new data on Foundayo, retatrutide, and eloraTZP at EASD 2026, as it strives to change the course of cardiometabolic health
+  year: 2026
+  url: https://investor.lilly.com/news-releases/news-release-details/lilly-present-new-data-foundayo-retatrutide-and-eloratzp-easd
+
 - outlet: SelectScience
   title: New insights into human disease that could propel drug development
   year: 2023
