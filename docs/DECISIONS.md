@@ -274,6 +274,8 @@ _Nature_.
 **Why not keep paper-count order.** It put _Nature Genetics_ second, which reads as a ranking of
 the journals rather than of Josh's output.
 
+**Superseded by** [D-020](#d-020-journal-chips-use-a-fixed-order)
+
 ## D-018: Cycling data comes from Apple Health, not the Strava API
 
 _Recorded 2026-10-04 (owner's request) · `scripts/cycling_data.py`, `add-ride.yml`, [cycling-data.md](cycling-data.md)_
@@ -313,3 +315,15 @@ has a journal version, so the entry gets replaced instead of the paper being cou
 
 **Why not use the `@phdthesis` entry type.** `bib.liquid` builds the venue line from the journal
 field, so a type change would mean template work for one entry.
+
+## D-020: Journal chips use a fixed order
+
+_Recorded 2026-10-04 (owner's choice) · `top_journals` in `_config.yml`_
+
+**Context.** D-017 ordered the chips by impact factor, which has to be re-checked every June and
+flips between _Nature_ and _Nature Medicine_ from year to year.
+
+**Decision.** A fixed order chosen by Josh: _Nature_, _Cell_, _Nature Medicine_, _Nature Genetics_,
+_Nature Immunology_. The order in `_config.yml` is the order on the page; nothing re-sorts it.
+
+**Why not impact factor.** It changes yearly and needs maintenance for no gain to the reader.

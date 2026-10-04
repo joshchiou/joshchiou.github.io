@@ -42,8 +42,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 3. Settled decisions
 
-The full append-only log, nineteen entries from D-001 to D-019, is [`DECISIONS.md`](DECISIONS.md).
-D-001 to D-013 were settled on 2026-10-03, D-014 to D-019 on 2026-10-04.
+The full append-only log, 20 entries from D-001 to D-020, is [`DECISIONS.md`](DECISIONS.md).
+D-001 to D-013 were settled on 2026-10-03, D-014 to D-020 on 2026-10-04.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -66,6 +66,7 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-019 on 2026-10-04.
 | D-017 | Journal chips ordered by 2025 impact factor; re-check each June                                   | [D-017](DECISIONS.md#d-017-journal-chips-are-ordered-by-impact-factor)                                    |
 | D-018 | Cycling data from Apple Health (Shortcut plus Health export); Strava frozen at 2026-06-21         | [D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)                       |
 | D-019 | Count includes unpublished preprints, not the thesis (39)                                         | [D-019](DECISIONS.md#d-019-the-publication-count-includes-unpublished-preprints-but-not-the-thesis)       |
+| D-020 | Journal chips in a fixed order: Nature, Cell, Nature Medicine, Nature Genetics, Nature Immunology | [D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)                                               |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
