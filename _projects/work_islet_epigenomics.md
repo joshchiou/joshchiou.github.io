@@ -22,11 +22,12 @@ accessibility in each cell type (beta, alpha, delta, and others), then linked th
 programs active in each cell type to type 2 diabetes GWAS loci {% cite chiou2021single %}. That
 made it possible to read non-coding risk variants in terms of the islet cells they act in.
 
-Related work looked at how nutrient signals change the islet epigenome to control insulin
-secretion {% cite islet2023nutrient %}, and at how genetic variants at type 2 diabetes loci change
-regulatory activity in each cell type as the disease develops {% cite wang2023integrating %}. The
-catalog of islet regulatory elements from this work is widely used to interpret diabetes GWAS
-results.
+Before the single-cell work, I co-led a study that mapped chromatin accessibility and 3D chromatin
+contacts in human islets to connect distal type 2 diabetes risk variants to the genes they likely
+regulate {% cite greenwald2019pancreatic %}. Later work looked at how genetic variants at type 2
+diabetes loci change regulatory activity in each cell type as the disease develops
+{% cite wang2023integrating %}. The catalog of islet regulatory elements from this work is widely
+used to interpret diabetes GWAS results.
 
 ---
 

@@ -26,7 +26,7 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
     ([D-004](DECISIONS.md#d-004-homepage-theme-images-are-52-composites-of-whole-figures)), and the
     SURMOUNT-5 repo and dashboard links.
   - #57: the VIDRA preprint (Stefanucci et al., medRxiv 2026) and the USP18 trans-eQTL paper
-    (Freimann et al., _Nat Commun_ 2025).
+    (Freimann et al., _Nature Communications_ 2025).
   - #58: Scholar stats through SerpAPI ([D-001](DECISIONS.md#d-001-scholar-stats-come-from-serpapi)).
   - #59: Lilly red and blue on the clinical trial illustration
     ([D-008](DECISIONS.md#d-008-the-lilly-illustration-uses-lilly-red-and-blue-with-red-for-the-larger-change)).
