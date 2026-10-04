@@ -34,7 +34,8 @@ Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Content l
 - `_projects/*.md`: project cards and pages (`work_` and `fun_` prefixes)
 - `_data/repositories.yml`, `_data/contributions.yml`: code page repos and open-source PRs
 - `_data/research_themes.yml`, `_data/press.yml`: homepage theme cards, press list
-- `_data/strava_*.json`, `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
+- `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
+- `_data/cycling_*.json`: from Apple Health via `scripts/cycling_data.py` (docs/cycling-data.md)
 - `_data/travel_countries.yml`, `_data/travel_cities.yml`: from the Timeline script, then hand-edited
 
 Template-level files (`_sass/`, `assets/libs/`, `_layouts/`, `_includes/`) are mostly upstream
@@ -81,9 +82,11 @@ lives in the `@media print` block of `_sass/_custom.scss`. To preview locally af
 
 ## Data pipelines
 
-**Strava:** `scripts/update_strava.py`, run manually or via `.github/workflows/update-strava.yml`.
-Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
-GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
+**Cycling:** Apple Health, not Strava (its API became paid in June 2026; D-018). An iPhone
+Shortcut posts each Apple Watch ride to the "Add Ride" workflow; a periodic Health export run
+through `scripts/cycling_data.py import-health` adds elevation and fills gaps. Rides through
+2026-06-21 are a frozen Strava archive. Setup and instructions: docs/cycling-data.md. Never
+commit a Health export.
 
 **Travel:** export the JSON on the phone (Google Maps → your profile → Timeline → ⋮ → Export
 Timeline data; Timeline lives on the device, so this can't be automated), then run
@@ -102,7 +105,7 @@ run. Without the key the script falls back to `scholarly` (needs `bibtexparser<2
 works off CI. On a failed fetch the script exits non-zero and leaves `_data/scholar_stats.json`
 unchanged, so a red run means stale numbers.
 
-**Refresh chain:** the Scholar, GitHub stats, and Strava workflows push with `GITHUB_TOKEN`, which
+**Refresh chain:** the Scholar, GitHub stats, and Add Ride workflows push with `GITHUB_TOKEN`, which
 doesn't trigger push-based workflows, so `deploy.yml` also runs on `workflow_run` after each of
 them succeeds. New data workflows that should update the live site must be added to that list.
 

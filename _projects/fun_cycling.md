@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cycling
-description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
+description: Six bikes, a slow cooker full of chain wax, and a couple years of ride data.
 img: assets/img/projects/fun/cycling-acadia.webp
 og_image: /assets/img/projects/og/cycling-acadia.jpg
 importance: 2
@@ -11,7 +11,7 @@ chart:
   echarts: true
 ---
 
-{% assign stats = site.data.strava_stats %}
+{% assign stats = site.data.cycling_stats %}
 {% assign total_miles = stats.total_distance_km | times: 0.621371 | round %}
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
@@ -140,10 +140,10 @@ chart:
 
 <script>
 window._cyclingData = {
-  monthly: {{ site.data.strava_stats.monthly | jsonify }},
-  calendar: {{ site.data.strava_calendar | jsonify }}
+  monthly: {{ site.data.cycling_stats.monthly | jsonify }},
+  calendar: {{ site.data.cycling_calendar | jsonify }}
 };
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
 
-<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem;">Data via Strava API · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>
+<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem;">Rides through June 2026 from Strava, since then from Apple Health · last ride {{ stats.last_ride | date: "%b %-d, %Y" | default: "n/a" }}</p>

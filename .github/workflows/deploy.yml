@@ -21,7 +21,7 @@ on:
   # Data workflows push with GITHUB_TOKEN, which doesn't trigger push events,
   # so redeploy explicitly after they finish.
   workflow_run:
-    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Update Strava Data"]
+    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Add Ride"]
     types: [completed]
     branches: [master]
   workflow_dispatch:

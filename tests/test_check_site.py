@@ -87,8 +87,8 @@ def test_scholar_current_values_pass():
     assert check_site.failures == []
 
 
-def test_strava_monthly_must_sum_to_total():
-    check_site.check_strava({"total_distance_km": 500, "monthly": [{"distance_km": 100}]})
+def test_cycling_monthly_must_sum_to_total():
+    check_site.check_cycling({"total_distance_km": 500, "monthly": [{"distance_km": 100}]})
     assert check_site.failures
 
 
@@ -103,7 +103,7 @@ def test_travel_city_needs_known_country():
 def test_real_data_files_pass():
     config = check_site.load_yaml(ROOT / "_config.yml")
     check_site.check_bib(check_site.parse_bib(ROOT / "_bibliography" / "papers.bib"), config)
-    check_site.check_strava(check_site.load_json("strava_stats.json"))
+    check_site.check_cycling(check_site.load_json("cycling_stats.json"))
     check_site.check_travel(
         check_site.load_yaml(ROOT / "_data" / "travel_countries.yml"),
         check_site.load_yaml(ROOT / "_data" / "travel_cities.yml"),

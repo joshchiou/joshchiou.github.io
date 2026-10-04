@@ -42,8 +42,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 3. Settled decisions
 
-The full append-only log, sixteen entries from D-001 to D-016, is [`DECISIONS.md`](DECISIONS.md).
-D-001 to D-013 were settled on 2026-10-03, D-014 to D-016 on 2026-10-04.
+The full append-only log, eighteen entries from D-001 to D-018, is [`DECISIONS.md`](DECISIONS.md).
+D-001 to D-013 were settled on 2026-10-03, D-014 to D-018 on 2026-10-04.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -63,13 +63,17 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-016 on 2026-10-04.
 | D-014 | Publication counts come from `papers.bib` at build time; `check_site.py` gates the deploy         | [D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time)                          |
 | D-015 | Journal chips: Nature, Nature Genetics, Nature Medicine, Cell, Nature Immunology                  | [D-015](DECISIONS.md#d-015-the-homepage-journal-chips-are-the-nature-and-cell-flagship-research-journals) |
 | D-016 | Inline scripts read `data-theme`; `theme.js` is deferred                                          | [D-016](DECISIONS.md#d-016-inline-scripts-read-the-theme-from-data-theme-because-themejs-is-deferred)     |
+| D-017 | Journal chips ordered by 2025 impact factor; re-check each June                                   | [D-017](DECISIONS.md#d-017-journal-chips-are-ordered-by-impact-factor)                                    |
+| D-018 | Cycling data from Apple Health (Shortcut plus Health export); Strava frozen at 2026-06-21         | [D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)                       |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
 
-1. **Update Strava Data has failed on every scheduled run** since early July; the cycling page
-   still shows data from 2026-07-02. `check_site.py` reports it as a warning. Likely the Strava
-   refresh token or app credentials (`STRAVA_*` secrets); check the run log.
+1. **Set up the ride Shortcut and the GitHub token for it** (owner only), following
+   [`cycling-data.md`](cycling-data.md), then import a Health export once to bring in rides since
+   June 21. Strava's API became paid, so the old workflow is gone
+   ([D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)). The
+   `STRAVA_*` repo secrets can be deleted.
 2. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
    one with `deposit:write` scope and store it as `ZENODO_TOKEN` in the environment settings,
    never in chat.

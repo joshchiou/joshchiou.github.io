@@ -65,7 +65,7 @@ Every project page follows the same pattern:
 | `category`             | `work` or `fun`                                                                      |
 | `related_publications` | `true` to list cited papers at the bottom                                            |
 
-The fun pages pull from their own data files: cycling from `_data/strava_*.json`, `bikes.yml`,
+The fun pages pull from their own data files: cycling from `_data/cycling_*.json` (see [cycling-data.md](cycling-data.md)), `bikes.yml`,
 `bike_gallery.yml`, `featured_rides.yml`, `cycling_locations.yml`; cocktails from
 `cocktail_recipes.yml`, `cocktail_gallery.yml`; Home Assistant from `hass_layers.yml`,
 `hass_stats.yml`; travel from `travel_countries.yml`, `travel_cities.yml`; Claire from
@@ -76,7 +76,7 @@ The fun pages pull from their own data files: cycling from `_data/strava_*.json`
 | Workflow                            | When                                                          | What it does                                                                                              |
 | ----------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, runs `check_site.py`, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages                  |
-| Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                                           |
+| Add Ride                            | When the iPhone Shortcut posts a finished ride                | Adds it to `_data/cycling_rides.json` and rebuilds the cycling data ([cycling-data.md](cycling-data.md))  |
 | Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml`                 |
 | Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json` via SerpAPI (`SERPAPI_KEY` secret); a red run means stale numbers    |
 | Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                                     |
@@ -125,16 +125,16 @@ lists each of them under `workflow_run`. Add any new data workflow to that list.
 
 ## Scripts
 
-| Script                                                                                                 | Use                                                                          |
-| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| `update_strava.py`, `update_github.py`, `update_scholar.py`, `update_publications.py`, `enrich_bib.py` | Run by the workflows above                                                   |
-| `parse_location_history.py`                                                                            | Adds new places from a Google Maps Timeline export (run locally)             |
-| `render_travel_card.py`                                                                                | Redraws the travel card map from the travel data                             |
-| `render_project_art.py`                                                                                | Redraws the Lilly, Pfizer, and Home Assistant card illustrations             |
-| `render_og_image.py`                                                                                   | Renders `assets/img/og-image.png` (the site-wide link preview) from its SVG  |
-| `prep_images.py`, `publish_images.sh`                                                                  | Convert photos to responsive WebP; publish gallery photos to GitHub releases |
-| `build_cv_pdf.py`                                                                                      | Renders `/cv/` to PDF (the deploy workflow runs it)                          |
-| `zenodo_deposit.py`                                                                                    | Creates a Zenodo draft for talk slides; Josh publishes it                    |
+| Script                                                                                                | Use                                                                          |
+| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `cycling_data.py`, `update_github.py`, `update_scholar.py`, `update_publications.py`, `enrich_bib.py` | Run by the workflows above                                                   |
+| `parse_location_history.py`                                                                           | Adds new places from a Google Maps Timeline export (run locally)             |
+| `render_travel_card.py`                                                                               | Redraws the travel card map from the travel data                             |
+| `render_project_art.py`                                                                               | Redraws the Lilly, Pfizer, and Home Assistant card illustrations             |
+| `render_og_image.py`                                                                                  | Renders `assets/img/og-image.png` (the site-wide link preview) from its SVG  |
+| `prep_images.py`, `publish_images.sh`                                                                 | Convert photos to responsive WebP; publish gallery photos to GitHub releases |
+| `build_cv_pdf.py`                                                                                     | Renders `/cv/` to PDF (the deploy workflow runs it)                          |
+| `zenodo_deposit.py`                                                                                   | Creates a Zenodo draft for talk slides; Josh publishes it                    |
 
 ## Common changes
 

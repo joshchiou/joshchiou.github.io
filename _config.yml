@@ -244,9 +244,11 @@ jekyll-minifier:
 # Jekyll Scholar
 # -----------------------------------------------------------------------------
 
-# Journals named on the homepage ("N papers in ..."). Counted from papers.bib at build time by
-# _plugins/publication-stats.rb; names must match the bib `journal` field exactly.
-top_journals: [Nature, Nature Genetics, Nature Medicine, Cell, Nature Immunology]
+# Journals named on the homepage ("N papers in ..."), shown in this order: by 2025 Journal Impact
+# Factor (JCR released June 2026): Nature 56.1, Nature Medicine 52.5, Cell 42.5, Nature Immunology
+# 26.5, Nature Genetics 25.5. Re-check the order each June (D-017). Counted from papers.bib at build
+# time by _plugins/publication-stats.rb; names must match the bib `journal` field exactly.
+top_journals: [Nature, Nature Medicine, Cell, Nature Immunology, Nature Genetics]
 
 scholar:
   last_name: [Chiou]

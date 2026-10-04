@@ -12,7 +12,7 @@ _sass/font-awesome/*.scss
 
 # Written by data workflows (scripts/update_*.py, parse_location_history.py);
 # formatting them would be undone on the next automated update.
-_data/strava_*.json
+_data/cycling_*.json
 _data/github_stats.json
 _data/scholar_stats.json
 _data/travel_countries.yml

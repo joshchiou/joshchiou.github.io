@@ -1,0 +1,58 @@
+name: Add Ride
+
+# Receives a finished bike ride from the iPhone Shortcut (see docs/cycling-data.md) and adds it to
+# _data/cycling_rides.json. The Shortcut sends a repository_dispatch event of type "ride" with
+# client_payload {start, end, distance, unit}. deploy.yml redeploys after this succeeds.
+
+on:
+  repository_dispatch:
+    types: [ride]
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "Start time, ISO 8601 with offset (2026-10-04T08:01:00-04:00)"
+        required: true
+      end:
+        description: "End time, ISO 8601 with offset"
+        required: true
+      distance:
+        description: "Distance"
+        required: true
+      unit:
+        description: "mi or km"
+        required: true
+        default: "mi"
+
+concurrency:
+  group: cycling-data
+  cancel-in-progress: false
+
+jobs:
+  add-ride:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Add the ride
+        env:
+          # Passed through the environment, never interpolated into the shell.
+          PAYLOAD: ${{ github.event_name == 'repository_dispatch' && toJSON(github.event.client_payload) || toJSON(github.event.inputs) }}
+        run: python3 scripts/cycling_data.py add-shortcut
+
+      - name: Commit updated data files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/cycling_rides.json _data/cycling_stats.json _data/cycling_calendar.json
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: add ride"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

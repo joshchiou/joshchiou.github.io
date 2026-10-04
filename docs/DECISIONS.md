@@ -236,6 +236,8 @@ Immunology_ (1) as well.
 families and _Science_: _Nature_, _Nature Genetics_, _Nature Medicine_, _Cell_, _Nature
 Immunology_ (12 papers). Order is by paper count, ties in list order.
 
+**Superseded by** [D-017](#d-017-journal-chips-are-ordered-by-impact-factor)
+
 **Why not _Nature Communications_, _Science Advances_, _Cell Genomics_, or _Genome Biology_.** Good
 journals, but broad-scope or open-access siblings; listing them would make the line read as every
 journal rather than a highlight.
@@ -255,3 +257,43 @@ head snippet has already set, and `test_interactive.py` fails on any JavaScript 
 
 **Why not stop deferring `theme.js`.** It would block rendering on every page to serve five lines
 that only need a value already on the page.
+
+## D-017: Journal chips are ordered by impact factor
+
+_Recorded 2026-10-04 (owner's request) · `top_journals` in `_config.yml`_
+
+**Context.** D-015 chose the five journals and ordered the chips by how many papers Josh has in
+each. Josh asked for impact-factor order instead.
+
+**Decision.** Same five journals, in `_config.yml` order, which is by 2025 Journal Impact Factor
+(JCR released June 2026): _Nature_ 56.1, _Nature Medicine_ 52.5, _Cell_ 42.5, _Nature
+Immunology_ 26.5, _Nature Genetics_ 25.5. The values come from secondary listings of the JCR, not
+the publishers' pages. Re-check the order each June; in the 2024 JCR _Nature Medicine_ was above
+_Nature_.
+
+**Why not keep paper-count order.** It put _Nature Genetics_ second, which reads as a ranking of
+the journals rather than of Josh's output.
+
+## D-018: Cycling data comes from Apple Health, not the Strava API
+
+_Recorded 2026-10-04 (owner's request) · `scripts/cycling_data.py`, `add-ride.yml`, [cycling-data.md](cycling-data.md)_
+
+**Context.** Strava put its API behind a paid subscription in June 2026. The daily Update Strava
+Data workflow has returned 403 Forbidden since early July, and the cycling page stopped at June 21.
+Josh records rides with Apple Fitness on the Apple Watch.
+
+**Decision.** Rides through 2026-06-21 are frozen in `_data/cycling_strava_archive.json`, which
+reproduces the last Strava numbers exactly. Newer rides come from Apple Health in two ways: an
+iPhone Shortcut that fires when a Watch cycling workout ends and posts start, end, and distance to
+the Add Ride workflow (`repository_dispatch`), and a periodic Health export imported with
+`cycling_data.py import-health`, which adds elevation and fills gaps. Rides are stored as date,
+distance, moving time, and elevation only, with no start times or routes, because the repo is
+public; duplicates are matched on those fields.
+
+**Why not pay for Strava.** $11.99 a month to keep a hobby page's ride count current.
+
+**Why not Health Auto Export.** It posts richer data automatically, but in its own JSON format,
+which GitHub's API doesn't accept, so it would need a relay server. It also needs a subscription.
+
+**Why keep the Strava archive instead of re-importing everything from Health.** Rides recorded in
+the Strava app may not be in Health, and the archive is the record the site already showed.

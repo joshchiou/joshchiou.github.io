@@ -27,7 +27,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "_data"
-STALE_DAYS = {"scholar_stats.json": 14, "github_stats.json": 14, "strava_stats.json": 30}
+STALE_DAYS = {"scholar_stats.json": 14, "github_stats.json": 14}
+NO_RIDES_DAYS = 45  # warn when the cycling data has no ride this recent
 
 failures: list[str] = []
 warnings: list[str] = []
@@ -135,13 +136,13 @@ def check_scholar(stats: dict) -> None:
         fail(f"scholar_stats.json: i10-index {i10} is below h-index {h}")
 
 
-def check_strava(stats: dict) -> None:
+def check_cycling(stats: dict) -> None:
     monthly_km = sum(m.get("distance_km", 0) for m in stats.get("monthly", []))
     total_km = stats.get("total_distance_km", 0)
     if stats.get("monthly") and abs(monthly_km - total_km) > 0.05 * len(stats["monthly"]) + 0.1:
-        fail(f"strava_stats.json: monthly distances sum to {monthly_km:.1f} km, total is {total_km} km")
+        fail(f"cycling_stats.json: monthly distances sum to {monthly_km:.1f} km, total is {total_km} km")
     if stats.get("longest_ride_km", 0) > total_km:
-        fail("strava_stats.json: longest ride is longer than the total distance")
+        fail("cycling_stats.json: longest ride is longer than the total distance")
 
 
 def check_travel(countries: list, cities: list) -> None:
@@ -169,6 +170,11 @@ def check_freshness() -> None:
         age = (now - datetime.fromisoformat(stamp)).days
         if age > days:
             warnings.append(f"{name} was last updated {age} days ago ({stamp[:10]}); check its workflow")
+    last_ride = load_json("cycling_stats.json").get("last_ride")
+    if last_ride:
+        age = (now.date() - datetime.fromisoformat(last_ride).date()).days
+        if age > NO_RIDES_DAYS:
+            warnings.append(f"no ride logged since {last_ride} ({age} days); is the ride Shortcut running?")
 
 
 # ---------------------------------------------------------------- built-site checks
@@ -196,13 +202,10 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
     selected = {e["key"] for e in entries if e.get("selected") == "true"}
     total = len(entries)
 
-    top = []
-    for order, name in enumerate(config.get("top_journals") or []):
-        count = sum(1 for e in entries if e.get("journal") == name)
-        if count:
-            top.append((-count, order, name))
-    top_names = [name for _, _, name in sorted(top)]
-    top_total = -sum(c for c, _, _ in top)
+    top = [(name, sum(1 for e in entries if e.get("journal") == name))
+           for name in config.get("top_journals") or []]
+    top_names = [name for name, count in top if count]
+    top_total = sum(count for _, count in top)
 
     # Homepage
     home = read_page(site, "index.html")
@@ -260,7 +263,7 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
     # Cycling page
     cycling = read_page(site, "projects/fun_cycling/index.html")
     if cycling:
-        s = load_json("strava_stats.json")
+        s = load_json("cycling_stats.json")
         if s.get("total_rides"):
             miles = liquid_round(s["total_distance_km"] * 0.621371)
             kft = liquid_round(s["total_elevation_m"] * 3.28084) // 1000
@@ -282,7 +285,7 @@ def main() -> None:
 
     check_bib(entries, config)
     check_scholar(scholar)
-    check_strava(load_json("strava_stats.json"))
+    check_cycling(load_json("cycling_stats.json"))
     check_travel(load_yaml(DATA / "travel_countries.yml"), load_yaml(DATA / "travel_cities.yml"))
     check_freshness()
 
