@@ -97,10 +97,8 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-021 on 2026-10-04.
 
 7. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
    (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
-8. **Polish not done:** a higher-resolution Greenwald thumbnail (the open-access figure is on
-   hosts this environment's network policy blocks; allow them or upload the figure), the
-   leftover card in five-item grids, extra badge colors, the UCSD logo and white figure
-   backgrounds in dark mode.
+8. **Polish not done:** the leftover card in five-item grids, extra badge colors, the UCSD logo and
+   white figure backgrounds in dark mode.
 
 ## 5. Known-stale documentation
 
