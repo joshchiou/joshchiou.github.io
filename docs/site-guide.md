@@ -73,17 +73,17 @@ The fun pages pull from their own data files: cycling from `_data/strava_*.json`
 
 ## Automation
 
-| Workflow                            | When                                                          | What it does                                                                                           |
-| ----------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, runs `check_site.py`, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages               |
-| Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                                        |
-| Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml`              |
-| Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json` via SerpAPI (`SERPAPI_KEY` secret); a red run means stale numbers |
-| Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                                  |
-| Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                                          |
-| Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass                   |
-| Site checks                         | Pull requests and pushes to master                            | Builds the site, runs `scripts/check_site.py` and the tests in `tests/`                                |
-| Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                                 |
+| Workflow                            | When                                                          | What it does                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, runs `check_site.py`, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages                  |
+| Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                                           |
+| Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml`                 |
+| Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json` via SerpAPI (`SERPAPI_KEY` secret); a red run means stale numbers    |
+| Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                                     |
+| Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                                             |
+| Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass                      |
+| Site checks                         | Pull requests, pushes to master, Mondays                      | Builds the site; runs `check_site.py`, `check_sri.py`, and the tests in `tests/`, including browser tests |
+| Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                                    |
 
 Generated data files, vendored files, and the historical notes in `docs/superpowers/` are listed in
 `.prettierignore`. Sites that block bots, gated URLs, and Liquid expressions (which lychee would
@@ -96,8 +96,29 @@ compares it with the built HTML, so pages can't disagree with each other or with
 checks the data files themselves: duplicate bib keys or DOIs, missing fields, a top journal spelled
 differently, an h-index that the citation count can't support, cities in countries that aren't
 listed. Data that a workflow has stopped refreshing shows as a warning, not a failure. Run it after
-a local build with `python3 scripts/check_site.py` and `python3 -m pytest tests`. When you add a
-page that shows a number, add a check for it.
+a local build with `python3 scripts/check_site.py`. When you add a page that shows a number, add a
+check for it.
+
+`scripts/check_sri.py` downloads every CDN library in `_config.yml` and compares it with its
+integrity hash. A wrong hash makes the browser refuse the script without any visible error; that is
+how the cocktails and travel carousels stopped responding. Run it whenever you change a library's
+URL or version.
+
+`tests/test_interactive.py` loads every built page in headless Chromium and fails on JavaScript
+errors, blocked scripts, or missing local files, then drives each interactive feature: the cocktails
+and travel carousels, the travel map and bars, the cycling chart tabs and bike carousel, the Home
+Assistant diagram, the code page filters, publication search, site search, the theme toggle, the
+mobile menu, and the homepage count-up. When you add an interactive feature, add a test for it.
+Run everything locally with:
+
+```bash
+bundle exec jekyll build && npx purgecss -c purgecss.config.js
+python3 scripts/check_site.py && python3 scripts/check_sri.py
+python3 -m pytest tests   # needs `pip install pytest pyyaml playwright`
+```
+
+Where jsDelivr is blocked (cloud sandboxes), set `CDN_FALLBACK=npm` to serve the CDN files from
+the npm registry, and `CHROMIUM_PATH` to point at an installed Chromium.
 
 Data workflows push with `GITHUB_TOKEN`, which does not trigger other workflows, so `deploy.yml`
 lists each of them under `workflow_run`. Add any new data workflow to that list.

@@ -42,8 +42,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 3. Settled decisions
 
-The full append-only log, fourteen entries from D-001 to D-014, is [`DECISIONS.md`](DECISIONS.md).
-D-001 to D-013 were settled on 2026-10-03, D-014 on 2026-10-04.
+The full append-only log, sixteen entries from D-001 to D-016, is [`DECISIONS.md`](DECISIONS.md).
+D-001 to D-013 were settled on 2026-10-03, D-014 to D-016 on 2026-10-04.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -61,6 +61,8 @@ D-001 to D-013 were settled on 2026-10-03, D-014 on 2026-10-04.
 | D-012 | The Preprint badge matches both `10.1101/` and `10.64898/`                                        | [D-012](DECISIONS.md#d-012-newer-medrxiv-and-biorxiv-dois-use-the-1064898-prefix)                         |
 | D-013 | The Timeline parser only appends; deleted cities stay deleted                                     | [D-013](DECISIONS.md#d-013-the-timeline-parser-only-appends-to-the-travel-files)                          |
 | D-014 | Publication counts come from `papers.bib` at build time; `check_site.py` gates the deploy         | [D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time)                          |
+| D-015 | Journal chips: Nature, Nature Genetics, Nature Medicine, Cell, Nature Immunology                  | [D-015](DECISIONS.md#d-015-the-homepage-journal-chips-are-the-nature-and-cell-flagship-research-journals) |
+| D-016 | Inline scripts read `data-theme`; `theme.js` is deferred                                          | [D-016](DECISIONS.md#d-016-inline-scripts-read-the-theme-from-data-theme-because-themejs-is-deferred)     |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)

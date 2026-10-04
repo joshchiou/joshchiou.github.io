@@ -60,11 +60,12 @@ Places to update together when role/focus changes:
 bundle install          # first time only
 bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
-python3 scripts/check_site.py && python3 -m pytest tests  # numbers match their sources
+python3 scripts/check_site.py && python3 scripts/check_sri.py  # numbers and CDN hashes
+python3 -m pytest tests  # unit and browser tests (after `npx purgecss -c purgecss.config.js`)
 ```
 
-`check_site.py` also runs in the "Site checks" workflow on every PR and in `deploy.yml` before
-deploying. Publication counts come from `papers.bib` at build time (`_plugins/publication-stats.rb`,
+All three run in the "Site checks" workflow on every PR and weekly; `check_site.py` also runs in
+`deploy.yml` before deploying. See "Automation" in docs/site-guide.md. Publication counts come from `papers.bib` at build time (`_plugins/publication-stats.rb`,
 top journals listed in `top_journals` in `_config.yml`); never hardcode a count in a template.
 
 Or with Docker (recommended, since it matches CI):
@@ -145,7 +146,10 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 - `_sass/`: al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
   `_projects.scss`). Put new site-specific styles in `_sass/_custom.scss`, which is imported last.
 - `assets/libs/`: vendored JS libraries
-- `_config.yml` third_party_libraries block: library versions and integrity hashes
+- `_config.yml` third_party_libraries block: library versions and integrity hashes. If you must
+  change one, run `scripts/check_sri.py`; a wrong hash silently disables the library.
+- `theme.js` is deferred, so inline scripts must read `data-theme` from `<html>` (set by the inline
+  snippet in `head.liquid`) instead of calling `determineComputedTheme()` (D-016).
 - `bin/`: CI scripts (upstream)
 
 ## Project card images

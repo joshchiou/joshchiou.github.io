@@ -246,7 +246,7 @@ jekyll-minifier:
 
 # Journals named on the homepage ("N papers in ..."). Counted from papers.bib at build time by
 # _plugins/publication-stats.rb; names must match the bib `journal` field exactly.
-top_journals: [Nature, Nature Genetics, Cell]
+top_journals: [Nature, Nature Genetics, Nature Medicine, Cell, Nature Immunology]
 
 scholar:
   last_name: [Chiou]
@@ -532,7 +532,7 @@ third_party_libraries:
   swiper:
     integrity:
       css: "sha256-yUoNxsvX+Vo8Trj3lZ/Y5ZBf8HlBFsB6Xwm7rH75/9E="
-      js: "sha256-F/XmJMW0GjV9plS9N/uS5WP0ACGAnPNdgXMLsQARmA4="
+      js: "sha256-aULwhztqcQjhipg7QZKtRpARqBMTF/iBYdbwkXBY2iI="
     url:
       css: "https://cdn.jsdelivr.net/npm/swiper@{{version}}/swiper-bundle.min.css"
       js: "https://cdn.jsdelivr.net/npm/swiper@{{version}}/swiper-bundle.min.js"

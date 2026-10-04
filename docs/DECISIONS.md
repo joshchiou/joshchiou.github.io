@@ -223,3 +223,35 @@ SerpAPI is down.
 
 **Why not a Liquid tag such as jekyll-scholar's `bibliography_count`.** It can't take the journal
 names from a list, so the top-journal counts would be hand-copied into the template.
+
+## D-015: The homepage journal chips are the Nature and Cell flagship research journals
+
+_Recorded 2026-10-04 (owner's question) · `top_journals` in `_config.yml`_
+
+**Context.** The chips listed only _Nature_, _Nature Genetics_, and _Cell_, a list picked in the
+April 2026 overhaul without a stated rule. Josh has papers in _Nature Medicine_ (2) and _Nature
+Immunology_ (1) as well.
+
+**Decision.** The chips name the flagship and specialty research journals of the Nature and Cell
+families and _Science_: _Nature_, _Nature Genetics_, _Nature Medicine_, _Cell_, _Nature
+Immunology_ (12 papers). Order is by paper count, ties in list order.
+
+**Why not _Nature Communications_, _Science Advances_, _Cell Genomics_, or _Genome Biology_.** Good
+journals, but broad-scope or open-access siblings; listing them would make the line read as every
+journal rather than a highlight.
+
+## D-016: Inline scripts read the theme from `data-theme`, because `theme.js` is deferred
+
+_Recorded 2026-10-04 · `_includes/scripts/{search,echarts,vega,mermaid,diff2html}.liquid`_
+
+**Context.** This fork loads `theme.js` with `defer` and sets the theme with a small inline script
+in `head.liquid`, to avoid a flash of the wrong theme without blocking rendering. Upstream al-folio
+loads `theme.js` normally, and its inline scripts call `determineComputedTheme()` from it. Here
+those calls ran before `theme.js` and threw on every page, which stopped the site search setup
+(the search button did nothing) and the ECharts code-block setup.
+
+**Decision.** Inline scripts read `document.documentElement.getAttribute('data-theme')`, which the
+head snippet has already set, and `test_interactive.py` fails on any JavaScript error.
+
+**Why not stop deferring `theme.js`.** It would block rendering on every page to serve five lines
+that only need a value already on the page.
