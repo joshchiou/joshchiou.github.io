@@ -69,7 +69,7 @@ Repositories I've built or contributed to significantly.
       <div class="repo-card-header">
         <i class="fa-solid fa-book"></i>
         <span class="repo-card-name">
-          {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo }}{% endif %}
+          {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo | replace: '/', '/<wbr>' }}{% endif %}
         </span>
       </div>
       <div class="repo-card-desc">{{ item.desc }}</div>

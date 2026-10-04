@@ -597,3 +597,171 @@ html[data-theme="dark"] {
   display: block;
   object-fit: contain;
 }
+
+// ---------------------------------------------------------------- design review, Oct 2026
+
+// Section headings: one style for page-level section labels (left-aligned, text color, bold,
+// with a rule), matching "All publications".
+.projects h2.category {
+  text-align: left;
+  color: var(--global-text-color);
+  border-bottom: 2px solid var(--global-text-color);
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.publications h2.bibliography.selected-heading {
+  color: var(--global-text-color);
+  border-bottom-color: var(--global-text-color);
+
+  i {
+    color: var(--global-theme-color);
+  }
+}
+
+// In-page h2s on ordinary pages (code page sections, project References) match project pages.
+.post > h2,
+.post article > h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+// Publication lists: thumbnails and TL;DRs belong to the Selected list. Elsewhere every entry
+// gets the full width so the titles line up.
+.publications h2.all-heading ~ ol.bibliography,
+.post article ~ .publications ol.bibliography {
+  .pub-thumb,
+  .pub-tldr {
+    display: none;
+  }
+
+  .col-sm-10 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .publications ol.bibliography li {
+    padding-left: 0;
+  }
+
+  .publications ol.bibliography .col-sm-10 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // The profile photo shouldn't push the bio below the fold on a phone.
+  .profile.float-right {
+    float: none !important;
+    max-width: 180px;
+    margin: 0 auto 1rem;
+  }
+}
+
+// TL;DR boxes and the Home Assistant diagram: a faint accent tint, not the purple code tint.
+.project-tldr,
+.hass-layer:nth-child(odd) {
+  background: color-mix(in srgb, var(--global-theme-color) 6%, transparent);
+}
+
+// Footer social icons: smaller, one row on a phone.
+.social .contact-icons {
+  font-size: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.75rem;
+}
+
+.footer-updated {
+  white-space: nowrap;
+}
+
+// Carousels use the accent color, not Swiper's default blue.
+.swiper {
+  --swiper-navigation-color: var(--global-theme-color);
+  --swiper-pagination-color: var(--global-theme-color);
+}
+
+// Touch targets: small dots and buttons get a larger invisible hit area.
+.swiper-pagination-bullet,
+.bike-carousel-dot {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -9px;
+  }
+}
+
+.travel-map-reset-btn {
+  min-width: 32px;
+  min-height: 32px;
+}
+
+// Travel map: one legend swatch per continent, matching the map colors in travel.js.
+.travel-legend-north-america {
+  background: #4575b4;
+}
+
+.travel-legend-europe {
+  background: #e67e22;
+}
+
+.travel-legend-asia {
+  background: #27ae60;
+}
+
+html[data-theme="dark"] {
+  .travel-legend-north-america {
+    background: #58a6ff;
+  }
+
+  .travel-legend-europe {
+    background: #f5a623;
+  }
+
+  .travel-legend-asia {
+    background: #4ade80;
+  }
+}
+
+.travel-hint-touch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .travel-hint-pointer {
+    display: none;
+  }
+
+  .travel-hint-touch {
+    display: inline;
+  }
+}
+
+// Short pages: keep the footer at the bottom of the window.
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > footer.sticky-bottom {
+  margin-top: auto !important; // the footer also carries Bootstrap's .mt-5 (!important)
+}
+
+body > main {
+  flex: 1 0 auto;
+}
+
+// Repo names wrap at word boundaries (after "/" or "-") instead of mid-word.
+.repo-card .repo-card-header .repo-card-name {
+  word-break: normal;
+  overflow-wrap: break-word;
+  min-width: 0;
+}

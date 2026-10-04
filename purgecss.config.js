@@ -24,6 +24,7 @@ module.exports = {
       /^github-avatar/,
       /^gh-stat/,
       /^gh-avatar/,
+      /^swiper-pagination-bullet/, // added by Swiper at runtime
     ],
   },
 };

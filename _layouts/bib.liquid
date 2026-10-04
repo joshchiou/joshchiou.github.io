@@ -307,7 +307,7 @@
       {% if entry.website %}
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener">Website</a>
       {% endif %}
-      {% if entry.project_url %}
+      {% if entry.project_url and entry.project_url != page.url %}
         <a href="{{ entry.project_url | relative_url }}" class="btn btn-sm z-depth-0 btn-project" role="button"
           ><i class="fa-solid fa-arrow-up-right-from-square fa-sm"></i> View project</a
         >

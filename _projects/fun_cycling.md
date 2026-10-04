@@ -16,7 +16,7 @@ chart:
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
-<p class="text-muted mb-4">I ride a 2002 LeMond Zurich 18 miles to commute to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bike trips wherever we travel.</p>
+<p class="mb-4">I ride a 2002 LeMond Zurich 18 miles to commute to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bike trips wherever we travel.</p>
 
 <h2 class="page-chapter">By the numbers</h2>
 

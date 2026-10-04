@@ -41,6 +41,12 @@ one accent color, generous white space, and real figures from the work instead o
 | Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
 | Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
 
+Section labels on the projects and publications pages ("work", "fun", "Selected", "All
+publications", "Talks and presentations", "Press") share one style: left-aligned, 1.2rem bold,
+text color, with a 2px rule; only the Selected star uses the accent. Thumbnails and TL;DRs appear
+only in Selected lists; everywhere else publication entries use the full width so titles line up.
+On short pages the footer sits at the bottom of the window.
+
 Headings: page titles in the navigation and the homepage section labels ("research", "selected
 publications", "news") are lowercase, which is al-folio's style. Headings inside pages use sentence
 case. Project titles use title case. CV section names use title case; the publications page shows

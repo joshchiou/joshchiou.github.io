@@ -474,6 +474,9 @@
       });
       placeholder.style.display = "none";
       swiperEl.style.display = "";
+      // The Photos heading and section stay hidden until at least one photo exists.
+      document.getElementById("travel-photos-heading").style.display = "";
+      document.getElementById("travel-gallery-section").style.display = "";
       if (typeof Swiper !== "undefined") {
         new Swiper("#travelSwiper", {
           slidesPerView: 1,
