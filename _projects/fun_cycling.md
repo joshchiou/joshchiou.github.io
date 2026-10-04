@@ -28,7 +28,7 @@ chart:
     <small class="text-muted">rides</small>
   </div>
   <div class="col-4">
-    <h3 class="mb-0">{{ total_miles }}</h3>
+    <h3 class="mb-0">{% include commas.liquid n=total_miles %}</h3>
     <small class="text-muted">miles</small>
   </div>
   <div class="col-4">
@@ -82,7 +82,7 @@ chart:
 
 <h2 class="page-chapter">The bikes</h2>
 
-<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-90s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the drivetrains run on hot-waxed chain: strip the factory grease, melted wax in a slow cooker, re-dip every few hundred miles or whenever I remember.</p>
+<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-1990s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the drivetrains run on hot-waxed chain: strip the factory grease, melt wax in a slow cooker, dip, and re-dip every few hundred miles or whenever I remember.</p>
 
 <div class="bike-carousel">
   <div class="bike-carousel-viewport">

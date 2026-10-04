@@ -76,7 +76,7 @@ editing:
 - The Lilly card (and its homepage version) uses Lilly colors instead: red `#e0241a` (the logo red)
   and blue `#2e5a94`, one step lighter than the deck navy `#0c376d` so the pair passes the
   validator.
-- Thin lines, small round markers with a 1-2px surface-colored outline, no gridlines beyond a few
+- Thin lines, small round markers with a 1–2px surface-colored outline, no gridlines beyond a few
   faint guides.
 
 ## Motion and accessibility

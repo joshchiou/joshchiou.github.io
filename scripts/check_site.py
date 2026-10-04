@@ -218,7 +218,7 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
         stat = re.search(r'id="stat-papers">([^<]*)<', home)
         expect_equal("homepage publications stat", stat and stat.group(1).strip(), total)
         stat = re.search(r'id="stat-citations">([^<]*)<', home)
-        expect_equal("homepage citations stat", stat and stat.group(1).strip(), scholar["citations"])
+        expect_equal("homepage citations stat", stat and stat.group(1).strip(), f"{scholar['citations']:,}")
         nums = texts(home, "about-stat-num", "span")
         expect_equal("homepage h-index stat", nums[2] if len(nums) > 2 else None, scholar["h_index"])
         expect_equal("homepage top-journal line", (texts(home, "about-journals-count") or [None])[0],
@@ -273,7 +273,7 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
             miles = liquid_round(s["total_distance_km"] * 0.621371)
             kft = liquid_round(s["total_elevation_m"] * 3.28084) // 1000
             shown = [t.strip() for t in re.findall(r'<h3 class="mb-0">([^<]*)<', cycling)[:3]]
-            expect_equal("cycling page stats", shown, [str(s["total_rides"]), str(miles), f"{kft}k"])
+            expect_equal("cycling page stats", shown, [f"{s['total_rides']:,}", f"{miles:,}", f"{kft}k"])
 
 
 # ---------------------------------------------------------------- main

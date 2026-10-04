@@ -173,7 +173,7 @@ def test_missing_entry_on_publications_page_is_caught(site_copy):
 @needs_site
 def test_stale_citation_stat_is_caught(site_copy):
     citations = check_site.load_json("scholar_stats.json")["citations"]
-    edit(site_copy / "index.html", f'id="stat-citations">{citations}', 'id="stat-citations">1')
+    edit(site_copy / "index.html", f'id="stat-citations">{citations:,}', 'id="stat-citations">1')
     run_site_checks(site_copy)
     assert any("citations stat" in f for f in check_site.failures)
 

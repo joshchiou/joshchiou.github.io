@@ -28,7 +28,9 @@ It should return nothing outside vendored libraries.
   past tense for finished work ("I completed my PhD…").
 - Write for a scientist in a neighboring field: precise terms where they matter, no jargon for its
   own sake, acronyms spelled out on first use on each page ("UK Biobank Pharma Proteomics Project
-  (UKB-PPP)", "type 1 diabetes (T1D)").
+  (UKB-PPP)", "type 1 diabetes (T1D)"). This includes scientific and technical acronyms on project
+  pages (GWAS, pQTL, eQTL, GLP-1, scATAC-seq, HPC) and conference names (European Association for
+  the Study of Diabetes (EASD)). Product and company names keep their own form (Olink, SomaScan).
 - Plain and specific. Say what was measured or found, with numbers when there are numbers. Avoid
   hype words such as groundbreaking, cutting-edge, novel (unless it is the paper's own claim), and
   leverage.
@@ -76,7 +78,12 @@ prose that reaches for effect (taglines, framing, significance statements).
 - Journal names are italic: _Nature_, _Nature Genetics_.
 - Doses and units take a space: 15 mg, 2.4 mg.
 - Numbers: commas in thousands (54,000), numerals for 10 and above, and for any measurement.
-- Dates in prose: "October 1, 2026" or "Oct 2026". Front-matter dates stay in ISO format.
+- Dates in prose: "October 1, 2026" or "Oct 2026". Front-matter dates stay in ISO format, and so do
+  the metadata lines in the docs (`_Recorded 2026-10-03_`).
+- Year ranges in `_data/cv.yml` are stored as `2021 - 2023` or `2025 - now` (the CV timeline splits
+  on " - "); the templates render them with an en dash.
+- Cycling distances are in miles in text, matching the stat tiles and charts.
+- Stat-tile labels are lowercase ("rides", "publications").
 - Approximate numbers take "about" in prose ("about 3,000 proteins"), not "~". A tilde is fine in
   a stat tile where space is tight ("~2018").
 - Disease names are lowercase in prose ("type 1 diabetes", "type 2 diabetes") and capitalized only
@@ -95,7 +102,9 @@ prose that reaches for effect (taglines, framing, significance statements).
   titles: title case. Navigation labels and homepage section labels: lowercase. CV section names:
   title case (they are also lookup keys, so don't rename them casually).
 - Use "and" in prose and headings; "&" only in short labels where space is tight (the homepage
-  tagline, CV section names).
+  tagline, CV section names) and in official names (Inflammation & Immunology, _BMJ Open Diabetes
+  Research & Care_).
+- "versus" in prose; "vs" only in chart labels.
 - Straight quotes in code and data files are fine; Markdown and Liquid output them as written.
 - Contractions are fine in prose ("it's", "doesn't"); they keep the tone conversational.
 - Italics: `_Nature_` in Markdown, `<em>Nature</em>` inside YAML strings and front matter that are
@@ -109,7 +118,15 @@ prose that reaches for effect (taglines, framing, significance statements).
 fragment, under about 120 characters. Example: "Pre-competitive consortium mapping the genetic
 architecture of the human plasma proteome."
 
-**TL;DR box** on a project page: one sentence saying what the project is for.
+**TL;DR box** on a project page: one sentence saying what the work did or found, or what it is for.
+Its claim is no stronger than the page body's.
+
+**Inline citations**: name the journal before the citation ("published in _Nature_
+{% cite key %}"), never "published in {% cite key %}", which renders as an author-year with no
+venue. A preprint "reported" a result; only a published paper "showed" it.
+
+**Related line** at the end of a work project page: "**Related:** [Project Title](…), the [noun]
+that [verb]…".
 
 **Project page prose**: first person singular, including for team papers; for a co-first-author
 paper, "I co-led a study that…". Papers are cited inline with `{% cite key %}` right after the

@@ -28,4 +28,4 @@ for Mendelian randomization, drug target validation, and multi-omics work.
 
 ---
 
-**Related:** [Translational Proteomics for Obesity Clinical Trials]({{ '/projects/work_lilly_proteomics/' | relative_url }}), applying the pQTL and proteomic methods from UKB-PPP to clinical trial data at Lilly.
+**Related:** [Translational Proteomics for Obesity Clinical Trials]({{ '/projects/work_lilly_proteomics/' | relative_url }}), the clinical trial work at Lilly that applies the pQTL and proteomic methods from UKB-PPP.

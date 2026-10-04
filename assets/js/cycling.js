@@ -70,7 +70,8 @@
     if (!el) return;
     var sign = yoyDelta >= 0 ? "+" : "";
     var pct = yoyPct !== null ? " (" + sign + yoyPct + "%)" : "";
-    el.textContent = sign + yoyDelta + " mi vs " + prevYear + pct + " · on pace for ~" + projFull + " mi";
+    el.textContent =
+      sign + yoyDelta.toLocaleString("en-US") + " mi vs " + prevYear + pct + " · on pace for about " + projFull.toLocaleString("en-US") + " mi";
     el.classList.add(yoyDelta >= 0 ? "stat-delta-up" : "stat-delta-down");
     if (sep) sep.style.display = "";
   }

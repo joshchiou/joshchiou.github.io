@@ -31,4 +31,4 @@ Data and code: [joshchiou/T1D_snATAC](https://github.com/joshchiou/T1D_snATAC)
 
 ---
 
-**Related:** [Single-Cell Epigenomics of Pancreatic Islets]({{ '/projects/work_islet_epigenomics/' | relative_url }}), companion project mapping islet cell-type chromatin accessibility and type 2 diabetes risk variants.
+**Related:** [Single-Cell Epigenomics of Pancreatic Islets]({{ '/projects/work_islet_epigenomics/' | relative_url }}), the companion project that mapped islet cell-type chromatin accessibility and type 2 diabetes risk variants.

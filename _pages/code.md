@@ -36,8 +36,8 @@ description: >
       <div class="gh-stat-divider"></div>
       <div class="github-profile-orgs-d">
         <div class="github-profile-orgs-icons">
-          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly and Company">
-            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Eli Lilly">
+          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Lilly">
+            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Lilly">
           </a>
           <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
             <img src="{{ '/assets/img/orgs/conda-forge.png' | relative_url }}" alt="conda-forge">

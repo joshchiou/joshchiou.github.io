@@ -10,7 +10,7 @@
   date: 2026-03-26
   type: bug fix
   language: Python
-  blurb: Fixed a memory leak that caused the Home Assistant integration to crash when the SunPower PVS serial number is configured as an IP address.
+  blurb: Fixed a memory leak that crashed the Home Assistant integration when the SunPower PVS serial number was an IP address.
 
 - repo: conda-forge/staged-recipes
   url: https://github.com/conda-forge/staged-recipes
@@ -19,7 +19,7 @@
   date: 2026-02-12
   type: packaging
   language: R
-  blurb: Packaged r-mmrm for conda-forge, making it available as a conda dependency for clinical trial analysis pipelines.
+  blurb: Packaged r-mmrm for conda-forge, so it can be installed as a conda dependency in clinical trial pipelines.
 
 - repo: scverse/SnapATAC2
   url: https://github.com/scverse/SnapATAC2
@@ -48,7 +48,7 @@
   date: 2024-11-28
   type: bug fix
   language: Python
-  blurb: Added a variant ID normalization step before rsID assignment, preventing downstream mapping errors in GWAS summary statistics workflows.
+  blurb: Added a step that normalizes variant IDs before rsID assignment, which prevents mapping errors in GWAS summary statistics.
 
 - repo: scverse/SnapATAC2
   url: https://github.com/scverse/SnapATAC2
@@ -67,7 +67,7 @@
   type: bug fix
   language: R
   featured: true
-  blurb: Fixed group export function compatibility with updated dependencies.
+  blurb: Fixed the group export function so it works with updated dependencies.
 
 - repo: FinucaneLab/fine-mapping-inf
   url: https://github.com/FinucaneLab/fine-mapping-inf
@@ -76,4 +76,4 @@
   date: 2022-11-09
   type: feature
   language: Python
-  blurb: Added deduplication step for credible sets output, preventing redundant entries in fine-mapping results.
+  blurb: Added a step that removes duplicate credible sets from fine-mapping output.

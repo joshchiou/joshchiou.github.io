@@ -11,9 +11,9 @@ images:
 ---
 
 This started with Swinford Spirits, a creative cocktail lounge in San Diego that I loved and
-that closed permanently during the pandemic. With bars shut down I started making my own
+that closed permanently during the pandemic. With bars shut down, I started making my own
 drinks at home, experimenting with different base liquors, infusions, and garnishes, and never
-stopped. Current obsessions lean towards stirred drinks: Negroni variations, spec-forward
+stopped. Current obsessions lean toward stirred drinks: Negroni variations, spec-forward
 Manhattans, and anything that involves a good amaro. I have a soft spot for funky rums and
 tiki cocktails.
 

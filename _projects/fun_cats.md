@@ -46,7 +46,7 @@ category: fun
         </div>
       </div>
 
-      <div class="claire-section-eyebrow">&#x1F9EC;&nbsp; Basepaws Breed Analysis</div>
+      <div class="claire-section-eyebrow">Basepaws breed analysis</div>
 
       {% for breed in genetics.breeds %}
       <div class="claire-breed-row">
@@ -90,7 +90,7 @@ category: fun
 <!-- ── Section divider ───────────────────────────────────────────────────── -->
 <div class="claire-divider">
   <div class="claire-divider-line"></div>
-  <span class="claire-divider-text">Life in Photos</span>
+  <span class="claire-divider-text">Life in photos</span>
   <div class="claire-divider-line"></div>
 </div>
 

@@ -1,4 +1,4 @@
-- name: Lemond Zurich
+- name: LeMond Zurich
   year: 2002
   image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-daily-driver.webp
   status: Daily driver
@@ -20,7 +20,7 @@
         - SKS Raceblade fenders
         - Tubus Fly rack
 
-- name: Lemond Tourmalet
+- name: LeMond Tourmalet
   year: 2002
   image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-backup-bike.webp
   status: Backup bike
@@ -38,7 +38,7 @@
         - Forte Titan wheelset
         - Continental GP 5000 tires
 
-- name: Lemond Etape
+- name: LeMond Etape
   year: 2007
   image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-wifes-bike.webp
   status: Wife's main bike
@@ -53,7 +53,7 @@
         - Shimano Tiagra 4700 (2x10)
     - label: Wheels & Tires
       items:
-        - Alexrims AT450  wheelset
+        - Alexrims AT450 wheelset
         - Continental GP 5000 tires
     - label: Accessories
       items:
@@ -95,7 +95,7 @@
         - White Industries wheelset
         - Continental Race King tires
 
-- name: Lemond Buenos Aires
+- name: LeMond Buenos Aires
   year: 2001
   image: https://github.com/joshchiou/joshchiou.github.io/releases/download/images-v1/bikes-tall-bike.webp
   status: Large frame
