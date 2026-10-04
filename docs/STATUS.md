@@ -94,9 +94,8 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-020 on 2026-10-04.
    `auto/new-publications-1790979034`. Not checked: `copilot/fix-doi-errors-in-publications`.
    Keep `claude/personal-website-review-g4soy3`; it is PR #49's branch.
 
-7. **Owner checks from the content review:** whether Chun Zeng is also co-first on Wang 2023;
-   reuse terms for the T1D and islet card figures (non-CC-BY papers); the Lilly card colors
-   (D-008), which a reader could map to the drugs; a link for the PhD news item.
+7. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
+   (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
 8. **Polish not done:** a higher-resolution Greenwald thumbnail (needs the source figure), the
    leftover card in five-item grids, extra badge colors, the UCSD logo and white figure
    backgrounds in dark mode.

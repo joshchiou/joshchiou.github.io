@@ -8,6 +8,7 @@ https://www.pfizer.com
 https://www.lilly.com
 https://twitter.com
 https://x.com
+https://www.proquest.com
 # Gated behind a reviewer token until the SURMOUNT-5 proteomics paper is published
 https://surmount5-proteomics.lilly.com
 # Returns 403 to automated checkers
