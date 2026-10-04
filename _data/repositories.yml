@@ -4,6 +4,8 @@ github_users:
 github_repos:
   - repo: EliLillyCo/surmount5-proteomics
     desc: "Analysis code for the SURMOUNT-5 proteomics study. Author."
+    # GitHub's breakdown puts R under the 5% cutoff; `languages` overrides it.
+    languages: [Python, R]
   - repo: joshchiou/T1D_snATAC
     desc: "snATAC-seq of pancreas and type 1 diabetes risk loci."
   - repo: Gaulton-Lab/pipelines

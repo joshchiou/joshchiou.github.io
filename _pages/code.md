@@ -74,7 +74,7 @@ Repositories I've built or contributed to significantly.
       </div>
       <div class="repo-card-desc">{{ item.desc }}</div>
       <div class="repo-card-meta">
-        {% assign repo_languages = repo_data.languages %}
+        {% assign repo_languages = item.languages | default: repo_data.languages %}
         {% if repo_languages == nil and repo_data.language %}
           {% assign repo_languages = repo_data.language | split: "|" %}
         {% endif %}

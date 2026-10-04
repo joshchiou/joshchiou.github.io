@@ -158,7 +158,10 @@ in `linkitems`.
 **Repository on the code page.** Add `repo: owner/name` and a one-sentence `desc` to
 `_data/repositories.yml`, ending with the role where it adds something ("Author." or "Maintainer."). Cards show two lines,
 so keep it under about 60 characters. Repos owned by
-`joshchiou` show the short name; others show `owner/name`.
+`joshchiou` show the short name; others show `owner/name`. Language tags come from GitHub's language
+breakdown (every language with at least 5% of the code, up to three), filled in by the weekly
+Update GitHub Stats run; until it runs, a new card has none. Set `languages: [Python, R]` on an
+entry to override what GitHub reports.
 
 **New role or title.** Follow the tagline checklist in [CLAUDE.md](../CLAUDE.md), and add a news item.
 
