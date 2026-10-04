@@ -125,8 +125,8 @@ Its claim is no stronger than the page body's.
 {% cite key %}"), never "published in {% cite key %}", which renders as an author-year with no
 venue. A preprint "reported" a result; only a published paper "showed" it.
 
-**Related line** at the end of a work project page: "**Related:** [Project Title](…), the [noun]
-that [verb]…".
+**Related line** at the end of a work project page: `**Related:** [Project Title](URL), the [noun]
+that [verb]…`.
 
 **Project page prose**: first person singular, including for team papers; for a co-first-author
 paper, "I co-led a study that…". Papers are cited inline with `{% cite key %}` right after the
