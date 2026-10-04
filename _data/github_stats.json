@@ -5,30 +5,53 @@
   "followers": 6,
   "total_stars": 3,
   "repos": {
+    "EliLillyCo/surmount5-proteomics": {
+      "language": "Python",
+      "languages": [
+        "Python"
+      ],
+      "stars": 0,
+      "forks": 0,
+      "description": "Code to reproduce analyses from the SURMOUNT-5 proteomics paper"
+    },
     "joshchiou/T1D_snATAC": {
       "language": null,
+      "languages": [],
       "stars": 2,
       "forks": 0,
       "description": "Links to T1D GWAS and single cell ATAC-seq datasets."
     },
     "Gaulton-Lab/pipelines": {
       "language": null,
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ],
       "stars": 0,
       "forks": 0,
       "description": "Analytical tools and pipelines for bulk and single cell epigenomic and human genetic data"
     },
     "joshchiou/joshchiou.github.io": {
       "language": "HTML",
+      "languages": [
+        "HTML",
+        "SCSS",
+        "JavaScript"
+      ],
       "stars": 1,
       "forks": 0,
       "description": "Personal website for Josh Chiou"
     },
     "conda-forge/r-mmrm-feedstock": {
       "language": "Shell",
+      "languages": [
+        "Shell",
+        "Batchfile"
+      ],
       "stars": 1,
       "forks": 1,
       "description": "A conda-smithy repository for r-mmrm."
     }
   },
-  "updated_at": "2026-09-29T15:05:05.272170+00:00"
+  "updated_at": "2026-10-04T11:34:07.224258+00:00"
 }
