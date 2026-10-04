@@ -287,6 +287,7 @@ enable_publication_badges:
 filtered_bibtex_keywords:
   [
     abbr,
+    counted,
     author_count,
     author_includes_self,
     cofirst,

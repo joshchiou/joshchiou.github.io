@@ -86,6 +86,11 @@ def load_yaml(path: Path):
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
 
+def counted(entries: list[dict]) -> list[dict]:
+    """Entries the site counts as publications: everything but `counted = {false}` (the thesis)."""
+    return [e for e in entries if e.get("counted") != "false"]
+
+
 # ---------------------------------------------------------------- data checks
 
 
@@ -200,9 +205,9 @@ def entry_keys(fragment: str, keys: set[str]) -> list[str]:
 def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> None:
     keys = {e["key"] for e in entries}
     selected = {e["key"] for e in entries if e.get("selected") == "true"}
-    total = len(entries)
+    total = len(counted(entries))
 
-    top = [(name, sum(1 for e in entries if e.get("journal") == name))
+    top = [(name, sum(1 for e in counted(entries) if e.get("journal") == name))
            for name in config.get("top_journals") or []]
     top_names = [name for name, count in top if count]
     top_total = sum(count for _, count in top)
@@ -238,7 +243,7 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
             sel = entry_keys(pubs[:split], keys)
             full = entry_keys(pubs[split:], keys)
             expect_equal("publications page Selected entries", sorted(sel), sorted(selected))
-            expect_equal("publications page entry count", len(full), total)
+            expect_equal("publications page entry count", len(full), len(entries))
             missing = sorted(keys - set(full))
             if missing:
                 fail(f"publications page: entries missing from the full list: {', '.join(missing)}")
@@ -303,7 +308,8 @@ def main() -> None:
         print(f"FAIL: {f}")
     if failures:
         sys.exit(f"{len(failures)} check(s) failed")
-    print(f"All checks passed ({len(entries)} publications, site {'checked' if site else 'not built'}).")
+    print(f"All checks passed ({len(counted(entries))} publications counted, {len(entries)} listed; "
+          f"site {'checked' if site else 'not built'}).")
 
 
 if __name__ == "__main__":

@@ -58,6 +58,12 @@ def test_parse_bib_counts_every_entry(tmp_path):
     assert [e["key"] for e in entries] == ["a", "b", "c"]
 
 
+def test_thesis_is_listed_but_not_counted():
+    entries = check_site.parse_bib(ROOT / "_bibliography" / "papers.bib")
+    skipped = [e for e in entries if e not in check_site.counted(entries)]
+    assert [e["key"] for e in skipped] == ["t1t2diabetes2021understanding"]
+
+
 def test_real_bib_matches_entry_count():
     text = (ROOT / "_bibliography" / "papers.bib").read_text(encoding="utf-8")
     entries = check_site.parse_bib(ROOT / "_bibliography" / "papers.bib")
@@ -147,7 +153,7 @@ def test_built_site_passes(site_copy):
 @needs_site
 def test_hardcoded_publication_count_is_caught(site_copy):
     page = site_copy / "publications" / "index.html"
-    total = len(check_site.parse_bib(ROOT / "_bibliography" / "papers.bib"))
+    total = len(check_site.counted(check_site.parse_bib(ROOT / "_bibliography" / "papers.bib")))
     edit(page, f'publication-count">{total} publications', 'publication-count">38 publications')
     run_site_checks(site_copy)
     assert any("publications page count" in f for f in check_site.failures)
@@ -170,3 +176,40 @@ def test_stale_citation_stat_is_caught(site_copy):
     edit(site_copy / "index.html", f'id="stat-citations">{citations}', 'id="stat-citations">1')
     run_site_checks(site_copy)
     assert any("citations stat" in f for f in check_site.failures)
+
+
+# ---------------------------------------------------------------- preprints
+
+import check_preprints  # noqa: E402
+
+PREPRINT = {"key": "p2026", "doi": "10.1101/2026.01.01.000001", "journal": "bioRxiv"}
+
+
+def test_unpublished_preprint_passes(monkeypatch):
+    monkeypatch.setattr(check_preprints, "fetch", lambda url: {"collection": [{"published": "NA"}]})
+    assert check_preprints.check([PREPRINT]) == []
+
+
+def test_published_preprint_fails(monkeypatch):
+    monkeypatch.setattr(check_preprints, "fetch", lambda url: {"collection": [{"published": "10.1038/x"}]})
+    [problem] = check_preprints.check([PREPRINT])
+    assert "published as https://doi.org/10.1038/x" in problem and "listed twice" not in problem
+
+
+def test_published_preprint_already_in_bib_says_listed_twice(monkeypatch):
+    monkeypatch.setattr(check_preprints, "fetch", lambda url: {"collection": [{"published": "10.1038/X"}]})
+    problems = check_preprints.check([PREPRINT, {"key": "j", "doi": "10.1038/x", "journal": "Nature"}])
+    assert len(problems) == 1 and "listed twice" in problems[0]
+
+
+def test_unknown_preprint_doi_fails(monkeypatch):
+    monkeypatch.setattr(check_preprints, "fetch", lambda url: {"collection": [], "messages": [{"status": "no posts found"}]})
+    [problem] = check_preprints.check([PREPRINT])
+    assert "has no preprint" in problem
+
+
+def test_medrxiv_entries_ask_medrxiv(monkeypatch):
+    urls = []
+    monkeypatch.setattr(check_preprints, "fetch", lambda url: urls.append(url) or {"collection": [{"published": "NA"}]})
+    check_preprints.check([{**PREPRINT, "journal": "medRxiv"}])
+    assert "/details/medrxiv/" in urls[0]

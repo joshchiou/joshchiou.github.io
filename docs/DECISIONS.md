@@ -297,3 +297,19 @@ which GitHub's API doesn't accept, so it would need a relay server. It also need
 
 **Why keep the Strava archive instead of re-importing everything from Health.** Rides recorded in
 the Strava app may not be in Health, and the archive is the record the site already showed.
+
+## D-019: The publication count includes unpublished preprints but not the thesis
+
+_Recorded 2026-10-04 (owner's decision) · `counted` field in `papers.bib`, `scripts/check_preprints.py`_
+
+**Context.** The count of 40 included the PhD thesis and three preprints (VIDRA on medRxiv 2026,
+INTERFACE on bioRxiv 2024, and the pancreatic enzyme T1D paper on medRxiv 2024). On 2026-10-04
+none of the three had a published version on bioRxiv, medRxiv, or PubMed.
+
+**Decision.** The thesis stays on /publications/ but carries `counted = {false}`, so the count is 39. Preprints count until they're published. `check_preprints.py` runs weekly and fails when one
+has a journal version, so the entry gets replaced instead of the paper being counted twice.
+
+**Why not drop the thesis from the list.** It is part of the record; only the count was in question.
+
+**Why not use the `@phdthesis` entry type.** `bib.liquid` builds the venue line from the journal
+field, so a type change would mean template work for one entry.

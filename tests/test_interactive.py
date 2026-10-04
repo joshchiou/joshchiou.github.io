@@ -265,7 +265,7 @@ def test_homepage_count_up_ends_on_real_numbers(site):
     page = p.open("/")
     page.locator("#stat-papers").scroll_into_view_if_needed()
     page.wait_for_timeout(1800)
-    total = len(check_site.parse_bib(ROOT / "_bibliography" / "papers.bib"))
+    total = len(check_site.counted(check_site.parse_bib(ROOT / "_bibliography" / "papers.bib")))
     citations = check_site.load_json("scholar_stats.json")["citations"]
     assert page.inner_text("#stat-papers").replace(",", "") == str(total)
     assert page.inner_text("#stat-citations").replace(",", "") == str(citations)

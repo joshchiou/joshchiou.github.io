@@ -32,7 +32,8 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
 ### Publications page, top to bottom
 
 1. Publication count, counted from `papers.bib` at build time by `_plugins/publication-stats.rb`
-   (`_includes/publication_meta.liquid`). Never type a count into a template; see
+   (`_includes/publication_meta.liquid`). Preprints count until they're published; the PhD thesis
+   is listed but not counted (`counted = {false}`). Never type a count into a template; see
    [D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time).
 2. Search box.
 3. **Selected**: papers with `selected = {true}`, ordered by `cv_order`, each with a 4:3 `preview`
@@ -98,6 +99,10 @@ differently, an h-index that the citation count can't support, cities in countri
 listed. Data that a workflow has stopped refreshing shows as a warning, not a failure. Run it after
 a local build with `python3 scripts/check_site.py`. When you add a page that shows a number, add a
 check for it.
+
+`scripts/check_preprints.py` asks the bioRxiv/medRxiv API whether each preprint has been published
+and fails if one has, since the entry should then be replaced by the journal version. It also
+catches preprint DOIs that don't exist. It runs weekly in Site checks.
 
 `scripts/check_sri.py` downloads every CDN library in `_config.yml` and compares it with its
 integrity hash. A wrong hash makes the browser refuse the script without any visible error; that is
