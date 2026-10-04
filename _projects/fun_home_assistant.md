@@ -10,9 +10,9 @@ category: fun
 {% assign s = site.data.hass_stats %}
 
 I run [Home Assistant](https://www.home-assistant.io/) on a self-hosted server as the hub for
-home automation. It started with solar: after installing a SunPower PV system I wanted to
+home automation. It started with solar: after installing a SunPower solar (photovoltaic, PV) system I wanted to
 monitor production locally without depending on SunPower's cloud app, so I set up Home
-Assistant to pull data directly from the PVS gateway on my LAN. From there it grew to lights,
+Assistant to pull data directly from the PVS gateway on my home network. From there it grew to lights,
 climate, media, and utility monitoring. The whole system follows one rule: **if the internet goes
 down, everything still works.**
 
@@ -102,7 +102,7 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
 
 ## Open source
 
-The SunPower PV integration is adapted from [ha-esunpower](https://github.com/smcneece/ha-esunpower). I contributed a fix for a memory-leak crash that occurred when the PVS gateway's serial number is an IP address:
+The SunPower PV integration is adapted from [ha-esunpower](https://github.com/smcneece/ha-esunpower). I contributed a fix for a memory-leak crash that happened when the PVS gateway's serial number was an IP address:
 
 - [ha-esunpower #64](https://github.com/smcneece/ha-esunpower/pull/64): fix memory leak when `pvs_serial` is an IP address
 

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Prints a whole number with comma thousands separators (8655 -> 8,655). Usage:
+  {% include commas.liquid n=some.number %}
+{%- endcomment -%}
+{%- assign _n = include.n | plus: 0 | round -%}
+{%- if _n >= 1000 -%}
+  {%- assign _k = _n | divided_by: 1000 -%}
+  {%- assign _r = _n | modulo: 1000 | prepend: '00' | slice: -3, 3 -%}
+  {%- include commas.liquid n=_k -%}
+  ,{{ _r }}
+{%- else -%}
+  {{- _n -}}
+{%- endif -%}

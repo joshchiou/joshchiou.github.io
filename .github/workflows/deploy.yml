@@ -21,7 +21,7 @@ on:
   # Data workflows push with GITHUB_TOKEN, which doesn't trigger push events,
   # so redeploy explicitly after they finish.
   workflow_run:
-    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Update Strava Data"]
+    workflows: ["Update Scholar Stats", "Update GitHub Stats", "Add Ride"]
     types: [completed]
     branches: [master]
   workflow_dispatch:
@@ -70,6 +70,10 @@ jobs:
           pip3 install --upgrade nbconvert
           export JEKYLL_ENV=production
           bundle exec jekyll build
+      - name: Check numbers 🔢
+        run: |
+          pip3 install pyyaml
+          python3 scripts/check_site.py --site _site
       - name: Purge unused CSS 🧹
         run: |
           npm install -g purgecss

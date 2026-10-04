@@ -12,22 +12,21 @@ related_publications: true
 
 <div class="project-tldr">
   <strong>TL;DR</strong>
-  Single-cell chromatin maps of human pancreatic islets revealed how type 2 diabetes risk variants alter gene regulation at the cell type level.
+  Single-cell chromatin maps of human pancreatic islets showed which islet cell types carry the regulatory elements behind type 2 diabetes risk variants.
 </div>
 
 Hundreds of genetic variants influence type 2 diabetes risk, but most sit in non-coding regions
 of the genome, where it's hard to tell what they do without knowing which regulatory elements are
-active in which cells. For my PhD, I used single-cell ATAC-seq on human islets to map chromatin
-accessibility in each cell type (beta, alpha, delta, and others), then linked the regulatory
-programs active in each cell type to type 2 diabetes GWAS loci {% cite chiou2021single %}. That
-made it possible to read non-coding risk variants in terms of the islet cells they act in.
+active in which cells. For my PhD, I used single-cell chromatin accessibility profiling
+(scATAC-seq) on human islets to map accessible chromatin in each cell type (beta, alpha, delta,
+and others), then linked the regulatory programs active in each cell type to type 2 diabetes
+genome-wide association study (GWAS) loci {% cite chiou2021single %}.
 
 Before the single-cell work, I co-led a study that mapped chromatin accessibility and 3D chromatin
 contacts in human islets to connect distal type 2 diabetes risk variants to the genes they likely
-regulate {% cite greenwald2019pancreatic %}. Later work looked at how genetic variants at type 2
-diabetes loci change regulatory activity in each cell type as the disease develops
-{% cite wang2023integrating %}. The catalog of islet regulatory elements from this work is widely
-used to interpret diabetes GWAS results.
+regulate {% cite greenwald2019pancreatic %}. Later work identified two beta cell subtypes whose
+abundance shifts in type 2 diabetes and whose accessible chromatin is enriched for type 2
+diabetes risk variants {% cite wang2023integrating %}.
 
 ---
 

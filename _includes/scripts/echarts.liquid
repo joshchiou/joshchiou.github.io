@@ -12,7 +12,7 @@
     ></script>
   {% endif %}
   <script>
-    let echartsTheme = determineComputedTheme();
+    let echartsTheme = document.documentElement.getAttribute('data-theme'); // set inline in head.liquid; theme.js is deferred
 
     /* Create echarts chart as another node and hide the code block, appending the echarts node after it
        this is done to enable retrieving the code again when changing theme between light/dark */

@@ -5,7 +5,7 @@ github_repos:
   - repo: EliLillyCo/surmount5-proteomics
     desc: "Analysis code for the SURMOUNT-5 proteomics study. Author."
   - repo: joshchiou/T1D_snATAC
-    desc: "snATAC-seq of islets and type 1 diabetes risk loci."
+    desc: "snATAC-seq of pancreas and type 1 diabetes risk loci."
   - repo: Gaulton-Lab/pipelines
     desc: "ATAC-seq, GWAS, and epigenomic analysis pipelines."
   - repo: joshchiou/joshchiou.github.io

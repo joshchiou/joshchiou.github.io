@@ -2,7 +2,7 @@
   <script type="module" src="{{ '/assets/js/search/ninja-keys.min.js' | relative_url | bust_file_cache }}"></script>
   <ninja-keys hideBreadcrumbs noAutoLoadMdIcons placeholder="Type to start searching"></ninja-keys>
   <script>
-    let searchTheme = determineComputedTheme();
+    let searchTheme = document.documentElement.getAttribute('data-theme'); // set inline in head.liquid; theme.js is deferred
     const ninjaKeys = document.querySelector('ninja-keys');
 
     if (searchTheme === 'dark') {

@@ -9,7 +9,7 @@
                 <tr>
                   <td>
                     <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px">
-                      {{- content.year -}}
+                      {{- content.year | replace: ' - ', '–' -}}
                     </span>
                   </td>
                 </tr>
@@ -70,7 +70,7 @@
                   <div class="cv-sub-role-marker{% if forloop.first %} cv-sub-role-marker--current{% endif %}"></div>
                   <div class="cv-sub-role-body">
                     <div class="cv-sub-role-title">{{ role.title }}</div>
-                    <div class="cv-sub-role-year">{{ role.year }}</div>
+                    <div class="cv-sub-role-year">{{ role.year | replace: ' - ', '–' }}</div>
                     {% if role.maindescription %}
                       <div class="cv-sub-role-desc">{{ role.maindescription }}</div>
                     {% endif %}

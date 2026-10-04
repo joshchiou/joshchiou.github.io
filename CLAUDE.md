@@ -34,7 +34,8 @@ Customized fork of [al-folio](https://github.com/alshedivat/al-folio). Content l
 - `_projects/*.md`: project cards and pages (`work_` and `fun_` prefixes)
 - `_data/repositories.yml`, `_data/contributions.yml`: code page repos and open-source PRs
 - `_data/research_themes.yml`, `_data/press.yml`: homepage theme cards, press list
-- `_data/strava_*.json`, `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
+- `_data/github_stats.json`, `_data/scholar_stats.json`: auto-updated by GitHub Actions
+- `_data/cycling_*.json`: from Apple Health via `scripts/cycling_data.py` (docs/cycling-data.md)
 - `_data/travel_countries.yml`, `_data/travel_cities.yml`: from the Timeline script, then hand-edited
 
 Template-level files (`_sass/`, `assets/libs/`, `_layouts/`, `_includes/`) are mostly upstream
@@ -60,7 +61,13 @@ Places to update together when role/focus changes:
 bundle install          # first time only
 bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
+python3 scripts/check_site.py && python3 scripts/check_sri.py  # numbers and CDN hashes
+python3 -m pytest tests  # unit and browser tests (after `npx purgecss -c purgecss.config.js`)
 ```
+
+All three run in the "Site checks" workflow on every PR and weekly; `check_site.py` also runs in
+`deploy.yml` before deploying. See "Automation" in docs/site-guide.md. Publication counts come from `papers.bib` at build time (`_plugins/publication-stats.rb`,
+top journals listed in `top_journals` in `_config.yml`); never hardcode a count in a template.
 
 Or with Docker (recommended, since it matches CI):
 
@@ -75,9 +82,11 @@ lives in the `@media print` block of `_sass/_custom.scss`. To preview locally af
 
 ## Data pipelines
 
-**Strava:** `scripts/update_strava.py`, run manually or via `.github/workflows/update-strava.yml`.
-Requires env vars: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
-GitHub Actions secrets set in repo Settings → Secrets and variables → Actions.
+**Cycling:** Apple Health, not Strava (its API became paid in June 2026; D-018). An iPhone
+Shortcut posts each Apple Watch ride to the "Add Ride" workflow; a periodic Health export run
+through `scripts/cycling_data.py import-health` adds elevation and fills gaps. Rides through
+2026-06-21 are a frozen Strava archive. Setup and instructions: docs/cycling-data.md. Never
+commit a Health export.
 
 **Travel:** export the JSON on the phone (Google Maps → your profile → Timeline → ⋮ → Export
 Timeline data; Timeline lives on the device, so this can't be automated), then run
@@ -89,14 +98,14 @@ proposed cities are remembered in `scripts/.travel_seen.json` (gitignored). Geoc
 cached in `scripts/.geocode_cache.json` (gitignored; first run ~5 min at 1 req/sec). Never commit
 the export itself.
 
-**Scholar stats:** `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
+**Scholar stats** (citations, h-index, i10-index): `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
 Google Scholar blocks GitHub Actions runners, so the workflow reads the profile through SerpAPI
 (Google Scholar Author API) using the `SERPAPI_KEY` repo secret; the free plan covers a weekly
 run. Without the key the script falls back to `scholarly` (needs `bibtexparser<2`), which only
 works off CI. On a failed fetch the script exits non-zero and leaves `_data/scholar_stats.json`
 unchanged, so a red run means stale numbers.
 
-**Refresh chain:** the Scholar, GitHub stats, and Strava workflows push with `GITHUB_TOKEN`, which
+**Refresh chain:** the Scholar, GitHub stats, and Add Ride workflows push with `GITHUB_TOKEN`, which
 doesn't trigger push-based workflows, so `deploy.yml` also runs on `workflow_run` after each of
 them succeeds. New data workflows that should update the live site must be added to that list.
 
@@ -140,7 +149,10 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 - `_sass/`: al-folio CSS (upstream, with earlier customizations in `_base.scss`, `_cv.scss`,
   `_projects.scss`). Put new site-specific styles in `_sass/_custom.scss`, which is imported last.
 - `assets/libs/`: vendored JS libraries
-- `_config.yml` third_party_libraries block: library versions and integrity hashes
+- `_config.yml` third_party_libraries block: library versions and integrity hashes. If you must
+  change one, run `scripts/check_sri.py`; a wrong hash silently disables the library.
+- `theme.js` is deferred, so inline scripts must read `data-theme` from `<html>` (set by the inline
+  snippet in `head.liquid`) instead of calling `determineComputedTheme()` (D-016).
 - `bin/`: CI scripts (upstream)
 
 ## Project card images

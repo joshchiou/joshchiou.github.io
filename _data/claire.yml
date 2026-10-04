@@ -3,7 +3,7 @@
 # Fields: year, milestone, location, img, caption
 
 - year: "~2018"
-  milestone: "The Early Days"
+  milestone: "The early days"
   location: "Los Angeles, CA"
   img: "assets/img/projects/fun/cats/claire-gallery-1.webp"
   img_position: "center"
@@ -13,7 +13,7 @@
     moments, and judging strangers from afar.
 
 - year: "February 2021"
-  milestone: "Adoption Day"
+  milestone: "Adoption day"
   location: "Los Angeles → San Diego, CA"
   img: "assets/img/projects/fun/cats/claire-gallery-2.webp"
   img_position: "center"
@@ -23,7 +23,7 @@
     windows to nap under.
 
 - year: "July 2021"
-  milestone: "Cross-Country Move"
+  milestone: "Cross-country move"
   location: "San Diego, CA → Cambridge, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-3.webp"
   img_position: "center"
@@ -32,8 +32,8 @@
     silent the entire trip apart from the TSA screening experience. First
     encounter with the East Coast apartment was met with curiosity.
 
-- year: "2021 – 2023"
-  milestone: "The Cambridge Years"
+- year: "2021–2023"
+  milestone: "The Cambridge years"
   location: "Cambridge, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-4.webp"
   img_position: "center"
@@ -43,7 +43,7 @@
     comfort of a nearby lap.
 
 - year: "June 2023"
-  milestone: "New Home"
+  milestone: "New home"
   location: "Watertown, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-5.webp"
   img_position: "center"

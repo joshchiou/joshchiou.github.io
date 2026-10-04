@@ -15,3 +15,9 @@ scripts/.geocode_cache.json
 # Generated at deploy time by scripts/build_cv_pdf.py
 assets/pdf/CV.pdf
 scripts/.travel_seen.json
+__pycache__/
+.pytest_cache/
+# Apple Health exports hold all of your health data; never commit them
+export.zip
+export.xml
+apple_health_export/

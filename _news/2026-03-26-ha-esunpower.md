@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Fixed a <a href="https://github.com/smcneece/ha-esunpower/pull/64" target="_blank">memory leak</a> in the ha-esunpower Home Assistant integration that crashed on PVS gateways configured with an IP address.
+Fixed a <a href="https://github.com/smcneece/ha-esunpower/pull/64" target="_blank">memory leak</a> in the ha-esunpower Home Assistant integration that crashed when the PVS gateway's serial number was an IP address.

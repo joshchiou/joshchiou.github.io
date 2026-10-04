@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fetch Google Scholar stats and count publications from papers.bib.
+"""Fetch Google Scholar stats.
 
-Writes _data/scholar_stats.json with citation count, h-index, paper counts,
-top-journal breakdown, and update metadata. If the Scholar fetch fails, exits
+Writes _data/scholar_stats.json with citation count, h-index, i10-index, and
+update metadata. Publication counts are not stored here: the site counts
+papers.bib at build time (_plugins/publication-stats.rb). If the Scholar fetch fails, exits
 non-zero and leaves the file untouched, so the workflow run turns red instead
 of committing stale numbers with a fresh timestamp.
 
@@ -18,7 +19,6 @@ Usage:
 
 import json
 import os
-import re
 import sys
 import urllib.error
 import urllib.parse
@@ -27,28 +27,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 SCHOLAR_ID = "cIiNWmYAAAAJ"
-BIB_PATH = Path(__file__).resolve().parent.parent / "_bibliography" / "papers.bib"
 OUT_PATH = Path(__file__).resolve().parent.parent / "_data" / "scholar_stats.json"
 
-TOP_JOURNALS = {"Nature", "Cell", "Nature Genetics"}
 GOOGLE_SCHOLAR_TIMEOUT = 60
 SERPAPI_URL = "https://serpapi.com/search.json"
-
-
-def count_bib_entries(bib_path: Path) -> tuple[int, list[dict]]:
-    text = bib_path.read_text()
-    total = len(re.findall(r"^@\w+\{", text, re.MULTILINE))
-    journal_counts: dict[str, int] = {}
-    for m in re.finditer(r"journal\s*=\s*\{([^}]+)\}", text):
-        name = m.group(1).strip()
-        if name in TOP_JOURNALS:
-            journal_counts[name] = journal_counts.get(name, 0) + 1
-    top_journals = [
-        {"name": name, "count": count}
-        for name, count in sorted(journal_counts.items(), key=lambda x: -x[1])
-    ]
-    top_total = sum(j["count"] for j in top_journals)
-    return total, top_total, top_journals
 
 
 def load_existing_stats() -> dict:
@@ -120,10 +102,6 @@ print(json.dumps({{"citations": a.get("citedby", 0), "h_index": a.get("hindex", 
 
 
 def main():
-    total_papers, top_journal_papers, top_journals = count_bib_entries(BIB_PATH)
-    print(f"Bib: {total_papers} papers, {top_journal_papers} in top journals")
-    print(f"  Journals: {', '.join(j['name'] + ' (' + str(j['count']) + ')' for j in top_journals)}")
-
     existing = load_existing_stats()
     api_key = os.environ.get("SERPAPI_KEY", "").strip()
     if api_key:
@@ -145,9 +123,6 @@ def main():
     print(f"{scholar['source']}: {scholar['citations']} citations, h-index {scholar['h_index']}")
 
     stats = {
-        "total_papers": total_papers,
-        "top_journal_papers": top_journal_papers,
-        "top_journals": top_journals,
         "citations": scholar["citations"],
         "h_index": scholar["h_index"],
         "i10_index": scholar["i10_index"],

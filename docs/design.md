@@ -41,10 +41,16 @@ one accent color, generous white space, and real figures from the work instead o
 | Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
 | Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
 
+Section labels on the projects and publications pages ("work", "fun", "Selected", "All
+publications", "Talks and presentations", "Press") share one style: left-aligned, 1.2rem bold,
+text color, with a 2px rule; only the Selected star uses the accent. Thumbnails and TL;DRs appear
+only in Selected lists; everywhere else publication entries use the full width so titles line up.
+On short pages the footer sits at the bottom of the window.
+
 Headings: page titles in the navigation and the homepage section labels ("research", "selected
 publications", "news") are lowercase, which is al-folio's style. Headings inside pages use sentence
-case. Project titles use title case. CV section names use title case, and the publications page
-reuses the CV's "Talks & Presentations" name.
+case. Project titles use title case. CV section names use title case; the publications page shows
+the CV's "Talks & Presentations" section under the sentence-case heading "Talks and presentations".
 
 ## Images
 
@@ -76,7 +82,7 @@ editing:
 - The Lilly card (and its homepage version) uses Lilly colors instead: red `#e0241a` (the logo red)
   and blue `#2e5a94`, one step lighter than the deck navy `#0c376d` so the pair passes the
   validator.
-- Thin lines, small round markers with a 1-2px surface-colored outline, no gridlines beyond a few
+- Thin lines, small round markers with a 1–2px surface-colored outline, no gridlines beyond a few
   faint guides.
 
 ## Motion and accessibility

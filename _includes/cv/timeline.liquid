@@ -31,7 +31,7 @@
       {% endif %}
 
       {% assign is_education = false %}
-      {% if item.title contains 'PhD' or item.title contains 'B.S.' %}
+      {% if item.title contains 'PhD' or item.title contains 'BS,' %}
         {% assign is_education = true %}
       {% endif %}
 
@@ -54,7 +54,7 @@
           {% endif %}
         </div>
         <div class="timeline-content">
-          <div class="timeline-year{% if is_education %} timeline-year--edu{% endif %}">{{ item.year }}</div>
+          <div class="timeline-year{% if is_education %} timeline-year--edu{% endif %}">{{ item.year | replace: ' - ', '–' }}</div>
           <div class="timeline-title">
             {{ item.title }}
             {% if item.previous_title %}
@@ -69,7 +69,7 @@
           </div>
           {% if item.previous_title %}
             <div class="timeline-roles-expand">
-              <span class="timeline-prev-role">{{ item.previous_title }} · {{ item.previous_year }}</span>
+              <span class="timeline-prev-role">{{ item.previous_title }} · {{ item.previous_year | replace: ' - ', '–' }}</span>
             </div>
           {% endif %}
           <div class="timeline-institution">

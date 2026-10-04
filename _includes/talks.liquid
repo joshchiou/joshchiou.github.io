@@ -4,7 +4,7 @@
 {% endcomment %}
 {% assign talks_section = site.data.cv | where: 'title', 'Talks & Presentations' | first %}
 {% if talks_section %}
-  <h2 class="pub-section-heading talks-heading" id="talks">Talks &amp; Presentations</h2>
+  <h2 class="pub-section-heading talks-heading" id="talks">Talks and presentations</h2>
   <ul class="talks-list">
     {% for talk in talks_section.contents %}
       <li class="talk-item">

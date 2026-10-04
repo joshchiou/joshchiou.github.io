@@ -138,7 +138,8 @@ collections:
   news:
     defaults:
       layout: post
-    output: true
+    # Every item is inline (shown in full on the homepage and /news/), so no per-item pages.
+    output: false
     permalink: /:collection/:title/
   projects:
     output: true
@@ -189,6 +190,7 @@ exclude:
   - vendor
   - docs/
   - scripts/
+  - tests/
   - assets/css/bootstrap.min.css.map
   - assets/css/mdb.min.css.map
   - assets/js/bootstrap.bundle.min.js.map
@@ -243,6 +245,11 @@ jekyll-minifier:
 # Jekyll Scholar
 # -----------------------------------------------------------------------------
 
+# Journals named on the homepage ("N papers in ..."), always shown in this fixed order (owner's
+# choice, D-020). Counted from papers.bib at build time by _plugins/publication-stats.rb; names
+# must match the bib `journal` field exactly.
+top_journals: [Nature, Cell, Nature Medicine, Nature Genetics, Nature Immunology]
+
 scholar:
   last_name: [Chiou]
   first_name: [Joshua, Josh, J.]
@@ -280,6 +287,7 @@ enable_publication_badges:
 filtered_bibtex_keywords:
   [
     abbr,
+    counted,
     author_count,
     author_includes_self,
     cofirst,
@@ -527,7 +535,7 @@ third_party_libraries:
   swiper:
     integrity:
       css: "sha256-yUoNxsvX+Vo8Trj3lZ/Y5ZBf8HlBFsB6Xwm7rH75/9E="
-      js: "sha256-F/XmJMW0GjV9plS9N/uS5WP0ACGAnPNdgXMLsQARmA4="
+      js: "sha256-aULwhztqcQjhipg7QZKtRpARqBMTF/iBYdbwkXBY2iI="
     url:
       css: "https://cdn.jsdelivr.net/npm/swiper@{{version}}/swiper-bundle.min.css"
       js: "https://cdn.jsdelivr.net/npm/swiper@{{version}}/swiper-bundle.min.js"

@@ -36,8 +36,8 @@ description: >
       <div class="gh-stat-divider"></div>
       <div class="github-profile-orgs-d">
         <div class="github-profile-orgs-icons">
-          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Eli Lilly and Company">
-            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Eli Lilly">
+          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Lilly">
+            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Lilly">
           </a>
           <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
             <img src="{{ '/assets/img/orgs/conda-forge.png' | relative_url }}" alt="conda-forge">
@@ -67,9 +67,9 @@ Repositories I've built or contributed to significantly.
     {% assign repo_data = gh.repos[repo] %}
     <a class="repo-card" href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer">
       <div class="repo-card-header">
-        <i class="fa-regular fa-book"></i>
+        <i class="fa-solid fa-book"></i>
         <span class="repo-card-name">
-          {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo }}{% endif %}
+          {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo | replace: '/', '/<wbr>' }}{% endif %}
         </span>
       </div>
       <div class="repo-card-desc">{{ item.desc }}</div>

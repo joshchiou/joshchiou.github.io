@@ -38,9 +38,11 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
     <i class="fa-solid fa-compress"></i>
   </button>
 </div>
-<p class="travel-map-hint">Ctrl + scroll to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; double-click to reset &nbsp;·&nbsp; hover country for city clusters &nbsp;·&nbsp; click to expand below</p>
+<p class="travel-map-hint"><span class="travel-hint-pointer">Ctrl + scroll to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; double-click to reset &nbsp;·&nbsp; hover a country for city clusters &nbsp;·&nbsp; click to expand below</span><span class="travel-hint-touch">Pinch to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; tap a country for city clusters</span></p>
 <div class="travel-map-legend mb-4">
-  <span class="travel-legend-swatch travel-legend-visited"></span><span class="travel-legend-label">Visited</span>
+{%- for continent in continents %}
+  <span class="travel-legend-swatch travel-legend-{{ continent | slugify }}"></span><span class="travel-legend-label">{{ continent }}</span>
+{%- endfor %}
   <span class="travel-legend-swatch travel-legend-city"></span><span class="travel-legend-label">Cities</span>
 </div>
 
@@ -50,7 +52,9 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
 
 ## Photos
 
-<div id="travel-gallery-section">
+{: #travel-photos-heading style="display:none"}
+
+<div id="travel-gallery-section" style="display:none">
   <div class="swiper mySwiper mt-3" id="travelSwiper" style="display:none">
     <div class="swiper-wrapper" id="travelSwiperWrapper"></div>
     <div class="swiper-pagination"></div>

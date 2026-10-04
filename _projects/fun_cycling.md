@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cycling
-description: Six bikes, a slow cooker full of chain wax, and a couple years of Strava data.
+description: Six bikes, a slow cooker full of chain wax, and a couple years of ride data.
 img: assets/img/projects/fun/cycling-acadia.webp
 og_image: /assets/img/projects/og/cycling-acadia.jpg
 importance: 2
@@ -11,12 +11,12 @@ chart:
   echarts: true
 ---
 
-{% assign stats = site.data.strava_stats %}
+{% assign stats = site.data.cycling_stats %}
 {% assign total_miles = stats.total_distance_km | times: 0.621371 | round %}
 {% assign total_ft = stats.total_elevation_m | times: 3.28084 | round %}
 {% assign bikes = site.data.bikes %}
 
-<p class="text-muted mb-4">I ride a 2002 LeMond Zurich 18 miles to commute to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bike trips wherever we travel.</p>
+<p class="mb-4">I ride a 2002 LeMond Zurich 18 miles to commute to work and back, year-round. Ice is basically the only thing that stops me. On weekends my wife and I pick whichever bikes fit the terrain: road loops around the Fells and out to Nahant, or gravel days in Acadia and Beaver Brook. We also try to find bike trips wherever we travel.</p>
 
 <h2 class="page-chapter">By the numbers</h2>
 
@@ -28,7 +28,7 @@ chart:
     <small class="text-muted">rides</small>
   </div>
   <div class="col-4">
-    <h3 class="mb-0">{{ total_miles }}</h3>
+    <h3 class="mb-0">{% include commas.liquid n=total_miles %}</h3>
     <small class="text-muted">miles</small>
   </div>
   <div class="col-4">
@@ -82,7 +82,7 @@ chart:
 
 <h2 class="page-chapter">The bikes</h2>
 
-<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-90s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the drivetrains run on hot-waxed chain: strip the factory grease, melted wax in a slow cooker, re-dip every few hundred miles or whenever I remember.</p>
+<p class="text-muted mb-4">Six vintage frames found on Craigslist and rebuilt in my basement. Four LeMond road bikes and two late-1990s Specialized Stumpjumpers converted to gravel bikes, inspired by builds on r/xbiking. I do all the wrenching myself, from cable swaps and bearing overhauls to full drivetrain upgrades. All the drivetrains run on hot-waxed chain: strip the factory grease, melt wax in a slow cooker, dip, and re-dip every few hundred miles or whenever I remember.</p>
 
 <div class="bike-carousel">
   <div class="bike-carousel-viewport">
@@ -140,10 +140,10 @@ chart:
 
 <script>
 window._cyclingData = {
-  monthly: {{ site.data.strava_stats.monthly | jsonify }},
-  calendar: {{ site.data.strava_calendar | jsonify }}
+  monthly: {{ site.data.cycling_stats.monthly | jsonify }},
+  calendar: {{ site.data.cycling_calendar | jsonify }}
 };
 </script>
 <script src="{{ '/assets/js/cycling.js' | relative_url }}"></script>
 
-<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem;">Data via Strava API · {{ stats.updated_at | date: "%b %-d, %Y" | default: "–" }}</p>
+<p class="text-muted text-right mt-4 mb-0" style="font-size: 0.75rem;">Rides through June 2026 from Strava, since then from Apple Health · last ride {{ stats.last_ride | date: "%b %-d, %Y" | default: "n/a" }}</p>

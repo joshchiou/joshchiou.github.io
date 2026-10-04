@@ -6,7 +6,7 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    let diff2HtmlTheme = determineComputedTheme();
+    let diff2HtmlTheme = document.documentElement.getAttribute('data-theme'); // set inline in head.liquid; theme.js is deferred
 
     /* Create diff2html as another node and hide the code block, appending the diff2html node after it
        this is done to enable retrieving the code again when changing theme between light/dark */

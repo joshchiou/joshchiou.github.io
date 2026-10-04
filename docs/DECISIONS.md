@@ -200,3 +200,130 @@ by hand; new US cities get a `state`. Every city the script has proposed is reco
 **Why not commit the seen list.** It names every town the script has proposed, including ones
 deliberately left off the site, and the repo is public. The cost is that a machine without the file
 proposes previously deleted cities once more.
+
+## D-014: Publication counts come from papers.bib at build time
+
+_Recorded 2026-10-04 (owner's request) · `_plugins/publication-stats.rb`, `scripts/check_site.py`_
+
+**Context.** The homepage showed 40 publications and the publications page showed 38. The homepage
+number came from `_data/scholar_stats.json`, where the weekly Scholar workflow wrote a count of
+`papers.bib`; the publications page had "38 publications" typed into
+`_includes/publication_meta.liquid`, which nobody updated when two papers were added in PR #57.
+Nothing checked that the two agreed.
+
+**Decision.** A Jekyll plugin counts `papers.bib` on every build and exposes the total, the
+Selected count, and the top-journal counts as `site.data.publication_stats`. Every page reads from
+it. `scholar_stats.json` holds only what comes from Scholar. `scripts/check_site.py` recounts
+everything independently from the source files and compares it with the built pages; it runs on
+every PR and gates the deploy.
+
+**Why not keep the count in `scholar_stats.json`.** The file only changes when the Scholar fetch
+succeeds (D-002), so a new paper wouldn't be counted until the next good Wednesday run, and never if
+SerpAPI is down.
+
+**Why not a Liquid tag such as jekyll-scholar's `bibliography_count`.** It can't take the journal
+names from a list, so the top-journal counts would be hand-copied into the template.
+
+## D-015: The homepage journal chips are the Nature and Cell flagship research journals
+
+_Recorded 2026-10-04 (owner's question) · `top_journals` in `_config.yml`_
+
+**Context.** The chips listed only _Nature_, _Nature Genetics_, and _Cell_, a list picked in the
+April 2026 overhaul without a stated rule. Josh has papers in _Nature Medicine_ (2) and _Nature
+Immunology_ (1) as well.
+
+**Decision.** The chips name the flagship and specialty research journals of the Nature and Cell
+families and _Science_: _Nature_, _Nature Genetics_, _Nature Medicine_, _Cell_, _Nature
+Immunology_ (12 papers). Order is by paper count, ties in list order.
+
+**Superseded by** [D-017](#d-017-journal-chips-are-ordered-by-impact-factor)
+
+**Why not _Nature Communications_, _Science Advances_, _Cell Genomics_, or _Genome Biology_.** Good
+journals, but broad-scope or open-access siblings; listing them would make the line read as every
+journal rather than a highlight.
+
+## D-016: Inline scripts read the theme from `data-theme`, because `theme.js` is deferred
+
+_Recorded 2026-10-04 · `_includes/scripts/{search,echarts,vega,mermaid,diff2html}.liquid`_
+
+**Context.** This fork loads `theme.js` with `defer` and sets the theme with a small inline script
+in `head.liquid`, to avoid a flash of the wrong theme without blocking rendering. Upstream al-folio
+loads `theme.js` normally, and its inline scripts call `determineComputedTheme()` from it. Here
+those calls ran before `theme.js` and threw on every page, which stopped the site search setup
+(the search button did nothing) and the ECharts code-block setup.
+
+**Decision.** Inline scripts read `document.documentElement.getAttribute('data-theme')`, which the
+head snippet has already set, and `test_interactive.py` fails on any JavaScript error.
+
+**Why not stop deferring `theme.js`.** It would block rendering on every page to serve five lines
+that only need a value already on the page.
+
+## D-017: Journal chips are ordered by impact factor
+
+_Recorded 2026-10-04 (owner's request) · `top_journals` in `_config.yml`_
+
+**Context.** D-015 chose the five journals and ordered the chips by how many papers Josh has in
+each. Josh asked for impact-factor order instead.
+
+**Decision.** Same five journals, in `_config.yml` order, which is by 2025 Journal Impact Factor
+(JCR released June 2026): _Nature_ 56.1, _Nature Medicine_ 52.5, _Cell_ 42.5, _Nature
+Immunology_ 26.5, _Nature Genetics_ 25.5. The values come from secondary listings of the JCR, not
+the publishers' pages. Re-check the order each June; in the 2024 JCR _Nature Medicine_ was above
+_Nature_.
+
+**Why not keep paper-count order.** It put _Nature Genetics_ second, which reads as a ranking of
+the journals rather than of Josh's output.
+
+**Superseded by** [D-020](#d-020-journal-chips-use-a-fixed-order)
+
+## D-018: Cycling data comes from Apple Health, not the Strava API
+
+_Recorded 2026-10-04 (owner's request) · `scripts/cycling_data.py`, `add-ride.yml`, [cycling-data.md](cycling-data.md)_
+
+**Context.** Strava put its API behind a paid subscription in June 2026. The daily Update Strava
+Data workflow has returned 403 Forbidden since early July, and the cycling page stopped at June 21.
+Josh records rides with Apple Fitness on the Apple Watch.
+
+**Decision.** Rides through 2026-06-21 are frozen in `_data/cycling_strava_archive.json`, which
+reproduces the last Strava numbers exactly. Newer rides come from Apple Health in two ways: an
+iPhone Shortcut that fires when a Watch cycling workout ends and posts start, end, and distance to
+the Add Ride workflow (`repository_dispatch`), and a periodic Health export imported with
+`cycling_data.py import-health`, which adds elevation and fills gaps. Rides are stored as date,
+distance, moving time, and elevation only, with no start times or routes, because the repo is
+public; duplicates are matched on those fields.
+
+**Why not pay for Strava.** $11.99 a month to keep a hobby page's ride count current.
+
+**Why not Health Auto Export.** It posts richer data automatically, but in its own JSON format,
+which GitHub's API doesn't accept, so it would need a relay server. It also needs a subscription.
+
+**Why keep the Strava archive instead of re-importing everything from Health.** Rides recorded in
+the Strava app may not be in Health, and the archive is the record the site already showed.
+
+## D-019: The publication count includes unpublished preprints but not the thesis
+
+_Recorded 2026-10-04 (owner's decision) · `counted` field in `papers.bib`, `scripts/check_preprints.py`_
+
+**Context.** The count of 40 included the PhD thesis and three preprints (VIDRA on medRxiv 2026,
+INTERFACE on bioRxiv 2024, and the pancreatic enzyme T1D paper on medRxiv 2024). On 2026-10-04
+none of the three had a published version on bioRxiv, medRxiv, or PubMed.
+
+**Decision.** The thesis stays on /publications/ but carries `counted = {false}`, so the count is 39. Preprints count until they're published. `check_preprints.py` runs weekly and fails when one
+has a journal version, so the entry gets replaced instead of the paper being counted twice.
+
+**Why not drop the thesis from the list.** It is part of the record; only the count was in question.
+
+**Why not use the `@phdthesis` entry type.** `bib.liquid` builds the venue line from the journal
+field, so a type change would mean template work for one entry.
+
+## D-020: Journal chips use a fixed order
+
+_Recorded 2026-10-04 (owner's choice) · `top_journals` in `_config.yml`_
+
+**Context.** D-017 ordered the chips by impact factor, which has to be re-checked every June and
+flips between _Nature_ and _Nature Medicine_ from year to year.
+
+**Decision.** A fixed order chosen by Josh: _Nature_, _Cell_, _Nature Medicine_, _Nature Genetics_,
+_Nature Immunology_. The order in `_config.yml` is the order on the page; nothing re-sorts it.
+
+**Why not impact factor.** It changes yearly and needs maintenance for no gain to the reader.

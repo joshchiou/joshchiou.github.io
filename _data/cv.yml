@@ -36,14 +36,13 @@
           year: 2023 - 2025
           maindescription: >-
             I worked with cross-functional teams on cardiovascular and renal target discovery, combining human
-            genetics, functional genomics, and large language models, and led the build-out of cloud
-            infrastructure for genomics analysis across the organization.
+            genetics, functional genomics, and large language models. I also led the team that built the
+            cloud infrastructure for genomics analysis across the organization.
         - title: Senior Computational Geneticist
           year: 2021 - 2023
           maindescription: >-
             I worked with biologists to find new targets for cardiovascular and renal disease using
-            multi-omics data, several of which advanced into the portfolio, and was the genetics expert
-            for indication expansion teams.
+            multi-omics data, and I was the genetics expert for indication expansion teams.
 
     - title: Graduate Student Researcher
       institution: UC San Diego
@@ -53,7 +52,7 @@
       icon_bg: "#182B49"
       icon_color: "#C69214"
       maindescription: >-
-        I led the largest GWAS of type 1 diabetes at the time and combined it with single-cell
+        I led the largest genome-wide association study (GWAS) of type 1 diabetes at the time and combined it with single-cell
         epigenomics to identify new disease-relevant cell types in the pancreas.
 
     - title: Development Scientist
@@ -63,7 +62,7 @@
       icon_label: IDx
       icon_bg: "#9c5300"
       previous_title: Research Associate
-      previous_year: 2015
+      previous_year: 2015 - 2016
       roles:
         - title: Development Scientist
           year: 2016
@@ -71,7 +70,7 @@
         - title: Research Associate
           year: 2015 - 2016
           maindescription: >-
-            I optimized a cell-based companion diagnostic assay for HIV that was subsequently acquired by
+            I optimized a cell-based companion diagnostic assay for HIV; the assay was later acquired by
             a major pharmaceutical company.
 
     - title: Microbiology Intern
@@ -82,7 +81,7 @@
       icon_label: NASA
       icon_bg: "#0b3d91"
       maindescription: >-
-        I developed a rapid assay for improved detection of infectious herpesviruses in astronauts.
+        I developed a rapid assay to detect infectious herpesviruses in astronauts.
 
 - title: Education
   type: time_table
@@ -98,7 +97,7 @@
         Dissertation: <em>Understanding pancreatic mechanisms of diabetes risk with genetic association
         and single cell epigenome data</em><br/>Advisor: Dr. Kyle Gaulton
 
-    - title: B.S., Microbiology, Immunology, and Molecular Genetics
+    - title: BS, Microbiology, Immunology, and Molecular Genetics
       institution: University of California, Los Angeles
       location: Los Angeles, CA
       year: 2011 - 2015
@@ -124,7 +123,7 @@
         - text: "Annual Investigator Meeting Scholarship"
           org: "HIRN"
           link: "https://hirnetwork.org/news/news-awards/hirn2020_scholarship"
-    - year: 2018-2020
+    - year: 2018 - 2020
       items:
         - text: "Genetics Training Program Fellowship"
           org: "UC San Diego"
@@ -147,12 +146,12 @@
     - year: 2023
       items:
         - "McKinsey Leadership Essentials"
-    - year: 2022-now
+    - year: 2022 - now
       items:
-        - "Ad hoc reviewer: Nature Communications, Diabetes, BMJ Open Diabetes Research & Care, Communications Biology, Scientific Reports, BBA Molecular Basis of Disease"
-    - year: 2016-now
+        - "Ad hoc reviewer: <em>Nature Communications</em>, <em>Diabetes</em>, <em>BMJ Open Diabetes Research & Care</em>, <em>Communications Biology</em>, <em>Scientific Reports</em>, <em>BBA: Molecular Basis of Disease</em>"
+    - year: 2016 - now
       items:
-        - "Member, American Society for Human Genetics (ASHG)"
+        - "Member, American Society of Human Genetics (ASHG)"
 
 - title: Talks & Presentations
   type: time_table
