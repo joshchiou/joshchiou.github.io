@@ -23,14 +23,20 @@
   {% capture title %}{{ site.title }}{% endcapture %}
 {% endif %}
 
-<!-- Build SEO-optimized page title: home gets name + role tagline; sub-pages capitalize -->
+<!--
+  Build SEO-optimized page title: home gets name + role tagline; sub-pages uppercase only the
+  first letter (Liquid's capitalize would lowercase the rest of a title-case project title)
+-->
+{% assign _page_title = page.title | default: '' %}
+{% if _page_title == 'cv' %}{% assign _page_title = 'CV' %}{% endif %}
+{% capture _page_title %}{{ _page_title | slice: 0 | upcase }}{{ _page_title | slice: 1, 500 }}{% endcapture %}
 {% if page.url == '/' or page.permalink == '/' %}
   {% assign _tagline = site.description | strip_newlines | split: '.' | first | strip %}
   {% capture seo_title %}{{ title }} | {{ _tagline }}{% endcapture %}
 {% elsif page.url == '/blog/index.html' %}
-  {% capture seo_title %}{{ page.title | capitalize }} | {{ title }}{% endcapture %}
+  {% capture seo_title %}{{ _page_title }} | {{ title }}{% endcapture %}
 {% elsif page.title and page.title != 'blank' and page.title != '' %}
-  {% capture seo_title %}{{ page.title | capitalize }} | {{ title }}{% endcapture %}
+  {% capture seo_title %}{{ _page_title }} | {{ title }}{% endcapture %}
 {% elsif page.date %}
   {% capture seo_title %}{{ page.date | date: '%Y' }} | {{ title }}{% endcapture %}
 {% else %}

@@ -67,7 +67,7 @@ Repositories I've built or contributed to significantly.
     {% assign repo_data = gh.repos[repo] %}
     <a class="repo-card" href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer">
       <div class="repo-card-header">
-        <i class="fa-regular fa-book"></i>
+        <i class="fa-solid fa-book"></i>
         <span class="repo-card-name">
           {% if site.data.repositories.github_users contains owner %}{{ rname }}{% else %}{{ repo }}{% endif %}
         </span>

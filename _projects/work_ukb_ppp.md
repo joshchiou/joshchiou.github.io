@@ -16,14 +16,14 @@ related_publications: true
 </div>
 
 The [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/)
-(UKB-PPP) was a pre-competitive consortium of thirteen pharmaceutical companies and the UK Biobank,
-profiling about 3,000 plasma proteins using the Olink Proximity Extension Assay across 54,306
-participants. The main analysis, published in {% cite sun2023plasma %}, mapped protein
-quantitative trait loci (pQTLs) and their links to disease, giving one of the largest maps so far
+(UKB-PPP) was a pre-competitive consortium of 13 pharmaceutical companies and UK Biobank. It
+measured about 3,000 plasma proteins in 54,219 participants with the Olink Proximity Extension
+Assay. The main analysis, published in _Nature_ {% cite sun2023plasma %}, mapped protein
+quantitative trait loci (pQTLs) and their links to disease. It is one of the largest maps so far
 of how genetic variation affects blood protein levels.
 
-For that paper, I fine-mapped the pQTLs and ran colocalization with eQTLs, which the
-consortium's other analyses built on. The UKB-PPP data are now widely used across the industry
+For that paper, I fine-mapped the pQTLs and ran colocalization with expression QTLs (eQTLs). The
+UKB-PPP data are now widely used across the industry
 for Mendelian randomization, drug target validation, and multi-omics work.
 
 ---

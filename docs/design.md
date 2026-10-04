@@ -43,8 +43,8 @@ one accent color, generous white space, and real figures from the work instead o
 
 Headings: page titles in the navigation and the homepage section labels ("research", "selected
 publications", "news") are lowercase, which is al-folio's style. Headings inside pages use sentence
-case. Project titles use title case. CV section names use title case, and the publications page
-reuses the CV's "Talks & Presentations" name.
+case. Project titles use title case. CV section names use title case; the publications page shows
+the CV's "Talks & Presentations" section under the sentence-case heading "Talks and presentations".
 
 ## Images
 

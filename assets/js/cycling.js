@@ -23,8 +23,17 @@
     byYear[year][monthIdx] = Math.round(m.distance_km * KM_TO_MI * 10) / 10;
   });
   var years = Object.keys(byYear).sort();
+  // Months before tracking began and months still to come have no data, not zero miles.
+  var firstMonth = monthlyRaw.length ? monthlyRaw[0].month : null;
+  var nowMonth = new Date().toISOString().slice(0, 7);
+  years.forEach(function (y) {
+    for (var mi = 0; mi < 12; mi++) {
+      var key = y + "-" + (mi < 9 ? "0" : "") + (mi + 1);
+      if ((firstMonth && key < firstMonth) || key > nowMonth) byYear[y][mi] = null;
+    }
+  });
   var monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var yearColors = ["#2980b9", "#e67e22", "#27ae60", "#8e44ad", "#e74c3c"];
+  var yearColors = ["#2a78d6", "#eb6834", "#eda100", "#c9c8c3"]; // dataviz palette (docs/design.md)
 
   // YoY pace
   var curYear = years[years.length - 1];
@@ -168,7 +177,7 @@
     var textColor = dark ? "#c8c8c8" : "#333333";
     var emptyColor = dark ? "rgba(255,255,255,0.05)" : "rgba(41,128,185,0.09)";
     var borderColor = dark ? "rgba(255,255,255,0.05)" : "rgba(41,128,185,0.15)";
-    var activeHigh = dark ? "#74add1" : "#2980b9";
+    var activeHigh = dark ? "#74add1" : "#2a78d6";
     var activeMid = dark ? "#4a9fd4" : "#5aaee0";
     var now = new Date();
     var yearStr = String(now.getFullYear());
@@ -199,7 +208,8 @@
         left: mobile ? 30 : 40,
         right: mobile ? 10 : 115,
         bottom: mobile ? 50 : 30,
-        itemStyle: { borderWidth: 1, borderColor: borderColor },
+        itemStyle: { color: dark ? "#242424" : "#ffffff", borderWidth: 1, borderColor: borderColor },
+        splitLine: { lineStyle: { color: dark ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.3)", width: 1 } },
         yearLabel: { show: false },
         monthLabel: { fontSize: 11, color: textColor },
         dayLabel: { nameMap: ["S", "M", "T", "W", "T", "F", "S"], color: textColor },
@@ -223,6 +233,7 @@
           var curVal = null,
             prevVal = null;
           params.forEach(function (p) {
+            if (p.value == null || isNaN(p.value)) return;
             lines.push('<span style="color:' + p.color + '">●</span> ' + p.seriesName + ": " + (p.value || 0) + " mi");
             if (p.seriesName === curYear) curVal = p.value;
             if (p.seriesName === prevYear) prevVal = p.value;
@@ -262,7 +273,7 @@
           name: year,
           type: "line",
           data: byYear[year],
-          smooth: true,
+          smooth: false,
           symbol: "circle",
           symbolSize: 6,
           lineStyle: { width: 2.5 },
@@ -335,7 +346,7 @@
         {
           type: "line",
           data: cumValues,
-          smooth: true,
+          smooth: false,
           markLine: goalMarkLine,
           areaStyle: {
             color: {
@@ -350,8 +361,8 @@
               ],
             },
           },
-          lineStyle: { color: "#2980b9", width: 2.5 },
-          itemStyle: { color: "#2980b9" },
+          lineStyle: { color: "#2a78d6", width: 2.5 },
+          itemStyle: { color: "#2a78d6" },
           symbol: "circle",
           symbolSize: 5,
         },

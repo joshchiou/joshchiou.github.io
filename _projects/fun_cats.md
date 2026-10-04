@@ -3,6 +3,7 @@ layout: page
 title: Claire
 description: The real senior scientist in the family.
 img: assets/img/projects/fun/cats/claire-main.webp
+img_position: "50% 20%"
 importance: 4
 category: fun
 ---

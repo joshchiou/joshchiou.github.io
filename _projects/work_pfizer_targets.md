@@ -12,19 +12,20 @@ related_publications: false
 
 <div class="project-tldr">
   <strong>TL;DR</strong>
-  Built the genetics pipelines and cloud infrastructure Pfizer used to find and prioritize drug targets.
+  Led the team that built the genetics pipelines and cloud infrastructure Pfizer used to find and prioritize drug targets.
 </div>
 
 When I joined Pfizer's Internal Medicine Research Unit, genetics-based target discovery relied
-on one-off analyses run by individual scientists on an aging HPC cluster. Nothing reusable
-connected GWAS evidence to functional genomics to a target nomination. Over four years I built
-that pipeline. It combined human genetic evidence (GWAS, exome-wide association studies,
-colocalization, and Mendelian randomization) with functional genomics, including single-cell
-chromatin accessibility, eQTL and pQTL data, and deep learning predictions of variant function,
-to find and rank new targets with genetic support for efficacy and selectivity. Several targets
-it found advanced into the Pfizer portfolio.
+on one-off analyses run by individual scientists on a high-performance computing (HPC) cluster.
+Nothing reusable connected genome-wide association study (GWAS) evidence to functional genomics
+to a target nomination. Over four years I led the team that built that pipeline. It combined
+human genetic evidence (GWAS, exome-wide association studies, colocalization, and Mendelian
+randomization) with functional genomics, including single-cell chromatin accessibility,
+expression and protein quantitative trait locus (eQTL and pQTL) data, and deep learning
+predictions of variant function, to find and rank new targets with genetic support for efficacy
+and selectivity.
 
-I also led the move of Pfizer's genomics analysis to AWS: GWAS and fine-mapping pipelines that
+I also led the move of Pfizer's genomics analysis to Amazon Web Services (AWS): GWAS and fine-mapping pipelines that
 scale, a standard way to harmonize summary statistics, and support for new multi-omics datasets.
 That work involved teams from Internal Medicine, Inflammation & Immunology, Statistics, and
 Machine Learning & Computational Sciences.

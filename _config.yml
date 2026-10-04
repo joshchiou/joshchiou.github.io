@@ -138,7 +138,8 @@ collections:
   news:
     defaults:
       layout: post
-    output: true
+    # Every item is inline (shown in full on the homepage and /news/), so no per-item pages.
+    output: false
     permalink: /:collection/:title/
   projects:
     output: true

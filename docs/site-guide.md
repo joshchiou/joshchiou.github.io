@@ -169,12 +169,12 @@ above, and make a 16:10 card image (see "Project card images" in CLAUDE.md).
 
 The analysis code ([EliLillyCo/surmount5-proteomics](https://github.com/EliLillyCo/surmount5-proteomics))
 and the results dashboard (surmount5-proteomics.lilly.com) are linked from the Lilly project page.
-The dashboard needs a reviewer token until publication. When the paper is published:
+The page describes the dashboard as available, in Josh's wording; it may still ask for a reviewer
+token until publication. When the paper is published:
 
 1. Add it to `papers.bib` with `code` (the GitHub URL) and `website` (the dashboard URL) fields,
    `selected = {true}`, a `tldr`, and a `preview`.
-2. On `_projects/work_lilly_proteomics.md`, change "opens to the public when the paper is
-   published" to describe the dashboard as public, and cite the paper.
+2. Cite the paper on `_projects/work_lilly_proteomics.md`.
 3. Remove the dashboard line from `.lycheeignore` so the link checker covers it.
 4. Add a news item, and consider replacing the synthetic Lilly card illustration with a figure
    from the paper (with `img_credit`).

@@ -49,6 +49,13 @@ html[data-theme="dark"] {
   }
 }
 
+// Visible keyboard focus everywhere. MDB's .btn:focus { outline: 0 } outranks the rule below, so
+// buttons get their own.
+.btn:focus-visible {
+  outline: 2px solid var(--global-theme-color) !important;
+  outline-offset: 2px;
+}
+
 // Visible keyboard focus everywhere.
 a,
 button,
@@ -579,4 +586,14 @@ html[data-theme="dark"] {
   .hass-chip--core {
     color: #0ea5d9; // 6.0:1 on the dark background
   }
+}
+
+// Cat timeline photos are portraits; show them whole instead of cropping to a wide box.
+.claire-era-photo img {
+  width: auto;
+  max-width: 100%;
+  max-height: 480px;
+  margin: 0 auto;
+  display: block;
+  object-fit: contain;
 }
