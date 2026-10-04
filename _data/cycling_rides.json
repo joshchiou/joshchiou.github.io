@@ -1,1 +1,387 @@
-[]
+[
+ {
+  "date": "2026-06-22",
+  "distance_km": 14.22,
+  "moving_time_min": 39,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-23",
+  "distance_km": 13.72,
+  "moving_time_min": 36,
+  "elevation_m": 57,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-25",
+  "distance_km": 13.87,
+  "moving_time_min": 41,
+  "elevation_m": 58,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-25",
+  "distance_km": 14.17,
+  "moving_time_min": 37,
+  "elevation_m": 25,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-06",
+  "distance_km": 14.06,
+  "moving_time_min": 38,
+  "elevation_m": 59,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-06",
+  "distance_km": 14.21,
+  "moving_time_min": 37,
+  "elevation_m": 34,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-09",
+  "distance_km": 14.37,
+  "moving_time_min": 45,
+  "elevation_m": 62,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-09",
+  "distance_km": 14.5,
+  "moving_time_min": 34,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-13",
+  "distance_km": 13.96,
+  "moving_time_min": 39,
+  "elevation_m": 55,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-13",
+  "distance_km": 14.19,
+  "moving_time_min": 36,
+  "elevation_m": 35,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-14",
+  "distance_km": 13.96,
+  "moving_time_min": 40,
+  "elevation_m": 55,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-14",
+  "distance_km": 14.17,
+  "moving_time_min": 37,
+  "elevation_m": 30,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-15",
+  "distance_km": 13.7,
+  "moving_time_min": 38,
+  "elevation_m": 75,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-15",
+  "distance_km": 14.15,
+  "moving_time_min": 39,
+  "elevation_m": 30,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-16",
+  "distance_km": 13.58,
+  "moving_time_min": 42,
+  "elevation_m": 97,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-16",
+  "distance_km": 14.17,
+  "moving_time_min": 37,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-20",
+  "distance_km": 13.73,
+  "moving_time_min": 41,
+  "elevation_m": 82,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-20",
+  "distance_km": 14.71,
+  "moving_time_min": 37,
+  "elevation_m": 36,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-22",
+  "distance_km": 13.51,
+  "moving_time_min": 42,
+  "elevation_m": 69,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-23",
+  "distance_km": 13.82,
+  "moving_time_min": 41,
+  "elevation_m": 69,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-23",
+  "distance_km": 14.02,
+  "moving_time_min": 36,
+  "elevation_m": 37,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-27",
+  "distance_km": 13.74,
+  "moving_time_min": 41,
+  "elevation_m": 72,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-27",
+  "distance_km": 14.1,
+  "moving_time_min": 36,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-28",
+  "distance_km": 13.69,
+  "moving_time_min": 40,
+  "elevation_m": 70,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-28",
+  "distance_km": 14.08,
+  "moving_time_min": 39,
+  "elevation_m": 28,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-31",
+  "distance_km": 13.74,
+  "moving_time_min": 50,
+  "elevation_m": 64,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-07-31",
+  "distance_km": 14.08,
+  "moving_time_min": 41,
+  "elevation_m": 27,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-04",
+  "distance_km": 13.75,
+  "moving_time_min": 41,
+  "elevation_m": 68,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-04",
+  "distance_km": 14.06,
+  "moving_time_min": 38,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-05",
+  "distance_km": 13.71,
+  "moving_time_min": 40,
+  "elevation_m": 71,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-05",
+  "distance_km": 14.1,
+  "moving_time_min": 38,
+  "elevation_m": 28,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-10",
+  "distance_km": 13.66,
+  "moving_time_min": 40,
+  "elevation_m": 66,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-10",
+  "distance_km": 14.13,
+  "moving_time_min": 36,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-11",
+  "distance_km": 14.12,
+  "moving_time_min": 36,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-12",
+  "distance_km": 13.79,
+  "moving_time_min": 44,
+  "elevation_m": 64,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-12",
+  "distance_km": 14.13,
+  "moving_time_min": 37,
+  "elevation_m": 25,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-13",
+  "distance_km": 13.54,
+  "moving_time_min": 44,
+  "elevation_m": 68,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-13",
+  "distance_km": 14.16,
+  "moving_time_min": 38,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-18",
+  "distance_km": 13.69,
+  "moving_time_min": 40,
+  "elevation_m": 73,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-18",
+  "distance_km": 14.1,
+  "moving_time_min": 37,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-19",
+  "distance_km": 13.65,
+  "moving_time_min": 41,
+  "elevation_m": 69,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-19",
+  "distance_km": 14.13,
+  "moving_time_min": 36,
+  "elevation_m": 28,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-20",
+  "distance_km": 13.74,
+  "moving_time_min": 43,
+  "elevation_m": 67,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-20",
+  "distance_km": 14.08,
+  "moving_time_min": 37,
+  "elevation_m": 27,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-25",
+  "distance_km": 13.6,
+  "moving_time_min": 41,
+  "elevation_m": 67,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-26",
+  "distance_km": 13.77,
+  "moving_time_min": 39,
+  "elevation_m": 68,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-26",
+  "distance_km": 14.06,
+  "moving_time_min": 38,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-27",
+  "distance_km": 13.66,
+  "moving_time_min": 42,
+  "elevation_m": 70,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-08-27",
+  "distance_km": 13.97,
+  "moving_time_min": 36,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-02",
+  "distance_km": 13.69,
+  "moving_time_min": 41,
+  "elevation_m": 74,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-02",
+  "distance_km": 14.06,
+  "moving_time_min": 36,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-08",
+  "distance_km": 14.07,
+  "moving_time_min": 41,
+  "elevation_m": 57,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-08",
+  "distance_km": 14.18,
+  "moving_time_min": 39,
+  "elevation_m": 32,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-10",
+  "distance_km": 14.0,
+  "moving_time_min": 42,
+  "elevation_m": 73,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-09-10",
+  "distance_km": 14.06,
+  "moving_time_min": 36,
+  "elevation_m": 32,
+  "source": "apple_health"
+ }
+]

@@ -29,6 +29,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from xml.etree import ElementTree
+from zoneinfo import ZoneInfo
 
 DATA = Path(__file__).resolve().parent.parent / "_data"
 ARCHIVE = DATA / "cycling_strava_archive.json"
@@ -56,17 +57,17 @@ def write(path: Path, data) -> None:
 
 
 def same_ride(a: dict, b: dict) -> bool:
-    """Rides are stored without start times (the repo is public), so match on date, distance,
-    and duration. Two rides on one day differ in distance or duration in practice."""
-    return (
-        a["date"] == b["date"]
-        and abs(a["distance_km"] - b["distance_km"]) <= max(0.3, 0.03 * b["distance_km"])
-        and abs(a["moving_time_min"] - b["moving_time_min"]) <= 3
-    )
+    """Rides are stored without start times (the repo is public), so match on local date and
+    distance. The Shortcut and the export measure the same workout's distance to within a
+    percent, while a day's two commutes differ by several hundred meters. Duration isn't
+    compared: the Shortcut's includes pauses and the export's doesn't."""
+    return a["date"] == b["date"] and abs(a["distance_km"] - b["distance_km"]) <= max(0.1, 0.01 * b["distance_km"])
 
 
-def merge(rides: list[dict], new: dict) -> str:
-    for i, ride in enumerate(rides):
+def merge(rides: list[dict], new: dict, existing: int | None = None) -> str:
+    """Add `new`, or update the matching ride. Only the first `existing` rides are candidates,
+    so rides from one export never merge with each other."""
+    for i, ride in enumerate(rides[:existing]):
         if same_ride(ride, new):
             if new.get("elevation_m") is None and ride.get("elevation_m") is not None:
                 return "unchanged"
@@ -108,17 +109,32 @@ def health_rides(path: Path) -> list[dict]:
                 continue
             if el.get("workoutActivityType") == CYCLING:
                 km = quantity(el.get("totalDistance"), el.get("totalDistanceUnit"), TO_KM)
-                elevation = None
+                elevation = zone = None
                 for child in el:
                     if child.tag == "WorkoutStatistics" and child.get("type") == DISTANCE:
                         km = quantity(child.get("sum"), child.get("unit"), TO_KM)
                     elif child.tag == "MetadataEntry" and child.get("key") == "HKElevationAscended":
                         elevation = quantity(child.get("value"), None, TO_M)
+                    elif child.tag == "MetadataEntry" and child.get("key") == "HKTimeZone":
+                        zone = child.get("value")
                 minutes = quantity(el.get("duration"), el.get("durationUnit", "min"), TO_MIN)
                 if km and minutes:
-                    rides.append(ride_record(el.get("startDate")[:10], km, minutes, elevation, "apple_health"))
+                    rides.append(ride_record(local_date(el.get("startDate"), zone), km, minutes, elevation, "apple_health"))
             el.clear()
     return rides
+
+
+def local_date(stamp: str, zone: str | None) -> str:
+    """The ride's date where it happened. The export writes every timestamp in the phone's time
+    zone at export time (export abroad and evening rides move to the next day), so convert to
+    the workout's own HKTimeZone when it has one."""
+    when = datetime.strptime(stamp, "%Y-%m-%d %H:%M:%S %z")
+    if zone:
+        try:
+            when = when.astimezone(ZoneInfo(zone))
+        except (KeyError, ValueError):
+            pass
+    return when.date().isoformat()
 
 
 def ride_record(date: str, km: float, minutes: float, elevation_m: float | None, source: str) -> dict:
@@ -224,8 +240,9 @@ def main() -> None:
         new = [r for r in found if r["date"] > archive["through"]]
         print(f"Export has {len(found)} cycling workouts; {len(new)} after {archive['through']}")
         counts: defaultdict[str, int] = defaultdict(int)
+        existing = len(rides)
         for ride in new:
-            counts[merge(rides, ride)] += 1
+            counts[merge(rides, ride, existing)] += 1
         print("  " + ", ".join(f"{n} {k}" for k, n in sorted(counts.items())) if counts else "  nothing new")
         if args.dry_run:
             return

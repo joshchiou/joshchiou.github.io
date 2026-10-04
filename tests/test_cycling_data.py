@@ -25,6 +25,7 @@ EXPORT = """<?xml version="1.0" encoding="UTF-8"?>
    startDate="2026-07-10 08:00:00 -0400" endDate="2026-07-10 08:05:00 -0400"/>
  <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="42.5" durationUnit="min"
    sourceName="Apple Watch" startDate="2026-07-10 08:00:00 -0400" endDate="2026-07-10 08:42:30 -0400">
+  <MetadataEntry key="HKTimeZone" value="America/New_York"/>
   <MetadataEntry key="HKElevationAscended" value="6100 cm"/>
   <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceCycling" startDate="2026-07-10 08:00:00 -0400"
     endDate="2026-07-10 08:42:30 -0400" sum="9.0" unit="mi"/>
@@ -32,6 +33,17 @@ EXPORT = """<?xml version="1.0" encoding="UTF-8"?>
  <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="30" durationUnit="min"
    totalDistance="14.0" totalDistanceUnit="km" startDate="2024-09-01 10:00:00 -0400"
    endDate="2024-09-01 10:30:00 -0400"/>
+ <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="40" durationUnit="min"
+   sourceName="Fitness" startDate="2026-07-11 23:25:00 +0200" endDate="2026-07-12 00:05:00 +0200">
+  <MetadataEntry key="HKTimeZone" value="America/New_York"/>
+  <MetadataEntry key="HKElevationAscended" value="6900 cm"/>
+  <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceCycling" sum="8.5" unit="mi"/>
+ </Workout>
+ <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="37" durationUnit="min"
+   sourceName="Fitness" startDate="2026-07-11 14:05:00 +0200" endDate="2026-07-11 14:42:00 +0200">
+  <MetadataEntry key="HKTimeZone" value="America/New_York"/>
+  <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceCycling" sum="8.8" unit="mi"/>
+ </Workout>
  <Workout workoutActivityType="HKWorkoutActivityTypeRunning" duration="25" durationUnit="min"
    startDate="2026-07-11 07:00:00 -0400" endDate="2026-07-11 07:25:00 -0400">
   <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceWalkingRunning" sum="3.1" unit="mi"/>
@@ -74,22 +86,32 @@ def export_zip(tmp_path):
 
 def test_reads_cycling_workouts_only(tmp_path):
     rides = cycling_data.health_rides(export_zip(tmp_path))
-    assert rides == [
+    assert rides[:2] == [
         {"date": "2026-07-10", "distance_km": 14.48, "moving_time_min": 42, "elevation_m": 61, "source": "apple_health"},
         {"date": "2024-09-01", "distance_km": 14.0, "moving_time_min": 30, "elevation_m": None, "source": "apple_health"},
     ]
+    assert len(rides) == 4  # the running workout is skipped
+
+
+def test_dates_use_the_workouts_own_time_zone(tmp_path):
+    """Exported abroad (+0200), a Boston commute at 17:25 local reads 23:25; a later one would
+    cross midnight. Both commutes on July 11 must stay on July 11 and stay separate."""
+    rides = cycling_data.health_rides(export_zip(tmp_path))
+    july11 = sorted(r["distance_km"] for r in rides if r["date"] == "2026-07-11")
+    assert july11 == [13.68, 14.16]
+    assert not any(r["date"] == "2026-07-12" for r in rides)
 
 
 def test_import_skips_rides_in_the_strava_archive(data, monkeypatch):
     run(monkeypatch, "import-health", str(export_zip(data)))
     rides = json.loads((data / "cycling_rides.json").read_text())
-    assert [r["date"] for r in rides] == ["2026-07-10"]
+    assert [r["date"] for r in rides] == ["2026-07-10", "2026-07-11", "2026-07-11"]
     stats = json.loads((data / "cycling_stats.json").read_text())
-    assert stats["total_rides"] == 3
-    assert stats["total_distance_km"] == 44.5
-    assert stats["total_elevation_m"] == 161
-    assert stats["last_ride"] == "2026-07-10"
-    assert {"month": "2026-07", "distance_km": 14.5} in stats["monthly"]
+    assert stats["total_rides"] == 5
+    assert stats["total_distance_km"] == 72.3
+    assert stats["total_elevation_m"] == 230
+    assert stats["last_ride"] == "2026-07-11"
+    assert {"month": "2026-07", "distance_km": 42.3} in stats["monthly"]
     calendar = json.loads((data / "cycling_calendar.json").read_text())
     assert ["2026-07-10", 14.48] in calendar and ["2026-06-21", 20.0] in calendar
 
@@ -112,11 +134,12 @@ def test_shortcut_ride_then_export_fills_elevation(data, monkeypatch):
     assert json.loads((data / "cycling_stats.json").read_text())["rides_missing_elevation"] == 1
 
     run(monkeypatch, "import-health", str(export_zip(data)))
-    rides = json.loads((data / "cycling_rides.json").read_text())
+    rides = [r for r in json.loads((data / "cycling_rides.json").read_text()) if r["date"] == "2026-07-10"]
     assert len(rides) == 1 and rides[0]["elevation_m"] == 61 and rides[0]["source"] == "apple_health"
 
     run(monkeypatch, "add-shortcut", payload=SHORTCUT)  # a repeated post doesn't erase elevation
-    assert json.loads((data / "cycling_rides.json").read_text())[0]["elevation_m"] == 61
+    rides = [r for r in json.loads((data / "cycling_rides.json").read_text()) if r["date"] == "2026-07-10"]
+    assert len(rides) == 1 and rides[0]["elevation_m"] == 61
 
 
 def test_two_commutes_on_one_day_are_two_rides(data, monkeypatch):
