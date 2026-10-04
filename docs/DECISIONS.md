@@ -327,3 +327,23 @@ flips between _Nature_ and _Nature Medicine_ from year to year.
 _Nature Immunology_. The order in `_config.yml` is the order on the page; nothing re-sorts it.
 
 **Why not impact factor.** It changes yearly and needs maintenance for no gain to the reader.
+
+## D-021: Health fills the days the Strava archive missed
+
+_Recorded 2026-10-04 (owner's question) · `scripts/cycling_data.py import-health`_
+
+**Context.** Health has cycling workouts from 2026-01-13 on. For January through June 2026 it
+holds every day Strava logged plus 19 days Strava never received, including all of May (165 km).
+Strava alone has the 2024 and 2025 rides. Where both have a day, their distances agree to within
+a kilometer or two.
+
+**Decision.** The Strava archive stays the record for every day it has a ride. Health rides on
+earlier days the archive has no ride for are added to `cycling_rides.json`, like newer rides.
+Rides also store whether they started in the morning or afternoon ("am"/"pm"), because on seven
+days the two commutes were within 1% of each other in distance and couldn't be told apart.
+
+**Why not replace Strava with Health from January 2026.** Git keeps only one Strava snapshot, so
+the archive's ride count and elevation can't be split at a date; the day-level rule needs no split.
+
+**Why not store start times.** The repo is public; morning or afternoon is enough to match a
+Shortcut ride to the same workout in a later export.

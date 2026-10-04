@@ -5,7 +5,9 @@ The cycling page used to pull rides from the Strava API. Strava made its API pai
 since then. Rides now come from Apple Health ([D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)).
 
 Rides through June 21, 2026 stay in a frozen Strava archive (`_data/cycling_strava_archive.json`).
-Newer rides go in `_data/cycling_rides.json`, and `scripts/cycling_data.py` rebuilds the page data
+Strava missed many rides in 2026 (all of May, most of June), so Health rides on archive-era days
+with no Strava ride are added too ([D-021](DECISIONS.md#d-021-health-fills-the-days-the-strava-archive-missed)).
+Those and all newer rides go in `_data/cycling_rides.json`, and `scripts/cycling_data.py` rebuilds the page data
 (`cycling_stats.json`, `cycling_calendar.json`) from both. There are two ways to add rides; use
 both.
 
@@ -31,9 +33,9 @@ both.
 4. Commit the three `_data/cycling_*.json` files and push (or open a PR).
 
 The export holds all of your health data. Never commit it: `export.zip`, `export.xml`, and
-`apple_health_export/` are in `.gitignore`. Only cycling workouts after June 21, 2026 are read, and
-only the date, distance, moving time, and elevation of each are stored. No start times or routes
-are committed.
+`apple_health_export/` are in `.gitignore`. Only cycling workouts after June 21, 2026, or on earlier
+days with no Strava ride, are read. For each, only the date, morning or afternoon, distance,
+moving time, and elevation are stored. No start times or routes are committed.
 
 ## Automatic: the ride Shortcut
 

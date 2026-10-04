@@ -1,6 +1,295 @@
 [
  {
+  "date": "2026-01-13",
+  "part": "pm",
+  "distance_km": 0.12,
+  "moving_time_min": 1,
+  "elevation_m": null,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-04-07",
+  "part": "am",
+  "distance_km": 0.05,
+  "moving_time_min": 5,
+  "elevation_m": 3,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-04-27",
+  "part": "pm",
+  "distance_km": 14.03,
+  "moving_time_min": 38,
+  "elevation_m": 61,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-04-27",
+  "part": "am",
+  "distance_km": 14.27,
+  "moving_time_min": 40,
+  "elevation_m": 34,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-04-28",
+  "part": "am",
+  "distance_km": 14.2,
+  "moving_time_min": 38,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-03",
+  "part": "pm",
+  "distance_km": 2.31,
+  "moving_time_min": 13,
+  "elevation_m": 14,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-03",
+  "part": "pm",
+  "distance_km": 4.48,
+  "moving_time_min": 16,
+  "elevation_m": 23,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-03",
+  "part": "pm",
+  "distance_km": 9.89,
+  "moving_time_min": 35,
+  "elevation_m": 74,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-03",
+  "part": "am",
+  "distance_km": 11.82,
+  "moving_time_min": 35,
+  "elevation_m": 38,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-04",
+  "part": "am",
+  "distance_km": 14.1,
+  "moving_time_min": 42,
+  "elevation_m": 78,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-04",
+  "part": "am",
+  "distance_km": 14.48,
+  "moving_time_min": 35,
+  "elevation_m": 35,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-21",
+  "part": "pm",
+  "distance_km": 14.04,
+  "moving_time_min": 39,
+  "elevation_m": 61,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-21",
+  "part": "am",
+  "distance_km": 14.37,
+  "moving_time_min": 35,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-26",
+  "part": "pm",
+  "distance_km": 13.97,
+  "moving_time_min": 41,
+  "elevation_m": 63,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-26",
+  "part": "am",
+  "distance_km": 14.1,
+  "moving_time_min": 35,
+  "elevation_m": 28,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-27",
+  "part": "pm",
+  "distance_km": 8.71,
+  "moving_time_min": 32,
+  "elevation_m": 49,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-27",
+  "part": "am",
+  "distance_km": 14.28,
+  "moving_time_min": 37,
+  "elevation_m": 29,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-29",
+  "part": "pm",
+  "distance_km": 14.15,
+  "moving_time_min": 37,
+  "elevation_m": 59,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-05-29",
+  "part": "am",
+  "distance_km": 14.18,
+  "moving_time_min": 36,
+  "elevation_m": 38,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-01",
+  "part": "am",
+  "distance_km": 14.1,
+  "moving_time_min": 36,
+  "elevation_m": 58,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-01",
+  "part": "am",
+  "distance_km": 14.29,
+  "moving_time_min": 38,
+  "elevation_m": 37,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-02",
+  "part": "pm",
+  "distance_km": 14.04,
+  "moving_time_min": 38,
+  "elevation_m": 56,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-02",
+  "part": "am",
+  "distance_km": 14.25,
+  "moving_time_min": 42,
+  "elevation_m": 34,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-03",
+  "part": "am",
+  "distance_km": 14.23,
+  "moving_time_min": 38,
+  "elevation_m": 26,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-03",
+  "part": "pm",
+  "distance_km": 14.39,
+  "moving_time_min": 42,
+  "elevation_m": 81,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-04",
+  "part": "pm",
+  "distance_km": 14.42,
+  "moving_time_min": 40,
+  "elevation_m": 56,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-08",
+  "part": "am",
+  "distance_km": 14.24,
+  "moving_time_min": 37,
+  "elevation_m": 25,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-08",
+  "part": "pm",
+  "distance_km": 14.46,
+  "moving_time_min": 40,
+  "elevation_m": 66,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-09",
+  "part": "am",
+  "distance_km": 14.28,
+  "moving_time_min": 41,
+  "elevation_m": 35,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-09",
+  "part": "pm",
+  "distance_km": 14.4,
+  "moving_time_min": 47,
+  "elevation_m": 64,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-15",
+  "part": "am",
+  "distance_km": 13.98,
+  "moving_time_min": 37,
+  "elevation_m": 30,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-15",
+  "part": "pm",
+  "distance_km": 14.14,
+  "moving_time_min": 41,
+  "elevation_m": 51,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-16",
+  "part": "am",
+  "distance_km": 14.24,
+  "moving_time_min": 38,
+  "elevation_m": 28,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-16",
+  "part": "pm",
+  "distance_km": 14.38,
+  "moving_time_min": 41,
+  "elevation_m": 52,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-17",
+  "part": "am",
+  "distance_km": 14.21,
+  "moving_time_min": 36,
+  "elevation_m": 25,
+  "source": "apple_health"
+ },
+ {
+  "date": "2026-06-17",
+  "part": "pm",
+  "distance_km": 14.41,
+  "moving_time_min": 46,
+  "elevation_m": 58,
+  "source": "apple_health"
+ },
+ {
   "date": "2026-06-22",
+  "part": "am",
   "distance_km": 14.22,
   "moving_time_min": 39,
   "elevation_m": 26,
@@ -8,6 +297,7 @@
  },
  {
   "date": "2026-06-23",
+  "part": "pm",
   "distance_km": 13.72,
   "moving_time_min": 36,
   "elevation_m": 57,
@@ -15,6 +305,7 @@
  },
  {
   "date": "2026-06-25",
+  "part": "pm",
   "distance_km": 13.87,
   "moving_time_min": 41,
   "elevation_m": 58,
@@ -22,6 +313,7 @@
  },
  {
   "date": "2026-06-25",
+  "part": "am",
   "distance_km": 14.17,
   "moving_time_min": 37,
   "elevation_m": 25,
@@ -29,6 +321,7 @@
  },
  {
   "date": "2026-07-06",
+  "part": "pm",
   "distance_km": 14.06,
   "moving_time_min": 38,
   "elevation_m": 59,
@@ -36,6 +329,7 @@
  },
  {
   "date": "2026-07-06",
+  "part": "am",
   "distance_km": 14.21,
   "moving_time_min": 37,
   "elevation_m": 34,
@@ -43,6 +337,7 @@
  },
  {
   "date": "2026-07-09",
+  "part": "pm",
   "distance_km": 14.37,
   "moving_time_min": 45,
   "elevation_m": 62,
@@ -50,6 +345,7 @@
  },
  {
   "date": "2026-07-09",
+  "part": "am",
   "distance_km": 14.5,
   "moving_time_min": 34,
   "elevation_m": 29,
@@ -57,6 +353,7 @@
  },
  {
   "date": "2026-07-13",
+  "part": "pm",
   "distance_km": 13.96,
   "moving_time_min": 39,
   "elevation_m": 55,
@@ -64,6 +361,7 @@
  },
  {
   "date": "2026-07-13",
+  "part": "am",
   "distance_km": 14.19,
   "moving_time_min": 36,
   "elevation_m": 35,
@@ -71,6 +369,7 @@
  },
  {
   "date": "2026-07-14",
+  "part": "pm",
   "distance_km": 13.96,
   "moving_time_min": 40,
   "elevation_m": 55,
@@ -78,6 +377,7 @@
  },
  {
   "date": "2026-07-14",
+  "part": "am",
   "distance_km": 14.17,
   "moving_time_min": 37,
   "elevation_m": 30,
@@ -85,6 +385,7 @@
  },
  {
   "date": "2026-07-15",
+  "part": "pm",
   "distance_km": 13.7,
   "moving_time_min": 38,
   "elevation_m": 75,
@@ -92,6 +393,7 @@
  },
  {
   "date": "2026-07-15",
+  "part": "am",
   "distance_km": 14.15,
   "moving_time_min": 39,
   "elevation_m": 30,
@@ -99,6 +401,7 @@
  },
  {
   "date": "2026-07-16",
+  "part": "pm",
   "distance_km": 13.58,
   "moving_time_min": 42,
   "elevation_m": 97,
@@ -106,6 +409,7 @@
  },
  {
   "date": "2026-07-16",
+  "part": "am",
   "distance_km": 14.17,
   "moving_time_min": 37,
   "elevation_m": 29,
@@ -113,6 +417,7 @@
  },
  {
   "date": "2026-07-20",
+  "part": "pm",
   "distance_km": 13.73,
   "moving_time_min": 41,
   "elevation_m": 82,
@@ -120,6 +425,7 @@
  },
  {
   "date": "2026-07-20",
+  "part": "am",
   "distance_km": 14.71,
   "moving_time_min": 37,
   "elevation_m": 36,
@@ -127,6 +433,7 @@
  },
  {
   "date": "2026-07-22",
+  "part": "pm",
   "distance_km": 13.51,
   "moving_time_min": 42,
   "elevation_m": 69,
@@ -134,6 +441,7 @@
  },
  {
   "date": "2026-07-23",
+  "part": "pm",
   "distance_km": 13.82,
   "moving_time_min": 41,
   "elevation_m": 69,
@@ -141,6 +449,7 @@
  },
  {
   "date": "2026-07-23",
+  "part": "am",
   "distance_km": 14.02,
   "moving_time_min": 36,
   "elevation_m": 37,
@@ -148,6 +457,7 @@
  },
  {
   "date": "2026-07-27",
+  "part": "pm",
   "distance_km": 13.74,
   "moving_time_min": 41,
   "elevation_m": 72,
@@ -155,6 +465,7 @@
  },
  {
   "date": "2026-07-27",
+  "part": "am",
   "distance_km": 14.1,
   "moving_time_min": 36,
   "elevation_m": 26,
@@ -162,6 +473,7 @@
  },
  {
   "date": "2026-07-28",
+  "part": "pm",
   "distance_km": 13.69,
   "moving_time_min": 40,
   "elevation_m": 70,
@@ -169,6 +481,7 @@
  },
  {
   "date": "2026-07-28",
+  "part": "am",
   "distance_km": 14.08,
   "moving_time_min": 39,
   "elevation_m": 28,
@@ -176,6 +489,7 @@
  },
  {
   "date": "2026-07-31",
+  "part": "pm",
   "distance_km": 13.74,
   "moving_time_min": 50,
   "elevation_m": 64,
@@ -183,6 +497,7 @@
  },
  {
   "date": "2026-07-31",
+  "part": "am",
   "distance_km": 14.08,
   "moving_time_min": 41,
   "elevation_m": 27,
@@ -190,6 +505,7 @@
  },
  {
   "date": "2026-08-04",
+  "part": "pm",
   "distance_km": 13.75,
   "moving_time_min": 41,
   "elevation_m": 68,
@@ -197,6 +513,7 @@
  },
  {
   "date": "2026-08-04",
+  "part": "am",
   "distance_km": 14.06,
   "moving_time_min": 38,
   "elevation_m": 26,
@@ -204,6 +521,7 @@
  },
  {
   "date": "2026-08-05",
+  "part": "pm",
   "distance_km": 13.71,
   "moving_time_min": 40,
   "elevation_m": 71,
@@ -211,6 +529,7 @@
  },
  {
   "date": "2026-08-05",
+  "part": "am",
   "distance_km": 14.1,
   "moving_time_min": 38,
   "elevation_m": 28,
@@ -218,6 +537,7 @@
  },
  {
   "date": "2026-08-10",
+  "part": "pm",
   "distance_km": 13.66,
   "moving_time_min": 40,
   "elevation_m": 66,
@@ -225,6 +545,7 @@
  },
  {
   "date": "2026-08-10",
+  "part": "am",
   "distance_km": 14.13,
   "moving_time_min": 36,
   "elevation_m": 26,
@@ -232,6 +553,7 @@
  },
  {
   "date": "2026-08-11",
+  "part": "am",
   "distance_km": 14.12,
   "moving_time_min": 36,
   "elevation_m": 29,
@@ -239,6 +561,7 @@
  },
  {
   "date": "2026-08-12",
+  "part": "pm",
   "distance_km": 13.79,
   "moving_time_min": 44,
   "elevation_m": 64,
@@ -246,6 +569,7 @@
  },
  {
   "date": "2026-08-12",
+  "part": "am",
   "distance_km": 14.13,
   "moving_time_min": 37,
   "elevation_m": 25,
@@ -253,6 +577,7 @@
  },
  {
   "date": "2026-08-13",
+  "part": "pm",
   "distance_km": 13.54,
   "moving_time_min": 44,
   "elevation_m": 68,
@@ -260,6 +585,7 @@
  },
  {
   "date": "2026-08-13",
+  "part": "am",
   "distance_km": 14.16,
   "moving_time_min": 38,
   "elevation_m": 26,
@@ -267,6 +593,7 @@
  },
  {
   "date": "2026-08-18",
+  "part": "pm",
   "distance_km": 13.69,
   "moving_time_min": 40,
   "elevation_m": 73,
@@ -274,6 +601,7 @@
  },
  {
   "date": "2026-08-18",
+  "part": "am",
   "distance_km": 14.1,
   "moving_time_min": 37,
   "elevation_m": 26,
@@ -281,6 +609,7 @@
  },
  {
   "date": "2026-08-19",
+  "part": "pm",
   "distance_km": 13.65,
   "moving_time_min": 41,
   "elevation_m": 69,
@@ -288,6 +617,7 @@
  },
  {
   "date": "2026-08-19",
+  "part": "am",
   "distance_km": 14.13,
   "moving_time_min": 36,
   "elevation_m": 28,
@@ -295,6 +625,7 @@
  },
  {
   "date": "2026-08-20",
+  "part": "pm",
   "distance_km": 13.74,
   "moving_time_min": 43,
   "elevation_m": 67,
@@ -302,6 +633,7 @@
  },
  {
   "date": "2026-08-20",
+  "part": "am",
   "distance_km": 14.08,
   "moving_time_min": 37,
   "elevation_m": 27,
@@ -309,6 +641,7 @@
  },
  {
   "date": "2026-08-25",
+  "part": "pm",
   "distance_km": 13.6,
   "moving_time_min": 41,
   "elevation_m": 67,
@@ -316,6 +649,7 @@
  },
  {
   "date": "2026-08-26",
+  "part": "pm",
   "distance_km": 13.77,
   "moving_time_min": 39,
   "elevation_m": 68,
@@ -323,6 +657,7 @@
  },
  {
   "date": "2026-08-26",
+  "part": "am",
   "distance_km": 14.06,
   "moving_time_min": 38,
   "elevation_m": 26,
@@ -330,6 +665,7 @@
  },
  {
   "date": "2026-08-27",
+  "part": "pm",
   "distance_km": 13.66,
   "moving_time_min": 42,
   "elevation_m": 70,
@@ -337,6 +673,7 @@
  },
  {
   "date": "2026-08-27",
+  "part": "am",
   "distance_km": 13.97,
   "moving_time_min": 36,
   "elevation_m": 29,
@@ -344,6 +681,7 @@
  },
  {
   "date": "2026-09-02",
+  "part": "pm",
   "distance_km": 13.69,
   "moving_time_min": 41,
   "elevation_m": 74,
@@ -351,6 +689,7 @@
  },
  {
   "date": "2026-09-02",
+  "part": "am",
   "distance_km": 14.06,
   "moving_time_min": 36,
   "elevation_m": 29,
@@ -358,6 +697,7 @@
  },
  {
   "date": "2026-09-08",
+  "part": "pm",
   "distance_km": 14.07,
   "moving_time_min": 41,
   "elevation_m": 57,
@@ -365,6 +705,7 @@
  },
  {
   "date": "2026-09-08",
+  "part": "am",
   "distance_km": 14.18,
   "moving_time_min": 39,
   "elevation_m": 32,
@@ -372,6 +713,7 @@
  },
  {
   "date": "2026-09-10",
+  "part": "pm",
   "distance_km": 14.0,
   "moving_time_min": 42,
   "elevation_m": 73,
@@ -379,6 +721,7 @@
  },
  {
   "date": "2026-09-10",
+  "part": "am",
   "distance_km": 14.06,
   "moving_time_min": 36,
   "elevation_m": 32,

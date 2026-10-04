@@ -30,8 +30,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
   - Fixed: the Swiper hash that froze the cocktails and travel carousels, and site search, broken
     on every page by the deferred `theme.js`
     ([D-016](DECISIONS.md#d-016-inline-scripts-read-the-theme-from-data-theme-because-themejs-is-deferred)).
-  - Cycling data from Apple Health; Strava frozen at 2026-06-21; 55 rides imported through
-    2026-09-10 ([D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)).
+  - Cycling data from Apple Health; Strava frozen at 2026-06-21; 91 Health rides imported (55
+    after the archive, 36 on 2026 days Strava missed), 148 rides in all through 2026-09-10 ([D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)).
   - Journal chips: five journals in a fixed order ([D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)).
   - Content, style, and design review fixes, including Josh's wording for the Lilly and Pfizer
     pages.
@@ -41,8 +41,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 3. Settled decisions
 
-The full append-only log, 20 entries from D-001 to D-020, is [`DECISIONS.md`](DECISIONS.md).
-D-001 to D-013 were settled on 2026-10-03, D-014 to D-020 on 2026-10-04.
+The full append-only log, 21 entries from D-001 to D-021, is [`DECISIONS.md`](DECISIONS.md).
+D-001 to D-013 were settled on 2026-10-03, D-014 to D-021 on 2026-10-04.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -66,6 +66,7 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-020 on 2026-10-04.
 | D-018 | Cycling data from Apple Health (Shortcut plus Health export); Strava frozen at 2026-06-21         | [D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)                       |
 | D-019 | Count includes unpublished preprints, not the thesis (39)                                         | [D-019](DECISIONS.md#d-019-the-publication-count-includes-unpublished-preprints-but-not-the-thesis)       |
 | D-020 | Journal chips in a fixed order: Nature, Cell, Nature Medicine, Nature Genetics, Nature Immunology | [D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)                                               |
+| D-021 | Health fills days the Strava archive missed; rides store am/pm for matching                       | [D-021](DECISIONS.md#d-021-health-fills-the-days-the-strava-archive-missed)                               |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
@@ -96,7 +97,8 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-020 on 2026-10-04.
 
 7. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
    (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
-8. **Polish not done:** a higher-resolution Greenwald thumbnail (needs the source figure), the
+8. **Polish not done:** a higher-resolution Greenwald thumbnail (the open-access figure is on
+   hosts this environment's network policy blocks; allow them or upload the figure), the
    leftover card in five-item grids, extra badge colors, the UCSD logo and white figure
    backgrounds in dark mode.
 

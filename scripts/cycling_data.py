@@ -2,14 +2,16 @@
 """Maintain the cycling page data from Apple Health.
 
 Strava's API became paid in June 2026, so rides now come from Apple Health (D-018). Rides up to
-2026-06-21 stay in a frozen Strava archive; newer rides live in _data/cycling_rides.json. Every
+2026-06-21 stay in a frozen Strava archive; newer rides live in _data/cycling_rides.json, along
+with Health rides on earlier days the archive has no ride for (Strava missed some, D-021). Every
 command rebuilds the files the cycling page reads (_data/cycling_stats.json and
 _data/cycling_calendar.json) from the archive plus the ride list.
 
 Commands:
     import-health EXPORT.zip [--dry-run]
         Read cycling workouts from an Apple Health export ("Export All Health Data" in the
-        Health app) and merge the ones after the archive into the ride list. Rides already
+        Health app) and merge into the ride list the ones after the archive, plus earlier ones on
+        days the archive has no ride (the archive stays the record for days it covers). Rides already
         listed are matched and updated, so the export fills in elevation for rides the
         Shortcut added. Accepts the .zip or the export.xml inside it.
     add-shortcut
@@ -57,11 +59,16 @@ def write(path: Path, data) -> None:
 
 
 def same_ride(a: dict, b: dict) -> bool:
-    """Rides are stored without start times (the repo is public), so match on local date and
-    distance. The Shortcut and the export measure the same workout's distance to within a
-    percent, while a day's two commutes differ by several hundred meters. Duration isn't
-    compared: the Shortcut's includes pauses and the export's doesn't."""
-    return a["date"] == b["date"] and abs(a["distance_km"] - b["distance_km"]) <= max(0.1, 0.01 * b["distance_km"])
+    """Rides are stored without start times (the repo is public), so match on local date, half
+    of the day ("am"/"pm"), and distance. The Shortcut and the export report the same workout's
+    start and its distance to within a percent; a day's two commutes can be within a percent of
+    each other in distance, but one starts in the morning and the other in the afternoon.
+    Duration isn't compared: the Shortcut's includes pauses and the export's doesn't."""
+    return (
+        a["date"] == b["date"]
+        and a.get("part") == b.get("part")
+        and abs(a["distance_km"] - b["distance_km"]) <= max(0.1, 0.01 * b["distance_km"])
+    )
 
 
 def merge(rides: list[dict], new: dict, existing: int | None = None) -> str:
@@ -119,13 +126,13 @@ def health_rides(path: Path) -> list[dict]:
                         zone = child.get("value")
                 minutes = quantity(el.get("duration"), el.get("durationUnit", "min"), TO_MIN)
                 if km and minutes:
-                    rides.append(ride_record(local_date(el.get("startDate"), zone), km, minutes, elevation, "apple_health"))
+                    rides.append(ride_record(local_start(el.get("startDate"), zone), km, minutes, elevation, "apple_health"))
             el.clear()
     return rides
 
 
-def local_date(stamp: str, zone: str | None) -> str:
-    """The ride's date where it happened. The export writes every timestamp in the phone's time
+def local_start(stamp: str, zone: str | None) -> datetime:
+    """The ride's start where it happened. The export writes every timestamp in the phone's time
     zone at export time (export abroad and evening rides move to the next day), so convert to
     the workout's own HKTimeZone when it has one."""
     when = datetime.strptime(stamp, "%Y-%m-%d %H:%M:%S %z")
@@ -134,12 +141,14 @@ def local_date(stamp: str, zone: str | None) -> str:
             when = when.astimezone(ZoneInfo(zone))
         except (KeyError, ValueError):
             pass
-    return when.date().isoformat()
+    return when
 
 
-def ride_record(date: str, km: float, minutes: float, elevation_m: float | None, source: str) -> dict:
+def ride_record(start: datetime, km: float, minutes: float, elevation_m: float | None, source: str) -> dict:
+    """`start` is local to where the ride happened; only its date and half of the day are kept."""
     return {
-        "date": date,
+        "date": start.date().isoformat(),
+        "part": "am" if start.hour < 12 else "pm",
         "distance_km": round(km, 2),
         "moving_time_min": round(minutes),
         "elevation_m": None if elevation_m is None else round(elevation_m),
@@ -168,8 +177,8 @@ def shortcut_ride(payload: dict) -> dict:
         sys.exit(f"Duration {minutes:.0f} min is out of range")
     if start.date() > datetime.now(timezone.utc).date() + timedelta(days=1):
         sys.exit("Ride starts in the future")
-    # The date part of the Shortcut's ISO string is the local date of the ride.
-    return ride_record(str(payload["start"])[:10], km, minutes, None, "shortcut")
+    # The Shortcut's ISO string carries the phone's local offset, so `start` is already local.
+    return ride_record(start, km, minutes, None, "shortcut")
 
 
 # ---------------------------------------------------------------- page data
@@ -237,8 +246,11 @@ def main() -> None:
         print(f"{merge(rides, ride)}: {ride}")
     else:
         found = health_rides(args.export)
-        new = [r for r in found if r["date"] > archive["through"]]
-        print(f"Export has {len(found)} cycling workouts; {len(new)} after {archive['through']}")
+        strava_days = {date for date, _ in archive["calendar"]}
+        new = [r for r in found if r["date"] > archive["through"] or r["date"] not in strava_days]
+        later = sum(1 for r in new if r["date"] > archive["through"])
+        print(f"Export has {len(found)} cycling workouts; {later} after {archive['through']}, "
+              f"{len(new) - later} earlier on days Strava has no ride")
         counts: defaultdict[str, int] = defaultdict(int)
         existing = len(rides)
         for ride in new:

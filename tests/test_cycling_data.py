@@ -87,8 +87,8 @@ def export_zip(tmp_path):
 def test_reads_cycling_workouts_only(tmp_path):
     rides = cycling_data.health_rides(export_zip(tmp_path))
     assert rides[:2] == [
-        {"date": "2026-07-10", "distance_km": 14.48, "moving_time_min": 42, "elevation_m": 61, "source": "apple_health"},
-        {"date": "2024-09-01", "distance_km": 14.0, "moving_time_min": 30, "elevation_m": None, "source": "apple_health"},
+        {"date": "2026-07-10", "part": "am", "distance_km": 14.48, "moving_time_min": 42, "elevation_m": 61, "source": "apple_health"},
+        {"date": "2024-09-01", "part": "am", "distance_km": 14.0, "moving_time_min": 30, "elevation_m": None, "source": "apple_health"},
     ]
     assert len(rides) == 4  # the running workout is skipped
 
@@ -102,13 +102,36 @@ def test_dates_use_the_workouts_own_time_zone(tmp_path):
     assert not any(r["date"] == "2026-07-12" for r in rides)
 
 
-def test_import_skips_rides_in_the_strava_archive(data, monkeypatch):
+def test_import_fills_days_strava_missed(tmp_path, data, monkeypatch):
+    """A Health ride on an archive-era day with no Strava ride is added; one on a Strava day isn't."""
+    export = EXPORT.replace("</HealthData>", """ <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="30" durationUnit="min"
+   startDate="2026-06-20 08:00:00 -0400" endDate="2026-06-20 08:30:00 -0400">
+  <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceCycling" sum="10.0" unit="km"/>
+ </Workout>
+ <Workout workoutActivityType="HKWorkoutActivityTypeCycling" duration="30" durationUnit="min"
+   startDate="2026-06-10 08:00:00 -0400" endDate="2026-06-10 08:30:00 -0400">
+  <WorkoutStatistics type="HKQuantityTypeIdentifierDistanceCycling" sum="12.0" unit="km"/>
+ </Workout>
+</HealthData>""")
+    path = data / "export.zip"
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("apple_health_export/export.xml", export)
+    run(monkeypatch, "import-health", str(path))
+    dates = [r["date"] for r in json.loads((data / "cycling_rides.json").read_text())]
+    assert "2026-06-10" in dates  # Strava has no ride that day
+    assert "2026-06-20" not in dates  # Strava already has this day
+    assert "2024-09-01" in dates  # nor this one
+    calendar = dict(json.loads((data / "cycling_calendar.json").read_text()))
+    assert calendar["2026-06-20"] == 10.0 and calendar["2026-06-10"] == 12.0
+
+
+def test_import_skips_days_in_the_strava_archive(data, monkeypatch):
     run(monkeypatch, "import-health", str(export_zip(data)))
     rides = json.loads((data / "cycling_rides.json").read_text())
-    assert [r["date"] for r in rides] == ["2026-07-10", "2026-07-11", "2026-07-11"]
+    assert [r["date"] for r in rides] == ["2024-09-01", "2026-07-10", "2026-07-11", "2026-07-11"]
     stats = json.loads((data / "cycling_stats.json").read_text())
-    assert stats["total_rides"] == 5
-    assert stats["total_distance_km"] == 72.3
+    assert stats["total_rides"] == 6
+    assert stats["total_distance_km"] == 86.3
     assert stats["total_elevation_m"] == 230
     assert stats["last_ride"] == "2026-07-11"
     assert {"month": "2026-07", "distance_km": 42.3} in stats["monthly"]
@@ -129,7 +152,7 @@ SHORTCUT = {"start": "2026-07-10T08:00:00-04:00", "end": "2026-07-10T08:42:30-04
 def test_shortcut_ride_then_export_fills_elevation(data, monkeypatch):
     run(monkeypatch, "add-shortcut", payload=SHORTCUT)
     rides = json.loads((data / "cycling_rides.json").read_text())
-    assert rides == [{"date": "2026-07-10", "distance_km": 14.48, "moving_time_min": 42,
+    assert rides == [{"date": "2026-07-10", "part": "am", "distance_km": 14.48, "moving_time_min": 42,
                       "elevation_m": None, "source": "shortcut"}]
     assert json.loads((data / "cycling_stats.json").read_text())["rides_missing_elevation"] == 1
 
@@ -140,6 +163,17 @@ def test_shortcut_ride_then_export_fills_elevation(data, monkeypatch):
     run(monkeypatch, "add-shortcut", payload=SHORTCUT)  # a repeated post doesn't erase elevation
     rides = [r for r in json.loads((data / "cycling_rides.json").read_text()) if r["date"] == "2026-07-10"]
     assert len(rides) == 1 and rides[0]["elevation_m"] == 61
+
+
+def test_commutes_of_nearly_equal_distance_stay_separate(data, monkeypatch):
+    """Real data: 2026-09-10 had a 14.00 km and a 14.06 km commute, within 1% of each other."""
+    morning = {"start": "2026-09-10T08:05:00-04:00", "end": "2026-09-10T08:41:00-04:00", "distance": 14.0, "unit": "km"}
+    evening = {"start": "2026-09-10T17:20:00-04:00", "end": "2026-09-10T18:02:00-04:00", "distance": 14.06, "unit": "km"}
+    run(monkeypatch, "add-shortcut", payload=morning)
+    run(monkeypatch, "add-shortcut", payload=evening)
+    run(monkeypatch, "add-shortcut", payload=evening)  # a repeated post is still one ride
+    rides = json.loads((data / "cycling_rides.json").read_text())
+    assert sorted(r["part"] for r in rides) == ["am", "pm"]
 
 
 def test_two_commutes_on_one_day_are_two_rides(data, monkeypatch):

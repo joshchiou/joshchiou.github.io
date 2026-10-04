@@ -1,9 +1,9 @@
 {
- "total_rides": 112,
- "total_distance_km": 2052.7,
- "total_elevation_m": 10048,
+ "total_rides": 148,
+ "total_distance_km": 2502.7,
+ "total_elevation_m": 11572,
  "longest_ride_km": 92.6,
- "avg_ride_km": 18.3,
+ "avg_ride_km": 16.9,
  "monthly": [
   {
    "month": "2024-08",
@@ -35,7 +35,7 @@
   },
   {
    "month": "2026-01",
-   "distance_km": 53.7
+   "distance_km": 53.8
   },
   {
    "month": "2026-02",
@@ -47,11 +47,15 @@
   },
   {
    "month": "2026-04",
-   "distance_km": 131.7
+   "distance_km": 174.2
+  },
+  {
+   "month": "2026-05",
+   "distance_km": 164.9
   },
   {
    "month": "2026-06",
-   "distance_km": 159.4
+   "distance_km": 401.8
   },
   {
    "month": "2026-07",
@@ -66,7 +70,7 @@
    "distance_km": 84.1
   }
  ],
- "rides_missing_elevation": 0,
+ "rides_missing_elevation": 1,
  "last_ride": "2026-09-10",
- "updated_at": "2026-10-04T10:38:15.635039+00:00"
+ "updated_at": "2026-10-04T11:28:43.692277+00:00"
 }
