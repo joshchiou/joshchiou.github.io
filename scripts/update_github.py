@@ -25,6 +25,9 @@ API_BASE = "https://api.github.com"
 REPO_ROOT = Path(__file__).parent.parent
 REPOS_PATH = REPO_ROOT / "_data" / "repositories.yml"
 OUT_PATH = REPO_ROOT / "_data" / "github_stats.json"
+# A repo card lists every language with at least this share of the repo's code, up to MAX_LANGUAGES.
+MIN_LANGUAGE_SHARE = 0.05
+MAX_LANGUAGES = 3
 
 
 def get_headers() -> dict:
@@ -46,6 +49,15 @@ def fetch_json(url: str, headers: dict) -> dict | list | None:
     except Exception as e:
         print(f"  Failed: {url} — {e}")
         return None
+
+
+def main_languages(byte_counts: dict | None) -> list[str]:
+    """Languages from GitHub's /languages breakdown (bytes per language), largest first."""
+    if not byte_counts:
+        return []
+    total = sum(byte_counts.values())
+    ranked = sorted(byte_counts.items(), key=lambda kv: -kv[1])
+    return [name for name, n in ranked if n / total >= MIN_LANGUAGE_SHARE][:MAX_LANGUAGES]
 
 
 def get_featured_repos() -> list[str]:
@@ -89,15 +101,19 @@ def main():
     repos = {}
     for slug in featured:
         data = fetch_json(f"{API_BASE}/repos/{slug}", headers)
-        if data:
-            repos[slug] = {
-                "language": data.get("language"),
-                "stars": data.get("stargazers_count", 0),
-                "forks": data.get("forks_count", 0),
-                "description": data.get("description", ""),
-            }
-            print(f"  {slug}: {repos[slug]['language']}, "
-                  f"{repos[slug]['stars']} stars, {repos[slug]['forks']} forks")
+        if not data:
+            print(f"  WARNING: {slug} could not be fetched (private, renamed, or deleted?); its card shows no stats")
+            continue
+        languages = main_languages(fetch_json(f"{API_BASE}/repos/{slug}/languages", headers))
+        repos[slug] = {
+            "language": data.get("language"),
+            "languages": languages or ([data["language"]] if data.get("language") else []),
+            "stars": data.get("stargazers_count", 0),
+            "forks": data.get("forks_count", 0),
+            "description": data.get("description", ""),
+        }
+        print(f"  {slug}: {', '.join(repos[slug]['languages']) or 'no languages'}, "
+              f"{repos[slug]['stars']} stars, {repos[slug]['forks']} forks")
 
     stats = {
         "avatar_url": profile.get("avatar_url", ""),

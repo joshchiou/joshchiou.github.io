@@ -56,7 +56,7 @@ description: >
 
 Repositories I've built or contributed to significantly.
 
-{% assign LANG_COLORS = "Python:#3572A5,R:#198CE7,JavaScript:#f1e05a,TypeScript:#2b7489,Shell:#89e051,Ruby:#701516,HTML:#e34c26,CSS:#563d7c" | split: "," %}
+{% assign LANG_COLORS = "Python:#3572A5,R:#198CE7,JavaScript:#f1e05a,TypeScript:#2b7489,Shell:#89e051,Ruby:#701516,HTML:#e34c26,CSS:#563d7c,SCSS:#c6538c,Jupyter Notebook:#DA5B0B,Dockerfile:#384d54,Liquid:#67b8de,TeX:#3D6117,Nextflow:#3ac486,WDL:#42f1f4" | split: "," %}
 
 <div class="repo-card-grid mb-4">
   {% for item in site.data.repositories.github_repos %}
@@ -74,19 +74,23 @@ Repositories I've built or contributed to significantly.
       </div>
       <div class="repo-card-desc">{{ item.desc }}</div>
       <div class="repo-card-meta">
-        {% if repo_data.language %}
+        {% assign repo_languages = repo_data.languages %}
+        {% if repo_languages == nil and repo_data.language %}
+          {% assign repo_languages = repo_data.language | split: "|" %}
+        {% endif %}
+        {% for language in repo_languages %}
           {% assign lang_color = "#8a8a8a" %}
           {% for pair in LANG_COLORS %}
             {% assign kv = pair | split: ":" %}
-            {% if kv[0] == repo_data.language %}
+            {% if kv[0] == language %}
               {% assign lang_color = kv[1] %}
             {% endif %}
           {% endfor %}
           <span class="repo-card-lang">
             <span class="lang-dot" style="background:{{ lang_color }}"></span>
-            {{ repo_data.language }}
+            {{ language }}
           </span>
-        {% endif %}
+        {% endfor %}
         {% if repo_data.stars > 0 %}
           <span class="repo-card-stat"><i class="fa-regular fa-star"></i> {{ repo_data.stars }}</span>
         {% endif %}

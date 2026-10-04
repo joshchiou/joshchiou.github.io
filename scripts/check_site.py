@@ -166,6 +166,17 @@ def check_travel(countries: list, cities: list) -> None:
             fail(f"travel_cities.yml: {c['name']} is in {c.get('country')!r}, which is not in travel_countries.yml")
 
 
+def check_featured_repos() -> None:
+    """A featured repo with no stats shows a bare card. It's normal right after adding one (the
+    weekly Update GitHub Stats run fills it in), so this is a warning."""
+    featured = [r["repo"] for r in load_yaml(DATA / "repositories.yml").get("github_repos", [])]
+    have = load_json("github_stats.json").get("repos", {})
+    for slug in featured:
+        if slug not in have:
+            warnings.append(f"github_stats.json has no data for featured repo {slug}; "
+                            "run Update GitHub Stats, and check the repo is public")
+
+
 def check_freshness() -> None:
     now = datetime.now(timezone.utc)
     for name, days in STALE_DAYS.items():
@@ -293,6 +304,7 @@ def main() -> None:
     check_cycling(load_json("cycling_stats.json"))
     check_travel(load_yaml(DATA / "travel_countries.yml"), load_yaml(DATA / "travel_cities.yml"))
     check_freshness()
+    check_featured_repos()
 
     site = args.site or (ROOT / "_site" if (ROOT / "_site").exists() else None)
     if args.site and not args.site.exists():

@@ -36,7 +36,7 @@ jobs:
         with:
           python-version: "3.13"
       - name: Install Python dependencies
-        run: pip install pytest pyyaml nbconvert playwright
+        run: pip install pytest pyyaml nbconvert playwright requests
       - name: Check data files 🔢
         run: python3 scripts/check_site.py
       - name: Check CDN integrity hashes 🔒
