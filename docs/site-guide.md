@@ -31,7 +31,9 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
 
 ### Publications page, top to bottom
 
-1. Citation metrics from `_data/scholar_stats.json` (`_includes/publication_meta.liquid`).
+1. Publication count, counted from `papers.bib` at build time by `_plugins/publication-stats.rb`
+   (`_includes/publication_meta.liquid`). Never type a count into a template; see
+   [D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time).
 2. Search box.
 3. **Selected**: papers with `selected = {true}`, ordered by `cv_order`, each with a 4:3 `preview`
    thumbnail and a one-sentence `tldr`.
@@ -73,19 +75,29 @@ The fun pages pull from their own data files: cycling from `_data/strava_*.json`
 
 | Workflow                            | When                                                          | What it does                                                                                           |
 | ----------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages                                     |
+| Deploy site (`deploy.yml`)          | Push to master, manual, and after each data workflow succeeds | Builds, runs `check_site.py`, renders the CV PDF, runs PurgeCSS, deploys to GitHub Pages               |
 | Update Strava Data                  | Daily 06:00 UTC                                               | Refreshes `_data/strava_*.json`                                                                        |
 | Update GitHub Stats                 | Tuesdays                                                      | Refreshes `_data/github_stats.json`, including stats for every repo in `repositories.yml`              |
 | Update Scholar Stats                | Wednesdays                                                    | Refreshes `_data/scholar_stats.json` via SerpAPI (`SERPAPI_KEY` secret); a red run means stale numbers |
 | Discover New Publications           | Thursdays                                                     | Opens a PR with ORCID works missing from `papers.bib`                                                  |
 | Enrich Publication Metadata         | Manual                                                        | Opens a PR adding abstracts, PMIDs, and open-access PDF links                                          |
 | Lint, Check for broken links        | Pull requests                                                 | Prettier (`npx prettier --check .`) and lychee on the source files; both should pass                   |
+| Site checks                         | Pull requests and pushes to master                            | Builds the site, runs `scripts/check_site.py` and the tests in `tests/`                                |
 | Lighthouse CI, broken links on site | After deploy                                                  | Performance and built-site link checks                                                                 |
 
 Generated data files, vendored files, and the historical notes in `docs/superpowers/` are listed in
 `.prettierignore`. Sites that block bots, gated URLs, and Liquid expressions (which lychee would
 read as literal paths) are listed in `.lycheeignore`. Run `npx prettier --write .` before
 committing template or style changes.
+
+`scripts/check_site.py` recomputes every number the site shows (publication and top-journal
+counts, Selected papers, Scholar stats, GitHub, travel, and cycling stats) from the source files and
+compares it with the built HTML, so pages can't disagree with each other or with their data. It also
+checks the data files themselves: duplicate bib keys or DOIs, missing fields, a top journal spelled
+differently, an h-index that the citation count can't support, cities in countries that aren't
+listed. Data that a workflow has stopped refreshing shows as a warning, not a failure. Run it after
+a local build with `python3 scripts/check_site.py` and `python3 -m pytest tests`. When you add a
+page that shows a number, add a check for it.
 
 Data workflows push with `GITHUB_TOKEN`, which does not trigger other workflows, so `deploy.yml`
 lists each of them under `workflow_run`. Add any new data workflow to that list.

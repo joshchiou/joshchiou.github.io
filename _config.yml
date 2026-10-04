@@ -189,6 +189,7 @@ exclude:
   - vendor
   - docs/
   - scripts/
+  - tests/
   - assets/css/bootstrap.min.css.map
   - assets/css/mdb.min.css.map
   - assets/js/bootstrap.bundle.min.js.map
@@ -242,6 +243,10 @@ jekyll-minifier:
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
 # -----------------------------------------------------------------------------
+
+# Journals named on the homepage ("N papers in ..."). Counted from papers.bib at build time by
+# _plugins/publication-stats.rb; names must match the bib `journal` field exactly.
+top_journals: [Nature, Nature Genetics, Cell]
 
 scholar:
   last_name: [Chiou]

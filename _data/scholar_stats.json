@@ -1,20 +1,4 @@
 {
-  "total_papers": 40,
-  "top_journal_papers": 9,
-  "top_journals": [
-    {
-      "name": "Nature",
-      "count": 5
-    },
-    {
-      "name": "Nature Genetics",
-      "count": 3
-    },
-    {
-      "name": "Cell",
-      "count": 1
-    }
-  ],
   "citations": 8655,
   "h_index": 28,
   "i10_index": 36,

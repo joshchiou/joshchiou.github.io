@@ -1,0 +1,44 @@
+name: Site checks
+
+# Builds the site and checks that every number it shows (publication counts, Scholar stats,
+# GitHub, travel, and cycling stats) matches its source file and agrees across pages.
+# The same check runs in deploy.yml before anything goes live.
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v7
+      - name: Setup Ruby 💎
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3.5"
+          bundler-cache: true
+      - name: Setup Python 🐍
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Install Python dependencies
+        run: pip install pytest pyyaml nbconvert
+      - name: Check data files 🔢
+        run: python3 scripts/check_site.py
+      - name: Build 🔧
+        run: |
+          sudo apt-get update && sudo apt-get install -y imagemagick
+          JEKYLL_ENV=production bundle exec jekyll build --strict_front_matter
+      - name: Check numbers on the built site 🔢
+        run: python3 scripts/check_site.py --site _site
+      - name: Run tests 🧪
+        run: python3 -m pytest tests -v

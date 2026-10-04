@@ -60,7 +60,12 @@ Places to update together when role/focus changes:
 bundle install          # first time only
 bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
+python3 scripts/check_site.py && python3 -m pytest tests  # numbers match their sources
 ```
+
+`check_site.py` also runs in the "Site checks" workflow on every PR and in `deploy.yml` before
+deploying. Publication counts come from `papers.bib` at build time (`_plugins/publication-stats.rb`,
+top journals listed in `top_journals` in `_config.yml`); never hardcode a count in a template.
 
 Or with Docker (recommended, since it matches CI):
 
@@ -89,7 +94,7 @@ proposed cities are remembered in `scripts/.travel_seen.json` (gitignored). Geoc
 cached in `scripts/.geocode_cache.json` (gitignored; first run ~5 min at 1 req/sec). Never commit
 the export itself.
 
-**Scholar stats:** `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
+**Scholar stats** (citations, h-index, i10-index): `scripts/update_scholar.py` via `.github/workflows/update-scholar.yml` (weekly).
 Google Scholar blocks GitHub Actions runners, so the workflow reads the profile through SerpAPI
 (Google Scholar Author API) using the `SERPAPI_KEY` repo secret; the free plan covers a weekly
 run. Without the key the script falls back to `scholarly` (needs `bibtexparser<2`), which only

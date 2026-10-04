@@ -42,11 +42,12 @@ layout: default
 
     <!-- Stats bar + CTA buttons (Option A: stats left, CTAs right) -->
     {% assign stats = site.data.scholar_stats %}
+    {% assign pubs = site.data.publication_stats %}
     <div class="about-hero-bar animate-in" style="clear: both;">
       <div class="about-hero-left">
         <div class="about-stats">
           <div class="about-stat">
-            <span class="about-stat-num" id="stat-papers">{{ stats.total_papers }}</span>
+            <span class="about-stat-num" id="stat-papers">{{ pubs.total }}</span>
             <span class="about-stat-label">Publications</span>
           </div>
           <div class="about-stat">
@@ -58,10 +59,10 @@ layout: default
             <span class="about-stat-label">h-index</span>
           </div>
         </div>
-        {% if stats.top_journals.size > 0 %}
+        {% if pubs.top_journals.size > 0 %}
           <div class="about-journals">
-            <span class="about-journals-count">{{ stats.top_journal_papers }} papers in</span>
-            {% for journal in stats.top_journals %}
+            <span class="about-journals-count">{{ pubs.top_journal_papers }} papers in</span>
+            {% for journal in pubs.top_journals %}
               <span class="about-journal-pill">{{ journal.name }}</span>
             {% endfor %}
           </div>

@@ -200,3 +200,26 @@ by hand; new US cities get a `state`. Every city the script has proposed is reco
 **Why not commit the seen list.** It names every town the script has proposed, including ones
 deliberately left off the site, and the repo is public. The cost is that a machine without the file
 proposes previously deleted cities once more.
+
+## D-014: Publication counts come from papers.bib at build time
+
+_Recorded 2026-10-04 (owner's request) · `_plugins/publication-stats.rb`, `scripts/check_site.py`_
+
+**Context.** The homepage showed 40 publications and the publications page showed 38. The homepage
+number came from `_data/scholar_stats.json`, where the weekly Scholar workflow wrote a count of
+`papers.bib`; the publications page had "38 publications" typed into
+`_includes/publication_meta.liquid`, which nobody updated when two papers were added in PR #57.
+Nothing checked that the two agreed.
+
+**Decision.** A Jekyll plugin counts `papers.bib` on every build and exposes the total, the
+Selected count, and the top-journal counts as `site.data.publication_stats`. Every page reads from
+it. `scholar_stats.json` holds only what comes from Scholar. `scripts/check_site.py` recounts
+everything independently from the source files and compares it with the built pages; it runs on
+every PR and gates the deploy.
+
+**Why not keep the count in `scholar_stats.json`.** The file only changes when the Scholar fetch
+succeeds (D-002), so a new paper wouldn't be counted until the next good Wednesday run, and never if
+SerpAPI is down.
+
+**Why not a Liquid tag such as jekyll-scholar's `bibliography_count`.** It can't take the journal
+names from a list, so the top-journal counts would be hand-copied into the template.
