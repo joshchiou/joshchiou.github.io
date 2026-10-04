@@ -17,7 +17,7 @@ related_publications: true
 
 The [UK Biobank Pharma Proteomics Project](https://www.ukbiobank.ac.uk/projects/large-scale-proteomic-profiling-to-facilitate-genetics-guided-drug-discovery-and-precision-medicine-the-uk-biobank-pharma-proteomics-project-ukb-ppp/)
 (UKB-PPP) was a pre-competitive consortium of thirteen pharmaceutical companies and the UK Biobank,
-profiling ~3,000 plasma proteins using the Olink Proximity Extension Assay across 54,306
+profiling about 3,000 plasma proteins using the Olink Proximity Extension Assay across 54,306
 participants. The main analysis, published in {% cite sun2023plasma %}, mapped protein
 quantitative trait loci (pQTLs) and their links to disease, giving one of the largest maps so far
 of how genetic variation affects blood protein levels.

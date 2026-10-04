@@ -77,6 +77,16 @@ prose that reaches for effect (taglines, framing, significance statements).
 - Doses and units take a space: 15 mg, 2.4 mg.
 - Numbers: commas in thousands (54,000), numerals for 10 and above, and for any measurement.
 - Dates in prose: "October 1, 2026" or "Oct 2026". Front-matter dates stay in ISO format.
+- Approximate numbers take "about" in prose ("about 3,000 proteins"), not "~". A tilde is fine in
+  a stat tile where space is tight ("~2018").
+- Disease names are lowercase in prose ("type 1 diabetes", "type 2 diabetes") and capitalized only
+  in title-case project titles. The abbreviations are T1D and T2D.
+- Compound modifiers are hyphenated before a noun: "single-cell epigenomics", "cell-type-specific
+  regulation", "large-scale proteomics".
+- Degrees without periods: PhD, MS, BS.
+- Product and platform names keep their own spelling: SomaScan 11k, Olink Explore HT.
+- Titles of papers, theses, and talks are quoted exactly as published, even where they break these
+  rules (the dissertation title says "single cell" without a hyphen).
 
 ## Punctuation and capitalization
 
@@ -87,6 +97,11 @@ prose that reaches for effect (taglines, framing, significance statements).
 - Use "and" in prose and headings; "&" only in short labels where space is tight (the homepage
   tagline, CV section names).
 - Straight quotes in code and data files are fine; Markdown and Liquid output them as written.
+- Contractions are fine in prose ("it's", "doesn't"); they keep the tone conversational.
+- Italics: `_Nature_` in Markdown, `<em>Nature</em>` inside YAML strings and front matter that are
+  rendered as HTML. Plain-text fields such as the homepage theme `img_credit` (shown as a tooltip)
+  can't carry italics and use the bare journal name.
+- Journal names are written out in full on the site (_Nature Communications_, not _Nat Commun_).
 
 ## Patterns by content type
 
@@ -95,6 +110,10 @@ fragment, under about 120 characters. Example: "Pre-competitive consortium mappi
 architecture of the human plasma proteome."
 
 **TL;DR box** on a project page: one sentence saying what the project is for.
+
+**Project page prose**: first person singular, including for team papers; for a co-first-author
+paper, "I co-led a study that…". Papers are cited inline with `{% cite key %}` right after the
+claim they support, and the page's paragraphs run roughly in the order the work was done.
 
 **Publication `tldr`**: one plain-language sentence, past tense, starting with a verb, saying what
 was done and what it showed. Example: "Measured about 3,000 blood proteins in 54,000 UK Biobank
