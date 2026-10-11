@@ -86,12 +86,12 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-house-signal"></i></div>
     <h3>Local-first</h3>
-    <p>No automation depends on an external cloud. Lights, climate, and energy monitoring keep working if the internet goes down.</p>
+    <p>No automation depends on an external cloud, so lights, climate, and energy monitoring all keep working if the internet goes down.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <h3>Graceful degradation</h3>
-    <p>Every automation has a safe fallback when a sensor goes offline. The system fails open for comfort and closed for safety.</p>
+    <p>Every automation has a safe fallback when a sensor goes offline: comfort controls default to on, safety controls default to off.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-users"></i></div>
