@@ -50,20 +50,41 @@ prose that reaches for effect (taglines, framing, significance statements).
 - One idea per sentence. Break up chains of "revealing…, linking…, enabling…".
 - No taglines or wordplay closers ("Three trips, three different Frances.") and no rhetorical
   framing ("has long been understood as…", "challenged this view").
+- Put a number inside a sentence that says what it counts. Don't stack short sentences or
+  fragments to make numbers land ("54,219 participants. About 3,000 proteins. One map.") or follow
+  a number with a one-line verdict ("That's a lot of proteins.").
+- Don't split one thought into two short declaratives for rhythm. Join them with "so", "because",
+  or a comma: "No automation depends on the cloud, so everything keeps working offline", not "No
+  automation depends on the cloud. Everything keeps working offline."
+- End a sentence on the information, not on a contrast tag added for punch (", beyond the weight
+  loss itself", ", and that's the point"). Keep a contrast when it is the finding ("not only in
+  immune cells"), and keep its logic when rewording: "not only X" includes X, "rather than X"
+  excludes it.
+- No setup-and-reveal, where a colon or a bold line announces a rule or problem before stating it
+  ("The whole system follows one rule: **…**", "The core problem is X: …"). Just state it.
+- Don't name every method in one sentence. On a project page, split the methods into sentences by
+  what each one is for; in a TL;DR or card summary, name the one or two that matter. Splitting is
+  the fix, not dropping facts.
+- When rewriting text for tone, keep every fact and add none: no new motives, examples, or
+  explanations the source doesn't support. Check what a technical phrase means ("fails closed")
+  before paraphrasing it.
 - Phrases to avoid, with what to write instead:
 
-  | Avoid                                    | Write                                        |
-  | ---------------------------------------- | -------------------------------------------- |
-  | has long been understood as              | is usually described as                      |
-  | opening new avenues for                  | (cut, or name the specific next step)        |
-  | is unusually informative                 | is useful because…                           |
-  | at the intersection of                   | (say what you do)                            |
-  | foundational resource, comprehensive map | widely used dataset, one of the largest maps |
-  | an artifact that would mislead           | a side effect of weight loss                 |
-  | toolkit, connective layer, framework     | the methods, the pipeline                    |
-  | leverage, enable, drive delivery of      | use, let, build                              |
-  | previously underappreciated              | (cut, or say who missed it and why)          |
-  | tick a new box, chase bucket lists       | keep adding new places                       |
+  | Avoid                                     | Write                                        |
+  | ----------------------------------------- | -------------------------------------------- |
+  | has long been understood as               | is usually described as                      |
+  | opening new avenues for                   | (cut, or name the specific next step)        |
+  | is unusually informative                  | is useful because…                           |
+  | at the intersection of                    | (say what you do)                            |
+  | foundational resource, comprehensive map  | widely used dataset, one of the largest maps |
+  | an artifact that would mislead            | a side effect of weight loss                 |
+  | toolkit, connective layer, framework      | the methods, the pipeline                    |
+  | leverage, enable, drive delivery of       | use, let, build                              |
+  | previously underappreciated               | (cut, or say who missed it and why)          |
+  | tick a new box, chase bucket lists        | keep adding new places                       |
+  | cross-functional effort, stakeholders     | (name the teams)                             |
+  | a label you made up ("genetic anchoring") | (name the method: Mendelian randomization)   |
+  | day to day, at scale (as filler)          | (cut)                                        |
 
 - Humor is fine where it's clearly intended (the Claire timeline, the cycling card). Keep it
   specific and dry rather than cute.

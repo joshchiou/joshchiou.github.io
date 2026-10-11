@@ -20,12 +20,12 @@ change. The challenge is working out which changes come from the drug itself and
 follow the weight loss. Only the first kind can tell you something about how the drug works.
 
 At Lilly, I apply large-scale proteomics (mainly Olink Explore HT and SomaScan 11k) to phase 2
-and phase 3 trials in obesity and cardiometabolic disease. The core analysis problem is causal
-inference: a patient loses weight and hundreds of proteins move, so you need mixed models,
-mediation analysis, and genetic anchoring (Mendelian randomization, protein quantitative trait
-locus (pQTL) colocalization) to figure out which changes come from the drug rather than from
-weight loss alone. I also build the pipelines and dashboards the clinical omics team uses day to
-day.
+and phase 3 trials in obesity and cardiometabolic disease. Most of the analysis follows
+proteins over the course of a trial with longitudinal mixed models, then uses mediation analysis
+to ask whether those changes account for clinical outcomes and compares them across dose arms.
+Mendelian randomization and protein quantitative trait locus (pQTL) colocalization help separate
+causal signals from confounding. I also build the pipelines, data models, and dashboards the
+clinical omics team works with.
 
 ## SURMOUNT-5: tirzepatide versus semaglutide
 

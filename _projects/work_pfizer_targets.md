@@ -18,15 +18,17 @@ related_publications: false
 When I joined Pfizer's Internal Medicine Research Unit, genetics-based target discovery relied
 on one-off analyses run by individual scientists on a high-performance computing (HPC) cluster.
 Nothing reusable connected genome-wide association study (GWAS) evidence to functional genomics
-to a target nomination. Over four years I led the team that built that pipeline. The idea was to
-layer genetic association (GWAS, exome studies, Mendelian randomization) with functional data
-(single-cell chromatin, expression and protein quantitative trait loci) so you could go from a
-locus to a ranked target with genetic support for both efficacy and selectivity.
+to a target nomination. Over four years I led the team that built that pipeline. It combined
+human genetic evidence (GWAS, exome-wide association studies, colocalization, and Mendelian
+randomization) with functional genomics, so a risk locus could be followed to a ranked target with
+genetic support for efficacy and selectivity. On the functional side we used single-cell chromatin
+accessibility, expression and protein quantitative trait locus (eQTL and pQTL) data, and deep
+learning predictions of variant function.
 
-Alongside the pipeline work, I led the migration of Pfizer's genomics analysis to Amazon Web
-Services (AWS), mainly to get GWAS and fine-mapping running at a scale the on-premise cluster
-couldn't handle. That was a cross-functional effort with teams in statistics, machine learning,
-and several therapeutic areas.
+I also led the move of Pfizer's genomics analysis to Amazon Web Services (AWS). Along the way we
+built GWAS and fine-mapping pipelines that scale, settled on one way to harmonize summary
+statistics, and added support for new multi-omics datasets. The move involved teams from Internal
+Medicine, Inflammation & Immunology, Statistics, and Machine Learning & Computational Sciences.
 
 ---
 
