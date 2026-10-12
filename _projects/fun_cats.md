@@ -22,8 +22,8 @@ category: fun
   <!-- Right: lede + genetics panel (with stats row inside) -->
   <div class="claire-hero-right">
     <p class="claire-lede">
-      &ldquo;Joined the family in February 2021 and has since contributed significantly
-      to the household&rsquo;s culture through continuous lap occupancy.&rdquo;
+      &ldquo;Joined the family in February 2021 and has kept a lap occupied ever
+      since.&rdquo;
     </p>
 
     <div class="claire-genetics">

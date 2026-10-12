@@ -13,8 +13,7 @@ I run [Home Assistant](https://www.home-assistant.io/) on a self-hosted server a
 home automation. It started with solar: after installing a SunPower solar (photovoltaic, PV) system I wanted to
 monitor production locally without depending on SunPower's cloud app, so I set up Home
 Assistant to pull data directly from the PVS gateway on my home network. From there it grew to lights,
-climate, media, and utility monitoring. The whole system follows one rule: **if the internet goes
-down, everything still works.**
+climate, media, and utility monitoring, all set up to keep working if the internet goes down.
 
 {% if s.automations or s.entities or s.integrations or s.since %}
 
@@ -86,12 +85,12 @@ all on local hardware. <span class="text-muted" style="font-size: 0.82rem;">Tap 
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-house-signal"></i></div>
     <h3>Local-first</h3>
-    <p>No automation depends on an external cloud. Lights, climate, and energy monitoring keep working if the internet goes down.</p>
+    <p>No automation depends on an external cloud, so lights, climate, and energy monitoring all keep working if the internet goes down.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <h3>Graceful degradation</h3>
-    <p>Every automation has a safe fallback when a sensor goes offline. The system fails open for comfort and closed for safety.</p>
+    <p>Every automation has a safe fallback when a sensor goes offline, failing open for comfort and closed for safety.</p>
   </div>
   <div class="hass-principle-card">
     <div class="hass-principle-icon"><i class="fa-solid fa-users"></i></div>

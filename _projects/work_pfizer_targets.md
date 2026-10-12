@@ -20,15 +20,15 @@ on one-off analyses run by individual scientists on a high-performance computing
 Nothing reusable connected genome-wide association study (GWAS) evidence to functional genomics
 to a target nomination. Over four years I led the team that built that pipeline. It combined
 human genetic evidence (GWAS, exome-wide association studies, colocalization, and Mendelian
-randomization) with functional genomics, including single-cell chromatin accessibility,
-expression and protein quantitative trait locus (eQTL and pQTL) data, and deep learning
-predictions of variant function, to find and rank new targets with genetic support for efficacy
-and selectivity.
+randomization) with functional genomics, so a risk locus could be followed to a ranked target with
+genetic support for efficacy and selectivity. On the functional side we used single-cell chromatin
+accessibility, expression and protein quantitative trait locus (eQTL and pQTL) data, and deep
+learning predictions of variant function.
 
-I also led the move of Pfizer's genomics analysis to Amazon Web Services (AWS): GWAS and fine-mapping pipelines that
-scale, a standard way to harmonize summary statistics, and support for new multi-omics datasets.
-That work involved teams from Internal Medicine, Inflammation & Immunology, Statistics, and
-Machine Learning & Computational Sciences.
+I also led the move of Pfizer's genomics analysis to Amazon Web Services (AWS). Along the way we
+built GWAS and fine-mapping pipelines that scale, settled on one way to harmonize summary
+statistics, and added support for new multi-omics datasets. The move involved teams from Internal
+Medicine, Inflammation & Immunology, Statistics, and Machine Learning & Computational Sciences.
 
 ---
 

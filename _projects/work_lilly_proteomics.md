@@ -12,7 +12,7 @@ related_publications: false
 
 <div class="project-tldr">
   <strong>TL;DR</strong>
-  Using blood proteomics from clinical trials to understand how obesity drugs work, beyond the weight loss itself.
+  Using blood proteomics from clinical trials to figure out which protein changes come from obesity drugs themselves and which just follow the weight loss.
 </div>
 
 When a patient on a glucagon-like peptide-1 (GLP-1) receptor agonist loses a lot of weight, hundreds of plasma proteins
@@ -20,11 +20,12 @@ change. The challenge is working out which changes come from the drug itself and
 follow the weight loss. Only the first kind can tell you something about how the drug works.
 
 At Lilly, I apply large-scale proteomics (mainly Olink Explore HT and SomaScan 11k) to phase 2
-and phase 3 trials in obesity and cardiometabolic disease. I use longitudinal mixed models to
-track proteins over time, mediation analysis to test whether protein changes explain clinical
-outcomes, dose-response comparisons across treatment arms, and genetic methods (Mendelian
-randomization, protein quantitative trait locus (pQTL) colocalization) to separate causal signals from confounding. I also build
-the pipelines, data models, and dashboards the clinical omics team works with.
+and phase 3 trials in obesity and cardiometabolic disease. Most of the analysis follows
+proteins over the course of a trial with longitudinal mixed models, then uses mediation analysis
+to ask whether those changes account for clinical outcomes and compares them across dose arms.
+Mendelian randomization and protein quantitative trait locus (pQTL) colocalization help separate
+causal signals from confounding. I also build the pipelines, data models, and dashboards the
+clinical omics team works with.
 
 ## SURMOUNT-5: tirzepatide versus semaglutide
 
