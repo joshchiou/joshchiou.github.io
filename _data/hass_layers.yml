@@ -31,14 +31,14 @@
       desc: "IPv6-based mesh protocol for newer smart home devices. Thread border routers bridge the mesh to the local IP network. Home Assistant has native Matter support, so no cloud commissioning is required."
     - icon: fa-solid fa-tower-broadcast
       title: AMR 433 MHz
-      desc: "Automatic Meter Reading: one-way radio packets broadcast by the utility smart meter. Received passively by the RTL-SDR dongle and decoded by RTLAMR2MQTT. No pairing or utility account access needed."
+      desc: "Automatic Meter Reading (AMR) packets are one-way radio broadcasts from the utility smart meter. The RTL-SDR dongle receives them passively and RTLAMR2MQTT decodes them, so no pairing or utility account access is needed."
 
 - label: Bridges
   layer: bridges
   chips:
     - icon: fa-solid fa-arrows-left-right
       title: Zigbee2MQTT
-      desc: "Translates Zigbee radio traffic from the SLZB-06 coordinator into MQTT messages. Supports more than 3,000 devices. The primary bridge for all Zigbee devices, with no vendor clouds involved."
+      desc: "Translates Zigbee radio traffic from the SLZB-06 coordinator into MQTT messages, with no vendor cloud involved. It supports more than 3,000 device models and handles every Zigbee device in the house."
     - icon: fa-solid fa-satellite-dish
       title: RTLAMR2MQTT
       desc: "Decodes AMR utility meter readings received by the RTL-SDR dongle and publishes them as MQTT messages. Runs as a Docker container alongside the SDR device."
@@ -77,4 +77,4 @@
       desc: "Smart thermostat control with occupancy-based automations. When the house is empty, the thermostat backs off; it pre-conditions before regular arrival times."
     - icon: fa-solid fa-table-cells
       title: Custom cards
-      desc: "Purpose-built Lovelace cards for energy monitoring and at-a-glance system status. Designed for zero training: anyone in the house can read and operate them."
+      desc: "Custom Lovelace cards for energy monitoring and at-a-glance system status, simple enough that anyone in the house can read and operate them without training."
