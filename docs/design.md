@@ -36,15 +36,17 @@ one accent color, generous white space, and real figures from the work instead o
 | Project card        | `/projects/`                        | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                         |
 | Research theme card | Homepage                            | 5:2 image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
 | Project page        | `/projects/*/`                      | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                             |
-| Selected paper      | `/publications/`                    | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
+| Selected paper      | Homepage, `/publications/`          | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
 | Talk                | `/publications/`                    | Year, title, venue, outlined link buttons for slides or video                                                 |
 | Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
 | Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
 
-Section labels on the projects and publications pages ("work", "fun", "Selected", "All
-publications", "Talks and presentations", "Press") share one style: left-aligned, 1.2rem bold,
-text color, with a 2px rule; only the Selected star uses the accent. Thumbnails and TL;DRs appear
-only in Selected lists; everywhere else publication entries use the full width so titles line up.
+Section labels on the projects and publications pages ("work", "fun", "Talks and presentations",
+"Press") share one style: left-aligned, 1.2rem bold, text color, with a 2px rule. Thumbnails and
+TL;DRs appear only on selected papers (the CV hides them); other entries use the full width.
+Filters on the code page are `.contrib-filter-btn` buttons; on the publications page they are two
+dropdowns on the search box's line, the same height and border radius as the box, with an accent
+border while a filter is on.
 On short pages the footer sits at the bottom of the window.
 
 Headings: page titles in the navigation and the homepage section labels ("research", "selected

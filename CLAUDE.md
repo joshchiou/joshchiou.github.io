@@ -118,7 +118,8 @@ pull requests" (Settings → Actions → General).
 **Publication metadata:** run the "Enrich Publication Metadata" workflow (manual trigger) to
 add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
 `scripts/enrich_bib.py`; it opens a PR. Selected papers also carry a hand-written `tldr`
-(plain-language summary) and a `preview` image path.
+(plain-language summary) and a `preview` image path. Every paper names its topics in a `themes` field (ids from
+`_data/publication_themes.yml`) for the theme filter on /publications/.
 
 ## Homepage and publications data
 

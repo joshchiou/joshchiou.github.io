@@ -294,6 +294,7 @@ filtered_bibtex_keywords:
     author_count,
     author_includes_self,
     cofirst,
+    themes,
     author_others,
     abstract,
     additional_info,

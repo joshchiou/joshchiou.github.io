@@ -1,20 +1,43 @@
 {% if site.bib_search %}
   <script src="{{ '/assets/js/bibsearch.js' | relative_url | bust_file_cache }}" type="module"></script>
   <div class="bibsearch-container">
-    <div class="bibsearch-input-wrapper">
-      <i class="fa-solid fa-magnifying-glass bibsearch-icon"></i>
-      <input
-        type="text"
-        id="bibsearch"
-        spellcheck="false"
-        autocomplete="off"
-        class="search bibsearch-form-input"
-        placeholder="Filter by title, author, journal, or year…"
-      >
-      <button type="button" id="bibsearch-clear" class="bibsearch-clear" aria-label="Clear search" hidden>
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+    {% comment %} Search box and two filters on one line; assets/js/bibsearch.js reads the data on each entry. {% endcomment %}
+    <div class="bibsearch-row">
+      <div class="bibsearch-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass bibsearch-icon"></i>
+        <input
+          type="text"
+          id="bibsearch"
+          spellcheck="false"
+          autocomplete="off"
+          class="search bibsearch-form-input"
+          placeholder="Filter by title, author, journal, or year…"
+          aria-label="Filter publications"
+        >
+        <button type="button" id="bibsearch-clear" class="bibsearch-clear" aria-label="Clear search" hidden>
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="pub-filter-selects">
+        <select id="pub-filter-show" class="pub-filter-select" aria-label="Show">
+          <option value="">All papers</option>
+          <option value="selected">Selected</option>
+          <option value="first">First or co-first author</option>
+        </select>
+        <select id="pub-filter-theme" class="pub-filter-select" aria-label="Theme">
+          <option value="">All themes</option>
+          {% for theme in site.data.publication_themes %}
+            <option value="{{ theme.id }}">{{ theme.label | capitalize }}</option>
+          {% endfor %}
+          <option value="other">Other</option>
+        </select>
+      </div>
     </div>
-    <span id="bibsearch-count" class="bibsearch-count" hidden></span>
+
+    <div class="pub-filter-status">
+      <span id="bibsearch-count" class="bibsearch-count" aria-live="polite" hidden></span>
+      <button type="button" id="pub-filter-reset" class="pub-filter-reset" hidden>Reset</button>
+    </div>
+    <p id="pub-filter-empty" class="pub-filter-empty" hidden>No publications match these filters.</p>
   </div>
 {% endif %}

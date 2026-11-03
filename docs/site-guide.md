@@ -35,12 +35,18 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
    (`_includes/publication_meta.liquid`). Preprints count until they're published; the PhD thesis
    is listed but not counted (`counted = {false}`). Never type a count into a template; see
    [D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time).
-2. Search box.
-3. **Selected**: papers with `selected = {true}`, ordered by `cv_order`, each with a 4:3 `preview`
-   thumbnail and a one-sentence `tldr`.
-4. **All publications**: every entry in `papers.bib`, newest first.
-5. **Talks & Presentations**: read from the section of that name in `_data/cv.yml`.
-6. **Press**: `_data/press.yml`, newest first.
+2. Search box and two dropdowns on one line (`_includes/bib_search.liquid`,
+   `assets/js/bibsearch.js`): "show" (all, selected, or first or co-first author) and "theme". The
+   choices are kept in the query string, so a filtered view can be linked
+   (`/publications/?show=selected`). There is no year filter; the list is already grouped by year. Themes are listed in
+   `_data/publication_themes.yml`; each entry names its own in a `themes` field; untagged entries
+   show under "other".
+3. Every entry in `papers.bib`, newest first and grouped by year. Selected papers
+   (`selected = {true}`) show their 4:3 `preview` thumbnail and one-sentence `tldr` here; they are
+   a filter, not a second list
+   ([D-022](DECISIONS.md#d-022-selected-papers-are-a-filter-on-the-publications-page-not-a-second-list)).
+4. **Talks & Presentations**: read from the section of that name in `_data/cv.yml`.
+5. **Press**: `_data/press.yml`, newest first.
 
 ### Projects
 
@@ -143,7 +149,9 @@ lists each of them under `workflow_run`. Add any new data workflow to that list.
 
 ## Common changes
 
-**New paper.** Add the entry to `papers.bib` (or merge the weekly discovery PR). For a selected
+**New paper.** Add the entry to `papers.bib` (or merge the weekly discovery PR), with a `themes`
+field naming its ids from `_data/publication_themes.yml` (space-separated; leave it out for
+"other"); `check_site.py` rejects unknown ids. For a selected
 paper, add `selected = {true}`, a `cv_order`, a `tldr` (see the writing guide), and a 4:3 `preview`
 image in `assets/img/publication_preview/`.
 

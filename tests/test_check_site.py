@@ -77,6 +77,13 @@ def test_duplicate_key_and_doi_fail(tmp_path):
     assert any("duplicate DOI" in f for f in check_site.failures)
 
 
+def test_unknown_theme_fails(tmp_path):
+    entries = bib(tmp_path, make().replace("  doi =", "  themes = {diabetes proteomic},\n  doi =", 1))
+    check_site.check_bib(entries, {})
+    assert any("theme 'proteomic'" in f for f in check_site.failures)
+    assert not any("theme 'diabetes'" in f for f in check_site.failures)
+
+
 def test_top_journal_misspelling_fails(tmp_path):
     entries = bib(tmp_path, make(journal="Nature genetics"))
     check_site.check_bib(entries, {"top_journals": ["Nature Genetics"]})
@@ -163,9 +170,7 @@ def test_hardcoded_publication_count_is_caught(site_copy):
 def test_missing_entry_on_publications_page_is_caught(site_copy):
     page = site_copy / "publications" / "index.html"
     text = page.read_text(encoding="utf-8")
-    split = text.find("all-heading")
-    head, tail = text[:split], text[split:]
-    page.write_text(head + tail.replace('<div id="sun2023plasma" class="col-sm', '<div class="col-sm', 1))
+    page.write_text(text.replace('<div id="sun2023plasma" class="col-sm', '<div class="col-sm', 1))
     run_site_checks(site_copy)
     assert any("sun2023plasma" in f for f in check_site.failures)
 

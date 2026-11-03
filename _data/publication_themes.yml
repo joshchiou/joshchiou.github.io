@@ -1,0 +1,10 @@
+# Topics for the theme dropdown on /publications/ (assets/js/bibsearch.js).
+# Each paper lists theme ids in its `themes` field in papers.bib, separated by
+# spaces; a paper with no themes shows under "other". check_site.py rejects ids
+# that aren't listed here.
+- id: diabetes
+  label: diabetes
+- id: proteomics
+  label: proteomics and genetics
+- id: regulatory
+  label: gene regulation
