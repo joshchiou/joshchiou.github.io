@@ -6,6 +6,28 @@
     list keeps full width. `preview` may be a URL, a path under assets/, or a
     file name in assets/img/publication_preview/.
   {% endcomment %}
+  {%- comment -%}
+    Data for the filters on /publications/ (assets/js/bibsearch.js): role is
+    "first" when Josh is first or co-first (a * on his last name) author.
+  {%- endcomment -%}
+  {%- assign pub_role = 'other' -%}
+  {%- for author in entry.author_array -%}
+    {%- assign plain_last = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+    {%- if site.scholar.last_name contains plain_last and site.scholar.first_name contains author.first -%}
+      {%- if forloop.first or author.last contains '*' -%}
+        {%- assign pub_role = 'first' -%}
+      {%- endif -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  <span
+    class="pub-filter-data"
+    hidden
+    data-year="{{ entry.year }}"
+    data-role="{{ pub_role }}"
+    data-themes="{{ entry.themes }}"
+    data-selected="{{ entry.selected | default: 'false' }}"
+  ></span>
   {% assign content_col = 'col-sm-12' %}
   {% if site.enable_publication_thumbnails and entry.preview %}
     {% assign content_col = 'col-sm-10' %}
@@ -73,7 +95,9 @@
         {%- endif -%}
 
         {%- if forloop.length > 1 -%}
-          {% if forloop.first == false %},&nbsp;{% endif %}
+          {% if forloop.first == false %}
+            {%- if forloop.length == 2 and author_array_limit == author_array_size -%}&nbsp;{%- else -%},&nbsp;{%- endif -%}
+          {% endif %}
           {%- if forloop.last and author_array_limit == author_array_size %}and&nbsp;{% endif -%}
         {% endif %}
         {%- if author_is_self -%}

@@ -1,0 +1,7 @@
+# DOIs that scripts/update_publications.py should never propose again.
+# One DOI per line; text after "#" is a comment. Add a DOI here when you close
+# one of its PRs, so the same entry doesn't come back the next Thursday.
+
+10.1101/2024.07.15.24310442  # USP18 lupus medRxiv preprint; published as freimann2025transeqtl (Nat Commun 2025)
+10.1101/2022.06.17.496443    # UKB-PPP bioRxiv preprint; published as sun2023plasma (Nature 2023)
+10.2210/pdb3jb5/pdb          # PDB structure deposit (P. acnes phage capsid), a dataset rather than a paper

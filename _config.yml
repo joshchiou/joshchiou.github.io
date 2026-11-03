@@ -171,6 +171,9 @@ kramdown:
 include: ["_pages"]
 exclude:
   - bin/
+  - CLAUDE.md
+  - UPSTREAM_README.md
+  - requirements.txt
   - CONTRIBUTING.md
   - CUSTOMIZE.md
   - Dockerfile
@@ -291,6 +294,7 @@ filtered_bibtex_keywords:
     author_count,
     author_includes_self,
     cofirst,
+    themes,
     author_others,
     abstract,
     additional_info,

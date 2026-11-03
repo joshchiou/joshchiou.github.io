@@ -258,6 +258,39 @@ def test_publication_search_and_toggles(site):
     p.assert_clean()
 
 
+def test_publication_filters(site):
+    import check_site
+
+    entries = check_site.parse_bib(ROOT / "_bibliography" / "papers.bib")
+    selected = sum(1 for e in entries if e.get("selected") == "true")
+    p = site()
+    page = p.open("/publications/")
+    items = page.locator(".publications ol.bibliography > li")
+
+    def shown():
+        return sum(1 for e in items.all() if e.is_visible())
+
+    assert shown() == len(entries), "every entry is listed once"
+    page.select_option("#pub-filter-show", "selected")
+    assert shown() == selected
+    assert "show=selected" in page.url
+    page.select_option("#pub-filter-show", "first")
+    first = shown()
+    assert 0 < first < len(entries)
+    page.select_option("#pub-filter-theme", "diabetes")
+    assert 0 < shown() <= first
+    page.fill("#bibsearch", "no paper has this title")
+    page.wait_for_timeout(600)
+    assert shown() == 0 and page.locator("#pub-filter-empty").is_visible()
+    page.click("#pub-filter-reset")
+    assert shown() == len(entries) and "?" not in page.url
+
+    # Filters survive a reload through the query string.
+    page = p.open("/publications/?show=selected")
+    assert shown() == selected
+    p.assert_clean()
+
+
 def test_homepage_count_up_ends_on_real_numbers(site):
     import check_site
 

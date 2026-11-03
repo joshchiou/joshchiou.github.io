@@ -340,6 +340,94 @@ html[data-theme="dark"] {
   }
 }
 
+// Homepage: where the citation numbers come from and when they were fetched.
+.about-stats-asof {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--global-text-color-light);
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--global-divider-color);
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--global-theme-color);
+    }
+  }
+}
+
+// Publications page: search box and the two filter dropdowns on one line
+// (_includes/bib_search.liquid); the dropdowns wrap below the box on phones.
+.bibsearch-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.5rem;
+
+  .bibsearch-input-wrapper {
+    flex: 1 1 260px;
+    max-width: 440px;
+  }
+}
+
+.pub-filter-selects {
+  display: flex;
+  flex: 1 1 300px;
+  min-width: 0;
+  gap: 0.5rem;
+
+  .pub-filter-select {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.pub-filter-select {
+  font-size: 0.9rem;
+  min-height: calc(1.5rem + 22px); // the search box: 24px of text, 10px padding, 1px border
+  padding: 10px 2rem 10px 12px;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  background-color: var(--global-bg-color);
+  color: var(--global-text-color);
+  cursor: pointer;
+
+  &.active {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--global-theme-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--global-theme-color) 15%, transparent);
+  }
+}
+
+.pub-filter-status {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.pub-filter-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--global-theme-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pub-filter-empty {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--global-text-color-light);
+}
+
 // Phones: thumbnails would push the title below the fold; hide them.
 @media (max-width: 575.98px) {
   .publications ol.bibliography li .pub-thumb {

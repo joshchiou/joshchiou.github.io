@@ -55,10 +55,17 @@ layout: default
             <span class="about-stat-label">citations</span>
           </div>
           <div class="about-stat">
-            <span class="about-stat-num">{{ stats.h_index }}</span>
+            <span class="about-stat-num" id="stat-hindex">{{ stats.h_index }}</span>
             <span class="about-stat-label">h-index</span>
           </div>
         </div>
+        {% if stats.updated_at %}
+          <div class="about-stats-asof">
+            Citations and h-index from
+            <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" target="_blank" rel="noopener">Google Scholar</a>, as of
+            {{ stats.updated_at | date: '%b %-d, %Y' }}
+          </div>
+        {% endif %}
         {% if pubs.top_journals.size > 0 %}
           <div class="about-journals">
             <span class="about-journals-count">{{ pubs.top_journal_papers }} papers in</span>

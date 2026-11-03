@@ -110,14 +110,16 @@ doesn't trigger push-based workflows, so `deploy.yml` also runs on `workflow_run
 them succeeds. New data workflows that should update the live site must be added to that list.
 
 **New publications:** `scripts/update_publications.py` (weekly) opens a PR with ORCID works whose
-DOI and title aren't already in `papers.bib`; preprint versions with different titles still appear
-and should be rejected in review. Needs repo setting "Allow GitHub Actions to create and approve
+DOI and title aren't already in `papers.bib` or `scripts/publication_ignore.txt`, and skips the
+week while an earlier one is still open. Preprint versions with different titles still appear: to
+reject one, close the PR and add its DOI to the ignore list so it doesn't come back. Needs repo setting "Allow GitHub Actions to create and approve
 pull requests" (Settings → Actions → General).
 
 **Publication metadata:** run the "Enrich Publication Metadata" workflow (manual trigger) to
 add missing `abstract`, `pmid`, and open-access `pdf` fields from Europe PMC via
 `scripts/enrich_bib.py`; it opens a PR. Selected papers also carry a hand-written `tldr`
-(plain-language summary) and a `preview` image path.
+(plain-language summary) and a `preview` image path. Every paper names its topics in a `themes` field (ids from
+`_data/publication_themes.yml`) for the theme filter on /publications/.
 
 ## Homepage and publications data
 

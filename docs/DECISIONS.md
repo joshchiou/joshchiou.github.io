@@ -347,3 +347,26 @@ the archive's ride count and elevation can't be split at a date; the day-level r
 
 **Why not store start times.** The repo is public; morning or afternoon is enough to match a
 Shortcut ride to the same workout in a later export.
+
+## D-022: Selected papers are a filter on the publications page, not a second list
+
+_Recorded 2026-11-03 (owner asked to remove the repetition) · `_pages/publications.md`,
+`assets/js/bibsearch.js`_
+
+**Context.** The publications page showed the five selected papers in a Selected list and again in
+the full list, and the homepage shows the same five. Visitors also had no way to narrow 40 entries
+beyond text search.
+
+**Decision.** The publications page lists every entry once, grouped by year. Two dropdowns on the
+search box's line filter it: "show" (all, selected, or first or co-first author) and "theme".
+Selected papers keep their thumbnail and TL;DR in the full list. The homepage keeps its selected list and drops the
+publication count, Scholar, and ORCID line that repeated the stats above it.
+
+**Why not keep Selected and drop those papers from the year list.** Someone scanning a year would
+miss a paper; the year list has to be complete.
+
+**Why dropdowns and no year filter.** Rows of filter buttons took three lines above the list;
+the owner wanted one. The year headings already do what a year filter would.
+
+**Why themes are hand-tagged.** Titles don't map reliably to topics by keyword (the atlas papers
+and the islet papers share most terms), so each entry names its themes in a `themes` field.

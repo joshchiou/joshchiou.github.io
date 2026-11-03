@@ -119,6 +119,13 @@ def check_bib(entries: list[dict], config: dict) -> None:
         if e.get("preview") and not (ROOT / e["preview"]).exists():
             fail(f"papers.bib: {e['key']} preview {e['preview']} does not exist")
 
+    # Theme ids drive the filter on /publications/; an unknown one would never match a button.
+    theme_ids = {t["id"] for t in load_yaml(DATA / "publication_themes.yml")}
+    for e in entries:
+        for theme in e.get("themes", "").split():
+            if theme not in theme_ids:
+                fail(f"papers.bib: {e['key']} theme {theme!r} is not in _data/publication_themes.yml")
+
     # A top journal spelled differently in one entry would silently drop out of the count.
     top = config.get("top_journals") or []
     for e in entries:
@@ -239,7 +246,8 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
             expect_equal("homepage publication count", shown, f"{total} publications")
         expect_equal("homepage selected papers", sorted(entry_keys(home, keys)), sorted(selected))
 
-    # Publications page: the Selected list, then the full list, then talks and press.
+    # Publications page: every entry once (selected ones are a filter, not a second list),
+    # then talks and press.
     pubs = read_page(site, "publications/index.html")
     if pubs:
         counts = texts(pubs, "publication-count")
@@ -247,17 +255,12 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
             fail("publications page: no publication count shown")
         for shown in counts:
             expect_equal("publications page count", shown, f"{total} publications")
-        split = pubs.find("all-heading")
-        if split < 0:
-            fail("publications page: no 'All publications' heading")
-        else:
-            sel = entry_keys(pubs[:split], keys)
-            full = entry_keys(pubs[split:], keys)
-            expect_equal("publications page Selected entries", sorted(sel), sorted(selected))
-            expect_equal("publications page entry count", len(full), len(entries))
-            missing = sorted(keys - set(full))
-            if missing:
-                fail(f"publications page: entries missing from the full list: {', '.join(missing)}")
+        listed = entry_keys(pubs, keys)
+        expect_equal("publications page entry count", len(listed), len(entries))
+        missing = sorted(keys - set(listed))
+        if missing:
+            fail(f"publications page: entries missing from the list: {', '.join(missing)}")
+        expect_equal("publications page entries marked selected", pubs.count('data-selected="true"'), len(selected))
 
     # Code page
     code = read_page(site, "code/index.html")
