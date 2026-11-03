@@ -171,6 +171,9 @@ kramdown:
 include: ["_pages"]
 exclude:
   - bin/
+  - CLAUDE.md
+  - UPSTREAM_README.md
+  - requirements.txt
   - CONTRIBUTING.md
   - CUSTOMIZE.md
   - Dockerfile
