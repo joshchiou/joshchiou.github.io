@@ -27,6 +27,33 @@ ORCID_API = f"https://pub.orcid.org/v3.0/{ORCID_ID}/works"
 S2_API = "https://api.semanticscholar.org/graph/v1/paper"
 
 BIB_PATH = Path(__file__).resolve().parent.parent / "_bibliography" / "papers.bib"
+IGNORE_PATH = Path(__file__).resolve().parent / "publication_ignore.txt"
+BRANCH_PREFIX = "auto/new-publications-"
+
+
+def load_ignored_dois(path: Path = IGNORE_PATH) -> set[str]:
+    """DOIs rejected in review (preprints of listed papers, datasets), one per line; '#' starts a comment."""
+    if not path.exists():
+        return set()
+    dois = set()
+    for line in path.read_text().splitlines():
+        doi = line.split("#", 1)[0].strip().lower()
+        if doi:
+            dois.add(doi)
+    return dois
+
+
+def open_publication_pr() -> str | None:
+    """Branch of an open publications PR, if any, so a second one isn't stacked on top of it."""
+    try:
+        out = subprocess.run(
+            ["gh", "pr", "list", "--state", "open", "--json", "headRefName", "--jq", ".[].headRefName"],
+            check=True, capture_output=True, text=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError) as e:
+        print(f"  Could not list open PRs ({e}); continuing")
+        return None
+    return next((b for b in out.split() if b.startswith(BRANCH_PREFIX)), None)
 
 
 def extract_existing_dois(bib_path: Path) -> set[str]:
@@ -140,12 +167,17 @@ def main():
     existing_dois = extract_existing_dois(BIB_PATH)
     print(f"  {len(existing_dois)} DOIs already in papers.bib")
 
+    ignored_dois = load_ignored_dois()
+    print(f"  {len(ignored_dois)} DOIs on the ignore list ({IGNORE_PATH.name})")
+
     existing_titles = extract_existing_titles(BIB_PATH)
     new_works = [
         w for w in orcid_works
-        if w["doi"] not in existing_dois and not title_already_listed(w.get("title", ""), existing_titles)
+        if w["doi"] not in existing_dois
+        and w["doi"] not in ignored_dois
+        and not title_already_listed(w.get("title", ""), existing_titles)
     ]
-    print(f"  {len(new_works)} new works to process (DOI and title not already in papers.bib)")
+    print(f"  {len(new_works)} new works to process (not in papers.bib or the ignore list)")
 
     if not new_works:
         print("No new publications found.")
@@ -177,12 +209,17 @@ def main():
             print(f"\n{entry['bib']}")
         return
 
+    pending = open_publication_pr()
+    if pending:
+        print(f"\nPR from {pending} is still open; review it first. Not opening another.")
+        return
+
     bib_text = BIB_PATH.read_text()
     additions = "\n\n".join(e["bib"] for e in new_entries)
     BIB_PATH.write_text(bib_text.rstrip() + "\n\n" + additions + "\n")
     print(f"Appended {len(new_entries)} entries to {BIB_PATH}")
 
-    branch = f"auto/new-publications-{int(time.time())}"
+    branch = f"{BRANCH_PREFIX}{int(time.time())}"
     subprocess.run(["git", "checkout", "-b", branch], check=True)
     subprocess.run(["git", "add", str(BIB_PATH)], check=True)
 
@@ -191,7 +228,7 @@ def main():
     subprocess.run(["git", "commit", "-m", msg], check=True)
     subprocess.run(["git", "push", "-u", "origin", branch], check=True)
 
-    body = f"## New publications discovered via ORCID\n\n{titles}\n\nReview the BibTeX entries and add `selected`, `cv_order`, `altmetric`, and `preview` fields as needed."
+    body = f"## New publications discovered via ORCID\n\n{titles}\n\nReview the BibTeX entries and add `selected`, `cv_order`, `altmetric`, and `preview` fields as needed. To reject an entry (a preprint of a listed paper, a dataset), close this PR and add its DOI to `scripts/publication_ignore.txt`."
     subprocess.run([
         "gh", "pr", "create",
         "--title", f"Add {len(new_entries)} new publication(s)",
