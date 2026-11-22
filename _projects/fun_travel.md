@@ -33,12 +33,13 @@ My wife and I try to get abroad once or twice a year, plus domestic trips when w
 
 <div id="travel-map-wrap" class="travel-map-wrap mb-2">
   <svg id="travel-map-svg" class="travel-map-svg" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+  <p id="travel-map-loading" class="travel-map-loading" role="status">Loading map…</p>
   <div id="travel-map-tooltip" class="travel-map-tooltip" aria-hidden="true"></div>
   <button id="travel-map-reset" class="travel-map-reset-btn" title="Reset zoom">
     <i class="fa-solid fa-compress"></i>
   </button>
 </div>
-<p class="travel-map-hint"><span class="travel-hint-pointer">Ctrl + scroll to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; double-click to reset &nbsp;·&nbsp; hover a country for city clusters &nbsp;·&nbsp; click to expand below</span><span class="travel-hint-touch">Pinch to zoom &nbsp;·&nbsp; drag to pan &nbsp;·&nbsp; tap a country for city clusters</span></p>
+<p class="travel-map-hint"><span class="travel-hint-pointer"><span>Ctrl + scroll to zoom</span> <span>drag to pan</span> <span>double-click to reset</span> <span>hover a country for city clusters</span> <span>click to expand below</span></span><span class="travel-hint-touch"><span>Pinch to zoom</span> <span>drag to pan</span> <span>tap a country for city clusters</span></span></p>
 <div class="travel-map-legend mb-4">
 {%- for continent in continents %}
   <span class="travel-legend-swatch travel-legend-{{ continent | slugify }}"></span><span class="travel-legend-label">{{ continent }}</span>

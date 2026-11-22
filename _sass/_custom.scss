@@ -976,6 +976,35 @@ html[data-theme="dark"] .table {
   color: var(--global-text-color);
 }
 
+// Travel map: reserve the map's shape and say it's loading until the GeoJSON arrives
+// (assets/js/travel.js removes the message).
+.travel-map-wrap {
+  aspect-ratio: 960 / 500;
+}
+
+.travel-map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  pointer-events: none;
+}
+
+// Map hints: each phrase stays whole and the dot ends a line instead of starting the next one.
+.travel-map-hint .travel-hint-pointer > span,
+.travel-map-hint .travel-hint-touch > span {
+  white-space: nowrap;
+
+  &:not(:last-child)::after {
+    content: "\00a0\00a0·";
+    margin-right: 0.35em;
+  }
+}
+
 // Cycling: the tiles are all-time totals; this year's miles and pace get their own line.
 .cycling-stats-scope {
   margin: 0.15rem 0 0.35rem;
