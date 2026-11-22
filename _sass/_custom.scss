@@ -651,6 +651,12 @@ html.anim-ready .animate-in:not(.visible) {
     text-decoration: none !important;
   }
 
+  // "and 62 more authors" is a click-to-expand control on screen; on paper it's plain text.
+  .more-authors {
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
   .animate-in {
     opacity: 1 !important;
     transform: none !important;
@@ -1033,4 +1039,33 @@ html[data-theme="dark"] .table {
 .cycling-year-line {
   font-size: 0.88rem;
   color: var(--global-text-color);
+}
+
+// Skip link (_layouts/default.liquid): hidden until it gets keyboard focus.
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: var(--global-theme-color);
+  color: #fff;
+  font-size: 0.9rem;
+  transform: translateY(-200%);
+
+  &:focus,
+  &:focus-visible {
+    transform: none;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  html[data-theme="dark"] & {
+    color: #1c1c1d;
+  }
+}
+
+main#main-content:focus {
+  outline: none;
 }

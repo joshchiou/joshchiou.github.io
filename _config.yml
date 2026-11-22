@@ -224,6 +224,11 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  # Google Search Console's verification file isn't a page.
+  - scope:
+      path: "google4c76b57158d30499.html"
+    values:
+      sitemap: false
   # Inline news items are rendered in the news/about aggregation pages.
   # Their individual /news/<slug>/ URLs are thin duplicates with no search value.
   - scope:
