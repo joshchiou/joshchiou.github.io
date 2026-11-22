@@ -371,30 +371,20 @@ the owner wanted one. The year headings already do what a year filter would.
 **Why themes are hand-tagged.** Titles don't map reliably to topics by keyword (the atlas papers
 and the islet papers share most terms), so each entry names its themes in a `themes` field.
 
-## D-023: Homepage research cards use conceptual diagrams, not paper figures
+## D-023: The homepage research cards keep the paper figures
 
-_Recorded 2026-11-22 (owner's request) · `scripts/render_research_art.py`,
-`_includes/research_theme_art.liquid`, `_data/research_themes.yml`_
+_Recorded 2026-11-22 (owner's decision) · `_data/research_themes.yml`, `assets/img/research_themes/`_
 
-**Context.** The three research cards showed 5:2 composites of paper figures (D-004, D-005). The
-same figures appear again a few hundred pixels lower as Selected publication thumbnails and on the
-project cards, so the homepage showed the T1D Manhattan plot, the islet UMAP, and the pQTL map
-twice each. On a dark page their white backgrounds also read as bright cutouts.
+**Context.** A site review asked to differentiate the three research cards from the figures under
+Selected publications, since the same Manhattan plot, UMAP, and pQTL map appear in both places. A
+version with small conceptual SVG diagrams (a dot grid of proteins, a DNA helix with genotype
+groups, a chromatin track over cell clusters) was built on `claude/keen-curie-wsfpjj`.
 
-**Decision.** Each card has a small inline SVG that sketches the idea of the theme: a protein panel
-where a few proteins shift (clinical trial proteomics), a DNA variant raising a protein level
-(population proteomics and genetics), and a risk variant in one cell type's open chromatin
-(diabetes genetics). They carry no data, axes, or labels, and draw in the theme color, one warm
-highlight, and a gray mixed from the text color, so the same markup works in light and dark mode.
-The generator script is the source; the 5:2 composites in `assets/img/research_themes/` were
-deleted (they are in git history). This replaces D-004 and D-005 for the homepage; the project
-cards and thumbnails still use the paper figures.
+**Decision.** Josh preferred the figures, so the cards keep the 5:2 composites from D-004 and
+D-005. In dark mode they get the same slight dimming as the other figures.
 
-**Why not typographic cards with no graphic.** Three text-only cards in a row lose the visual break
-between the bio and the publication list, and the owner offered diagrams as the first option.
-
-**Why not stock icons.** D-007's reason still holds: generic art says nothing about the work. The
-diagrams show the specific idea of each theme.
+**Why not the diagrams.** The owner didn't like them; real figures from the work are the site's
+rule (see design.md), and drawn icons read as decoration. Don't propose them again without asking.
 
 ## D-024: The cycling projection is by day, as of the last ride
 
@@ -422,8 +412,7 @@ _Recorded 2026-11-22 · `assets/img/og-image.svg`_
 showed 39 publications and 9,024 citations. Nothing checks numbers inside an image, and social
 sites cache previews for weeks.
 
-**Decision.** The card shows name, role, focus, and URL on navy, with the protein-panel motif from
-the homepage. Pages without their own `og_image` also send `og:image:width`, `og:image:height`, and
+**Decision.** The card shows name, role, focus, and URL on navy, with a dot-grid motif. Pages without their own `og_image` also send `og:image:width`, `og:image:height`, and
 an alt text.
 
 **Why not render the numbers at deploy time.** It would keep the image current but not the copies

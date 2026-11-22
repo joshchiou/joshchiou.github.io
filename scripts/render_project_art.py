@@ -7,6 +7,7 @@ unlabeled data that implies no real results.
 
 Usage:
     python3 scripts/render_project_art.py   # writes the Lilly, Pfizer, and Home Assistant card images
+                                            # and the homepage clinical trial proteomics image
 
 Requires: pip install numpy matplotlib pillow
 """
@@ -212,6 +213,8 @@ def home_assistant(rng):
 
 def main():
     lilly(np.random.default_rng(7))
+    # 5:2 version for the homepage research theme card
+    lilly(np.random.default_rng(7), "assets/img/research_themes/clinical-trial-proteomics.webp", (10, 4), 120)
     pfizer(np.random.default_rng(11))
     home_assistant(np.random.default_rng(3))
 

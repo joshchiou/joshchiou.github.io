@@ -28,8 +28,8 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
     ([D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)).
   - Dark mode: figures and thumbnails dimmed and framed; Altmetric's white disc appears only after
     the badge loads.
-  - Research cards use conceptual SVG diagrams
-    ([D-023](DECISIONS.md#d-023-homepage-research-cards-use-conceptual-diagrams-not-paper-figures)).
+  - Research cards keep the paper figures; diagrams were tried and Josh preferred the figures
+    ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)).
   - One CTA row (Publications, CV, PDF); code page without KPI tiles; homepage news without code
     items ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
   - Social card redrawn without numbers, plus `og:image` size and alt tags
@@ -70,7 +70,7 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
 | D-020 | Journal chips in a fixed order: Nature, Cell, Nature Medicine, Nature Genetics, Nature Immunology | [D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)                                               |
 | D-021 | Health fills days the Strava archive missed; rides store am/pm for matching                       | [D-021](DECISIONS.md#d-021-health-fills-the-days-the-strava-archive-missed)                               |
 | D-022 | Selected papers are a filter on /publications/, not a second list                                 | [D-022](DECISIONS.md#d-022-selected-papers-are-a-filter-on-the-publications-page-not-a-second-list)       |
-| D-023 | Homepage research cards use conceptual SVG diagrams, not paper figures (replaces D-004, D-005)    | [D-023](DECISIONS.md#d-023-homepage-research-cards-use-conceptual-diagrams-not-paper-figures)             |
+| D-023 | Homepage research cards keep the paper figures (diagrams tried and rejected)                      | [D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)                            |
 | D-024 | Cycling projection is by day, as of the last ride                                                 | [D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)                          |
 | D-025 | The social preview card carries no numbers                                                        | [D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)                                    |
 | D-026 | Code page and homepage news lead with work, not activity counts                                   | [D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)                 |
@@ -78,8 +78,8 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
 
 ## 4. Open items (ranked by impact)
 
-1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). Look at the homepage research diagrams
-   and the new social card in both themes; after merging, re-scrape the homepage in LinkedIn's
+1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). Look at the new social card (Josh
+   was unsure about its dot grid) and the dark-mode changes; after merging, re-scrape the homepage in LinkedIn's
    Post Inspector so it drops the cached card with old numbers.
 2. **Set up the ride Shortcut and its GitHub token** (owner only), following
    [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling

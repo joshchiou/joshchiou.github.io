@@ -27,7 +27,7 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
    and a quiet PDF link. The numbers are in the static HTML; the count-up animation only plays in
    a visible tab and always ends on the real number.
 4. **research**: three theme cards from `_data/research_themes.yml`, each linking to a project,
-   with a diagram picked by `art` (see "Images" in [design.md](design.md)).
+   with a 5:2 image from `assets/img/research_themes/`.
 5. **selected publications**: entries in `papers.bib` with `selected = {true}`.
 6. **news**: the five most recent scientific, speaking, and career items from `_news/`. Items with
    `homepage: false` (code work such as merged PRs) are left out here but stay on `/news/`.
@@ -155,7 +155,6 @@ lists each of them under `workflow_run`. Add any new data workflow to that list.
 | `parse_location_history.py`                                                                           | Adds new places from a Google Maps Timeline export (run locally)             |
 | `render_travel_card.py`                                                                               | Redraws the travel card map from the travel data                             |
 | `render_project_art.py`                                                                               | Redraws the Lilly, Pfizer, and Home Assistant card illustrations             |
-| `render_research_art.py`                                                                              | Writes the homepage research card diagrams to `_includes/`                   |
 | `render_og_image.py`                                                                                  | Renders `assets/img/og-image.png` (the site-wide link preview) from its SVG  |
 | `prep_images.py`, `publish_images.sh`                                                                 | Convert photos to responsive WebP; publish gallery photos to GitHub releases |
 | `build_cv_pdf.py`                                                                                     | Renders `/cv/` to PDF (the deploy workflow runs it)                          |
