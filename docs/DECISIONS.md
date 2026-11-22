@@ -418,9 +418,10 @@ original card. The card's `og:image` size and alt tags were kept, since they cha
 **Why not the dark-mode dimming.** Owner's preference. Don't restyle figures or photos without
 asking first.
 
-**Numbers on the card.** Updated 2026-11-22 at Josh's request to 39 papers, 5 _Nature_, 9k+
-citations. Nothing checks them, so update `og-image.svg` and re-run `scripts/render_og_image.py`
-when they change (new papers, every 1,000 citations).
+**Later the same day (owner's choice).** Josh didn't like the original card's decorative circles,
+so it was replaced by his headshot (`prof_pic.jpg`, embedded when rendering) with name, title, and
+focus on white, and no counts, so nothing on it goes stale. When the headshot changes, re-run
+`scripts/render_og_image.py`; it picks up the new photo.
 
 ## D-026: The code page and homepage lead with work, not activity counts
 

@@ -67,6 +67,9 @@ the CV's "Talks & Presentations" section under the sentence-case heading "Talks 
   card at a 16:10 card image; it gets cropped on phones. They stay paper figures even though the
   same papers appear under Selected publications
   ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)).
+- **Social preview** (`assets/img/og-image.png`, 1200x630, from `og-image.svg`): the headshot in a
+  circle with name, title, focus, and URL on white. No counts. Re-run
+  `scripts/render_og_image.py` after changing the headshot or title.
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
 - **Formats.** WebP for photos and dense figures, through `scripts/prep_images.py` (responsive

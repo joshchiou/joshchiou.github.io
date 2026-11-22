@@ -17,9 +17,10 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 - **What is live** is whatever `deploy.yml` last built from `master`. Everything below is on
   `claude/keen-curie-wsfpjj`, pushed but not merged; no PR has been opened.
 - **Visuals are as Josh had them.** The research cards keep the paper figures (D-023), and figures,
-  photos, and the social card are unchanged
+  and photos are unchanged
   ([D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)). Diagrams,
-  dark-mode dimming, and a redrawn social card were tried on this branch and reverted.
+  dark-mode dimming, and a redrawn social card were tried on this branch and reverted; the social
+  card was then replaced by a headshot card at Josh's request.
 - **On the branch:**
   - Homepage: stats animate only in a visible tab and always end on the real number; one CTA row
     (Publications, CV, PDF); news leaves out the Home Assistant PR but keeps r-mmrm.
@@ -93,8 +94,9 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
      social links in subpage footers; a quieter stats row in the hero; a copyable third-person bio.
    - **Left alone on purpose** (Josh prefers the current visuals): dark-mode figure softening,
      headshot framing, and conceptual research-card graphics.
-   - The social card's numbers (39 papers, 5 _Nature_, 9k+ citations) are typed into
-     `og-image.svg`; update them by hand when they change.
+   - The social card is now the headshot with name and title (no numbers). After merging,
+     re-scrape the homepage in LinkedIn's Post Inspector; after swapping in a new headshot,
+     re-run `scripts/render_og_image.py`.
 2. **Set up the ride Shortcut and its GitHub token** (owner only), following
    [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling
    page's "this year" numbers are as of that date. The `STRAVA_*` repo secrets can be deleted.
