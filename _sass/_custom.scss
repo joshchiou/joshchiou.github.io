@@ -922,3 +922,18 @@ html[data-theme="dark"] {
     text-decoration: none;
   }
 }
+
+// Theme switch: no transitions while data-theme changes (assets/js/theme.js adds the class for
+// two frames), so colors flip at once instead of fading through mid-gray.
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+}
+
+// Tables (the /news/ list) get their dark colors from CSS, not from the table-dark class that
+// theme.js adds after the page loads, so dark mode shows the right text color on first paint.
+html[data-theme="dark"] .table {
+  color: var(--global-text-color);
+}
