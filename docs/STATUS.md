@@ -93,8 +93,8 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
      social links in subpage footers; a quieter stats row in the hero; a copyable third-person bio.
    - **Left alone on purpose** (Josh prefers the current visuals): dark-mode figure softening,
      headshot framing, and conceptual research-card graphics.
-   - The social card still shows "35+ papers, 5 Nature, 8k+ citations"; update the SVG numbers
-     only if Josh wants.
+   - The social card's numbers (39 papers, 5 _Nature_, 9k+ citations) are typed into
+     `og-image.svg`; update them by hand when they change.
 2. **Set up the ride Shortcut and its GitHub token** (owner only), following
    [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling
    page's "this year" numbers are as of that date. The `STRAVA_*` repo secrets can be deleted.

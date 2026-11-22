@@ -418,8 +418,9 @@ original card. The card's `og:image` size and alt tags were kept, since they cha
 **Why not the dark-mode dimming.** Owner's preference. Don't restyle figures or photos without
 asking first.
 
-**Known issue.** The card still says "35+ papers, 5 Nature, 8k+ citations"; if those should be
-updated, edit the numbers in `og-image.svg` and re-run `scripts/render_og_image.py`.
+**Numbers on the card.** Updated 2026-11-22 at Josh's request to 39 papers, 5 _Nature_, 9k+
+citations. Nothing checks them, so update `og-image.svg` and re-run `scripts/render_og_image.py`
+when they change (new papers, every 1,000 citations).
 
 ## D-026: The code page and homepage lead with work, not activity counts
 
