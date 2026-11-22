@@ -1,0 +1,69 @@
+# Bars on the cocktails page (_projects/fun_cocktails.md): Boston area, New York, then Europe.
+# Fields: name, city (shown as the chip), area (neighborhood or street), note, map (search query
+# for a Google Maps link). Notes are one or two plain sentences; say what was good, not ratings.
+- name: Wusong Road
+  city: Cambridge
+  area: Harvard Square
+  note: >-
+    Chef Jason Doo's tiki bar over two floors, inspired by his family's American Chinese
+    restaurant.
+  map: Wusong Road, 112 Mt Auburn St, Cambridge, MA
+
+- name: Longfellow Bar
+  city: Cambridge
+  area: Harvard Square
+  note: >-
+    The upstairs bar at Alden & Harlow, in the old Café Algiers space, with a cocktail list that
+    changes often.
+  map: Longfellow Bar, 40 Brattle St, Cambridge, MA
+
+- name: Blossom Bar
+  city: Brookline
+  area: Brookline Village
+  note: >-
+    Ran Duan's tropical cocktails, built on Latin American spirits, in his family's former Sichuan
+    Garden space.
+  map: Blossom Bar, 295 Washington St, Brookline, MA
+
+- name: Bloom
+  city: Boston
+  area: Seaport
+  note: >-
+    A Japanese tea and cocktail bar: matcha during the day, cocktails at night.
+  map: Bloom Tea & Cocktail Bar, 60 Seaport Blvd, Boston, MA
+
+- name: Bar Goto
+  city: New York
+  area: Lower East Side
+  note: >-
+    Kenta Goto's small Japanese izakaya-style bar, with cocktails and okonomiyaki.
+  map: Bar Goto, 245 Eldridge St, New York, NY
+
+- name: Little Red Door
+  city: Paris
+  area: Le Marais
+  note: >-
+    Behind an unmarked red door, with a menu built on French produce. A regular on the World's 50
+    Best Bars list.
+  map: Little Red Door, 60 Rue Charlot, Paris
+
+- name: Moonshiner
+  city: Paris
+  area: Bastille
+  note: >-
+    A speakeasy behind the walk-in fridge door of a pizzeria, with a long whisky list.
+  map: Moonshiner, 5 Rue Sedaine, Paris
+
+- name: Néroli
+  city: Paris
+  area: 11th arrondissement
+  note: >-
+    A cocktail bar with Mediterranean food, between Bastille and the Aligre market.
+  map: Néroli, 3 Rue Saint-Bernard, Paris
+
+- name: Picinin
+  city: Milan
+  area: Viale Premuda
+  note: >-
+    A one-man show: the owner runs the bar on his own, and every drink we tried was great.
+  map: Picinin cocktail bar, Viale Premuda 7, Milan

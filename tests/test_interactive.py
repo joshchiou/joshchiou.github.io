@@ -175,6 +175,16 @@ def test_travel_map_bars_and_gallery(site):
     rows = page.locator("#travel-bars-wrap > *")
     assert rows.count() > 0, "country bars did not render"
 
+    # Overseas territories (French Guiana) aren't colored with their country.
+    lit_overseas = page.evaluate(
+        "[...document.querySelectorAll('#travel-map-svg path.country-visited')]"
+        ".filter(p => p.__data__.properties.name.includes('(overseas)')).length"
+    )
+    assert lit_overseas == 0
+    assert page.locator("#travel-map-loading").count() == 0, "loading message left on the map"
+    if not page.locator("#travelSwiper").is_visible():
+        assert not page.locator("#travel-photos-heading").is_visible(), "empty Photos heading shown"
+
     if page.locator("#travelSwiper").is_visible():  # only shown once travel photos exist
         before = swiper_index(page, "#travelSwiper")
         page.click("#travelSwiper .swiper-button-next")
@@ -285,9 +295,42 @@ def test_publication_filters(site):
     page.click("#pub-filter-reset")
     assert shown() == len(entries) and "?" not in page.url
 
+    # The "Showing X of N" count uses the same total as the page header (the thesis isn't counted).
+    total = len(check_site.counted(entries))
+    page.fill("#bibsearch", "proteomic")
+    page.wait_for_timeout(600)
+    assert page.inner_text("#bibsearch-count").endswith(f"of {total} publications")
+    page.click("#pub-filter-reset")
+
     # Filters survive a reload through the query string.
     page = p.open("/publications/?show=selected")
     assert shown() == selected
+    p.assert_clean()
+
+
+def test_cycling_pace_is_for_this_year_and_not_below_miles_so_far(site):
+    p = site()
+    page = p.open("/projects/fun_cycling/")
+    page.wait_for_timeout(500)
+    text = page.inner_text("#stat-pace")
+    if not text:  # no ride yet this calendar year
+        pytest.skip("no rides this year")
+    nums = [int(n.replace(",", "")) for n in re.findall(r"([\d,]+) mi", text)]
+    assert re.match(r"^\d{4}: [\d,]+ mi so far", text), text
+    if "on pace for about" in text:
+        so_far, projected = nums[0], nums[-1]
+        assert projected >= so_far, text
+    p.assert_clean()
+
+
+def test_homepage_news_leaves_out_home_assistant_items(site):
+    p = site()
+    page = p.open("/")
+    news = " ".join(page.locator(".news td").all_inner_texts())
+    assert news, "homepage shows news"
+    # Home Assistant PRs (homepage: false) stay on /news/ and /code/; scientific software stays.
+    assert "memory leak" not in news
+    assert "r-mmrm" in news
     p.assert_clean()
 
 
@@ -313,6 +356,32 @@ def test_theme_toggle(site):
         page.click("#light-toggle")
         seen.add(page.evaluate("document.documentElement.getAttribute('data-theme')"))
     assert {"light", "dark"} <= seen
+    p.assert_clean()
+
+
+def test_theme_switch_has_no_fade_and_skip_link_works(site):
+    p = site()
+    page = p.open("/news/")
+    page.click("#light-toggle")
+    # The theme flips at once; the old 750 ms fade class must not come back.
+    assert page.evaluate("document.documentElement.classList.contains('transition')") is False
+    page.wait_for_timeout(100)
+    assert page.evaluate("document.documentElement.classList.contains('theme-switching')") is False
+
+    page = p.open("/news/")  # fresh page, so Tab starts at the top
+    page.keyboard.press("Tab")
+    assert page.evaluate("document.activeElement.classList.contains('skip-link')")
+    page.keyboard.press("Enter")
+    assert page.evaluate("document.activeElement.id") == "main-content"
+    p.assert_clean()
+
+
+def test_publication_search_filters_on_first_keystroke(site):
+    p = site()
+    page = p.open("/publications/")
+    page.locator("#bibsearch").press_sequentially("x", delay=0)
+    page.wait_for_timeout(120)  # well under the old 300 ms debounce
+    assert page.locator("#bibsearch-count").is_visible()
     p.assert_clean()
 
 

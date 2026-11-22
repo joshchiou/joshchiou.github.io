@@ -198,11 +198,16 @@ let setSearchTheme = (theme) => {
   }
 };
 
+// Switch themes instantly. Upstream al-folio faded every property over 750 ms (html.transition),
+// which passed through low-contrast mid-grays and, because it also ran on page load, faded the
+// /news/ table text in from dark gray. Instead, turn transitions off for the frame the theme
+// changes in, then back on so hover effects still animate.
 let transTheme = () => {
-  document.documentElement.classList.add("transition");
-  window.setTimeout(() => {
-    document.documentElement.classList.remove("transition");
-  }, 500);
+  const root = document.documentElement;
+  root.classList.add("theme-switching");
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => root.classList.remove("theme-switching"));
+  });
 };
 
 // Determine the expected state of the theme toggle, which can be "dark", "light", or

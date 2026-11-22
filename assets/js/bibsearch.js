@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const d = li.querySelector(".pub-filter-data");
     return d ? d.dataset : {};
   };
+  const isCounted = (li) => dataOf(li).counted !== "false";
+  const countedTotal = items.filter(isCounted).length;
 
   // Start from the query string, ignoring values the dropdowns don't offer.
   const state = { show: "", theme: "" };
@@ -70,10 +72,14 @@ document.addEventListener("DOMContentLoaded", function () {
       items.forEach((li) => li.innerText.toLowerCase().includes(searchTerm) || textMisses.add(li));
     }
 
+    // The count matches the page header: entries with counted = {false} in papers.bib (the
+    // thesis) are listed but not counted (D-019).
     let visible = 0;
+    let uncountedVisible = 0;
     items.forEach((li) => {
       if (textMisses.has(li) || !matchesFilters(li)) li.classList.add("unloaded");
-      else visible += 1;
+      else if (isCounted(li)) visible += 1;
+      else uncountedVisible += 1;
     });
 
     // Hide a year heading and its list when nothing in it is left.
@@ -87,11 +93,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const filtering = Boolean(searchTerm || state.show || state.theme);
     if (countEl) {
-      countEl.textContent = `Showing ${visible} of ${items.length}`;
+      const extra = uncountedVisible ? `, plus the PhD thesis` : "";
+      countEl.textContent = `Showing ${visible} of ${countedTotal} publications${extra}`;
       countEl.hidden = !filtering;
     }
     if (resetBtn) resetBtn.hidden = !filtering;
-    if (emptyEl) emptyEl.hidden = !(filtering && visible === 0);
+    if (emptyEl) emptyEl.hidden = !(filtering && visible + uncountedVisible === 0);
     if (clearBtn) clearBtn.hidden = !searchTerm;
   };
 
@@ -104,11 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   Object.entries(selects).forEach(([key, el]) => el.addEventListener("change", () => setFilter(key, el.value)));
 
-  // Search waits for 300 ms without typing.
-  let timeoutId;
+  // Filter on every keystroke, at most once per frame (40 entries is cheap). The old 300 ms
+  // debounce made the first keystroke look ignored.
+  let frame = 0;
   searchInput.addEventListener("input", function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(apply, 300);
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      apply();
+    });
   });
 
   const clearSearch = () => {
@@ -144,8 +155,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // A #term in the URL fills the box. Without one, keep whatever the visitor already typed
+  // before this module loaded instead of clearing it.
   const readHash = () => {
-    searchInput.value = decodeURIComponent(window.location.hash.substring(1));
+    const term = decodeURIComponent(window.location.hash.substring(1));
+    if (term || window.location.hash) searchInput.value = term;
     apply();
   };
   window.addEventListener("hashchange", readHash);

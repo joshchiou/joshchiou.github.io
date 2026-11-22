@@ -11,47 +11,6 @@ description: >
 
 {% assign gh = site.data.github_stats %}
 
-<div class="github-profile-card mb-5" id="github-profile-card">
-  <div class="github-profile-inner-d">
-    <div class="github-profile-left">
-      <a href="https://github.com/joshchiou" target="_blank" rel="noopener noreferrer"
-         class="github-profile-identity">
-        {% if gh.avatar_url %}
-          <img src="{{ gh.avatar_url }}" alt="GitHub avatar" class="github-avatar">
-        {% else %}
-          <img src="" alt="GitHub avatar" class="github-avatar" style="display:none">
-        {% endif %}
-        <div>
-          <div class="github-profile-name">{{ gh.name | default: "Josh Chiou" }}</div>
-          <div class="github-profile-login">@joshchiou</div>
-        </div>
-      </a>
-    </div>
-    <div class="github-profile-right-d">
-      <div class="github-profile-stats">
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.public_repos | default: "n/a" }}</span><span class="gh-stat-label">repos</span></div>
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.total_stars | default: "n/a" }}</span><span class="gh-stat-label">stars</span></div>
-        <div class="gh-stat"><span class="gh-stat-val">{{ gh.followers | default: "n/a" }}</span><span class="gh-stat-label">followers</span></div>
-      </div>
-      <div class="gh-stat-divider"></div>
-      <div class="github-profile-orgs-d">
-        <div class="github-profile-orgs-icons">
-          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Lilly">
-            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Lilly">
-          </a>
-          <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
-            <img src="{{ '/assets/img/orgs/conda-forge.png' | relative_url }}" alt="conda-forge">
-          </a>
-          <a href="https://github.com/noobies-tennis" target="_blank" rel="noopener noreferrer" title="Noobies Tennis">
-            <img src="{{ '/assets/img/orgs/noobies-tennis.png' | relative_url }}" alt="Noobies Tennis">
-          </a>
-        </div>
-        <span class="github-profile-orgs-label">organizations</span>
-      </div>
-    </div>
-  </div>
-</div>
-
 ## Featured repositories
 
 Repositories I've built or contributed to significantly.
@@ -173,6 +132,41 @@ Selected merged pull requests to community scientific software.
 <div class="mt-3">
   <a href="https://github.com/search?q=author%3Ajoshchiou+is%3Apr+is%3Amerged&type=pullrequests"
      target="_blank" rel="noopener noreferrer">See all merged pull requests &rarr;</a>
+</div>
+
+<div class="github-profile-card mt-5" id="github-profile-card">
+  <div class="github-profile-inner-d">
+    <div class="github-profile-left">
+      <a href="https://github.com/joshchiou" target="_blank" rel="noopener noreferrer"
+         class="github-profile-identity">
+        {% if gh.avatar_url %}
+          <img src="{{ gh.avatar_url }}" alt="GitHub avatar" class="github-avatar">
+        {% else %}
+          <img src="" alt="GitHub avatar" class="github-avatar" style="display:none">
+        {% endif %}
+        <div>
+          <div class="github-profile-name">{{ gh.name | default: "Josh Chiou" }}</div>
+          <div class="github-profile-login">@joshchiou</div>
+        </div>
+      </a>
+    </div>
+    <div class="github-profile-right-d">
+      <div class="github-profile-orgs-d">
+        <div class="github-profile-orgs-icons">
+          <a href="https://github.com/EliLillyCo" target="_blank" rel="noopener noreferrer" title="Lilly">
+            <img src="{{ '/assets/img/orgs/eli-lilly.png' | relative_url }}" alt="Lilly">
+          </a>
+          <a href="https://github.com/conda-forge" target="_blank" rel="noopener noreferrer" title="conda-forge">
+            <img src="{{ '/assets/img/orgs/conda-forge.png' | relative_url }}" alt="conda-forge">
+          </a>
+          <a href="https://github.com/noobies-tennis" target="_blank" rel="noopener noreferrer" title="Noobies Tennis">
+            <img src="{{ '/assets/img/orgs/noobies-tennis.png' | relative_url }}" alt="Noobies Tennis">
+          </a>
+        </div>
+        <span class="github-profile-orgs-label">organizations</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

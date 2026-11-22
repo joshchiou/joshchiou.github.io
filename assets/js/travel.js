@@ -130,17 +130,54 @@
       allClusters[name] = clusterCities(c);
     });
 
+    var loadingEl = document.getElementById("travel-map-loading");
     fetch(GEOJSON_URL)
       .then(function (r) {
         return r.json();
       })
       .then(function (geojson) {
-        renderCountries(geojson);
+        renderCountries(splitOverseas(geojson));
         renderCities();
+        if (loadingEl) loadingEl.remove();
       })
       .catch(function (e) {
         console.warn("Travel GeoJSON failed:", e);
+        if (loadingEl) loadingEl.textContent = "The map couldn't load.";
       });
+  }
+
+  /* ── Overseas territories ────────────────────────────────────────────── */
+  // The GeoJSON draws some countries' overseas territories as part of the country (France
+  // includes French Guiana), so visiting France would light up South America. Polygons outside
+  // the bounding box of the main territory become their own unvisited feature.
+  var MAINLAND_BOUNDS = {
+    France: { lonMin: -10, lonMax: 15, latMin: 35, latMax: 55 }, // keeps Corsica, drops French Guiana
+  };
+
+  function splitOverseas(geojson) {
+    var out = [];
+    geojson.features.forEach(function (f) {
+      var box = MAINLAND_BOUNDS[f.properties.name];
+      if (!box || f.geometry.type !== "MultiPolygon") return out.push(f);
+      var inside = function (poly) {
+        return poly[0].every(function (pt) {
+          return pt[0] >= box.lonMin && pt[0] <= box.lonMax && pt[1] >= box.latMin && pt[1] <= box.latMax;
+        });
+      };
+      var home = f.geometry.coordinates.filter(inside);
+      var away = f.geometry.coordinates.filter(function (poly) {
+        return !inside(poly);
+      });
+      out.push({ type: "Feature", properties: f.properties, geometry: { type: "MultiPolygon", coordinates: home } });
+      if (away.length) {
+        out.push({
+          type: "Feature",
+          properties: { name: f.properties.name + " (overseas)" },
+          geometry: { type: "MultiPolygon", coordinates: away },
+        });
+      }
+    });
+    return { type: "FeatureCollection", features: out };
   }
 
   /* ── Country rendering ───────────────────────────────────────────────── */

@@ -1,11 +1,12 @@
 # Timeline entries for Claire's project page.
 # Add new entries here to grow the timeline; no template changes needed.
-# Fields: year, milestone, location, img, caption
+# Fields: year, milestone, location, img, alt (describes the photo for screen readers), caption
 
 - year: "~2018"
   milestone: "The early days"
   location: "Los Angeles, CA"
   img: "assets/img/projects/fun/cats/claire-gallery-1.webp"
+  alt: "Claire, a gray cat, peeking over the back of a couch with her tongue out"
   img_position: "center"
   caption: >-
     Born somewhere in Los Angeles, Claire spent her early months getting good
@@ -15,6 +16,7 @@
   milestone: "Adoption day"
   location: "Los Angeles → San Diego, CA"
   img: "assets/img/projects/fun/cats/claire-gallery-2.webp"
+  alt: "Claire stretched out on a white blanket in the sun"
   img_position: "center"
   caption: >-
     Adopted in Los Angeles and moved straight to San Diego. She was cautious at
@@ -24,6 +26,7 @@
   milestone: "Cross-country move"
   location: "San Diego, CA → Cambridge, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-3.webp"
+  alt: "Claire standing on a desk keyboard in front of two monitors"
   img_position: "center"
   caption: >-
     Claire was stressed on the six-hour flight across the country but stayed
@@ -34,6 +37,7 @@
   milestone: "The Cambridge years"
   location: "Cambridge, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-5.webp"
+  alt: "Claire meowing from the ledge of a cat tower"
   img_position: "center"
   caption: >-
     Settled into Cambridge life. Living near MIT did nothing for her publication
@@ -43,6 +47,7 @@
   milestone: "New home"
   location: "Watertown, MA"
   img: "assets/img/projects/fun/cats/claire-gallery-4.webp"
+  alt: "Claire on the back of a couch, watching bare trees through a large window"
   img_position: "center"
   caption: >-
     Moved to a townhouse with proper south-facing windows, which she approved of

@@ -3,6 +3,8 @@
 
 Usage: python3 scripts/render_og_image.py
 
+Photos the SVG references by file name (prof_pic.jpg) are embedded when rendering.
+
 Requires: pip install playwright && playwright install chromium
 (or set CHROMIUM_PATH to an existing Chromium binary). Inter is fetched from
 Google Fonts and inlined, so the PNG matches the site typography without the
@@ -24,7 +26,7 @@ PNG = ROOT / "assets/img/og-image.png"
 HTML = """<!doctype html>
 <html><head><meta charset="utf-8">
 <style>{fonts}
-html,body{{margin:0;padding:0;background:#0d1729}} svg{{display:block}}</style>
+html,body{{margin:0;padding:0;background:#fff}} svg{{display:block}}</style>
 </head><body>{svg}</body></html>"""
 
 
@@ -49,6 +51,17 @@ def inline_fonts():
     return "\n".join(out)
 
 
+def inline_images(svg):
+    """Embed <image href="file"> files (relative to the SVG's folder) as data URIs."""
+
+    def repl(m):
+        path = SVG.parent / m.group(1)
+        mime = "image/png" if path.suffix == ".png" else "image/jpeg"
+        return f'href="data:{mime};base64,{base64.b64encode(path.read_bytes()).decode()}"'
+
+    return re.sub(r'href="(?!data:|https?:)([^"]+\.(?:jpe?g|png))"', repl, svg)
+
+
 def main():
     launch_args = {}
     if os.environ.get("CHROMIUM_PATH"):
@@ -56,7 +69,7 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(**launch_args)
         page = browser.new_page(viewport={"width": 1200, "height": 630})
-        page.set_content(HTML.format(fonts=inline_fonts(), svg=SVG.read_text()), wait_until="load")
+        page.set_content(HTML.format(fonts=inline_fonts(), svg=inline_images(SVG.read_text())), wait_until="load")
         page.evaluate("document.fonts.ready")
         page.screenshot(path=str(PNG), clip={"x": 0, "y": 0, "width": 1200, "height": 630})
         browser.close()

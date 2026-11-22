@@ -370,3 +370,89 @@ the owner wanted one. The year headings already do what a year filter would.
 
 **Why themes are hand-tagged.** Titles don't map reliably to topics by keyword (the atlas papers
 and the islet papers share most terms), so each entry names its themes in a `themes` field.
+
+## D-023: The homepage research cards keep the paper figures
+
+_Recorded 2026-11-22 (owner's decision) · `_data/research_themes.yml`, `assets/img/research_themes/`_
+
+**Context.** A site review asked to differentiate the three research cards from the figures under
+Selected publications, since the same Manhattan plot, UMAP, and pQTL map appear in both places. A
+version with small conceptual SVG diagrams (a dot grid of proteins, a DNA helix with genotype
+groups, a chromatin track over cell clusters) was built on `claude/keen-curie-wsfpjj`.
+
+**Decision.** Josh preferred the figures, so the cards keep the 5:2 composites from D-004 and
+D-005. In dark mode they get the same slight dimming as the other figures.
+
+**Why not the diagrams.** The owner didn't like them; real figures from the work are the site's
+rule (see design.md), and drawn icons read as decoration. Don't propose them again without asking.
+
+## D-024: The cycling projection is by day, as of the last ride
+
+_Recorded 2026-11-22 · `assets/js/cycling.js`_
+
+**Context.** The cycling page showed 1,555 miles ridden and "on pace for about 1,451 mi". The first
+number is all-time; the second was this year's miles divided by the number of months with data,
+times 12. The last month was September with only 10 days of data, counted as a whole month, so the
+projection came out low and looked smaller than the miles already ridden.
+
+**Decision.** The line now reads "2026: 1,088 mi so far, +1,018 mi vs 2025 to date · on pace for
+about 1,570 mi this year". Miles so far are divided by the day of the year of the last ride in the
+data and scaled to the full year; last year is summed through the same day. The projection is
+never below the miles so far, appears only after 30 days of the year, and the year-over-year
+percentage is left out above 500% (2025 tracking began in July, so early comparisons are huge).
+
+**Why the last ride and not today.** Rides arrive through the Shortcut and Health exports, so the
+data can lag by weeks. Dividing by today's date would read a gap in the import as a gap in riding.
+
+## D-025: Figures, photos, and the social card stay as designed
+
+_Recorded 2026-11-22 (owner's decision) · `_sass/_custom.scss`, `assets/img/og-image.svg`_
+
+**Context.** The 2026-11-22 review dimmed and framed paper figures and thumbnails in dark mode and
+redrew the link-preview card without its numbers and with a dot-grid motif.
+
+**Decision.** Josh likes the visuals as they are, so both were reverted: figures, thumbnails,
+project images, and the profile photo look the same in both modes, and `og-image.png` is the
+original card. The card's `og:image` size and alt tags were kept, since they change nothing visible.
+
+**Why not the dark-mode dimming.** Owner's preference. Don't restyle figures or photos without
+asking first.
+
+**Later the same day (owner's choice).** Josh didn't like the original card's decorative circles,
+so it was replaced by his headshot (`prof_pic.jpg`, embedded when rendering) with name, title, and
+focus on white, and no counts, so nothing on it goes stale. When the headshot changes, re-run
+`scripts/render_og_image.py`; it picks up the new photo.
+
+## D-026: The code page and homepage lead with work, not activity counts
+
+_Recorded 2026-11-22 (owner's request) · `_pages/code.md`, `_includes/news.liquid`_
+
+**Context.** The code page opened with GitHub repo, star, and follower tiles, small numbers that say
+little about the work and undersell it (most of it is in enterprise organizations). The homepage
+news mixed two merged pull requests in with papers, talks, and promotions.
+
+**Decision.** The code page opens with featured repositories, then merged contributions; a small
+GitHub card with no counts sits at the bottom. News items with `homepage: false` (Home Assistant
+work) are left off the homepage but stay on `/news/`, the code page, and the Home Assistant page.
+Scientific software such as the r-mmrm conda-forge package stays on the homepage.
+`check_site.py` now checks that the code page lists every featured repository instead of
+checking the tiles.
+
+**Why keep the repo-level stars and forks.** On a repo card they describe that repository, and the
+cards hide them when they are zero.
+
+## D-027: Theme switches are instant
+
+_Recorded 2026-11-22 (owner's request) · `assets/js/theme.js`, `_sass/_custom.scss`_
+
+**Context.** Upstream al-folio adds `html.transition` on every theme change, which animates every
+CSS property for 750 ms. Colors passed through low-contrast mid-grays on each toggle, and because
+`applyTheme()` also runs on page load, the /news/ table's text faded in from dark gray in dark mode.
+
+**Decision.** `transTheme()` now adds `html.theme-switching`, which turns transitions off, and
+removes it two frames later so hover effects still animate. Dark tables take their text color from
+CSS, so they are right before `theme.js` adds `table-dark`. The upstream `html.transition` rule in
+`_base.scss` is left in place but no longer used.
+
+**Why not a shorter fade.** Any fade between white and #1c1c1d passes through gray text on a gray
+background; an instant switch is what most sites do.

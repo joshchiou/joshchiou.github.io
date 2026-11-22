@@ -387,7 +387,14 @@ html[data-theme="dark"] {
 .pub-filter-select {
   font-size: 0.9rem;
   min-height: calc(1.5rem + 22px); // the search box: 24px of text, 10px padding, 1px border
-  padding: 10px 2rem 10px 12px;
+  padding: 10px 2.25rem 10px 12px;
+  // Own caret, 12px in from the border; the native one sat against it.
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236b6b6b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
   border: 1px solid var(--global-divider-color);
   border-radius: 8px;
   background-color: var(--global-bg-color);
@@ -397,6 +404,10 @@ html[data-theme="dark"] {
   &.active {
     border-color: var(--global-theme-color);
     color: var(--global-theme-color);
+  }
+
+  html[data-theme="dark"] & {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23a0a0a0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
   &:focus-visible {
@@ -640,6 +651,12 @@ html.anim-ready .animate-in:not(.visible) {
     text-decoration: none !important;
   }
 
+  // "and 62 more authors" is a click-to-expand control on screen; on paper it's plain text.
+  .more-authors {
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
   .animate-in {
     opacity: 1 !important;
     transform: none !important;
@@ -852,4 +869,230 @@ body > main {
   word-break: normal;
   overflow-wrap: break-word;
   min-width: 0;
+}
+
+// ---------------------------------------------------------------- site review, Nov 2026
+
+// Theme toggle: the filled sun is drawn small inside its em box, so at the stock 16px it read as a
+// speck on the white header. Same size for all three states, in the text color.
+#light-toggle {
+  color: var(--global-text-color);
+
+  #light-toggle-system,
+  #light-toggle-dark,
+  #light-toggle-light {
+    font-size: 1.2rem;
+    line-height: 1;
+    padding-top: 11px;
+  }
+
+  #light-toggle-light {
+    -webkit-text-stroke: 0.4px currentColor; // a touch heavier, like the moon beside it
+  }
+}
+
+// Native controls and scrollbars follow the site theme, not the OS: without this the search
+// modal (Ctrl+K) and other scroll areas kept bright white scrollbars in dark mode.
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+// scrollbar-color is inherited, so it reaches the list inside ninja-keys' shadow DOM.
+ninja-keys {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--global-text-color) 30%, transparent) transparent;
+}
+
+// Altmetric donuts (publication lists): a fixed 36px slot centered on the DOI/Scholar pills, so
+// rows don't jump when the badge arrives, and the donut fades in once its image has loaded
+// (assets/js/common.js adds .is-loaded). In dark mode the white disc behind the score also waits
+// for the image, so no blank white circle shows while it loads.
+.publications .links .altmetric-embed {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  margin-left: 4px;
+  vertical-align: middle;
+  line-height: 0;
+
+  img {
+    width: 36px !important;
+    height: 36px !important;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  img.is-loaded {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .publications .links .altmetric-embed img {
+    transition: none;
+  }
+}
+
+html[data-theme="dark"] {
+  .altmetric-embed img {
+    background-color: transparent;
+  }
+
+  .altmetric-embed img.is-loaded {
+    background-color: #ffffff;
+  }
+}
+
+// Homepage CTA row: Publications, the CV page, and the PDF as a quiet text link.
+.about-cta {
+  align-items: center;
+}
+
+.about-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  padding: 8px 4px;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+}
+
+// Theme switch: no transitions while data-theme changes (assets/js/theme.js adds the class for
+// two frames), so colors flip at once instead of fading through mid-gray.
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+}
+
+// Tables (the /news/ list) get their dark colors from CSS, not from the table-dark class that
+// theme.js adds after the page loads, so dark mode shows the right text color on first paint.
+html[data-theme="dark"] .table {
+  color: var(--global-text-color);
+}
+
+// Travel map: reserve the map's shape and say it's loading until the GeoJSON arrives
+// (assets/js/travel.js removes the message).
+.travel-map-wrap {
+  aspect-ratio: 960 / 500;
+}
+
+.travel-map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  pointer-events: none;
+}
+
+// Map hints: each phrase stays whole and the dot ends a line instead of starting the next one.
+.travel-map-hint .travel-hint-pointer > span,
+.travel-map-hint .travel-hint-touch > span {
+  white-space: nowrap;
+
+  &:not(:last-child)::after {
+    content: "\00a0\00a0·";
+    margin-right: 0.35em;
+  }
+}
+
+// Cocktail recipes: one column on phones, two from 600px. With an odd count the last card is
+// centered on its own row instead of sitting alone at the left (five recipes left Saturn orphaned).
+.recipe-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > .recipe-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - 1.25rem) / 2);
+    }
+  }
+}
+
+// Cycling: the tiles are all-time totals; this year's miles and pace get their own line.
+.cycling-stats-scope {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--global-text-color-light);
+}
+
+.cycling-year-line {
+  font-size: 0.88rem;
+  color: var(--global-text-color);
+}
+
+// Skip link (_layouts/default.liquid): hidden until it gets keyboard focus.
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: var(--global-theme-color);
+  color: #fff;
+  font-size: 0.9rem;
+  transform: translateY(-200%);
+
+  &:focus,
+  &:focus-visible {
+    transform: none;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  html[data-theme="dark"] & {
+    color: #1c1c1d;
+  }
+}
+
+main#main-content:focus {
+  outline: none;
+}
+
+// Cocktail bars (_data/cocktail_bars.yml): same cards as the recipes, with the neighborhood under
+// the name and a map link at the bottom.
+.bar-grid .recipe-card {
+  display: flex;
+  flex-direction: column;
+
+  .recipe-card-header {
+    margin-bottom: 0.2rem;
+  }
+
+  .bar-area {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    color: var(--global-text-color-light);
+  }
+
+  .recipe-note {
+    flex: 1 0 auto;
+  }
+
+  .bar-map-link {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    align-self: flex-start;
+  }
 }

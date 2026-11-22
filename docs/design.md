@@ -25,21 +25,22 @@ one accent color, generous white space, and real figures from the work instead o
 
 - **Dark mode.** Supported on every page. The toggle sets `data-theme` on `<html>` (handled by
   `assets/js/theme.js`), so dark styles key on `html[data-theme="dark"]`, not on the
-  `prefers-color-scheme` media query. Check every change in both modes.
+  `prefers-color-scheme` media query. Check every change in both modes. `color-scheme` follows
+  `data-theme`, so native scrollbars and form controls (including the Ctrl+K search modal) match.
 - **Icons.** Font Awesome, used sparingly (social links, buttons, the star on Selected). No emoji
   in headings or body text; the travel page's country flags are the exception.
 
 ## Components
 
-| Component           | Where                               | Rules                                                                                                         |
-| ------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Project card        | `/projects/`                        | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                         |
-| Research theme card | Homepage                            | 5:2 image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
-| Project page        | `/projects/*/`                      | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                             |
-| Selected paper      | Homepage, `/publications/`          | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
-| Talk                | `/publications/`                    | Year, title, venue, outlined link buttons for slides or video                                                 |
-| Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
-| Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
+| Component           | Where                         | Rules                                                                                                         |
+| ------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Project card        | `/projects/`                  | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                         |
+| Research theme card | Homepage                      | 5:2 image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
+| Project page        | `/projects/*/`                | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                             |
+| Selected paper      | Homepage, `/publications/`    | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
+| Talk                | `/publications/`              | Year, title, venue, outlined link buttons for slides or video                                                 |
+| Repo card           | `/code/`                      | Name, one-sentence description, language dot, stars, forks                                                    |
+| Stat tile           | Cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
 
 Section labels on the projects and publications pages ("work", "fun", "Talks and presentations",
 "Press") share one style: left-aligned, 1.2rem bold, text color, with a 2px rule. Thumbnails and
@@ -61,15 +62,22 @@ the CV's "Talks & Presentations" section under the sentence-case heading "Talks 
   photos. Work without public figures gets an illustration drawn from synthetic data (see below).
 - **Homepage research theme images** are 5:2 (1200x480) in `assets/img/research_themes/`: two
   panels side by side on white, ideally from two different papers, each fitted whole into its half
-  so nothing is cropped at any screen width, with a thin gray vertical divider (4px, `#c4c4c4`) between them. `img_credit` in `_data/research_themes.yml` names the
-  sources. Never point a theme card at a 16:10 card image; it gets cropped on phones.
+  so nothing is cropped at any screen width, with a thin gray vertical divider (4px, `#c4c4c4`)
+  between them. `img_credit` in `_data/research_themes.yml` names the sources. Never point a theme
+  card at a 16:10 card image; it gets cropped on phones. They stay paper figures even though the
+  same papers appear under Selected publications
+  ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)).
+- **Social preview** (`assets/img/og-image.png`, 1200x630, from `og-image.svg`): the headshot in a
+  circle with name, title, focus, and URL on white. No counts. Re-run
+  `scripts/render_og_image.py` after changing the headshot or title.
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
 - **Formats.** WebP for photos and dense figures, through `scripts/prep_images.py` (responsive
   480/800/1400px versions). SVG only for simple drawings. Link previews (`og_image`) are JPG,
   because social sites don't reliably read WebP or SVG.
 - **Alt text.** Card images sit next to their title, so they use empty alt text. Any image that
-  carries information on its own needs a real description.
+  carries information on its own needs a real description. Photos say what is in them (Claire's timeline photos have an `alt`
+  field in `_data/claire.yml`).
 
 ## Illustrations and charts
 
@@ -89,6 +97,8 @@ editing:
 
 ## Motion and accessibility
 
+- Theme switches are instant, with no fade (`html.theme-switching` in `assets/js/theme.js`,
+  [D-027](DECISIONS.md#d-027-theme-switches-are-instant)).
 - Motion is subtle: a small hover lift on cards and a fade-in on scroll (`.animate-in`, enabled
   only once `html.anim-ready` is set). Everything respects `prefers-reduced-motion`.
 - Keyboard focus is always visible (2px accent-color outline).
