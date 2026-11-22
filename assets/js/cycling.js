@@ -23,28 +23,28 @@
     byYear[year][monthIdx] = Math.round(m.distance_km * KM_TO_MI * 10) / 10;
   });
   var years = Object.keys(byYear).sort();
-  // Months before tracking began and months still to come have no data, not zero miles.
+  // Months before tracking began, and months after the last logged ride (not imported yet, or
+  // still to come), have no data rather than zero miles, so the lines stop instead of dropping to 0.
   var firstMonth = monthlyRaw.length ? monthlyRaw[0].month : null;
-  var nowMonth = new Date().toISOString().slice(0, 7);
+  var lastDay = calendarRaw.reduce(function (latest, d) {
+    return d[0] > latest ? d[0] : latest;
+  }, "");
+  var lastMonth = lastDay ? lastDay.slice(0, 7) : null;
+  var now = new Date();
+  var nowMonth = now.getFullYear() + "-" + (now.getMonth() < 9 ? "0" : "") + (now.getMonth() + 1);
   years.forEach(function (y) {
     for (var mi = 0; mi < 12; mi++) {
       var key = y + "-" + (mi < 9 ? "0" : "") + (mi + 1);
-      if ((firstMonth && key < firstMonth) || key > nowMonth) byYear[y][mi] = null;
+      if ((firstMonth && key < firstMonth) || (lastMonth && key > lastMonth) || key > nowMonth) byYear[y][mi] = null;
     }
   });
   var monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var yearColors = ["#2a78d6", "#eb6834", "#eda100", "#c9c8c3"]; // dataviz palette (docs/design.md)
 
-  // Year-over-year chart: the latest year in the data, and its last month with any riding.
+  // Year-over-year chart: the latest year in the data, with a "today" line at the current month.
   var chartYear = years[years.length - 1];
   var chartPrevYear = String(parseInt(chartYear, 10) - 1);
-  var chartMonthIdx = -1;
-  for (var _i = 11; _i >= 0; _i--) {
-    if (((byYear[chartYear] || [])[_i] || 0) > 0) {
-      chartMonthIdx = _i;
-      break;
-    }
-  }
+  var chartMonthIdx = chartYear === String(now.getFullYear()) ? now.getMonth() : -1;
 
   // Year-to-date pace, by day rather than by month: the last month with data is usually partial,
   // and counting it as a whole month understated the projection. "To date" is the last ride in the
@@ -56,9 +56,7 @@
   var yoyDelta = null,
     yoyPct = null,
     projFull = null;
-  var asOf = calendarRaw.reduce(function (latest, d) {
-    return d[0] > latest ? d[0] : latest;
-  }, "");
+  var asOf = lastDay;
   if (asOf && asOf.slice(0, 4) === String(new Date().getFullYear())) {
     curYear = asOf.slice(0, 4);
     prevYear = String(parseInt(curYear, 10) - 1);
@@ -88,7 +86,6 @@
   function showPaceStat() {
     if (curYear === null || (yoyDelta === null && projFull === null)) return;
     var el = document.getElementById("stat-pace");
-    var sep = document.getElementById("stat-pace-sep");
     if (!el) return;
     var parts = [curYear + ": " + curYTD.toLocaleString("en-US") + " mi so far"];
     if (yoyDelta !== null) {
@@ -105,7 +102,6 @@
       if (i > 0) el.appendChild(document.createTextNode(i === 1 ? ", " : " · "));
       el.appendChild(typeof part === "string" ? document.createTextNode(part) : part);
     });
-    if (sep) sep.style.display = "";
   }
 
   // Cumulative data
@@ -321,7 +317,7 @@
             label: {
               show: true,
               position: "insideEndTop",
-              formatter: "latest",
+              formatter: "today",
               fontSize: 10,
               color: markerLabelColor,
             },

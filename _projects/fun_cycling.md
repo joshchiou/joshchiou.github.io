@@ -36,9 +36,12 @@ chart:
     <small class="text-muted">ft climbed</small>
   </div>
 </div>
-<div class="text-center mb-4" style="font-size: 0.82rem; color: var(--global-text-color-light);">
-  <span id="stat-streak"></span><span id="stat-streak-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-best-streak"></span><span id="stat-pace-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-pace"></span>
+{% assign first_month = stats.monthly | first %}
+<p class="cycling-stats-scope text-center">All time, since {{ first_month.month | append: "-01" | date: "%B %Y" }}</p>
+<div class="text-center mb-1" style="font-size: 0.82rem; color: var(--global-text-color-light);">
+  <span id="stat-streak"></span><span id="stat-streak-sep" style="display:none"> &nbsp;·&nbsp; </span><span id="stat-best-streak"></span>
 </div>
+<p id="stat-pace" class="cycling-year-line text-center mb-4"></p>
 {% else %}
 <p class="text-muted">Stats updating. Check back soon.</p>
 {% endif %}

@@ -975,3 +975,15 @@ html.theme-switching *::after {
 html[data-theme="dark"] .table {
   color: var(--global-text-color);
 }
+
+// Cycling: the tiles are all-time totals; this year's miles and pace get their own line.
+.cycling-stats-scope {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--global-text-color-light);
+}
+
+.cycling-year-line {
+  font-size: 0.88rem;
+  color: var(--global-text-color);
+}
