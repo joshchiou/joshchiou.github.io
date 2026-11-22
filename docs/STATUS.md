@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-11-22 · branch `claude/keen-curie-wsfpjj` (not merged)_
+_Last updated: 2026-11-22 · branch `claude/keen-curie-wsfpjj` (17 commits, pushed, not merged)_
 
 The one-page handoff: what is true right now, what is waiting on whom, and where the detail
 lives. Rewritten in place at the end of each working session; history is in git and in
@@ -14,22 +14,24 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 2. Current state
 
-- **What is live** is whatever `deploy.yml` last built from `master`. Everything below is on
-  `claude/keen-curie-wsfpjj`, pushed but not merged; no PR has been opened.
-- **Visuals are as Josh had them.** The research cards keep the paper figures (D-023), and figures,
-  and photos are unchanged
-  ([D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)). Diagrams,
-  dark-mode dimming, and a redrawn social card were tried on this branch and reverted; the social
-  card was then replaced by a headshot card at Josh's request.
+- **What is live** is the last `deploy.yml` build from `master`, at `7b0d707` (a Scholar stats
+  update). Nothing from the 2026-11-22 session is live: it is all on `claude/keen-curie-wsfpjj`,
+  pushed, with no PR opened.
+- **Josh's taste, learned the hard way this session:** he likes the site's visuals as they are.
+  Conceptual SVGs on the research cards, dark-mode dimming of figures, and a redrawn social card
+  were all built and reverted. Paper figures stay; ask before restyling any figure or photo
+  ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures),
+  [D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)).
 - **On the branch:**
   - Homepage: stats animate only in a visible tab and always end on the real number; one CTA row
-    (Publications, CV, PDF); news leaves out the Home Assistant PR but keeps r-mmrm.
+    (Publications, CV, PDF); news leaves out the Home Assistant PR, keeps r-mmrm.
   - Publications: "Showing X of 39 publications" (the thesis was the 40th); search filters on the
     first keystroke; dropdown caret spaced from the border; Altmetric donuts in a fixed 36px slot
     that fades in.
   - Theme: toggle icons at 1.2rem; switches are instant
     ([D-027](DECISIONS.md#d-027-theme-switches-are-instant)), which also fixes the /news/ dark
-    flash; dark scrollbars, including in the Ctrl+K modal, whose long titles no longer overflow.
+    flash; dark scrollbars; Ctrl+K titles no longer overflow (two fixes in the vendored
+    `ninja-action.min.js`).
   - Cycling: all-time tiles labeled; 2026 line by day as of the last ride
     ([D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)); today line
     at the current month; unlogged months empty, not 0.
@@ -37,14 +39,16 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
     Photos heading hidden.
   - Code page without star/follower/repo tiles
     ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
-  - Cocktails: odd last card centered. Claire: descriptive alt text.
+  - Cocktails: new **Bars** section, nine bars from `_data/cocktail_bars.yml`; odd last card
+    centered. Claire: descriptive alt text.
+  - Social card: headshot with name and title on white, no numbers (`og-image.svg`,
+    `render_og_image.py` embeds `prof_pic.jpg`).
   - SEO and a11y: 404 noindex; verification file out of the sitemap; skip link; `og:image` size
     and alt tags; CV print shows "more authors" as plain text.
 - **Checked:** 75 tests and `check_site.py` pass; axe-core finds no serious or critical issues on
   any page in either theme; no page scrolls sideways at 375, 768, or 1440px; every page has a
-  unique title, description, canonical URL, and Open Graph tags. `check_sri.py` not run (jsDelivr
-  is blocked in the sandbox). Altmetric badges couldn't be loaded here, so their new slot is
-  untested against the live embed.
+  unique title, description, canonical URL, and Open Graph tags. Not run: `check_sri.py` (jsDelivr
+  blocked in the sandbox). Not seen: live Altmetric badges and Google Maps (both blocked).
 - **Scholar stats:** 9,024 citations, h-index 28 (`_data/scholar_stats.json`, 2026-11-18).
 - **Cycling data** stops at 2026-09-10 (`check_site.py` warns: 73 days without a ride).
 
@@ -87,39 +91,46 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
 
 ## 4. Open items (ranked by impact)
 
-1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). After merging, check one Altmetric
-   badge on /publications/ in both themes (the sandbox couldn't load them).
+1. **Cocktail page redesign (next session).** Josh wants unique drinks featured instead of the
+   five classics (Negroni, Manhattan, Paper Plane, Jungle Bird, Saturn). Ask him for his own or
+   favorite unusual drinks with specs and a line each; the gallery's "Claire's Cocktails" photos
+   show bottles, not recipes, so nothing can be read from them. Proposed: keep the classics as one
+   short "go-to classics" line. The Bars cards (`_data/cocktail_bars.yml`) have factual notes from
+   press coverage; only Picinin's is in Josh's words, so ask for a line per bar. Google Maps is
+   blocked in the sandbox, so his reviews can't be read; Néroli's coverage is mostly sponsored.
+2. **Review and merge `claude/keen-curie-wsfpjj`** (owner). After merging: check one Altmetric
+   badge on /publications/ in both themes, and re-scrape the homepage in LinkedIn's Post
+   Inspector so it shows the new social card.
    - **Proposed, waiting on Josh's go-ahead:** a Talks section (`date`, `type`, `session`,
-     `project` fields in `cv.yml`, kept under /publications/ rather than a new nav item); compact
-     social links in subpage footers; a quieter stats row in the hero; a copyable third-person bio.
-   - **Left alone on purpose** (Josh prefers the current visuals): dark-mode figure softening,
-     headshot framing, and conceptual research-card graphics.
-   - The social card is now the headshot with name and title (no numbers). After merging,
-     re-scrape the homepage in LinkedIn's Post Inspector; after swapping in a new headshot,
-     re-run `scripts/render_og_image.py`.
-2. **Set up the ride Shortcut and its GitHub token** (owner only), following
+     `project` fields in `cv.yml`, under /publications/ rather than a new nav item); compact
+     social links in subpage footers; a quieter stats row in the hero. A pronoun-free third-person
+     bio was drafted in chat; Josh hasn't placed it anywhere.
+   - **Left alone on purpose:** dark-mode figure softening, headshot framing, research-card
+     graphics (D-023, D-025). Josh plans to swap in a sharper headshot; re-run
+     `scripts/render_og_image.py` after he does.
+3. **Set up the ride Shortcut and its GitHub token** (owner only), following
    [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling
    page's "this year" numbers are as of that date. The `STRAVA_*` repo secrets can be deleted.
-3. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
+4. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
    one with `deposit:write` scope and store it as `ZENODO_TOKEN` in the environment settings,
    never in chat.
-4. **PR #49 is waiting on Josh.** It conflicts with `scripts/update_scholar.py`, which no longer
+5. **PR #49 is waiting on Josh.** It conflicts with `scripts/update_scholar.py`, which no longer
    counts papers (D-014), and touches the same data scripts as #53 and #58. Leave it alone unless
    Josh asks.
-5. **When the SURMOUNT-5 proteomics paper is published**, follow the checklist under "Pending" in
+6. **When the SURMOUNT-5 proteomics paper is published**, follow the checklist under "Pending" in
    [`site-guide.md`](site-guide.md).
-6. **Talk decks stay offline until cleared**
+7. **Talk decks stay offline until cleared**
    ([D-003](DECISIONS.md#d-003-talk-slides-go-to-zenodo-and-only-with-employer-clearance)). The
    EASD 2026 deck is not cleared; the Festival of Genomics 2025 deck is on hold.
-7. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
+8. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
    `claude/docs-style`, `claude/figure-fetch`, `claude/fix-data-refresh`, `claude/lilly-colors`,
    `claude/project-graphics`, `claude/scholar-serpapi`, `claude/vidra-preprint`. Closed PR #54:
    `auto/new-publications-1790979034`. Not checked: `copilot/fix-doi-errors-in-publications`.
    Keep `claude/personal-website-review-g4soy3`; it is PR #49's branch.
-8. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
+9. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
    (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
-9. **Polish not done:** the leftover card in five-item grids (code page repos too), extra badge
-   colors, and the UCSD logo in dark mode.
+10. **Polish not done:** the leftover card in the five-item code page repo grid, extra badge
+    colors, and the UCSD logo in dark mode.
 
 ## 5. Known-stale documentation
 

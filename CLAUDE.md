@@ -16,6 +16,10 @@ This file is the starting point for a new session; the guides below hold the det
 - [docs/DECISIONS.md](docs/DECISIONS.md): append-only log of decisions and why the alternatives
   were rejected. Check it before changing something that looks odd.
 
+**Visuals:** Josh likes the site's figures, photos, and graphics as they are. Don't replace,
+restyle, dim, or decorate them, and don't add drawn illustrations, without asking first (D-023,
+D-025). Bug fixes to how they load or lay out are fine.
+
 Two writing rules apply to all visible text, docs, and commit messages:
 
 1. **American English** (analyze, color, modeling, gray, traveled).
@@ -61,6 +65,7 @@ Places to update together when role/focus changes:
 bundle install          # first time only
 bundle exec jekyll serve # local dev at http://localhost:4000
 bundle exec jekyll build --strict_front_matter  # production build check
+# "invalid byte sequence in US-ASCII" from bibtex-ruby: export LANG=C.UTF-8 LC_ALL=C.UTF-8 first
 python3 scripts/check_site.py && python3 scripts/check_sri.py  # numbers and CDN hashes
 python3 -m pytest tests  # unit and browser tests (after `npx purgecss -c purgecss.config.js`)
 ```
@@ -156,6 +161,8 @@ The Festival of Genomics 2025 deck is **on hold** (Josh, Oct 2026): do not uploa
 - `theme.js` is deferred, so inline scripts must read `data-theme` from `<html>` (set by the inline
   snippet in `head.liquid`) instead of calling `determineComputedTheme()` (D-016).
 - `bin/`: CI scripts (upstream)
+- `assets/js/search/ninja-action.min.js` is vendored but carries two commented site fixes (long
+  Ctrl+K titles overflowed); reapply them if the search library is ever updated.
 
 ## Project card images
 
