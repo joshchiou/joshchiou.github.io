@@ -73,7 +73,8 @@ the CV's "Talks & Presentations" section under the sentence-case heading "Talks 
   480/800/1400px versions). SVG only for simple drawings. Link previews (`og_image`) are JPG,
   because social sites don't reliably read WebP or SVG.
 - **Alt text.** Card images sit next to their title, so they use empty alt text. Any image that
-  carries information on its own needs a real description.
+  carries information on its own needs a real description. Photos say what is in them (Claire's timeline photos have an `alt`
+  field in `_data/claire.yml`).
 
 ## Illustrations and charts
 
@@ -93,6 +94,8 @@ editing:
 
 ## Motion and accessibility
 
+- Theme switches are instant, with no fade (`html.theme-switching` in `assets/js/theme.js`,
+  [D-027](DECISIONS.md#d-027-theme-switches-are-instant)).
 - Motion is subtle: a small hover lift on cards and a fade-in on scroll (`.animate-in`, enabled
   only once `html.anim-ready` is set). Everything respects `prefers-reduced-motion`.
 - Keyboard focus is always visible (2px accent-color outline).

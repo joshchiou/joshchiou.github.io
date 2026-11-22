@@ -14,36 +14,43 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 2. Current state
 
-- **What is live** is whatever `deploy.yml` last built from `master`. The 2026-11-22 site review is
-  on `claude/keen-curie-wsfpjj` and is not live until it is merged; no PR has been opened.
-- **On the branch (2026-11-22 review):**
-  - Homepage stats: the real numbers were already in the static HTML; the count-up now only plays
-    in a visible tab, writes nothing before its first frame, and a timer restores the real number,
-    so a crawler snapshot can't catch a 0.
-  - Publications filter: "Showing X of 39 publications", matching the header (the thesis was
-    counted as the 40th; D-019).
-  - Theme toggle icons at 1.2rem (the filled sun was a speck at 16px); `color-scheme` follows the
-    site theme, so the Ctrl+K modal and other scrollbars are dark in dark mode.
-  - Cycling projection by day as of the last ride
-    ([D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)).
-  - Dark mode: figures and thumbnails dimmed and framed; Altmetric's white disc appears only after
-    the badge loads.
-  - Research cards keep the paper figures; diagrams were tried and Josh preferred the figures
-    ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)).
-  - One CTA row (Publications, CV, PDF); code page without KPI tiles; homepage news without code
-    items ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
-  - Social card redrawn without numbers, plus `og:image` size and alt tags
-    ([D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)).
-  - Tests: filter count, cycling pace line, homepage news; `check_site.py` checks the code page's
-    repo list instead of the removed tiles. All 73 tests and `check_site.py` pass locally (CDN via
-    the npm fallback); `check_sri.py` not run (jsDelivr blocked in the sandbox).
+- **What is live** is whatever `deploy.yml` last built from `master`. Everything below is on
+  `claude/keen-curie-wsfpjj`, pushed but not merged; no PR has been opened.
+- **Visuals are as Josh had them.** The research cards keep the paper figures (D-023), and figures,
+  photos, and the social card are unchanged
+  ([D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)). Diagrams,
+  dark-mode dimming, and a redrawn social card were tried on this branch and reverted.
+- **On the branch:**
+  - Homepage: stats animate only in a visible tab and always end on the real number; one CTA row
+    (Publications, CV, PDF); news leaves out the Home Assistant PR but keeps r-mmrm.
+  - Publications: "Showing X of 39 publications" (the thesis was the 40th); search filters on the
+    first keystroke; dropdown caret spaced from the border; Altmetric donuts in a fixed 36px slot
+    that fades in.
+  - Theme: toggle icons at 1.2rem; switches are instant
+    ([D-027](DECISIONS.md#d-027-theme-switches-are-instant)), which also fixes the /news/ dark
+    flash; dark scrollbars, including in the Ctrl+K modal, whose long titles no longer overflow.
+  - Cycling: all-time tiles labeled; 2026 line by day as of the last ride
+    ([D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)); today line
+    at the current month; unlogged months empty, not 0.
+  - Travel: French Guiana no longer lit with France; map loading placeholder; hint wrapping; empty
+    Photos heading hidden.
+  - Code page without star/follower/repo tiles
+    ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
+  - Cocktails: odd last card centered. Claire: descriptive alt text.
+  - SEO and a11y: 404 noindex; verification file out of the sitemap; skip link; `og:image` size
+    and alt tags; CV print shows "more authors" as plain text.
+- **Checked:** 75 tests and `check_site.py` pass; axe-core finds no serious or critical issues on
+  any page in either theme; no page scrolls sideways at 375, 768, or 1440px; every page has a
+  unique title, description, canonical URL, and Open Graph tags. `check_sri.py` not run (jsDelivr
+  is blocked in the sandbox). Altmetric badges couldn't be loaded here, so their new slot is
+  untested against the live embed.
 - **Scholar stats:** 9,024 citations, h-index 28 (`_data/scholar_stats.json`, 2026-11-18).
 - **Cycling data** stops at 2026-09-10 (`check_site.py` warns: 73 days without a ride).
 
 ## 3. Settled decisions
 
-The full append-only log, D-001 to D-026, is [`DECISIONS.md`](DECISIONS.md). D-001 to D-013 were
-settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-023 to D-026 on
+The full append-only log, D-001 to D-027, is [`DECISIONS.md`](DECISIONS.md). D-001 to D-013 were
+settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-023 to D-027 on
 2026-11-22.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
@@ -74,40 +81,43 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
 | D-024 | Cycling projection is by day, as of the last ride                                                 | [D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)                          |
 | D-025 | Figures, photos, and the social card stay as designed (dimming and new card reverted)             | [D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)                           |
 | D-026 | Code page and homepage news lead with work, not activity counts                                   | [D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)                 |
+| D-027 | Theme switches are instant (no 750 ms fade)                                                       | [D-027](DECISIONS.md#d-027-theme-switches-are-instant)                                                    |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
 
-1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). Look at the new social card (Josh
-   was unsure about its dot grid) and the dark-mode changes; after merging, re-scrape the homepage in LinkedIn's
-   Post Inspector so it drops the cached card with old numbers.
+1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). After merging, check one Altmetric
+   badge on /publications/ in both themes (the sandbox couldn't load them).
+   - **Proposed, waiting on Josh's go-ahead:** a Talks section (`date`, `type`, `session`,
+     `project` fields in `cv.yml`, kept under /publications/ rather than a new nav item); compact
+     social links in subpage footers; a quieter stats row in the hero; a copyable third-person bio.
+   - **Left alone on purpose** (Josh prefers the current visuals): dark-mode figure softening,
+     headshot framing, and conceptual research-card graphics.
+   - The social card still shows "35+ papers, 5 Nature, 8k+ citations"; update the SVG numbers
+     only if Josh wants.
 2. **Set up the ride Shortcut and its GitHub token** (owner only), following
    [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling
    page's "this year" numbers are as of that date. The `STRAVA_*` repo secrets can be deleted.
 3. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
    one with `deposit:write` scope and store it as `ZENODO_TOKEN` in the environment settings,
    never in chat.
-4. **Talks section structure** (proposed 2026-11-22, not built): keep `_data/cv.yml` as the one
-   source, add optional `date`, `type` (oral, invited, poster), `session`, and `project` (link to
-   the project page) fields, and a homepage "upcoming / recent talk" line driven by the newest
-   entry. Waits on Josh's go-ahead.
-5. **PR #49 is waiting on Josh.** It conflicts with `scripts/update_scholar.py`, which no longer
+4. **PR #49 is waiting on Josh.** It conflicts with `scripts/update_scholar.py`, which no longer
    counts papers (D-014), and touches the same data scripts as #53 and #58. Leave it alone unless
    Josh asks.
-6. **When the SURMOUNT-5 proteomics paper is published**, follow the checklist under "Pending" in
+5. **When the SURMOUNT-5 proteomics paper is published**, follow the checklist under "Pending" in
    [`site-guide.md`](site-guide.md).
-7. **Talk decks stay offline until cleared**
+6. **Talk decks stay offline until cleared**
    ([D-003](DECISIONS.md#d-003-talk-slides-go-to-zenodo-and-only-with-employer-clearance)). The
    EASD 2026 deck is not cleared; the Festival of Genomics 2025 deck is on hold.
-8. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
+7. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
    `claude/docs-style`, `claude/figure-fetch`, `claude/fix-data-refresh`, `claude/lilly-colors`,
    `claude/project-graphics`, `claude/scholar-serpapi`, `claude/vidra-preprint`. Closed PR #54:
    `auto/new-publications-1790979034`. Not checked: `copilot/fix-doi-errors-in-publications`.
    Keep `claude/personal-website-review-g4soy3`; it is PR #49's branch.
-9. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
+8. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
    (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
-10. **Polish not done:** the leftover card in five-item grids (code page repos too), extra badge
-    colors, and the UCSD logo in dark mode.
+9. **Polish not done:** the leftover card in five-item grids (code page repos too), extra badge
+   colors, and the UCSD logo in dark mode.
 
 ## 5. Known-stale documentation
 

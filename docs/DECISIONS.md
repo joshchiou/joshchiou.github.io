@@ -438,3 +438,19 @@ checking the tiles.
 
 **Why keep the repo-level stars and forks.** On a repo card they describe that repository, and the
 cards hide them when they are zero.
+
+## D-027: Theme switches are instant
+
+_Recorded 2026-11-22 (owner's request) · `assets/js/theme.js`, `_sass/_custom.scss`_
+
+**Context.** Upstream al-folio adds `html.transition` on every theme change, which animates every
+CSS property for 750 ms. Colors passed through low-contrast mid-grays on each toggle, and because
+`applyTheme()` also runs on page load, the /news/ table's text faded in from dark gray in dark mode.
+
+**Decision.** `transTheme()` now adds `html.theme-switching`, which turns transitions off, and
+removes it two frames later so hover effects still animate. Dark tables take their text color from
+CSS, so they are right before `theme.js` adds `table-dark`. The upstream `html.transition` rule in
+`_base.scss` is left in place but no longer used.
+
+**Why not a shorter fade.** Any fade between white and #1c1c1d passes through gray text on a gray
+background; an instant switch is what most sites do.
