@@ -265,10 +265,8 @@ def check_site(site: Path, entries: list[dict], config: dict, scholar: dict) -> 
     # Code page
     code = read_page(site, "code/index.html")
     if code:
-        gh = load_json("github_stats.json")
-        expected = [gh.get(f, "n/a") if gh.get(f) is not None else "n/a"
-                    for f in ("public_repos", "total_stars", "followers")]
-        expect_equal("code page GitHub stats", texts(code, "gh-stat-val"), [str(v) for v in expected])
+        repos = (load_yaml(DATA / "repositories.yml") or {}).get("github_repos", [])
+        expect_equal("code page featured repositories", code.count('class="repo-card"'), len(repos))
 
     # Travel page
     travel = read_page(site, "projects/fun_travel/index.html")

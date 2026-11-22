@@ -278,13 +278,63 @@ html[data-theme="dark"] {
     }
   }
 
-  // Images are made at 5:2 so the whole figure shows at every width.
-  .research-theme-img {
+  // Conceptual diagram band (_includes/research_theme_art.liquid), drawn in theme colors.
+  .research-theme-band {
+    background: color-mix(in srgb, var(--global-theme-color) 5%, var(--global-card-bg-color));
+    border-bottom: 1px solid var(--global-divider-color);
+    padding: 0.9rem 0.75rem;
+  }
+
+  .research-theme-art {
+    display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 5 / 2;
-    object-fit: cover;
-    display: block;
+    aspect-ratio: 8 / 3;
+    --rt-muted: color-mix(in srgb, var(--global-text-color) 26%, transparent);
+    --rt-ink: color-mix(in srgb, var(--global-text-color) 60%, transparent);
+    --rt-accent: var(--global-theme-color);
+    --rt-warm: #d4572a; // dataviz orange, darkened for 3:1 on the light band
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    .rt-muted {
+      fill: var(--rt-muted);
+    }
+    .rt-accent {
+      fill: var(--rt-accent);
+    }
+    .rt-warm {
+      fill: var(--rt-warm);
+    }
+    .rt-accent-fill {
+      fill: color-mix(in srgb, var(--rt-accent) 35%, transparent);
+      stroke: var(--rt-accent);
+      stroke-width: 1.5;
+    }
+    .rt-muted-stroke {
+      stroke: var(--rt-muted);
+      stroke-width: 1.2;
+    }
+    .rt-ink-stroke {
+      stroke: var(--rt-ink);
+      stroke-width: 1.2;
+    }
+    .rt-accent-stroke {
+      stroke: var(--rt-accent);
+      stroke-width: 1.5;
+    }
+    .rt-warm-stroke {
+      stroke: var(--rt-warm);
+      stroke-width: 1.5;
+    }
+    .rt-thick {
+      stroke-width: 2;
+    }
+  }
+
+  html[data-theme="dark"] & .research-theme-art {
+    --rt-warm: #f08a5d;
   }
 
   .research-theme-body {
@@ -476,7 +526,6 @@ article .social .contact-note {
 // Figure crops have white backgrounds: a hairline keeps them from bleeding into
 // light cards and sets them off from the page in dark mode.
 .projects .project-img-wrap,
-.research-theme-img,
 .publications ol.bibliography li .pub-thumb .preview {
   border-bottom: 1px solid var(--global-divider-color);
 }
@@ -852,4 +901,91 @@ body > main {
   word-break: normal;
   overflow-wrap: break-word;
   min-width: 0;
+}
+
+// ---------------------------------------------------------------- site review, Nov 2026
+
+// Theme toggle: the filled sun is drawn small inside its em box, so at the stock 16px it read as a
+// speck on the white header. Same size for all three states, in the text color.
+#light-toggle {
+  color: var(--global-text-color);
+
+  #light-toggle-system,
+  #light-toggle-dark,
+  #light-toggle-light {
+    font-size: 1.2rem;
+    line-height: 1;
+    padding-top: 11px;
+  }
+
+  #light-toggle-light {
+    -webkit-text-stroke: 0.4px currentColor; // a touch heavier, like the moon beside it
+  }
+}
+
+// Native controls and scrollbars follow the site theme, not the OS: without this the search
+// modal (Ctrl+K) and other scroll areas kept bright white scrollbars in dark mode.
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+// scrollbar-color is inherited, so it reaches the list inside ninja-keys' shadow DOM.
+ninja-keys {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--global-text-color) 30%, transparent) transparent;
+}
+
+// Dark mode: figures and thumbnails have white backgrounds. A rounded frame, a muted border, and a
+// slight dimming keep them from reading as bright cutouts; hover restores full brightness.
+html[data-theme="dark"] {
+  .publications ol.bibliography li .pub-thumb .preview,
+  .projects .project-img-wrap img {
+    filter: brightness(0.86) contrast(1.06);
+    transition: filter 0.2s ease;
+  }
+
+  .publications ol.bibliography li .pub-thumb .preview {
+    border-radius: 6px;
+    border: 1px solid var(--global-divider-color);
+  }
+
+  .publications ol.bibliography li:hover .pub-thumb .preview,
+  .projects a:hover .project-img-wrap img,
+  .projects a:focus-visible .project-img-wrap img {
+    filter: none;
+  }
+
+  // Altmetric donut: the white disc that keeps the score legible goes on only once the image has
+  // loaded (assets/js/common.js adds .is-loaded), so no blank white circle shows while it loads.
+  .altmetric-embed img {
+    background-color: transparent;
+  }
+
+  .altmetric-embed img.is-loaded {
+    background-color: #ffffff;
+  }
+}
+
+// Homepage CTA row: Publications, the CV page, and the PDF as a quiet text link.
+.about-cta {
+  align-items: center;
+}
+
+.about-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+  padding: 8px 4px;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
 }

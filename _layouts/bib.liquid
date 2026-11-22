@@ -27,6 +27,7 @@
     data-role="{{ pub_role }}"
     data-themes="{{ entry.themes }}"
     data-selected="{{ entry.selected | default: 'false' }}"
+    data-counted="{{ entry.counted | default: 'true' }}"
   ></span>
   {% assign content_col = 'col-sm-12' %}
   {% if site.enable_publication_thumbnails and entry.preview %}

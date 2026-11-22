@@ -29,6 +29,17 @@
   }
 })();
 
+// Altmetric badges: mark each donut image once it has loaded, so dark mode can put the white disc
+// behind it only then (_sass/_custom.scss). Load events don't bubble, so listen in the capture phase.
+document.addEventListener(
+  "load",
+  function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG" && t.closest && t.closest(".altmetric-embed")) t.classList.add("is-loaded");
+  },
+  true
+);
+
 $(document).ready(function () {
   // add toggle functionality to abstract, award and bibtex buttons
   $("a.abstract").click(function () {

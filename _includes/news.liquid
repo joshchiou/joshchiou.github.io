@@ -2,6 +2,11 @@
   {% if site.news != blank %}
     {% assign news_size = site.news | size %}
     {% assign news = site.news | reverse %}
+    {% if include.limit %}
+      {% comment %} Homepage: scientific, speaking, and career news only; items with homepage: false (code work) stay on /news/. {% endcomment %}
+      {% assign news = news | where_exp: 'item', 'item.homepage != false' %}
+      {% assign news_size = news | size %}
+    {% endif %}
     {% if include.limit and site.announcements.limit %}
       {% assign news_limit = site.announcements.limit %}
     {% else %}

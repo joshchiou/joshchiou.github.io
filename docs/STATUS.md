@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-10-04 · branch `master` (merge of `claude/islet-greenwald-style`)_
+_Last updated: 2026-11-22 · branch `claude/keen-curie-wsfpjj` (not merged)_
 
 The one-page handoff: what is true right now, what is waiting on whom, and where the detail
 lives. Rewritten in place at the end of each working session; history is in git and in
@@ -14,35 +14,37 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
 
 ## 2. Current state
 
-- **What is live** is whatever `deploy.yml` last built from `master`. The 2026-10-04 session merged
-  `claude/islet-greenwald-style` (PR #62 plus the commits after it); its deploy is the first to run
-  the new number checks before going live. If that Deploy site run is red, the site still shows
-  the 2026-10-03 build.
-- **Merged on 2026-10-04:**
-  - Islet page cites Greenwald 2019 instead of Wortham 2023; style guide filled out.
-  - Publication counts come from `papers.bib` at build time; the thesis is listed but not counted,
-    preprints count until published (39 today)
-    ([D-014](DECISIONS.md#d-014-publication-counts-come-from-papersbib-at-build-time),
-    [D-019](DECISIONS.md#d-019-the-publication-count-includes-unpublished-preprints-but-not-the-thesis)).
-  - Checks and tests: `check_site.py` (numbers across pages), `check_sri.py` (CDN hashes),
-    `check_preprints.py`, and browser tests in `tests/`, run by the new Site checks workflow on
-    every PR, push, and Monday; `check_site.py` also gates the deploy.
-  - Fixed: the Swiper hash that froze the cocktails and travel carousels, and site search, broken
-    on every page by the deferred `theme.js`
-    ([D-016](DECISIONS.md#d-016-inline-scripts-read-the-theme-from-data-theme-because-themejs-is-deferred)).
-  - Cycling data from Apple Health; Strava frozen at 2026-06-21; 91 Health rides imported (55
-    after the archive, 36 on 2026 days Strava missed), 148 rides in all through 2026-09-10 ([D-018](DECISIONS.md#d-018-cycling-data-comes-from-apple-health-not-the-strava-api)).
-  - Journal chips: five journals in a fixed order ([D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)).
-  - Content, style, and design review fixes, including Josh's wording for the Lilly and Pfizer
-    pages.
-- **Scholar stats:** 8,655 citations, h-index 28 (`_data/scholar_stats.json`, 2026-10-03).
-- **Not yet run on GitHub:** the Site checks workflow and `check_preprints.py` (the bioRxiv API and
-  jsDelivr are blocked in the cloud sandbox, so they were tested locally with stand-ins).
+- **What is live** is whatever `deploy.yml` last built from `master`. The 2026-11-22 site review is
+  on `claude/keen-curie-wsfpjj` and is not live until it is merged; no PR has been opened.
+- **On the branch (2026-11-22 review):**
+  - Homepage stats: the real numbers were already in the static HTML; the count-up now only plays
+    in a visible tab, writes nothing before its first frame, and a timer restores the real number,
+    so a crawler snapshot can't catch a 0.
+  - Publications filter: "Showing X of 39 publications", matching the header (the thesis was
+    counted as the 40th; D-019).
+  - Theme toggle icons at 1.2rem (the filled sun was a speck at 16px); `color-scheme` follows the
+    site theme, so the Ctrl+K modal and other scrollbars are dark in dark mode.
+  - Cycling projection by day as of the last ride
+    ([D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)).
+  - Dark mode: figures and thumbnails dimmed and framed; Altmetric's white disc appears only after
+    the badge loads.
+  - Research cards use conceptual SVG diagrams
+    ([D-023](DECISIONS.md#d-023-homepage-research-cards-use-conceptual-diagrams-not-paper-figures)).
+  - One CTA row (Publications, CV, PDF); code page without KPI tiles; homepage news without code
+    items ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
+  - Social card redrawn without numbers, plus `og:image` size and alt tags
+    ([D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)).
+  - Tests: filter count, cycling pace line, homepage news; `check_site.py` checks the code page's
+    repo list instead of the removed tiles. All 73 tests and `check_site.py` pass locally (CDN via
+    the npm fallback); `check_sri.py` not run (jsDelivr blocked in the sandbox).
+- **Scholar stats:** 9,024 citations, h-index 28 (`_data/scholar_stats.json`, 2026-11-18).
+- **Cycling data** stops at 2026-09-10 (`check_site.py` warns: 73 days without a ride).
 
 ## 3. Settled decisions
 
-The full append-only log, 21 entries from D-001 to D-021, is [`DECISIONS.md`](DECISIONS.md).
-D-001 to D-013 were settled on 2026-10-03, D-014 to D-021 on 2026-10-04.
+The full append-only log, D-001 to D-026, is [`DECISIONS.md`](DECISIONS.md). D-001 to D-013 were
+settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-023 to D-026 on
+2026-11-22.
 
 | #     | Decision                                                                                          | Ref                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -67,38 +69,45 @@ D-001 to D-013 were settled on 2026-10-03, D-014 to D-021 on 2026-10-04.
 | D-019 | Count includes unpublished preprints, not the thesis (39)                                         | [D-019](DECISIONS.md#d-019-the-publication-count-includes-unpublished-preprints-but-not-the-thesis)       |
 | D-020 | Journal chips in a fixed order: Nature, Cell, Nature Medicine, Nature Genetics, Nature Immunology | [D-020](DECISIONS.md#d-020-journal-chips-use-a-fixed-order)                                               |
 | D-021 | Health fills days the Strava archive missed; rides store am/pm for matching                       | [D-021](DECISIONS.md#d-021-health-fills-the-days-the-strava-archive-missed)                               |
+| D-022 | Selected papers are a filter on /publications/, not a second list                                 | [D-022](DECISIONS.md#d-022-selected-papers-are-a-filter-on-the-publications-page-not-a-second-list)       |
+| D-023 | Homepage research cards use conceptual SVG diagrams, not paper figures (replaces D-004, D-005)    | [D-023](DECISIONS.md#d-023-homepage-research-cards-use-conceptual-diagrams-not-paper-figures)             |
+| D-024 | Cycling projection is by day, as of the last ride                                                 | [D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)                          |
+| D-025 | The social preview card carries no numbers                                                        | [D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)                                    |
+| D-026 | Code page and homepage news lead with work, not activity counts                                   | [D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)                 |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 
 ## 4. Open items (ranked by impact)
 
-1. **Set up the ride Shortcut and its GitHub token** (owner only), following
-   [`cycling-data.md`](cycling-data.md). Rides through 2026-09-10 are imported; later rides need the
-   Shortcut or another Health export. The `STRAVA_*` repo secrets can be deleted.
-2. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
+1. **Review and merge `claude/keen-curie-wsfpjj`** (owner). Look at the homepage research diagrams
+   and the new social card in both themes; after merging, re-scrape the homepage in LinkedIn's
+   Post Inspector so it drops the cached card with old numbers.
+2. **Set up the ride Shortcut and its GitHub token** (owner only), following
+   [`cycling-data.md`](cycling-data.md). No ride since 2026-09-10 has been imported, so the cycling
+   page's "this year" numbers are as of that date. The `STRAVA_*` repo secrets can be deleted.
+3. **Revoke the Zenodo token that was pasted into an earlier chat** (owner only). Create a new
    one with `deposit:write` scope and store it as `ZENODO_TOKEN` in the environment settings,
    never in chat.
-3. **PR #49 is waiting on Josh.** It now also conflicts with `scripts/update_scholar.py`, which no
-   longer counts papers (D-014). "Harden data-pipeline scripts against API changes; fix h-index
-   count-up", opened 2026-07-28 from another session. It touches the same data scripts that #53
-   and #58 changed, so expect overlap; it hasn't been checked against the current `master`.
-   Leave it alone unless Josh asks.
-4. **When the SURMOUNT-5 proteomics paper is published**, follow the four-step checklist under
-   "Pending" in [`site-guide.md`](site-guide.md): bib entry, Lilly project page, `.lycheeignore`,
-   news item, and optionally a real figure in place of the synthetic card
-   ([D-007](DECISIONS.md#d-007-work-without-public-figures-gets-synthetic-illustrations)).
-5. **Talk decks stay offline until cleared**
+4. **Talks section structure** (proposed 2026-11-22, not built): keep `_data/cv.yml` as the one
+   source, add optional `date`, `type` (oral, invited, poster), `session`, and `project` (link to
+   the project page) fields, and a homepage "upcoming / recent talk" line driven by the newest
+   entry. Waits on Josh's go-ahead.
+5. **PR #49 is waiting on Josh.** It conflicts with `scripts/update_scholar.py`, which no longer
+   counts papers (D-014), and touches the same data scripts as #53 and #58. Leave it alone unless
+   Josh asks.
+6. **When the SURMOUNT-5 proteomics paper is published**, follow the checklist under "Pending" in
+   [`site-guide.md`](site-guide.md).
+7. **Talk decks stay offline until cleared**
    ([D-003](DECISIONS.md#d-003-talk-slides-go-to-zenodo-and-only-with-employer-clearance)). The
-   Festival of Genomics 2025 metadata is ready; upload only when Josh says so.
-6. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
+   EASD 2026 deck is not cleared; the Festival of Genomics 2025 deck is on hold.
+8. **Stale branches on GitHub** (owner to delete, or say the word). Merged: `claude/director-easd-update`,
    `claude/docs-style`, `claude/figure-fetch`, `claude/fix-data-refresh`, `claude/lilly-colors`,
    `claude/project-graphics`, `claude/scholar-serpapi`, `claude/vidra-preprint`. Closed PR #54:
    `auto/new-publications-1790979034`. Not checked: `copilot/fix-doi-errors-in-publications`.
    Keep `claude/personal-website-review-g4soy3`; it is PR #49's branch.
-
-7. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
+9. **Owner checks from the content review:** reuse terms for the T1D and islet card figures
    (non-CC-BY papers), and the Lilly card colors (D-008), which a reader could map to the drugs.
-8. **Polish not done:** the leftover card in five-item grids, extra badge colors, the UCSD logo and
-   white figure backgrounds in dark mode.
+10. **Polish not done:** the leftover card in five-item grids (code page repos too), extra badge
+    colors, and the UCSD logo in dark mode.
 
 ## 5. Known-stale documentation
 

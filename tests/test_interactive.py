@@ -285,9 +285,41 @@ def test_publication_filters(site):
     page.click("#pub-filter-reset")
     assert shown() == len(entries) and "?" not in page.url
 
+    # The "Showing X of N" count uses the same total as the page header (the thesis isn't counted).
+    total = len(check_site.counted(entries))
+    page.fill("#bibsearch", "proteomic")
+    page.wait_for_timeout(600)
+    assert page.inner_text("#bibsearch-count").endswith(f"of {total} publications")
+    page.click("#pub-filter-reset")
+
     # Filters survive a reload through the query string.
     page = p.open("/publications/?show=selected")
     assert shown() == selected
+    p.assert_clean()
+
+
+def test_cycling_pace_is_for_this_year_and_not_below_miles_so_far(site):
+    p = site()
+    page = p.open("/projects/fun_cycling/")
+    page.wait_for_timeout(500)
+    text = page.inner_text("#stat-pace")
+    if not text:  # no ride yet this calendar year
+        pytest.skip("no rides this year")
+    nums = [int(n.replace(",", "")) for n in re.findall(r"([\d,]+) mi", text)]
+    assert re.match(r"^\d{4}: [\d,]+ mi so far", text), text
+    if "on pace for about" in text:
+        so_far, projected = nums[0], nums[-1]
+        assert projected >= so_far, text
+    p.assert_clean()
+
+
+def test_homepage_news_leaves_out_code_items(site):
+    p = site()
+    page = p.open("/")
+    news = " ".join(page.locator(".news td").all_inner_texts())
+    assert news, "homepage shows news"
+    # The two code items (homepage: false) stay on /news/ and /code/.
+    assert "memory leak" not in news and "conda-forge" not in news
     p.assert_clean()
 
 

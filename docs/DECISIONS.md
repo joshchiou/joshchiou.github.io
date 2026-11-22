@@ -370,3 +370,78 @@ the owner wanted one. The year headings already do what a year filter would.
 
 **Why themes are hand-tagged.** Titles don't map reliably to topics by keyword (the atlas papers
 and the islet papers share most terms), so each entry names its themes in a `themes` field.
+
+## D-023: Homepage research cards use conceptual diagrams, not paper figures
+
+_Recorded 2026-11-22 (owner's request) · `scripts/render_research_art.py`,
+`_includes/research_theme_art.liquid`, `_data/research_themes.yml`_
+
+**Context.** The three research cards showed 5:2 composites of paper figures (D-004, D-005). The
+same figures appear again a few hundred pixels lower as Selected publication thumbnails and on the
+project cards, so the homepage showed the T1D Manhattan plot, the islet UMAP, and the pQTL map
+twice each. On a dark page their white backgrounds also read as bright cutouts.
+
+**Decision.** Each card has a small inline SVG that sketches the idea of the theme: a protein panel
+where a few proteins shift (clinical trial proteomics), a DNA variant raising a protein level
+(population proteomics and genetics), and a risk variant in one cell type's open chromatin
+(diabetes genetics). They carry no data, axes, or labels, and draw in the theme color, one warm
+highlight, and a gray mixed from the text color, so the same markup works in light and dark mode.
+The generator script is the source; the 5:2 composites in `assets/img/research_themes/` were
+deleted (they are in git history). This replaces D-004 and D-005 for the homepage; the project
+cards and thumbnails still use the paper figures.
+
+**Why not typographic cards with no graphic.** Three text-only cards in a row lose the visual break
+between the bio and the publication list, and the owner offered diagrams as the first option.
+
+**Why not stock icons.** D-007's reason still holds: generic art says nothing about the work. The
+diagrams show the specific idea of each theme.
+
+## D-024: The cycling projection is by day, as of the last ride
+
+_Recorded 2026-11-22 · `assets/js/cycling.js`_
+
+**Context.** The cycling page showed 1,555 miles ridden and "on pace for about 1,451 mi". The first
+number is all-time; the second was this year's miles divided by the number of months with data,
+times 12. The last month was September with only 10 days of data, counted as a whole month, so the
+projection came out low and looked smaller than the miles already ridden.
+
+**Decision.** The line now reads "2026: 1,088 mi so far, +1,018 mi vs 2025 to date · on pace for
+about 1,570 mi this year". Miles so far are divided by the day of the year of the last ride in the
+data and scaled to the full year; last year is summed through the same day. The projection is
+never below the miles so far, appears only after 30 days of the year, and the year-over-year
+percentage is left out above 500% (2025 tracking began in July, so early comparisons are huge).
+
+**Why the last ride and not today.** Rides arrive through the Shortcut and Health exports, so the
+data can lag by weeks. Dividing by today's date would read a gap in the import as a gap in riding.
+
+## D-025: The social preview card carries no numbers
+
+_Recorded 2026-11-22 · `assets/img/og-image.svg`_
+
+**Context.** The link preview image said "35+ papers, 5 Nature, 8k+ citations" while the site
+showed 39 publications and 9,024 citations. Nothing checks numbers inside an image, and social
+sites cache previews for weeks.
+
+**Decision.** The card shows name, role, focus, and URL on navy, with the protein-panel motif from
+the homepage. Pages without their own `og_image` also send `og:image:width`, `og:image:height`, and
+an alt text.
+
+**Why not render the numbers at deploy time.** It would keep the image current but not the copies
+already cached by LinkedIn and others, which is where people see it.
+
+## D-026: The code page and homepage lead with work, not activity counts
+
+_Recorded 2026-11-22 (owner's request) · `_pages/code.md`, `_includes/news.liquid`_
+
+**Context.** The code page opened with GitHub repo, star, and follower tiles, small numbers that say
+little about the work and undersell it (most of it is in enterprise organizations). The homepage
+news mixed two merged pull requests in with papers, talks, and promotions.
+
+**Decision.** The code page opens with featured repositories, then merged contributions; a small
+GitHub card with no counts sits at the bottom. News items with `homepage: false` (code work) are
+left off the homepage but stay on `/news/`, the code page, and the Home Assistant page.
+`check_site.py` now checks that the code page lists every featured repository instead of
+checking the tiles.
+
+**Why keep the repo-level stars and forks.** On a repo card they describe that repository, and the
+cards hide them when they are zero.

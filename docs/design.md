@@ -25,21 +25,24 @@ one accent color, generous white space, and real figures from the work instead o
 
 - **Dark mode.** Supported on every page. The toggle sets `data-theme` on `<html>` (handled by
   `assets/js/theme.js`), so dark styles key on `html[data-theme="dark"]`, not on the
-  `prefers-color-scheme` media query. Check every change in both modes.
+  `prefers-color-scheme` media query. Check every change in both modes. `color-scheme` follows
+  `data-theme`, so native scrollbars and form controls (including the Ctrl+K search modal) match.
+  Paper figures and thumbnails on white backgrounds are dimmed slightly (`brightness(0.86)`) with a
+  rounded, divider-colored frame in dark mode, and return to full brightness on hover.
 - **Icons.** Font Awesome, used sparingly (social links, buttons, the star on Selected). No emoji
   in headings or body text; the travel page's country flags are the exception.
 
 ## Components
 
-| Component           | Where                               | Rules                                                                                                         |
-| ------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Project card        | `/projects/`                        | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                         |
-| Research theme card | Homepage                            | 5:2 image on top, short title, one-sentence summary, links to the project; border turns accent color on hover |
-| Project page        | `/projects/*/`                      | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                             |
-| Selected paper      | Homepage, `/publications/`          | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                             |
-| Talk                | `/publications/`                    | Year, title, venue, outlined link buttons for slides or video                                                 |
-| Repo card           | `/code/`                            | Name, one-sentence description, language dot, stars, forks                                                    |
-| Stat tile           | Code, cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                    |
+| Component           | Where                         | Rules                                                                                                          |
+| ------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Project card        | `/projects/`                  | 16:10 image, title (1.15rem, weight 600), one-line muted summary, small lift on hover                          |
+| Research theme card | Homepage                      | Conceptual SVG diagram on a faint accent band, short title, one-sentence summary; border turns accent on hover |
+| Project page        | `/projects/*/`                | TL;DR box, `##` sections (1.5rem, weight 600), "Related:" line, image credit line                              |
+| Selected paper      | Homepage, `/publications/`    | 4:3 thumbnail at left, title, plain-language `tldr`, authors, venue, link buttons                              |
+| Talk                | `/publications/`              | Year, title, venue, outlined link buttons for slides or video                                                  |
+| Repo card           | `/code/`                      | Name, one-sentence description, language dot, stars, forks                                                     |
+| Stat tile           | Cycling, Home Assistant pages | Large number with a small label; missing values show "n/a"                                                     |
 
 Section labels on the projects and publications pages ("work", "fun", "Talks and presentations",
 "Press") share one style: left-aligned, 1.2rem bold, text color, with a 2px rule. Thumbnails and
@@ -59,10 +62,18 @@ the CV's "Talks & Presentations" section under the sentence-case heading "Talks 
 - **Project cards** are 16:10. Paper cards use a cropped panel from the paper, with annotation text
   removed so the figure reads at card size, and an `img_credit` line on the page. Photos are real
   photos. Work without public figures gets an illustration drawn from synthetic data (see below).
-- **Homepage research theme images** are 5:2 (1200x480) in `assets/img/research_themes/`: two
-  panels side by side on white, ideally from two different papers, each fitted whole into its half
-  so nothing is cropped at any screen width, with a thin gray vertical divider (4px, `#c4c4c4`) between them. `img_credit` in `_data/research_themes.yml` names the
-  sources. Never point a theme card at a 16:10 card image; it gets cropped on phones.
+- **Homepage research theme cards** don't use paper figures (those already appear under Selected
+  publications and on the project cards;
+  [D-023](DECISIONS.md#d-023-homepage-research-cards-use-conceptual-diagrams-not-paper-figures)).
+  Each has a small inline SVG diagram of the idea (a protein panel with a few shifts, a variant
+  raising a protein level, a variant in one cell type's open chromatin), generated by
+  `scripts/render_research_art.py` into `_includes/research_theme_art.liquid`. They use only the
+  theme color, one warm highlight, and a muted gray drawn from the text color, so one drawing
+  works in both modes. No data, axes, or labels.
+- **Social preview** (`assets/img/og-image.png`, 1200x630, from `og-image.svg`): name, role,
+  focus, and URL on navy, with the protein-panel motif. No counts; link previews are cached for
+  weeks, so numbers on the card go stale
+  ([D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)).
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
 - **Formats.** WebP for photos and dense figures, through `scripts/prep_images.py` (responsive

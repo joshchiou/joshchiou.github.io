@@ -79,43 +79,54 @@ layout: default
         <a href="{{ '/publications/' | relative_url }}" class="about-cta-btn about-cta-primary">
           <i class="fa-solid fa-book-open"></i> Publications
         </a>
-        <a href="{{ '/assets/pdf/CV.pdf' | relative_url }}" class="about-cta-btn about-cta-secondary" target="_blank">
-          <i class="ai ai-cv"></i> Download CV
-        </a>
+        <a href="{{ '/cv/' | relative_url }}" class="about-cta-btn about-cta-secondary"> <i class="ai ai-cv"></i> CV </a>
+        <a
+          href="{{ '/assets/pdf/CV.pdf' | relative_url }}"
+          class="about-cta-link"
+          target="_blank"
+          rel="noopener"
+          aria-label="Download CV as PDF"
+          ><i class="fa-solid fa-file-arrow-down"></i> PDF</a
+        >
       </div>
     </div>
     <script>
+      // Count-up on the stats above. The HTML already holds the real numbers, so crawlers and
+      // no-JS visitors read them; the animation only runs for a visible tab, writes nothing until
+      // its first frame has advanced, and a timer puts the real number back even if frames stop.
       (function () {
         var els = document.querySelectorAll('#stat-papers, #stat-citations, #stat-hindex');
+        var DURATION = 1200;
+        var skip =
+          document.visibilityState !== 'visible' ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+          /bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent);
         var animated = false;
 
-        function animateCountUp(el, target, duration) {
-          var start = 0;
+        function animateCountUp(el) {
+          var final = el.textContent;
+          var target = parseInt(final.replace(/,/g, ''), 10);
+          if (isNaN(target) || target <= 0) return;
           var startTime = null;
           function step(ts) {
-            if (!startTime) startTime = ts;
-            var progress = Math.min((ts - startTime) / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3);
-            var current = Math.round(eased * target);
-            el.textContent = current.toLocaleString();
+            if (startTime === null) startTime = ts;
+            var progress = Math.min((ts - startTime) / DURATION, 1);
+            if (progress > 0) {
+              var eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = progress < 1 ? Math.round(eased * target).toLocaleString('en-US') : final;
+            }
             if (progress < 1) requestAnimationFrame(step);
           }
           requestAnimationFrame(step);
+          setTimeout(function () {
+            el.textContent = final;
+          }, DURATION + 200);
         }
 
         function triggerCountUp() {
-          if (animated) return;
+          if (animated || skip) return;
           animated = true;
-          els.forEach(function (el) {
-            var n = parseInt(el.textContent.replace(/,/g, ''), 10);
-            if (!isNaN(n) && n > 0) {
-              if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                el.textContent = n.toLocaleString();
-              } else {
-                animateCountUp(el, n, 1200);
-              }
-            }
-          });
+          els.forEach(animateCountUp);
         }
 
         var bar = document.querySelector('.about-hero-bar');

@@ -35,44 +35,76 @@
   var monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var yearColors = ["#2a78d6", "#eb6834", "#eda100", "#c9c8c3"]; // dataviz palette (docs/design.md)
 
-  // YoY pace
-  var curYear = years[years.length - 1];
-  var prevYear = String(parseInt(curYear, 10) - 1);
-  var curYearData = byYear[curYear] || [];
-  var curMonthIdx = -1;
+  // Year-over-year chart: the latest year in the data, and its last month with any riding.
+  var chartYear = years[years.length - 1];
+  var chartPrevYear = String(parseInt(chartYear, 10) - 1);
+  var chartMonthIdx = -1;
   for (var _i = 11; _i >= 0; _i--) {
-    if ((curYearData[_i] || 0) > 0) {
-      curMonthIdx = _i;
+    if (((byYear[chartYear] || [])[_i] || 0) > 0) {
+      chartMonthIdx = _i;
       break;
     }
   }
+
+  // Year-to-date pace, by day rather than by month: the last month with data is usually partial,
+  // and counting it as a whole month understated the projection. "To date" is the last ride in the
+  // data, and last year is summed through the same day of the year.
+  var curYear = null,
+    prevYear = null,
+    curYTD = 0,
+    prevYTD = 0;
   var yoyDelta = null,
     yoyPct = null,
     projFull = null;
-  if (curMonthIdx >= 0 && byYear[prevYear]) {
-    var curYTD = 0,
-      prevYTD = 0;
-    for (var _j = 0; _j <= curMonthIdx; _j++) {
-      curYTD += curYearData[_j] || 0;
-      prevYTD += byYear[prevYear][_j] || 0;
-    }
+  var asOf = calendarRaw.reduce(function (latest, d) {
+    return d[0] > latest ? d[0] : latest;
+  }, "");
+  if (asOf && asOf.slice(0, 4) === String(new Date().getFullYear())) {
+    curYear = asOf.slice(0, 4);
+    prevYear = String(parseInt(curYear, 10) - 1);
+    var asOfMonthDay = asOf.slice(5);
+    var hasPrevYear = false;
+    calendarRaw.forEach(function (d) {
+      var y = d[0].slice(0, 4);
+      if (y === curYear && d[0] <= asOf) curYTD += d[1] * KM_TO_MI;
+      if (y === prevYear) {
+        hasPrevYear = true;
+        if (d[0].slice(5) <= asOfMonthDay) prevYTD += d[1] * KM_TO_MI;
+      }
+    });
     curYTD = Math.round(curYTD);
     prevYTD = Math.round(prevYTD);
-    yoyDelta = curYTD - prevYTD;
-    yoyPct = prevYTD > 0 ? Math.round((yoyDelta / prevYTD) * 100) : null;
-    projFull = Math.round((curYTD / (curMonthIdx + 1)) * 12);
+    var start = Date.UTC(parseInt(curYear, 10), 0, 1);
+    var dayOfYear = Math.round((Date.parse(asOf + "T00:00:00Z") - start) / 86400000) + 1;
+    var daysInYear = Math.round((Date.UTC(parseInt(curYear, 10) + 1, 0, 1) - start) / 86400000);
+    if (hasPrevYear) {
+      yoyDelta = curYTD - prevYTD;
+      yoyPct = prevYTD > 0 ? Math.round((yoyDelta / prevYTD) * 100) : null;
+    }
+    // A projection from the first few weeks says little; wait for a month of data.
+    if (dayOfYear >= 30) projFull = Math.max(curYTD, Math.round(((curYTD / dayOfYear) * daysInYear) / 10) * 10);
   }
 
   function showPaceStat() {
-    if (yoyDelta === null) return;
+    if (curYear === null || (yoyDelta === null && projFull === null)) return;
     var el = document.getElementById("stat-pace");
     var sep = document.getElementById("stat-pace-sep");
     if (!el) return;
-    var sign = yoyDelta >= 0 ? "+" : "";
-    var pct = yoyPct !== null ? " (" + sign + yoyPct + "%)" : "";
-    el.textContent =
-      sign + yoyDelta.toLocaleString("en-US") + " mi vs " + prevYear + pct + " · on pace for about " + projFull.toLocaleString("en-US") + " mi";
-    el.classList.add(yoyDelta >= 0 ? "stat-delta-up" : "stat-delta-down");
+    var parts = [curYear + ": " + curYTD.toLocaleString("en-US") + " mi so far"];
+    if (yoyDelta !== null) {
+      var sign = yoyDelta >= 0 ? "+" : "";
+      var pct = yoyPct !== null && Math.abs(yoyPct) <= 500 ? " (" + sign + yoyPct + "%)" : "";
+      var delta = document.createElement("span");
+      delta.className = yoyDelta >= 0 ? "stat-delta-up" : "stat-delta-down";
+      delta.textContent = sign + yoyDelta.toLocaleString("en-US") + " mi vs " + prevYear + " to date" + pct;
+      parts.push(delta);
+    }
+    if (projFull !== null) parts.push("on pace for about " + projFull.toLocaleString("en-US") + " mi this year");
+    el.textContent = "";
+    parts.forEach(function (part, i) {
+      if (i > 0) el.appendChild(document.createTextNode(i === 1 ? ", " : " · "));
+      el.appendChild(typeof part === "string" ? document.createTextNode(part) : part);
+    });
     if (sep) sep.style.display = "";
   }
 
@@ -236,15 +268,15 @@
           params.forEach(function (p) {
             if (p.value == null || isNaN(p.value)) return;
             lines.push('<span style="color:' + p.color + '">●</span> ' + p.seriesName + ": " + (p.value || 0) + " mi");
-            if (p.seriesName === curYear) curVal = p.value;
-            if (p.seriesName === prevYear) prevVal = p.value;
+            if (p.seriesName === chartYear) curVal = p.value;
+            if (p.seriesName === chartPrevYear) prevVal = p.value;
           });
           var result = params[0].name + "<br/>" + lines.join("<br/>");
           if (curVal && prevVal) {
             var d = Math.round(curVal - prevVal);
             var sign = d >= 0 ? "+" : "";
             var col = d >= 0 ? "#27ae60" : "#e74c3c";
-            result += '<br/><span style="font-size:0.88em;color:' + col + '">' + sign + d + " mi vs " + prevYear + "</span>";
+            result += '<br/><span style="font-size:0.88em;color:' + col + '">' + sign + d + " mi vs " + chartPrevYear + "</span>";
           }
           return result;
         },
@@ -280,16 +312,16 @@
           lineStyle: { width: 2.5 },
           itemStyle: { color: yearColors[i % yearColors.length] },
         };
-        if (year === curYear && curMonthIdx >= 0) {
+        if (year === chartYear && chartMonthIdx >= 0) {
           s.markLine = {
             silent: true,
             symbol: ["none", "none"],
-            data: [{ xAxis: monthLabels[curMonthIdx] }],
+            data: [{ xAxis: monthLabels[chartMonthIdx] }],
             lineStyle: { type: "dashed", color: markerColor, width: 1.5 },
             label: {
               show: true,
               position: "insideEndTop",
-              formatter: "today",
+              formatter: "latest",
               fontSize: 10,
               color: markerLabelColor,
             },
