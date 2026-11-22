@@ -29,8 +29,8 @@ Two pages are reachable but not in the navigation bar: `/news/` (full news archi
 4. **research**: three theme cards from `_data/research_themes.yml`, each linking to a project,
    with a 5:2 image from `assets/img/research_themes/`.
 5. **selected publications**: entries in `papers.bib` with `selected = {true}`.
-6. **news**: the five most recent scientific, speaking, and career items from `_news/`. Items with
-   `homepage: false` (code work such as merged PRs) are left out here but stay on `/news/`.
+6. **news**: the five most recent scientific, speaking, career, and scientific-software items from
+   `_news/`. Items with `homepage: false` (Home Assistant work) are left out here but stay on `/news/`.
 7. Contact: social icons and `contact_note` from `_config.yml`.
 
 ### Publications page, top to bottom
@@ -170,8 +170,8 @@ image in `assets/img/publication_preview/`.
 
 **News item.** Add `_news/YYYY-MM-DD-slug.md` with `layout: post`, `date`, and `inline: true`, and
 one or two sentences of inline HTML. Links use `target="_blank"`. The homepage shows scientific,
-speaking, and career news; for code work (a merged PR, a package release) add `homepage: false`
-so it stays on `/news/` and the code page only.
+speaking, career, and scientific-software news; for hobby code (Home Assistant PRs) add
+`homepage: false` so it stays on `/news/` and the code page only.
 
 **Talk.** Add an item to the "Talks & Presentations" section of `_data/cv.yml`. Slides and video go
 in `linkitems`.

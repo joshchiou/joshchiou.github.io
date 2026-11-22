@@ -27,8 +27,6 @@ one accent color, generous white space, and real figures from the work instead o
   `assets/js/theme.js`), so dark styles key on `html[data-theme="dark"]`, not on the
   `prefers-color-scheme` media query. Check every change in both modes. `color-scheme` follows
   `data-theme`, so native scrollbars and form controls (including the Ctrl+K search modal) match.
-  Paper figures and thumbnails on white backgrounds are dimmed slightly (`brightness(0.86)`) with a
-  rounded, divider-colored frame in dark mode, and return to full brightness on hover.
 - **Icons.** Font Awesome, used sparingly (social links, buttons, the star on Selected). No emoji
   in headings or body text; the travel page's country flags are the exception.
 
@@ -69,10 +67,6 @@ the CV's "Talks & Presentations" section under the sentence-case heading "Talks 
   card at a 16:10 card image; it gets cropped on phones. They stay paper figures even though the
   same papers appear under Selected publications
   ([D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)).
-- **Social preview** (`assets/img/og-image.png`, 1200x630, from `og-image.svg`): name, role,
-  focus, and URL on navy, with a dot-grid motif. No counts; link previews are cached for
-  weeks, so numbers on the card go stale
-  ([D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)).
 - **Publication thumbnails** are 4:3, in `assets/img/publication_preview/` or reused from the
   project cards. Each selected paper should have its own; don't reuse one thumbnail for several papers.
 - **Formats.** WebP for photos and dense figures, through `scripts/prep_images.py` (responsive

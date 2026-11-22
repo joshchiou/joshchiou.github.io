@@ -890,29 +890,8 @@ ninja-keys {
   scrollbar-color: color-mix(in srgb, var(--global-text-color) 30%, transparent) transparent;
 }
 
-// Dark mode: figures and thumbnails have white backgrounds. A rounded frame, a muted border, and a
-// slight dimming keep them from reading as bright cutouts; hover restores full brightness.
+// Dark mode.
 html[data-theme="dark"] {
-  .publications ol.bibliography li .pub-thumb .preview,
-  .projects .project-img-wrap img,
-  .research-theme-img {
-    filter: brightness(0.86) contrast(1.06);
-    transition: filter 0.2s ease;
-  }
-
-  .publications ol.bibliography li .pub-thumb .preview {
-    border-radius: 6px;
-    border: 1px solid var(--global-divider-color);
-  }
-
-  .publications ol.bibliography li:hover .pub-thumb .preview,
-  .projects a:hover .project-img-wrap img,
-  .projects a:focus-visible .project-img-wrap img,
-  .research-theme:hover .research-theme-img,
-  .research-theme:focus-visible .research-theme-img {
-    filter: none;
-  }
-
   // Altmetric donut: the white disc that keeps the score legible goes on only once the image has
   // loaded (assets/js/common.js adds .is-loaded), so no blank white circle shows while it loads.
   .altmetric-embed img {

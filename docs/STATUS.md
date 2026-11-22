@@ -33,7 +33,7 @@ joshchiou.github.io. Start at [`../CLAUDE.md`](../CLAUDE.md), then
   - One CTA row (Publications, CV, PDF); code page without KPI tiles; homepage news without code
     items ([D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)).
   - Social card redrawn without numbers, plus `og:image` size and alt tags
-    ([D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)).
+    ([D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)).
   - Tests: filter count, cycling pace line, homepage news; `check_site.py` checks the code page's
     repo list instead of the removed tiles. All 73 tests and `check_site.py` pass locally (CDN via
     the npm fallback); `check_sri.py` not run (jsDelivr blocked in the sandbox).
@@ -72,7 +72,7 @@ settled on 2026-10-03, D-014 to D-021 on 2026-10-04, D-022 on 2026-11-03, and D-
 | D-022 | Selected papers are a filter on /publications/, not a second list                                 | [D-022](DECISIONS.md#d-022-selected-papers-are-a-filter-on-the-publications-page-not-a-second-list)       |
 | D-023 | Homepage research cards keep the paper figures (diagrams tried and rejected)                      | [D-023](DECISIONS.md#d-023-the-homepage-research-cards-keep-the-paper-figures)                            |
 | D-024 | Cycling projection is by day, as of the last ride                                                 | [D-024](DECISIONS.md#d-024-the-cycling-projection-is-by-day-as-of-the-last-ride)                          |
-| D-025 | The social preview card carries no numbers                                                        | [D-025](DECISIONS.md#d-025-the-social-preview-card-carries-no-numbers)                                    |
+| D-025 | Figures, photos, and the social card stay as designed (dimming and new card reverted)             | [D-025](DECISIONS.md#d-025-figures-photos-and-the-social-card-stay-as-designed)                           |
 | D-026 | Code page and homepage news lead with work, not activity counts                                   | [D-026](DECISIONS.md#d-026-the-code-page-and-homepage-lead-with-work-not-activity-counts)                 |
 | n/a   | Handoff docs follow the `handoff` skill: this file rewritten in place, `DECISIONS.md` append-only | [`.claude/handoff-inputs.md`](../.claude/handoff-inputs.md)                                               |
 

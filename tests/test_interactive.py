@@ -313,13 +313,14 @@ def test_cycling_pace_is_for_this_year_and_not_below_miles_so_far(site):
     p.assert_clean()
 
 
-def test_homepage_news_leaves_out_code_items(site):
+def test_homepage_news_leaves_out_home_assistant_items(site):
     p = site()
     page = p.open("/")
     news = " ".join(page.locator(".news td").all_inner_texts())
     assert news, "homepage shows news"
-    # The two code items (homepage: false) stay on /news/ and /code/.
-    assert "memory leak" not in news and "conda-forge" not in news
+    # Home Assistant PRs (homepage: false) stay on /news/ and /code/; scientific software stays.
+    assert "memory leak" not in news
+    assert "r-mmrm" in news
     p.assert_clean()
 
 

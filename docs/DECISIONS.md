@@ -404,19 +404,22 @@ percentage is left out above 500% (2025 tracking began in July, so early compari
 **Why the last ride and not today.** Rides arrive through the Shortcut and Health exports, so the
 data can lag by weeks. Dividing by today's date would read a gap in the import as a gap in riding.
 
-## D-025: The social preview card carries no numbers
+## D-025: Figures, photos, and the social card stay as designed
 
-_Recorded 2026-11-22 · `assets/img/og-image.svg`_
+_Recorded 2026-11-22 (owner's decision) · `_sass/_custom.scss`, `assets/img/og-image.svg`_
 
-**Context.** The link preview image said "35+ papers, 5 Nature, 8k+ citations" while the site
-showed 39 publications and 9,024 citations. Nothing checks numbers inside an image, and social
-sites cache previews for weeks.
+**Context.** The 2026-11-22 review dimmed and framed paper figures and thumbnails in dark mode and
+redrew the link-preview card without its numbers and with a dot-grid motif.
 
-**Decision.** The card shows name, role, focus, and URL on navy, with a dot-grid motif. Pages without their own `og_image` also send `og:image:width`, `og:image:height`, and
-an alt text.
+**Decision.** Josh likes the visuals as they are, so both were reverted: figures, thumbnails,
+project images, and the profile photo look the same in both modes, and `og-image.png` is the
+original card. The card's `og:image` size and alt tags were kept, since they change nothing visible.
 
-**Why not render the numbers at deploy time.** It would keep the image current but not the copies
-already cached by LinkedIn and others, which is where people see it.
+**Why not the dark-mode dimming.** Owner's preference. Don't restyle figures or photos without
+asking first.
+
+**Known issue.** The card still says "35+ papers, 5 Nature, 8k+ citations"; if those should be
+updated, edit the numbers in `og-image.svg` and re-run `scripts/render_og_image.py`.
 
 ## D-026: The code page and homepage lead with work, not activity counts
 
@@ -427,8 +430,9 @@ little about the work and undersell it (most of it is in enterprise organization
 news mixed two merged pull requests in with papers, talks, and promotions.
 
 **Decision.** The code page opens with featured repositories, then merged contributions; a small
-GitHub card with no counts sits at the bottom. News items with `homepage: false` (code work) are
-left off the homepage but stay on `/news/`, the code page, and the Home Assistant page.
+GitHub card with no counts sits at the bottom. News items with `homepage: false` (Home Assistant
+work) are left off the homepage but stay on `/news/`, the code page, and the Home Assistant page.
+Scientific software such as the r-mmrm conda-forge package stays on the homepage.
 `check_site.py` now checks that the code page lists every featured repository instead of
 checking the tiles.
 
