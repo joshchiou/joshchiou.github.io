@@ -1005,6 +1005,24 @@ html[data-theme="dark"] .table {
   }
 }
 
+// Cocktail recipes: one column on phones, two from 600px. With an odd count the last card is
+// centered on its own row instead of sitting alone at the left (five recipes left Saturn orphaned).
+.recipe-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > .recipe-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - 1.25rem) / 2);
+    }
+  }
+}
+
 // Cycling: the tiles are all-time totals; this year's miles and pace get their own line.
 .cycling-stats-scope {
   margin: 0.15rem 0 0.35rem;

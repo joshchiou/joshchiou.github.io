@@ -16,7 +16,7 @@ category: fun
 
   <!-- Left: photo only -->
   <div class="claire-hero-img-wrap">
-    {% include figure.liquid loading="eager" path="assets/img/projects/fun/cats/claire-main.webp" class="img-fluid" alt="Claire" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/projects/fun/cats/claire-main.webp" class="img-fluid" alt="Claire, a gray cat with green eyes, sitting on a cat tower with her tongue out" zoomable=true %}
   </div>
 
   <!-- Right: lede + genetics panel (with stats row inside) -->
@@ -105,7 +105,7 @@ category: fun
     <div class="claire-era-location">{{ entry.location }}</div>
   </div>
   <div class="claire-era-photo" style="--img-position: {{ entry.img_position | default: 'center' }}">
-    {% include figure.liquid loading="lazy" path=entry.img class="img-fluid" alt=entry.milestone zoomable=true %}
+    {% include figure.liquid loading="lazy" path=entry.img class="img-fluid" alt=entry.alt zoomable=true %}
   </div>
   {% if entry.caption %}
   <p class="claire-era-caption">{{ entry.caption }}</p>
