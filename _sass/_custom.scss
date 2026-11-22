@@ -1069,3 +1069,30 @@ html[data-theme="dark"] .table {
 main#main-content:focus {
   outline: none;
 }
+
+// Cocktail bars (_data/cocktail_bars.yml): same cards as the recipes, with the neighborhood under
+// the name and a map link at the bottom.
+.bar-grid .recipe-card {
+  display: flex;
+  flex-direction: column;
+
+  .recipe-card-header {
+    margin-bottom: 0.2rem;
+  }
+
+  .bar-area {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    color: var(--global-text-color-light);
+  }
+
+  .recipe-note {
+    flex: 1 0 auto;
+  }
+
+  .bar-map-link {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    align-self: flex-start;
+  }
+}

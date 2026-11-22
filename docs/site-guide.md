@@ -87,7 +87,7 @@ Every project page follows the same pattern:
 
 The fun pages pull from their own data files: cycling from `_data/cycling_*.json` (see [cycling-data.md](cycling-data.md)), `bikes.yml`,
 `bike_gallery.yml`, `featured_rides.yml`, `cycling_locations.yml`; cocktails from
-`cocktail_recipes.yml`, `cocktail_gallery.yml`; Home Assistant from `hass_layers.yml`,
+`cocktail_recipes.yml`, `cocktail_bars.yml`, `cocktail_gallery.yml`; Home Assistant from `hass_layers.yml`,
 `hass_stats.yml`; travel from `travel_countries.yml`, `travel_cities.yml`; Claire from
 `claire.yml`, `claire_genetics.yml`.
 

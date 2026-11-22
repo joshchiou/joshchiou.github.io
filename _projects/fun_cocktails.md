@@ -36,6 +36,24 @@ tiki cocktails.
 {% endfor %}
 </div>
 
+## Bars
+
+A few cocktail bars I've liked, close to home and on the road.
+
+<div class="recipe-grid bar-grid">
+{% for bar in site.data.cocktail_bars %}
+<div class="recipe-card">
+  <div class="recipe-card-header">
+    <h3>{{ bar.name }}</h3>
+    <span class="recipe-method">{{ bar.city }}</span>
+  </div>
+  <p class="bar-area">{{ bar.area }}</p>
+  <p class="recipe-note">{{ bar.note }}</p>
+  <a class="bar-map-link" href="https://www.google.com/maps/search/?api=1&amp;query={{ bar.map | url_encode }}" target="_blank" rel="noopener noreferrer">Map <i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i></a>
+</div>
+{% endfor %}
+</div>
+
 ## Photos
 
 <div class="swiper cocktail-gallery-swiper mb-4">
