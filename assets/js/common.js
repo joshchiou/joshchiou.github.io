@@ -39,6 +39,17 @@ document.addEventListener(
   },
   true
 );
+// Fallback for badges whose image finished loading before it was observed: never leave a loaded
+// donut hidden.
+window.addEventListener("load", function () {
+  var markLoaded = function () {
+    document.querySelectorAll(".altmetric-embed img:not(.is-loaded)").forEach(function (img) {
+      if (img.complete && img.naturalWidth > 0) img.classList.add("is-loaded");
+    });
+  };
+  markLoaded();
+  setTimeout(markLoaded, 2000);
+});
 
 $(document).ready(function () {
   // add toggle functionality to abstract, award and bibtex buttons

@@ -111,11 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   Object.entries(selects).forEach(([key, el]) => el.addEventListener("change", () => setFilter(key, el.value)));
 
-  // Search waits for 300 ms without typing.
-  let timeoutId;
+  // Filter on every keystroke, at most once per frame (40 entries is cheap). The old 300 ms
+  // debounce made the first keystroke look ignored.
+  let frame = 0;
   searchInput.addEventListener("input", function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(apply, 300);
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      apply();
+    });
   });
 
   const clearSearch = () => {
@@ -151,8 +155,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // A #term in the URL fills the box. Without one, keep whatever the visitor already typed
+  // before this module loaded instead of clearing it.
   const readHash = () => {
-    searchInput.value = decodeURIComponent(window.location.hash.substring(1));
+    const term = decodeURIComponent(window.location.hash.substring(1));
+    if (term || window.location.hash) searchInput.value = term;
     apply();
   };
   window.addEventListener("hashchange", readHash);
